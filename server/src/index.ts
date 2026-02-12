@@ -1,9 +1,9 @@
-import 'dotenv/config';
 import express, { Request, Response } from 'express';
 import { Server } from 'http';
+import { env } from './config/env.js';
 
 const app = express();
-const PORT = Number(process.env.PORT) || 3000;
+const PORT = env.PORT;
 
 app.use(express.json());
 
@@ -22,9 +22,7 @@ const server: Server = app.listen(PORT, () => {
 
 server.on('error', (error: NodeJS.ErrnoException) => {
     if (error.code === 'EADDRINUSE') {
-        console.error(
-            `❌ Port ${PORT} is already in use. Try a different port with PORT=<number> npm run dev`,
-        );
+        console.error(`Port ${PORT} is already in use. Try a different port`);
         process.exit(1);
     }
     throw error;
