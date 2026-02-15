@@ -1,11 +1,13 @@
+import cors from 'cors';
 import express, { Request, Response } from 'express';
 import { Server } from 'http';
-import { env } from './config/env.js';
+import { corsOptions, env } from './config/index.ts';
 
 const app = express();
 const PORT = env.PORT;
 
 app.use(express.json());
+app.use(cors(corsOptions));
 
 // Health check endpoint.
 app.get('/health', (_req: Request, res: Response): void => {
