@@ -3,7 +3,7 @@ import { Link, Outlet, createRootRoute } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 
 const RootLayout = () => {
-    const { isLoading, data } = useQuery({
+    const { isLoading, data: health } = useQuery({
         queryKey: ['health'],
         queryFn: async () => {
             const response = await fetch('http://localhost:3000/health');
@@ -25,7 +25,7 @@ const RootLayout = () => {
                 {isLoading ? (
                     <p>Loading server status...</p>
                 ) : (
-                    <p>Server status: {data.status}</p>
+                    <p>Server status: {health.data.status}</p>
                 )}
             </div>
             <hr />

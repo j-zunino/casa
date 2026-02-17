@@ -13,12 +13,14 @@ app.use(express.json());
 app.use(cors(corsOptions));
 
 // Health check endpoint.
-app.get('/health', (_req: Request, res: Response): void => {
-    res.json({ status: 'ok', timestamp: new Date().toISOString() });
-});
-
-app.get('/', (_req: Request, res: Response): void => {
-    res.json({ message: 'Hello world' });
+app.get('/health', (_req: Request, res: Response) => {
+    res.json({
+        success: true,
+        data: {
+            status: 'ok',
+            timestamp: new Date().toISOString(),
+        },
+    });
 });
 
 // Handle 404
@@ -50,7 +52,7 @@ server.on('error', (error: NodeJS.ErrnoException) => {
  * Gracefully shuts down the server when receiving termination signals.
  * @param {string} signal - The termination signal received
  */
-function gracefulShutdown(signal: string): void {
+function gracefulShutdown(signal: string) {
     console.log(`\n${signal} received. Shutting down gracefully...`);
     server.close(() => {
         console.log('Server closed.');
