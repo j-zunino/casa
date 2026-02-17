@@ -1,8 +1,10 @@
+import { ErrorCodes } from '@casa/shared';
 import cors from 'cors';
 import express, { Request, Response } from 'express';
 import { Server } from 'http';
 import { corsOptions, env } from './config/index.ts';
 import { errorMiddleware } from './middleware/index.ts';
+import { AppError } from './utils/AppError.ts';
 
 const app = express();
 const PORT = env.PORT;
@@ -17,6 +19,17 @@ app.get('/health', (_req: Request, res: Response): void => {
 
 app.get('/', (_req: Request, res: Response): void => {
     res.json({ message: 'Hello world' });
+});
+
+// Handle 404
+app.use((req, _res, next) => {
+    next(
+        new AppError(
+            `Route ${req.originalUrl} not found`,
+            404,
+            ErrorCodes.NOT_FOUND,
+        ),
+    );
 });
 
 app.use(errorMiddleware);
