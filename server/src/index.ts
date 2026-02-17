@@ -2,6 +2,7 @@ import cors from 'cors';
 import express, { Request, Response } from 'express';
 import { Server } from 'http';
 import { corsOptions, env } from './config/index.ts';
+import { errorMiddleware } from './middleware/index.ts';
 
 const app = express();
 const PORT = env.PORT;
@@ -17,6 +18,8 @@ app.get('/health', (_req: Request, res: Response): void => {
 app.get('/', (_req: Request, res: Response): void => {
     res.json({ message: 'Hello world' });
 });
+
+app.use(errorMiddleware);
 
 const server: Server = app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
