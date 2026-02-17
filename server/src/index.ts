@@ -4,7 +4,7 @@ import express, { Request, Response } from 'express';
 import { Server } from 'http';
 import { corsOptions, env } from './config/index.ts';
 import { errorMiddleware } from './middleware/index.ts';
-import { AppError } from './utils/AppError.ts';
+import { AppError } from './utils/index.ts';
 
 const app = express();
 const PORT = env.PORT;
