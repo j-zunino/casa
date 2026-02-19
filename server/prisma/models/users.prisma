@@ -1,0 +1,13 @@
+model User {
+    id    String  @id @default(cuid())
+    email String  @unique
+    name  String?
+    image String?
+
+    memberships Membership[]
+    createdTask Task[]       @relation("TaskCreator")
+
+    createdAt    DateTime     @default(now())
+    updatedAt    DateTime     @updatedAt
+    taskAccesses TaskAccess[]
+}

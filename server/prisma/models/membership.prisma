@@ -1,0 +1,10 @@
+model Membership {
+    userId  String
+    houseId String
+    role    HouseRole @default(MEMBER)
+
+    user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+    house House @relation(fields: [houseId], references: [id], onDelete: Cascade)
+
+    @@id([userId, houseId])
+}

@@ -1,0 +1,15 @@
+model House {
+    id   String @id @default(cuid())
+    name String
+
+    members Membership[]
+    tasks   Task[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+enum HouseRole {
+    OWNER
+    MEMBER
+}

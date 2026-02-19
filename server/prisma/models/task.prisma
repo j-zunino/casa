@@ -1,0 +1,31 @@
+model Task {
+    id          String  @id @default(cuid())
+    title       String
+    description String?
+    completed   Boolean @default(false)
+
+    houseId   String
+    creatorId String
+
+    visibility Visibility @default(PUBLIC)
+
+    house   House @relation(fields: [houseId], references: [id], onDelete: Cascade)
+    creator User  @relation("TaskCreator", fields: [creatorId], references: [id])
+
+    access     TaskAccess[]
+    recurrence Recurrence?
+
+    dueDate   DateTime?
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+}
+
+model TaskAccess {
+    taskId String
+    userId String
+
+    task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@id([taskId, userId])
+}
