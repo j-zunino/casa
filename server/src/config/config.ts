@@ -3,7 +3,7 @@ import { env } from './env.ts';
 
 export const corsOptions: CorsOptions = {
     credentials: true,
-    origin: (origin: string | undefined, callback: Function) => {
+    origin: (origin, callback) => {
         if (!origin || env.CORS_WHITELIST.includes(origin)) {
             callback(null, true);
         } else {
