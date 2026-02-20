@@ -8,6 +8,7 @@ const envSchema = z.object({
         .string()
         .transform((urls) => urls.split(',').map((url) => url.trim()))
         .pipe(z.array(z.url())),
+
     BETTER_AUTH_URL: z.url(),
     BETTER_AUTH_SECRET: z.string(),
 });

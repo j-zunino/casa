@@ -6,7 +6,7 @@ const RootLayout = () => {
     const { isLoading, data: health } = useQuery({
         queryKey: ['health'],
         queryFn: async () => {
-            const response = await fetch('http://localhost:3000/health');
+            const response = await fetch('http://localhost:3000/api/health');
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }

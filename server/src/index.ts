@@ -1,40 +1,14 @@
-import { ErrorCodes } from '@casa/shared';
 import cors from 'cors';
-import express, { Request, Response } from 'express';
+import express from 'express';
 import { Server } from 'http';
 import { corsOptions, env } from './config/index.ts';
-import { errorMiddleware } from './middleware/index.ts';
-import { AppError } from './utils/index.ts';
+import { mainRouter } from './modules/index.ts';
 
 const app = express();
 const PORT = env.PORT;
 
-app.use(express.json());
 app.use(cors(corsOptions));
-
-// Health check endpoint.
-app.get('/health', (_req: Request, res: Response) => {
-    res.json({
-        success: true,
-        data: {
-            status: 'ok',
-            timestamp: new Date().toISOString(),
-        },
-    });
-});
-
-// Handle 404
-app.use((req, _res, next) => {
-    next(
-        new AppError(
-            `Route ${req.originalUrl} not found`,
-            404,
-            ErrorCodes.NOT_FOUND,
-        ),
-    );
-});
-
-app.use(errorMiddleware);
+app.use('/api', mainRouter);
 
 const server: Server = app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);

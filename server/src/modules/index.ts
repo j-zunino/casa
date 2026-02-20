@@ -1,0 +1,27 @@
+import { ErrorCodes } from '@casa/shared';
+import { NextFunction, Request, Response, Router } from 'express';
+import { errorMiddleware } from '../middleware/index.ts';
+import { AppError, registerRoutes } from '../utils/index.ts';
+import { healthRouter } from './health/index.ts';
+
+const router: Router = Router();
+
+registerRoutes(router, [
+    { prefix: '/auth', router: authRouter, skipJson: true },
+    { prefix: '/health', router: healthRouter },
+]);
+
+// Handle 404 routes
+router.use((req: Request, _res: Response, next: NextFunction) => {
+    next(
+        new AppError(
+            `Route ${req.originalUrl} not found`,
+            404,
+            ErrorCodes.NOT_FOUND,
+        ),
+    );
+});
+
+router.use(errorMiddleware);
+
+export { router as mainRouter };
