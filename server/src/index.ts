@@ -1,14 +1,12 @@
-import cors from 'cors';
 import express from 'express';
 import { Server } from 'http';
-import { corsOptions, env } from './config/index.ts';
+import { env } from './config/index.ts';
 import { mainRouter } from './modules/index.ts';
 
 const app = express();
 const PORT = env.PORT;
 
-app.use(cors(corsOptions));
-app.use('/api', mainRouter);
+app.use(mainRouter);
 
 const server: Server = app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
