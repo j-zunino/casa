@@ -1,2 +1,2 @@
 export { env } from './env.ts';
-export { corsOptions } from './config.js';
+export { corsOptions } from './app.ts';
