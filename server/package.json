@@ -1,15 +1,14 @@
 {
   "name": "server",
-  "version": "0.0.0",
-  "private": true,
   "type": "module",
+  "private": true,
+  "version": "0.0.1",
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
-    "type-check": "tsc --noEmit",
     "start": "node dist/index.js",
-    "install:ci": "pnpm ci"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@casa/shared": "workspace:*",
@@ -27,8 +26,5 @@
     "@types/node": "^22.10.5",
     "@types/pg": "^8.16.0",
     "tsx": "^4.19.2"
-  },
-  "engines": {
-    "node": ">=18.0.0"
   }
 }
