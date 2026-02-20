@@ -2,6 +2,7 @@ import { ErrorCodes } from '@casa/shared';
 import { NextFunction, Request, Response, Router } from 'express';
 import { errorMiddleware } from '../middleware/index.ts';
 import { AppError, registerRoutes } from '../utils/index.ts';
+import { authRouter } from './auth/index.ts';
 import { healthRouter } from './health/index.ts';
 
 const router: Router = Router();
