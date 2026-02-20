@@ -18,9 +18,11 @@ export function errorMiddleware(
     res: Response,
     _next: NextFunction,
 ) {
-    console.error(error);
-
     if (error instanceof AppError) {
+        if (process.env.NODE_ENV !== 'production') {
+            console.log(`[AppError] ${error.code}: ${error.message}`);
+        }
+
         const response: ApiResponse<never> = {
             success: false,
             error: {
@@ -30,6 +32,10 @@ export function errorMiddleware(
         };
 
         return res.status(error.statusCode).json(response);
+    }
+
+    if (process.env.NODE_ENV !== 'production') {
+        console.error('[ERROR]', (error as Error).message);
     }
 
     const response: ApiResponse<never> = {
