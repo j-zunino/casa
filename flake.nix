@@ -23,18 +23,19 @@
         prisma
       ];
 
-      shellHook = ''
-        export PKG_CONFIG_PATH=${pkgs.openssl.dev}/lib/pkgconfig
-        export PRISMA_SCHEMA_ENGINE_BINARY=${pkgs.prisma-engines}/bin/schema-engine
-        export PRISMA_QUERY_ENGINE_BINARY=${pkgs.prisma-engines}/bin/query-engine
-        export PRISMA_QUERY_ENGINE_LIBRARY=${pkgs.prisma-engines}/lib/libquery_engine.node
-        export PRISMA_FMT_BINARY=${pkgs.prisma-engines}/bin/prisma-fmt
+      PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
+      PRISMA_SCHEMA_ENGINE_BINARY = "${pkgs.prisma-engines}/bin/schema-engine";
+      PRISMA_QUERY_ENGINE_BINARY = "${pkgs.prisma-engines}/bin/query-engine";
+      PRISMA_QUERY_ENGINE_LIBRARY = "${pkgs.prisma-engines}/lib/libquery_engine.node";
+      PRISMA_FMT_BINARY = "${pkgs.prisma-engines}/bin/prisma-fmt";
 
+      PGPORT = 5432;
+      PGUSER = "casa";
+      PGPASSWORD = "casa";
+
+      shellHook = ''
         export PGDATA=$PWD/.pgdata
         export PGHOST=$PWD/.pgsocket
-        export PGPORT=5432
-        export PGUSER=casa
-        export PGPASSWORD=casa
 
         mkdir -p "$PGDATA"
         mkdir -p "$PGHOST"
@@ -52,7 +53,7 @@
                   start
         fi
 
-        until pg_isready -h "$PGHOST" -p 5432 > /dev/null 2>&1; do
+        until pg_isready -h "$PGHOST" -p "$PGPORT" > /dev/null 2>&1; do
             echo "Waiting for PostgreSQL..."
             sleep 1
         done
