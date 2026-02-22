@@ -17,11 +17,11 @@
     "typecheck": "pnpm -r typecheck",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "db:generate": "pnpm --filter server prisma generate",
-    "db:migrate": "pnpm --filter server prisma migrate dev",
-    "db:deploy": "pnpm --filter server prisma migrate deploy",
-    "db:studio": "pnpm --filter server prisma studio",
-    "db:reset": "pnpm --filter server prisma migrate reset"
+    "db:generate": "pnpm --filter server exec prisma generate",
+    "db:migrate": "pnpm --filter server exec prisma migrate dev",
+    "db:deploy": "pnpm --filter server exec prisma migrate deploy",
+    "db:studio": "pnpm --filter server exec prisma studio",
+    "db:reset": "pnpm --filter server exec prisma migrate reset"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
