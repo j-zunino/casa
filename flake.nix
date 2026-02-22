@@ -23,17 +23,16 @@
         prisma
       ];
 
-      PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
-      PRISMA_SCHEMA_ENGINE_BINARY = "${pkgs.prisma-engines}/bin/schema-engine";
-      PRISMA_QUERY_ENGINE_BINARY = "${pkgs.prisma-engines}/bin/query-engine";
-      PRISMA_QUERY_ENGINE_LIBRARY = "${pkgs.prisma-engines}/lib/libquery_engine.node";
-      PRISMA_FMT_BINARY = "${pkgs.prisma-engines}/bin/prisma-fmt";
-
       PGPORT = 5432;
       PGUSER = "casa";
       PGPASSWORD = "casa";
 
       shellHook = ''
+        export PKG_CONFIG_PATH=${pkgs.openssl.dev}/lib/pkgconfig
+        export PRISMA_SCHEMA_ENGINE_BINARY=${pkgs.prisma-engines}/bin/schema-engine
+        export PRISMA_QUERY_ENGINE_BINARY=${pkgs.prisma-engines}/bin/query-engine
+        export PRISMA_QUERY_ENGINE_LIBRARY=${pkgs.prisma-engines}/lib/libquery_engine.node
+        export PRISMA_FMT_BINARY=${pkgs.prisma-engines}/bin/prisma-fmt
         export PGDATA=$PWD/.pgdata
         export PGHOST=$PWD/.pgsocket
 
@@ -72,6 +71,7 @@
         export PGUSER=casa
 
         echo "PostgreSQL ready"
+        echo "postgresql://$PGUSER:$PGPASSWORD@localhost:$PGPORT/casa_dev?host=$PGHOST"
 
         trap "pg_ctl -D \"$PGDATA\" stop" EXIT
       '';
