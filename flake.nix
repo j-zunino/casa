@@ -33,8 +33,8 @@
         export PRISMA_QUERY_ENGINE_BINARY=${pkgs.prisma-engines}/bin/query-engine
         export PRISMA_QUERY_ENGINE_LIBRARY=${pkgs.prisma-engines}/lib/libquery_engine.node
         export PRISMA_FMT_BINARY=${pkgs.prisma-engines}/bin/prisma-fmt
-        export PGDATA=$PWD/.pgdata
-        export PGHOST=$PWD/.pgsocket
+        export PGDATA=$PWD/server/.pgdata
+        export PGHOST=$PWD/server/.pgsocket
 
         mkdir -p "$PGDATA"
         mkdir -p "$PGHOST"

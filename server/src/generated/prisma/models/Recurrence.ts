@@ -412,14 +412,6 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
 export type RecurrenceCreateNestedOneWithoutTaskInput = {
   create?: Prisma.XOR<Prisma.RecurrenceCreateWithoutTaskInput, Prisma.RecurrenceUncheckedCreateWithoutTaskInput>
   connectOrCreate?: Prisma.RecurrenceCreateOrConnectWithoutTaskInput

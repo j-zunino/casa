@@ -302,14 +302,6 @@ export type HouseScalarRelationFilter = {
   isNot?: Prisma.HouseWhereInput
 }
 
-export type StringFieldUpdateOperationsInput = {
-  set?: string
-}
-
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
-}
-
 export type HouseCreateNestedOneWithoutMembersInput = {
   create?: Prisma.XOR<Prisma.HouseCreateWithoutMembersInput, Prisma.HouseUncheckedCreateWithoutMembersInput>
   connectOrCreate?: Prisma.HouseCreateOrConnectWithoutMembersInput

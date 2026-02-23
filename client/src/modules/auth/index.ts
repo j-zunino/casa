@@ -2,7 +2,7 @@ export { authClient } from './auth.client.ts';
 
 export {
     handleSignOut,
-    handleEmailSingnUp,
-    handleEmailSingIn,
+    handleEmailSingUp,
+    handleEmailSignIn,
     handleSocialSingIn,
 } from './auth.service.ts';

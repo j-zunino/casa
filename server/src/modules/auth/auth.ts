@@ -11,4 +11,6 @@ export const auth = betterAuth({
             clientSecret: env.GITHUB_CLIENT_SECRET as string,
         },
     },
+    trustedOrigins: env.CORS_WHITELIST,
+    telemetry: { enabled: false },
 });
