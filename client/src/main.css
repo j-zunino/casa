@@ -1,1 +1,25 @@
 @import 'tailwindcss';
+
+@theme {
+    --color-surface-900: var(--color-olive-950);
+    --color-surface-800: var(--color-olive-900);
+    --color-surface-700: var(--color-olive-800);
+
+    --color-surface-300: var(--color-olive-500);
+    --color-surface-200: var(--color-olive-400);
+    --color-surface-100: var(--color-olive-50);
+}
+
+@layer base {
+    body {
+        background-color: var(--color-surface-900);
+        color: var(--color-surface-100);
+    }
+
+    * {
+        font-family: var(--font-sans);
+
+        scrollbar-width: thin;
+        scrollbar-color: var() transparent !important;
+    }
+}
