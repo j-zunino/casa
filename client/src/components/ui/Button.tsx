@@ -1,10 +1,20 @@
 import type { ButtonHTMLAttributes } from 'react';
+import { createVariants } from '../../modules/tailwindcss';
 
-type ButtonVariant = 'none' | 'default';
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-    label?: string;
+    variant?: string;
+    size?: string;
 }
 
-export const Button = ({ label, ...props }: Props) => {
-    return <button>{label}</button>;
+const buttonVariants = createVariants({
+    variants: {
+        default: 'bg-white text-black',
+    },
+    sizes: {
+        md: 'px-4 py-2 text-base',
+    },
+});
+
+export const Button = ({ variant, size, ...props }: Props) => {
+    return <button className={buttonVariants(variant, size)} {...props} />;
 };
