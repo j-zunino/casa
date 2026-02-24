@@ -8,7 +8,8 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const buttonVariants = createVariants({
     variants: {
-        default: 'bg-white text-black',
+        default:
+            'bg-surface-100 text-black active:bg-transparent active:text-surface-100 hover:cursor-pointer',
     },
     sizes: {
         md: 'px-4 py-2 text-base',
