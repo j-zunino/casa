@@ -27,7 +27,7 @@ export const SignInForm = () => {
                 placeholder="Password"
             />
 
-            <span className="w-full justify-end flex">
+            <span className="flex w-full justify-end">
                 <Link
                     to="/sign-up"
                     className="text-surface-200 hover:underline"

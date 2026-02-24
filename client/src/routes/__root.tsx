@@ -5,7 +5,7 @@ const RootLayout = () => {
     return (
         <>
             <div className="bg-surface-950 flex justify-center border-b border-surface-700">
-                <nav className="flex w-full max-w-4xl justify-between gap-2">
+                <nav className="flex w-full justify-between gap-2">
                     <Link
                         to="/"
                         className="px-4 py-2 underline-offset-4 [&.active]:underline"
