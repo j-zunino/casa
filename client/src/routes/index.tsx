@@ -7,10 +7,8 @@ const Index = () => {
     const { data: session } = authClient.useSession();
 
     return (
-        <div className="flex w-full flex-col items-center space-y-4">
-            <h3>Welcome Home!</h3>
-
-            <div className="flex w-full max-w-sm flex-col gap-4 border border-surface-700 p-4">
+        <div className="flex w-full flex-col items-center">
+            <div className="max-w-sm p-4">
                 <div>
                     <h3 className="text-2xl font-bold">Sign In</h3>
                     <p className="text-surface-200">

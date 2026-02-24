@@ -1,34 +1,26 @@
-import { useQuery } from '@tanstack/react-query';
 import { Link, Outlet, createRootRoute } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 
 const RootLayout = () => {
-    const { isLoading, data: health } = useQuery({
-        queryKey: ['health'],
-        queryFn: async () => {
-            const response = await fetch('http://localhost:3000/api/health');
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            return response.json();
-        },
-    });
-
     return (
         <>
-            <div className="flex justify-between">
-                <Link to="/" className="[&.active]:font-bold">
-                    Home
-                </Link>
+            <div className="bg-surface-950 flex justify-center border-b border-surface-700">
+                <nav className="flex w-full max-w-4xl justify-between gap-2">
+                    <Link
+                        to="/"
+                        className="px-4 py-2 underline-offset-4 [&.active]:underline"
+                    >
+                        Home
+                    </Link>
 
-                {isLoading ? (
-                    <p>Loading server status...</p>
-                ) : (
-                    <p>Server status: {health.data.status}</p>
-                )}
+                    <Link
+                        to="/sign-up"
+                        className="px-4 py-2 underline-offset-4 [&.active]:underline"
+                    >
+                        Sign Up
+                    </Link>
+                </nav>
             </div>
-            <hr />
 
             <Outlet />
 
