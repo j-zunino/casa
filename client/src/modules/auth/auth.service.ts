@@ -19,10 +19,10 @@ export const handleEmailSingUp = async () => {
     return data;
 };
 
-export const handleEmailSignIn = async () => {
+export const handleEmailSignIn = async (email: string, password: string) => {
     const { data, error } = await authClient.signIn.email({
-        email: 'john.doe@example.com',
-        password: 'password1234',
+        email: email, // 'john.doe@example.com'
+        password: password, //'password1234'
         rememberMe: true,
     });
 
