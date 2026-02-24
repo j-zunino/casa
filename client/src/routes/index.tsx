@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { Button } from '../components/ui';
 import { authClient, handleEmailSignIn, handleSignOut } from '../modules/auth';
 
@@ -24,8 +24,11 @@ const Index = () => {
                     <>
                         <p>Not signed in</p>
 
-                        <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-2">
                             <Button onClick={handleEmailSignIn}>Sign In</Button>
+                            <Link to="/sign-up" className="hover:underline">
+                                I don't have an account
+                            </Link>
                         </div>
                     </>
                 )}
