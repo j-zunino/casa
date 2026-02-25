@@ -2,27 +2,29 @@ import { authClient } from './auth.client';
 
 export const handleSignOut = async () => await authClient.signOut();
 
-// TODO
-export const handleEmailSingUp = async () => {
+export const handleEmailSignUp = async (
+    name: string,
+    email: string,
+    password: string,
+) => {
     const { data, error } = await authClient.signUp.email({
-        name: 'John Doe',
-        email: 'john.doe@example.com',
-        password: 'password1234',
+        name: name,
+        email: email,
+        password: password,
     });
 
     if (error) {
-        console.error(error);
+        console.error('SignUp error:', error);
         return;
     }
 
-    console.log(data);
     return data;
 };
 
 export const handleEmailSignIn = async (email: string, password: string) => {
     const { data, error } = await authClient.signIn.email({
-        email: email, // 'john.doe@example.com'
-        password: password, //'password1234'
+        email: email,
+        password: password,
         rememberMe: true,
     });
 
@@ -31,7 +33,6 @@ export const handleEmailSignIn = async (email: string, password: string) => {
         return null;
     }
 
-    console.log('SignIn success:', data);
     return data;
 };
 
