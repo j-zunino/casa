@@ -12,8 +12,8 @@ const router: Router = Router();
 router.use(cors(corsOptions));
 
 registerRoutes(router, [
-    { prefix: '/api/auth', router: authRouter, skipJson: true },
-    { prefix: '/api/health', router: healthRouter },
+    { prefix: '/auth', router: authRouter, skipJson: true },
+    { prefix: '/health', router: healthRouter },
 ]);
 
 // Handle 404 routes

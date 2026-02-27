@@ -6,7 +6,7 @@ import { mainRouter } from './modules/index.ts';
 const app = express();
 const PORT = env.PORT;
 
-app.use(mainRouter);
+app.use('/api', mainRouter);
 
 const server: Server = app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
