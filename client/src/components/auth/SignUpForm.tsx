@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Button, Input } from '../ui';
 import { handleEmailSignUp } from '../../modules/auth';
 
+// TODO: Add password confirmation
 export const SignUpForm = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -46,15 +47,6 @@ export const SignUpForm = () => {
 
             <Button onClick={() => handleEmailSignUp(name, email, password)}>
                 Sign Up
-            </Button>
-
-            <hr className="border-surface-700" />
-
-            <Button disabled variant="outline">
-                Sign In with Google
-            </Button>
-            <Button disabled variant="outline">
-                Sign In with GitHub
             </Button>
         </form>
     );
