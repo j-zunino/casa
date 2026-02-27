@@ -10,3 +10,8 @@ enum RecurrenceFrequency {
     MONTHLY
     YEARLY
 }
+
+enum HouseRole {
+    OWNER
+    MEMBER
+}

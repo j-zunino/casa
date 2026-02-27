@@ -8,8 +8,3 @@ model House {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
-
-enum HouseRole {
-    OWNER
-    MEMBER
-}
