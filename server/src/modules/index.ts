@@ -6,6 +6,7 @@ import { errorMiddleware } from '../middleware/index.ts';
 import { AppError, registerRoutes } from '../utils/index.ts';
 import { authRouter } from './auth/index.ts';
 import { healthRouter } from './health/index.ts';
+import { meRouter } from './me/index.ts';
 
 const router: Router = Router();
 
@@ -14,6 +15,7 @@ router.use(cors(corsOptions));
 registerRoutes(router, [
     { prefix: '/auth', router: authRouter, skipJson: true },
     { prefix: '/health', router: healthRouter },
+    { prefix: '/me', router: meRouter },
 ]);
 
 // Handle 404 routes
