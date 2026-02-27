@@ -4,6 +4,9 @@ import { env, prisma } from '../../config/index.ts';
 
 export const auth = betterAuth({
     database: prismaAdapter(prisma, { provider: 'postgresql' }),
+    trustedOrigins: env.CORS_WHITELIST,
+    telemetry: { enabled: false },
+
     emailAndPassword: { enabled: true },
     socialProviders: {
         github: {
@@ -11,6 +14,4 @@ export const auth = betterAuth({
             clientSecret: env.GITHUB_CLIENT_SECRET as string,
         },
     },
-    trustedOrigins: env.CORS_WHITELIST,
-    telemetry: { enabled: false },
 });
