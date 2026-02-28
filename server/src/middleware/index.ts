@@ -1,1 +1,1 @@
-export { errorMiddleware } from './errorMiddleware.ts';
+export { errorMiddleware } from './error.middleware.ts';
