@@ -1,1 +1,1 @@
-export { router as healthRouter } from './health.routes.ts';
+export { router as healthRouter } from './health.routes';

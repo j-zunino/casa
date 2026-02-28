@@ -1,7 +1,7 @@
 import express from 'express';
 import { Server } from 'http';
-import { env } from './config/index.ts';
-import { mainRouter } from './modules/index.ts';
+import { env } from './config/index';
+import { mainRouter } from './modules/index';
 
 const app = express();
 const PORT = env.PORT;

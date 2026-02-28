@@ -1,3 +1,3 @@
-export { env } from './env.ts';
-export { corsOptions } from './app.ts';
-export { prisma } from './prisma.ts';
+export { env } from './env';
+export { corsOptions } from './app';
+export { prisma } from './prisma';

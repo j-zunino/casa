@@ -1,1 +1,1 @@
-export { router as meRouter } from './me.routes.ts';
+export { router as meRouter } from './me.routes';

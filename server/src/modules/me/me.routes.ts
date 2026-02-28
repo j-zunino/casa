@@ -1,6 +1,6 @@
 import type { ApiResponse } from '@casa/shared';
 import { type Request, type Response, Router } from 'express';
-import { requireAuth } from '../auth/index.ts';
+import { requireAuth } from '../auth/index';
 
 export const router: Router = Router();
 

@@ -1,12 +1,12 @@
 import { ErrorCodes } from '@casa/shared';
 import cors from 'cors';
 import { NextFunction, Request, Response, Router } from 'express';
-import { corsOptions } from '../config/index.ts';
-import { errorMiddleware } from '../middleware/index.ts';
-import { AppError, registerRoutes } from '../utils/index.ts';
-import { authRouter } from './auth/index.ts';
-import { healthRouter } from './health/index.ts';
-import { meRouter } from './me/index.ts';
+import { corsOptions } from '../config/index';
+import { errorMiddleware } from '../middleware/index';
+import { AppError, registerRoutes } from '../utils/index';
+import { authRouter } from './auth/index';
+import { healthRouter } from './health/index';
+import { meRouter } from './me/index';
 
 const router: Router = Router();
 

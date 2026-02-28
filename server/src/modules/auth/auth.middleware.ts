@@ -1,7 +1,7 @@
 import { ErrorCodes } from '@casa/shared';
 import { type NextFunction, type Request, type Response } from 'express';
-import { AppError } from '../../utils/index.ts';
-import { auth } from './auth.ts';
+import { AppError } from '../../utils/index';
+import { auth } from './auth';
 
 export const requireAuth = async (
     req: Request,

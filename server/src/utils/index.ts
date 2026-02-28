@@ -1,2 +1,2 @@
-export { AppError } from './AppError.ts';
-export { registerRoutes, type ModuleRouter } from './registerRoutes.ts';
+export { AppError } from './AppError';
+export { registerRoutes, type ModuleRouter } from './registerRoutes';
