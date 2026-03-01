@@ -6,3 +6,135 @@ generator client {
 datasource db {
     provider = "postgresql"
 }
+
+// Enums
+enum Visibility {
+    PUBLIC
+    PRIVATE
+    CUSTOM // Specific members
+}
+
+enum RecurrenceFrequency {
+    DAILY
+    WEEKLY
+    MONTHLY
+    YEARLY
+}
+
+model User {
+    id            String  @id
+    name          String
+    email         String
+    emailVerified Boolean @default(false)
+    image         String?
+
+    sessions    Session[]
+    accounts    Account[]
+    members     Member[]
+    invitations Invitation[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@unique([email])
+    @@map("user")
+}
+
+model Session {
+    id            String  @id
+    ipAddress     String?
+    token         String
+    user          User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId        String
+    userAgent     String?
+    activeHouseId String?
+
+    expiresAt DateTime
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@unique([token])
+    @@index([userId])
+    @@map("session")
+}
+
+model Account {
+    id           String  @id
+    idToken      String?
+    user         User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId       String
+    accountId    String
+    providerId   String
+    password     String?
+    scope        String?
+    accessToken  String?
+    refreshToken String?
+
+    accessTokenExpiresAt  DateTime?
+    refreshTokenExpiresAt DateTime?
+    createdAt             DateTime  @default(now())
+    updatedAt             DateTime  @updatedAt
+
+    @@index([userId])
+    @@map("account")
+}
+
+model Verification {
+    id         String @id
+    identifier String
+    value      String
+
+    expiresAt DateTime
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([identifier])
+    @@map("verification")
+}
+
+model House {
+    id          String       @id
+    name        String
+    slug        String
+    logo        String?
+    metadata    String?
+    members     Member[]
+    invitations Invitation[]
+
+    createdAt DateTime
+
+    @@unique([slug])
+    @@map("house")
+}
+
+model Member {
+    id        String   @id
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId    String
+    house     House    @relation(fields: [houseId], references: [id], onDelete: Cascade)
+    houseId   String
+    role      String   @default("member")
+    createdAt DateTime
+
+    @@index([houseId])
+    @@index([userId])
+    @@map("member")
+}
+
+model Invitation {
+    id        String  @id
+    email     String
+    user      User    @relation(fields: [inviterId], references: [id], onDelete: Cascade)
+    house     House   @relation(fields: [houseId], references: [id], onDelete: Cascade)
+    houseId   String
+    role      String?
+    status    String  @default("pending")
+    inviterId String
+
+    expiresAt DateTime
+    createdAt DateTime @default(now())
+
+    @@index([houseId])
+    @@index([email])
+    @@map("invitation")
+}
