@@ -1,6 +1,7 @@
 import { ErrorCodes } from '@casa/shared';
 import cors from 'cors';
 import { NextFunction, Request, Response, Router } from 'express';
+import helmet from 'helmet';
 import { corsOptions } from '../config/index';
 import { errorMiddleware } from '../middleware/index';
 import { AppError, registerRoutes } from '../utils/index';
@@ -10,6 +11,7 @@ import { meRouter } from './me/index';
 
 const router: Router = Router();
 
+router.use(helmet());
 router.use(cors(corsOptions));
 
 registerRoutes(router, [

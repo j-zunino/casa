@@ -36,7 +36,7 @@ export type ModuleRouter = {
 export function registerRoutes(appRouter: Router, modules: ModuleRouter[]) {
     for (const module of modules) {
         if (!module.skipJson) {
-            appRouter.use(module.prefix, express.json());
+            appRouter.use(module.prefix, express.json({ limit: '10kb' }));
         }
 
         appRouter.use(module.prefix, module.router);
