@@ -2,8 +2,8 @@ import type { InputHTMLAttributes } from 'react';
 import { createVariants } from '../../modules/tailwindcss';
 
 interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
-    variant?: string;
-    size?: string;
+    variant?: 'default' | '';
+    size?: 'md' | '';
     label?: string;
 }
 
@@ -17,6 +17,7 @@ const inputVariants = createVariants({
     },
 });
 
+// TODO: Add error state
 export const Input = ({ variant, size, label, ...props }: Props) => {
     return (
         <label>

@@ -2,8 +2,8 @@ import type { ButtonHTMLAttributes } from 'react';
 import { createVariants } from '../../modules/tailwindcss';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-    variant?: string;
-    size?: string;
+    variant?: 'default' | 'outline' | '';
+    size?: 'md' | '';
 }
 
 const buttonVariants = createVariants({
