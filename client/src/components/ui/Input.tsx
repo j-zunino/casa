@@ -7,10 +7,10 @@ interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
     label?: string;
 }
 
+// prettier-ignore
 const inputVariants = createVariants({
     variants: {
-        default:
-            'w-full outline-surface-100 border border-surface-700 focus:outline-1',
+        default: 'w-full bg-secondary-2 text-secondary-12 border border-secondary-6 placeholder-secondary-6',
     },
     sizes: {
         md: 'px-4 py-2 text-base',

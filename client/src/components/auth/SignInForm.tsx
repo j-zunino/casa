@@ -30,7 +30,7 @@ export const SignInForm = () => {
             <span className="flex w-full justify-end">
                 <Link
                     to="/sign-up"
-                    className="text-surface-200 hover:underline"
+                    className="text-secondary-8 hover:underline"
                 >
                     I don't have an account
                 </Link>
@@ -40,14 +40,10 @@ export const SignInForm = () => {
                 Sign In
             </Button>
 
-            <hr className="border-surface-700" />
+            <hr className="border-secondary-6" />
 
-            <Button disabled variant="outline">
-                Sign In with Google
-            </Button>
-            <Button disabled variant="outline">
-                Sign In with GitHub
-            </Button>
+            <Button variant="outline">Sign In with Google</Button>
+            <Button variant="outline">Sign In with GitHub</Button>
         </form>
     );
 };

@@ -9,10 +9,10 @@ interface Props {
 const toastVariants = createVariants({
     base: 'max-w-sm w-fit',
     variants: {
-        default: 'bg-surface-800 text-surface-100',
+        default: 'bg-secondary-2 border border-secondary-6',
     },
     sizes: {
-        md: 'px-4 py-2 text-base',
+        md: 'px-4 py-2',
     },
 });
 

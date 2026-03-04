@@ -6,18 +6,19 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
     size?: 'md' | '';
 }
 
+// prettier-ignore
 const buttonVariants = createVariants({
+    base: 'hover:cursor-pointer',
     variants: {
-        default:
-            'bg-surface-100 text-black active:bg-surface-800 active:text-surface-100 hover:cursor-pointer',
-        outline:
-            'border border-surface-700 bg-surface-900 disabled:cursor-not-allowed',
+        default: 'bg-primary-9 hover:bg-primary-10 active:brightness-active text-primary-1 outline-offset-(--outline-default-offset)',
+        outline: 'bg-secondary-2 text-secondary-12 border border-secondary-6',
     },
     sizes: {
-        md: 'px-4 py-2 text-base',
+        md: 'px-4 py-2',
     },
 });
 
+// TODO: Add icon support
 export const Button = ({ variant, size, ...props }: Props) => {
     return <button className={buttonVariants(variant, size)} {...props} />;
 };

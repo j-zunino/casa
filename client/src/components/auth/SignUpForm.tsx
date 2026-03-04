@@ -17,7 +17,7 @@ export const SignUpForm = () => {
             <Input
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                label="Name"
+                label="Full Name"
                 type="text"
                 placeholder="John Doe"
             />
@@ -39,7 +39,7 @@ export const SignUpForm = () => {
             <span className="flex w-full justify-end">
                 <Link
                     to="/sign-in"
-                    className="text-surface-200 hover:underline"
+                    className="text-secondary-8 hover:underline"
                 >
                     I already have an account
                 </Link>

@@ -6,7 +6,7 @@ export const NavBar = () => {
     const { data: session } = authClient.useSession();
 
     return (
-        <div className="bg-surface-950 flex justify-center border-b border-surface-700">
+        <div className="flex justify-center border-b border-secondary-6">
             <nav className="flex w-full justify-between gap-2">
                 <Link
                     to="/"

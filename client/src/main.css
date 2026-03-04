@@ -1,22 +1,53 @@
 @import 'tailwindcss';
 
 @theme {
-    --color-surface-900: var(--color-olive-950);
-    --color-surface-800: var(--color-olive-900);
-    --color-surface-700: var(--color-olive-800);
-
-    --color-surface-300: var(--color-olive-500);
-    --color-surface-200: var(--color-olive-400);
-    --color-surface-100: var(--color-olive-50);
-
     --font-display: 'Funnel Display', sans-serif;
+
+    /* Backgrounds */
+    --color-primary-1: #10120d;
+    --color-primary-2: #171914;
+    --color-secondary-1: #111113;
+    --color-secondary-2: #19191b;
+
+    /* Interactive components */
+    --color-primary-3: #22261b;
+    --color-primary-4: #2a321f;
+    --color-primary-5: #343c26;
+    --color-secondary-3: #222325;
+    --color-secondary-4: #292a2e;
+    --color-secondary-5: #303136;
+
+    /* Border and separators */
+    --color-primary-6: #3e492d;
+    --color-primary-7: #4b5836;
+    --color-primary-8: #5d6c44; /* Borders, focus rings */
+    --color-secondary-6: #393a40;
+    --color-secondary-7: #46484f;
+    --color-secondary-8: #5f606a; /* Borders, focus rings, disabled text */
+
+    /* Solid colors */
+    --color-primary-9: #a7c080; /* Buttons */
+    --color-primary-10: #9cb576; /* Buttons */
+    --color-secondary-9: #6c6e79; /* Solid backgrounds, disabled text */
+    --color-secondary-10: #797b86; /* Solid backgrounds, disabled text */
+
+    /* Accessible text */
+    --color-primary-11: #a7c080; /* Secondary text, links */
+    --color-primary-12: #dfedcb; /* High-contrast text */
+    --color-secondary-11: #b2b3bd; /* Secondary text, links */
+    --color-secondary-12: #eeeef0; /* High-contrast text */
+
+    --brightness-active: 1.08;
+    --outline-default: 2px solid var(--color-primary-8);
+    --outline-default-offset: 2px;
 
     --animate-slide-in: slideIn 0.3s ease-out;
     --animate-slide-out: slideOut 0.3s ease-in;
 
+    --toast-translate: 10%;
     @keyframes slideIn {
         from {
-            transform: translateY(20px);
+            transform: translateY(var(--toast-translate));
             opacity: 0;
         }
         to {
@@ -31,21 +62,32 @@
             opacity: 1;
         }
         to {
-            transform: translateY(20px);
+            transform: translateY(var(--toast-translate));
             opacity: 0;
         }
     }
 }
 
 @layer base {
-    body {
-        background-color: var(--color-surface-900);
-        color: var(--color-surface-100);
+    :root {
+        background-color: var(--color-primary-1);
+        color: var(--color-secondary-12);
         font-family: var(--font-display);
     }
 
     * {
         scrollbar-width: thin;
-        scrollbar-color: var() transparent !important;
+        scrollbar-color: var(--color-secondary-8) transparent !important;
+
+        &:focus-visible {
+            outline: var(--outline-default);
+        }
+    }
+
+    a,
+    Link {
+        &:focus-visible {
+            outline-offset: var(--outline-default-offset);
+        }
     }
 }
