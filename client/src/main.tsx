@@ -4,6 +4,7 @@ import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import './main.css';
 
+import { authClient } from './modules/auth';
 import { routeTree } from './routeTree.gen';
 
 const queryClient = new QueryClient();
@@ -15,14 +16,28 @@ declare module '@tanstack/react-router' {
     }
 }
 
-const rootElement = document.getElementById('root')!;
-if (!rootElement.innerHTML) {
-    const root = ReactDOM.createRoot(rootElement);
-    root.render(
-        <StrictMode>
-            <QueryClientProvider client={queryClient}>
-                <RouterProvider router={router} />
-            </QueryClientProvider>
-        </StrictMode>,
+function App() {
+    const { data: session } = authClient.useSession();
+
+    return (
+        <RouterProvider
+            router={router}
+            context={{
+                auth: {
+                    isAuthenticated: !!session?.user,
+                    user: session?.user ?? null,
+                },
+            }}
+        />
     );
 }
+
+const root = ReactDOM.createRoot(document.getElementById('root')!);
+
+root.render(
+    <StrictMode>
+        <QueryClientProvider client={queryClient}>
+            <App />
+        </QueryClientProvider>
+    </StrictMode>,
+);
