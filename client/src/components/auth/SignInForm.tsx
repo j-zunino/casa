@@ -1,17 +1,26 @@
 import { Link } from '@tanstack/react-router';
-import { useState } from 'react';
+import { useState, type SubmitEvent } from 'react';
 import { handleEmailSignIn } from '../../modules/auth';
+import { useToast } from '../../modules/toast';
 import { Button, Input } from '../ui';
 
 export const SignInForm = () => {
+    const { toast } = useToast();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        toast.promise(handleEmailSignIn(email, password), {
+            loading: 'Signing in...',
+            success: () => 'Successfully signed in',
+            error: (error: Error) => `${error.message}`,
+        });
+    };
+
     return (
-        <form
-            onSubmit={(e) => e.preventDefault()}
-            className="flex flex-col gap-2"
-        >
+        <form onSubmit={handleSubmit} className="flex flex-col gap-2">
             <Input
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -36,14 +45,16 @@ export const SignInForm = () => {
                 </Link>
             </span>
 
-            <Button onClick={() => handleEmailSignIn(email, password)}>
-                Sign In
-            </Button>
+            <Button type="submit">Sign In</Button>
 
             <hr className="border-secondary-6" />
 
-            <Button variant="outline">Sign In with Google</Button>
-            <Button variant="outline">Sign In with GitHub</Button>
+            <Button disabled variant="outline">
+                Sign In with Google
+            </Button>
+            <Button disabled variant="outline">
+                Sign In with GitHub
+            </Button>
         </form>
     );
 };
