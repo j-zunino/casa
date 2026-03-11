@@ -1,11 +1,10 @@
 import { Link } from '@tanstack/react-router';
 import { useState, type SubmitEvent } from 'react';
 import { handleEmailSignIn } from '../../modules/auth';
-import { useToast } from '../../modules/toast';
 import { Button, Input } from '../ui';
+import toast from '../../modules/toast';
 
 export const SignInForm = () => {
-    const { toast } = useToast();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -14,8 +13,8 @@ export const SignInForm = () => {
 
         toast.promise(handleEmailSignIn(email, password), {
             loading: 'Signing in...',
-            success: () => 'Successfully signed in',
-            error: (error: Error) => `${error.message}`,
+            success: 'Successfully signed In',
+            error: 'Failed',
         });
     };
 
