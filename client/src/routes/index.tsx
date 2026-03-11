@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import { Button } from '../components/ui';
 import { authClient } from '../modules/auth';
 import toast from '../modules/toast';
@@ -6,18 +6,7 @@ import toast from '../modules/toast';
 const Index = () => {
     const { data: session, isPending } = authClient.useSession();
 
-    if (isPending) return <div>Loading session...</div>;
-
-    if (!session) {
-        return (
-            <div>
-                <h1>Casa</h1>
-                <h2>Please Sign-In to access the casa dashboard</h2>
-
-                <Link to="/sign-in">Sign In</Link>
-            </div>
-        );
-    }
+    if (isPending || !session) return <div>Loading session...</div>;
 
     return (
         <div className="p-2">
