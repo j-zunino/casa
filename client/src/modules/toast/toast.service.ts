@@ -1,37 +1,50 @@
-import { createContext, useContext } from 'react';
+import type { ToastOptions } from './toast.config';
+import { createToast, dismiss } from './toast.store';
 
-interface ToastContextType {
-    toast: {
-        (message: string, timeout?: number): string;
+export const toast = Object.assign(
+    (message: string, options?: ToastOptions) =>
+        createToast(message, 'default', options),
 
-        success(message: string, timeout?: number): string;
-        error(message: string, timeout?: number): string;
-        loading(message: string): string;
+    {
+        dismiss,
 
-        promise<T>(
+        success: (msg: string, opt?: ToastOptions) =>
+            createToast(msg, 'success', opt),
+
+        error: (msg: string, opt?: ToastOptions) =>
+            createToast(msg, 'error', opt),
+
+        loading: (msg: string, opt?: ToastOptions) =>
+            createToast(msg, 'loading', opt),
+
+        promise: async <T>(
             promise: Promise<T>,
-            options: {
+            messages: {
                 loading: string;
-                success: (data: T) => string;
-                error: (error: unknown) => string;
+                success: string;
+                error: string;
             },
-        ): Promise<T>;
-    };
+            options?: ToastOptions,
+        ) => {
+            const id = createToast(messages.loading, 'loading', options);
 
-    close: (id: string) => void;
-}
+            try {
+                const result = await promise;
 
-const ToastContext = createContext<ToastContextType>({
-    toast: Object.assign((_message: string, _timeout?: number) => '', {
-        success: (_message: string, _timeout?: number) => '',
-        error: (_message: string, _timeout?: number) => '',
-        loading: (_message: string) => '',
-        promise: async <T>(p: Promise<T>) => p,
-    }),
+                createToast(messages.success, 'success', {
+                    ...options,
+                    id,
+                });
 
-    close: () => {},
-});
+                return result;
+            } catch (error) {
+                createToast(messages.error, 'error', {
+                    ...options,
+                    id,
+                });
 
-export const useToast = () => useContext(ToastContext);
-
-export default ToastContext;
+                throw error;
+            }
+        },
+    },
+);

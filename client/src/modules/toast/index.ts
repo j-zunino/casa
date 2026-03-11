@@ -1,7 +1,9 @@
-export { toastConfig } from './toast.config.ts';
-export { useToast } from './toast.service.ts';
 export {
-    ToastProvider,
-    type ToastItem,
+    toastConfig,
+    type ToastConfig,
+    type ToastOptions,
     type ToastVariant,
-} from './ToastProvider.tsx';
+} from './toast.config.ts';
+export { createToast, dismiss, subscribe } from './toast.store.ts';
+export { toast as default } from './toast.service.ts';
+export { Toaster } from './Toaster.tsx';

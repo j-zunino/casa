@@ -2,7 +2,6 @@ import { Outlet, createRootRouteWithContext } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import { NavBar } from '../components/shared';
 import { authClient } from '../modules/auth';
-import { ToastProvider } from '../modules/toast/ToastProvider';
 
 interface RouteContext {
     auth: {
@@ -13,13 +12,13 @@ interface RouteContext {
 
 const RootLayout = () => {
     return (
-        <ToastProvider>
+        <>
             <NavBar />
 
             <Outlet />
 
             <TanStackRouterDevtools />
-        </ToastProvider>
+        </>
     );
 };
 

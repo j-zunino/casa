@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom/client';
 import './main.css';
 
 import { App } from './components/shared/App';
+import { Toaster } from './modules/toast';
 import { routeTree } from './routeTree.gen';
 
 const queryClient = new QueryClient();
@@ -32,6 +33,7 @@ root.render(
     <StrictMode>
         <QueryClientProvider client={queryClient}>
             <App />
+            <Toaster />
         </QueryClientProvider>
     </StrictMode>,
 );

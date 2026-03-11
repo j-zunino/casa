@@ -1,13 +1,16 @@
+import { memo } from 'react';
 import { createVariants } from '../../modules/tailwindcss';
 
 interface Props {
-    variant?: 'default' | '';
-    size?: 'md' | '';
-    title?: string;
+    id?: string;
+    variant?: ToastVariant;
+    size?: 'md';
+    message?: string;
+    onDismiss?: () => void;
 }
 
 const toastVariants = createVariants({
-    base: 'max-w-sm w-fit',
+    base: 'max-w-sm w-fit border bg-secondary-2 animate-slide-in cursor-pointer',
     variants: {
         default: 'bg-secondary-2 border border-secondary-6',
     },
@@ -16,6 +19,14 @@ const toastVariants = createVariants({
     },
 });
 
-export const Toast = ({ variant, size, title }: Props) => {
-    return <div className={toastVariants(variant, size)}>{title}</div>;
-};
+export const Toast = memo(({ variant, size, message, onDismiss }: Props) => {
+    return (
+        <div 
+            className={toastVariants(variant, size)} 
+            onClick={onDismiss}
+            role="alert"
+        >
+            {message}
+        </div>
+    );
+});
