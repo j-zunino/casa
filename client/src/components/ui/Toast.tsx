@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { createVariants } from '../../modules/tailwindcss';
+import type { ToastVariant } from '../../modules/toast';
 
 interface Props {
     id?: string;
@@ -12,7 +13,10 @@ interface Props {
 const toastVariants = createVariants({
     base: 'max-w-sm w-fit border bg-secondary-2 animate-slide-in cursor-pointer',
     variants: {
-        default: 'bg-secondary-2 border border-secondary-6',
+        default: 'border-secondary-6',
+        success: 'border-primary-green',
+        error: 'border-primary-red',
+        loading: 'border-secondary-6 animate-pulse',
     },
     sizes: {
         md: 'px-4 py-2',

@@ -37,6 +37,11 @@
     --color-secondary-11: #b2b3bd; /* Secondary text, links */
     --color-secondary-12: #eeeef0; /* High-contrast text */
 
+    --color-primary-red: #e67e80;
+    --color-primary-yellow: #dbbc7f;
+    --color-primary-green: #a7c080;
+    --color-primary-blue: #7fbbb3;
+
     --brightness-active: 1.08;
     --outline-default: 2px solid var(--color-primary-8);
     --outline-default-offset: 2px;
