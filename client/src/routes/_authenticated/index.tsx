@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Button } from '../components/ui';
-import { authClient } from '../modules/auth';
-import toast from '../modules/toast';
+import { Button } from '../../components/ui';
+import { authClient } from '../../modules/auth';
+import toast from '../../modules/toast';
 
 const Index = () => {
     const { data: session, isPending } = authClient.useSession();
@@ -39,6 +39,6 @@ const Index = () => {
     );
 };
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute('/_authenticated/')({
     component: Index,
 });
