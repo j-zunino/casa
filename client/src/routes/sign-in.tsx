@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, redirect } from '@tanstack/react-router';
 import { SignInForm } from '../components/auth';
 
 const RouteComponent = () => {
@@ -20,4 +20,12 @@ const RouteComponent = () => {
 
 export const Route = createFileRoute('/sign-in')({
     component: RouteComponent,
+    beforeLoad: ({ context }) => {
+        if (context.auth.isAuthenticated) {
+            throw redirect({
+                to: '/',
+                replace: true,
+            });
+        }
+    },
 });
