@@ -1,12 +1,13 @@
 import { Outlet, createRootRouteWithContext } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
+import type { User } from 'better-auth';
 import { NavBar } from '../components/shared';
-import { authClient } from '../modules/auth';
 
-interface RouteContext {
+interface RouterContext {
     auth: {
-        user: Awaited<ReturnType<typeof authClient.getSession>>['user'] | null;
+        user: User | null;
         isAuthenticated: boolean;
+        isLoading: boolean;
     };
 }
 
@@ -22,6 +23,6 @@ const RootLayout = () => {
     );
 };
 
-export const Route = createRootRouteWithContext<RouteContext>()({
+export const Route = createRootRouteWithContext<RouterContext>()({
     component: RootLayout,
 });

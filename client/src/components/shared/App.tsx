@@ -1,18 +1,19 @@
 import { RouterProvider } from '@tanstack/react-router';
-import { authClient } from '../../modules/auth';
 import { router } from '../../main';
+import { useAuth } from '../../modules/auth';
 
 export const App = () => {
-    const { data: session } = authClient.useSession();
+    const auth = useAuth();
+
+    if (auth.isLoading) {
+        return null;
+    }
 
     return (
         <RouterProvider
             router={router}
             context={{
-                auth: {
-                    isAuthenticated: !!session?.user,
-                    user: session?.user ?? null,
-                },
+                auth,
             }}
         />
     );
