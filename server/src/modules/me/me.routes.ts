@@ -4,7 +4,7 @@ import { requireAuth } from '../auth/index';
 
 export const router: Router = Router();
 
-router.get('/', requireAuth, async (_req: Request, res: Response, next) => {
+router.get('/', requireAuth, async (_req: Request, res: Response) => {
     const { user } = res.locals;
 
     const response: ApiResponse<typeof user> = {
