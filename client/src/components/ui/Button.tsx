@@ -2,8 +2,8 @@ import type { ButtonHTMLAttributes } from 'react';
 import { createVariants } from '../../modules/tailwindcss';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-    variant?: 'default' | 'outline' | '';
-    size?: 'md' | '';
+    variant?: 'default' | 'outline' | 'none';
+    size?: 'md' | 'none';
 }
 
 // prettier-ignore

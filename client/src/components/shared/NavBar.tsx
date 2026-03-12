@@ -3,7 +3,7 @@ import { authClient, handleSignOut } from '../../modules/auth';
 import { Button } from '../ui';
 
 export const NavBar = () => {
-    const { data: session } = authClient.useSession();
+    const { data: session } = authClient.useSession(); // TODO: Use router context
 
     return (
         <div className="flex justify-center border-b border-secondary-6">
@@ -32,7 +32,9 @@ export const NavBar = () => {
                         </Link>
                     </nav>
                 ) : (
-                    <Button onClick={handleSignOut}>Sign Out</Button>
+                    <Button variant="none" onClick={handleSignOut}>
+                        Sign Out
+                    </Button>
                 )}
             </nav>
         </div>
