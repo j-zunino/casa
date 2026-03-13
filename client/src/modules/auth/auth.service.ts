@@ -22,20 +22,15 @@ export const handleEmailSignUp = async (
 };
 
 export const handleEmailSignIn = async (email: string, password: string) => {
-    const { data, error } = await authClient.signIn.email(
-        {
-            email,
-            password,
-            rememberMe: true,
-        },
-        {
-            onError: (ctx) => {
-                throw new Error(ctx.error.message);
-            },
-        },
-    );
+    const { data, error } = await authClient.signIn.email({
+        email,
+        password,
+        rememberMe: true,
+    });
 
-    return { data, error };
+    if (error) throw new Error(error.message);
+
+    return data;
 };
 
 export const handleSocialSingIn = async () => {

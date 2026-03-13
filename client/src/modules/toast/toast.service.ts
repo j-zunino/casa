@@ -43,7 +43,7 @@ export const toast = Object.assign(
                     id,
                 });
 
-                throw error;
+                return undefined;
             }
         },
     },
