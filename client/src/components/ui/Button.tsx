@@ -2,13 +2,13 @@ import type { ButtonHTMLAttributes } from 'react';
 import { createVariants } from '../../modules/tailwindcss';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-    variant?: 'default' | 'outline' | 'none';
-    size?: 'md' | 'none';
+    variant?: 'default' | 'outline';
+    size?: 'md';
 }
 
 // prettier-ignore
 const buttonVariants = createVariants({
-    base: 'hover:cursor-pointer',
+    base: 'hover:cursor-pointer active:scale-98',
     variants: {
         default: 'bg-primary-9 hover:bg-primary-10 active:brightness-active text-primary-1 outline-offset-(--outline-default-offset)',
         outline: 'bg-secondary-2 text-secondary-12 border border-secondary-6',

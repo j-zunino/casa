@@ -11,7 +11,7 @@ interface Props {
 }
 
 const toastVariants = createVariants({
-    base: 'max-w-sm w-fit border bg-secondary-2 animate-slide-in cursor-pointer',
+    base: 'max-w-sm w-fit border bg-secondary-2 animate-slide-in cursor-pointer active:scale-98',
     variants: {
         default: 'border-secondary-6',
         success: 'border-primary-green',
@@ -25,8 +25,8 @@ const toastVariants = createVariants({
 
 export const Toast = memo(({ variant, size, message, onDismiss }: Props) => {
     return (
-        <div 
-            className={toastVariants(variant, size)} 
+        <div
+            className={toastVariants(variant, size)}
             onClick={onDismiss}
             role="alert"
         >
