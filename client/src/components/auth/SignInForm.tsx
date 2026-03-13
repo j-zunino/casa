@@ -14,7 +14,7 @@ export const SignInForm = () => {
         toast.promise(handleEmailSignIn(email, password), {
             loading: 'Signing in...',
             success: 'Successfully signed In',
-            error: 'Failed',
+            error: (err) => err.message,
         });
     };
 

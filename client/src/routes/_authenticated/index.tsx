@@ -28,7 +28,7 @@ const Index = () => {
                         toast.promise(new Promise((r) => setTimeout(r, 2000)), {
                             loading: 'Loading...',
                             success: 'Done!',
-                            error: 'Failed',
+                            error: () => 'Failed',
                         })
                     }
                 >
