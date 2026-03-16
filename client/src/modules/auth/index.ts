@@ -3,6 +3,6 @@ export {
     handleEmailSignIn,
     handleEmailSignUp,
     handleSignOut,
-    handleSocialSingIn,
+    handleGithubSingIn,
 } from './auth.service.ts';
 export { useAuth } from './useAuth.ts';

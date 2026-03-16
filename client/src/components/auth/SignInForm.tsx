@@ -1,9 +1,10 @@
 import { Link } from '@tanstack/react-router';
 import { useState, type SubmitEvent } from 'react';
 import { handleEmailSignIn } from '../../modules/auth';
-import { Button, Input } from '../ui';
 import toast from '../../modules/toast';
+import { Button, Input } from '../ui';
 
+// TODO: Forgot password
 export const SignInForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -45,15 +46,6 @@ export const SignInForm = () => {
             </span>
 
             <Button type="submit">Sign In</Button>
-
-            <hr className="border-secondary-6" />
-
-            <Button disabled variant="outline">
-                Sign In with Google
-            </Button>
-            <Button disabled variant="outline">
-                Sign In with GitHub
-            </Button>
         </form>
     );
 };

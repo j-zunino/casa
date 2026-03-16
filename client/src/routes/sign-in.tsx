@@ -1,5 +1,5 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
-import { SignInForm } from '../components/auth';
+import { SignInForm, SocialSignIn } from '../components/auth';
 
 const RouteComponent = () => {
     return (
@@ -12,7 +12,11 @@ const RouteComponent = () => {
                     </p>
                 </div>
 
-                <SignInForm />
+                <div className="flex gap-2 flex-col">
+                    <SignInForm />
+
+                    <SocialSignIn />
+                </div>
             </div>
         </div>
     );

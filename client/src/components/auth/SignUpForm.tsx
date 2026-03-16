@@ -4,6 +4,7 @@ import { useState, type SubmitEvent } from 'react';
 import { handleEmailSignUp } from '../../modules/auth';
 import toast from '../../modules/toast';
 import { Button, Input } from '../ui';
+import { SocialSignIn } from './SocialSignIn';
 
 export const SignUpForm = () => {
     const [errors, setErrors] = useState<Record<string, string>>({});
@@ -110,7 +111,7 @@ export const SignUpForm = () => {
                 </Link>
             </span>
 
-            <Button>Sign Up</Button>
+            <Button>Create account</Button>
         </form>
     );
 };

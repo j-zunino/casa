@@ -30,6 +30,6 @@ export const handleEmailSignIn = async (email: string, password: string) => {
     return data;
 };
 
-export const handleSocialSingIn = async () => {
+export const handleGithubSingIn = async () => {
     await authClient.signIn.social({ provider: 'github' });
 };

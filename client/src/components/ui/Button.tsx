@@ -11,7 +11,7 @@ const buttonVariants = createVariants({
     base: 'hover:cursor-pointer active:scale-98',
     variants: {
         default: 'bg-primary-9 hover:bg-primary-10 active:brightness-active text-primary-1 outline-offset-(--outline-default-offset)',
-        outline: 'bg-secondary-2 text-secondary-12 border border-secondary-6',
+        outline: 'bg-secondary-2 text-secondary-12 active:brightness-active border border-secondary-6',
     },
     sizes: {
         md: 'px-4 py-2',
