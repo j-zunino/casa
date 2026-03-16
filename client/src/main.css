@@ -42,6 +42,11 @@
     --color-primary-green: #a7c080;
     --color-primary-blue: #7fbbb3;
 
+    --color-secondary-red: #a45456;
+    --color-secondary-yellow: #7a6231;
+    --color-secondary-green: #5d6c44;
+    --color-secondary-blue: #456e69;
+
     --brightness-active: 1.08;
     --outline-default: 2px solid var(--color-primary-8);
     --outline-default-offset: 2px;

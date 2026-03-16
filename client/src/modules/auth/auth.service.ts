@@ -13,10 +13,7 @@ export const handleEmailSignUp = async (
         password: password,
     });
 
-    if (error) {
-        console.error('SignUp error:', error);
-        return;
-    }
+    if (error) throw new Error(error.message);
 
     return data;
 };
