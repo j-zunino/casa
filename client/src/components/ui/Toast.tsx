@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { createVariants } from '../../modules/tailwindcss';
 import type { ToastVariant } from '../../modules/toast';
+import { Loading } from '../shared';
 
 interface Props {
     id?: string;
@@ -11,7 +12,7 @@ interface Props {
 }
 
 const toastVariants = createVariants({
-    base: 'max-w-sm w-fit border bg-secondary-2 animate-slide-in cursor-pointer active:scale-98',
+    base: 'border flex bg-secondary-2 max-w-sm items-center gap-2 animate-slide-in cursor-pointer active:scale-98',
     variants: {
         default: 'border-secondary-6',
         success: 'border-primary-green',
@@ -25,12 +26,16 @@ const toastVariants = createVariants({
 
 export const Toast = memo(({ variant, size, message, onDismiss }: Props) => {
     return (
-        <div
-            className={toastVariants(variant, size)}
-            onClick={onDismiss}
-            role="alert"
-        >
-            {message}
-        </div>
+        <>
+            <div
+                className={toastVariants(variant, size)}
+                onClick={onDismiss}
+                role="alert"
+            >
+                {variant === 'loading' && <Loading size="sm" />}
+
+                {message}
+            </div>
+        </>
     );
 });
