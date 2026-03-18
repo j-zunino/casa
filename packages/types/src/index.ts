@@ -1,9 +1,3 @@
-/**
- * All possible application-level error codes.
- *
- * These codes are shared between the client and server
- * to allow type-safe error handling.
- */
 export const ErrorCodes = {
     NOT_FOUND: 'NOT_FOUND',
     FORBIDDEN: 'FORBIDDEN',

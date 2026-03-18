@@ -1,4 +1,4 @@
-import { signUpSchema } from '@casa/shared';
+import { signUpSchema } from '@casa/schemas';
 import { Link } from '@tanstack/react-router';
 import { useState, type SubmitEvent } from 'react';
 import { handleEmailSignUp } from '../../modules/auth';

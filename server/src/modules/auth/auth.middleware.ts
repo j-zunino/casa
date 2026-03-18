@@ -1,4 +1,4 @@
-import { ErrorCodes } from '@casa/shared';
+import { ErrorCodes } from '@casa/types';
 import { type NextFunction, type Request, type Response } from 'express';
 import { AppError } from '../../utils/index';
 import { auth } from './auth';

@@ -7,5 +7,5 @@ export default defineConfig({
   dts: true,
   splitting: false,
   sourcemap: true,
-  external: ['@casa/shared'],
+  external: ['@casa/types', '@casa/schemas'],
 });

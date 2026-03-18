@@ -1,4 +1,4 @@
-import type { ApiResponse } from '@casa/shared';
+import type { ApiResponse } from '@casa/types';
 import { type Request, type Response, Router } from 'express';
 import { requireAuth } from '../auth/index';
 

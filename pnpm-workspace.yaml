@@ -1,4 +1,5 @@
 packages:
   - client
   - server
-  - shared
+  - packages/types
+  - packages/schemas

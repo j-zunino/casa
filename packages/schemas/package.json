@@ -1,5 +1,5 @@
 {
-  "name": "@casa/shared",
+  "name": "@casa/schemas",
   "type": "module",
   "private": true,
   "version": "0.0.1",
@@ -13,6 +13,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@casa/types": "workspace:*",
     "zod": "^4.3.6"
   }
 }

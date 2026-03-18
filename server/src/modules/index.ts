@@ -1,4 +1,4 @@
-import { ErrorCodes } from '@casa/shared';
+import { ErrorCodes } from '@casa/types';
 import cors from 'cors';
 import { NextFunction, Request, Response, Router } from 'express';
 import helmet from 'helmet';

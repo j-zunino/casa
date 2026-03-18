@@ -15,9 +15,8 @@
     "sourceMap": true
   },
   "references": [
-    {
-      "path": "../shared"
-    }
+    { "path": "../packages/types" },
+    { "path": "../packages/schemas" }
   ],
   "include": [
     "src"

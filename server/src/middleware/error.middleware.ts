@@ -1,9 +1,9 @@
-import type { ApiResponse } from '@casa/shared';
-import { ErrorCodes } from '@casa/shared';
+import type { ApiResponse } from '@casa/types';
+import { ErrorCodes } from '@casa/types';
 import type { NextFunction, Request, Response } from 'express';
 import { AppError } from '../utils/index';
 
-//TODO: Handle Zod validation
+// TODO: Handle Zod validation
 
 /**
  * Error-handling middleware.
