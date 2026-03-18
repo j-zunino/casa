@@ -1,40 +1,24 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Button } from '../../components/ui';
-import { authClient } from '../../modules/auth';
-import toast from '../../modules/toast';
 
 const Index = () => {
-    const { data: session, isPending } = authClient.useSession();
+    const { auth } = Route.useRouteContext();
 
-    if (isPending || !session) return <div>Loading session...</div>;
+    console.log(auth);
+
+    if (auth.isLoading) {
+        return <div>Loading session...</div>;
+    }
+
+    if (!auth.isAuthenticated || !auth.user) {
+        return <div>No session found, please Sign In</div>;
+    }
 
     return (
         <div className="p-2">
             <h1>Casa</h1>
-            <h2>Hello {session.user.name}!</h2>
+            <h2>Hello {auth.user.name}!</h2>
 
             <div>Create or join a Casa group:</div>
-
-            <div className="flex flex-wrap gap-2">
-                <Button onClick={() => toast('Hello world')}>Toast</Button>
-                <Button onClick={() => toast.success('Successfully saved')}>
-                    Success toast
-                </Button>
-                <Button onClick={() => toast.error("Didn't work")}>
-                    Error toast
-                </Button>
-                <Button
-                    onClick={() =>
-                        toast.promise(new Promise((r) => setTimeout(r, 2000)), {
-                            loading: 'Loading...',
-                            success: 'Done!',
-                            error: () => 'Failed',
-                        })
-                    }
-                >
-                    Promise toast
-                </Button>
-            </div>
         </div>
     );
 };
