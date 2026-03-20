@@ -1,3 +1,4 @@
+import { signInSchema } from '@casa/schemas';
 import { Link } from '@tanstack/react-router';
 import { useState, type SubmitEvent } from 'react';
 import { handleEmailSignIn } from '../../modules/auth';
@@ -6,11 +7,32 @@ import { Button, Input } from '../ui';
 
 // TODO: Forgot password
 export const SignInForm = () => {
+    const [errors, setErrors] = useState<Record<string, string>>({});
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        const result = signInSchema.safeParse({
+            email,
+            password,
+        });
+
+        if (!result.success) {
+            const fieldErrors: Record<string, string> = {};
+
+            result.error.issues.forEach((err) => {
+                const field = err.path[0] as string;
+                fieldErrors[field] = err.message;
+            });
+
+            setErrors(fieldErrors);
+
+            return;
+        }
+
+        setErrors({});
 
         toast.promise(handleEmailSignIn(email, password), {
             loading: 'Signing in...',
@@ -23,17 +45,25 @@ export const SignInForm = () => {
         <form onSubmit={handleSubmit} className="flex flex-col gap-2">
             <Input
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                    setEmail(e.target.value);
+                    setErrors((prev) => ({ ...prev, name: '' }));
+                }}
                 label="Email"
                 type="email"
                 placeholder="me@example.com"
+                error={errors.email}
             />
             <Input
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => {
+                    setPassword(e.target.value);
+                    setErrors((prev) => ({ ...prev, password: '' }));
+                }}
                 label="Password"
                 type="password"
                 placeholder="Password"
+                error={errors.password}
             />
 
             <span className="flex w-full justify-end">
