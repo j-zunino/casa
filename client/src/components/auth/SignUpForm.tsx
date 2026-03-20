@@ -4,7 +4,6 @@ import { useState, type SubmitEvent } from 'react';
 import { handleEmailSignUp } from '../../modules/auth';
 import toast from '../../modules/toast';
 import { Button, Input } from '../ui';
-import { SocialSignIn } from './SocialSignIn';
 
 export const SignUpForm = () => {
     const [errors, setErrors] = useState<Record<string, string>>({});
