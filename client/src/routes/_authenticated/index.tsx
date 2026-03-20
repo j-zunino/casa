@@ -3,8 +3,6 @@ import { createFileRoute } from '@tanstack/react-router';
 const Index = () => {
     const { auth } = Route.useRouteContext();
 
-    console.log(auth);
-
     if (auth.isLoading) {
         return <div>Loading session...</div>;
     }
