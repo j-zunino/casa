@@ -6,7 +6,7 @@ const RouteComponent = () => {
         <div className="flex w-full flex-col items-center">
             <div className="max-w-sm space-y-8 p-4">
                 <div>
-                    <h3 className="text-2xl font-bold">Sign Up</h3>
+                    <h1 className="text-2xl font-bold">Sign Up</h1>
                     <p className="text-secondary-11">
                         Enter your credentials bellow to create your account
                     </p>
