@@ -24,7 +24,7 @@ server.on('error', (error: NodeJS.ErrnoException) => {
  * Gracefully shuts down the server when receiving termination signals.
  * @param {string} signal - The termination signal received
  */
-function gracefulShutdown(signal: string) {
+const gracefulShutdown = (signal: string) => {
     console.log(`\n${signal} received. Shutting down gracefully...`);
     server.close(() => {
         console.log('Server closed.');
@@ -38,7 +38,7 @@ function gracefulShutdown(signal: string) {
         );
         process.exit(1);
     }, 10000);
-}
+};
 
 process.on('SIGINT', () => gracefulShutdown('SIGINT'));
 process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));

@@ -33,7 +33,7 @@ export type ModuleRouter = {
  * export { router as mainRouter };
  * ```
  */
-export function registerRoutes(appRouter: Router, modules: ModuleRouter[]) {
+export const registerRoutes = (appRouter: Router, modules: ModuleRouter[]) => {
     for (const module of modules) {
         if (!module.skipJson) {
             appRouter.use(module.prefix, express.json({ limit: '10kb' }));
@@ -41,4 +41,4 @@ export function registerRoutes(appRouter: Router, modules: ModuleRouter[]) {
 
         appRouter.use(module.prefix, module.router);
     }
-}
+};

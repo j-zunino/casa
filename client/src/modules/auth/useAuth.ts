@@ -1,6 +1,6 @@
 import { authClient } from './auth.client';
 
-export function useAuth() {
+export const useAuth = () => {
     const { data: session, isPending } = authClient.useSession();
 
     return {
@@ -8,4 +8,4 @@ export function useAuth() {
         isAuthenticated: !!session?.user,
         isLoading: isPending,
     };
-}
+};

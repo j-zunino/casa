@@ -14,12 +14,12 @@ import { AppError } from '../utils/index';
  * @param res - Express response object.
  * @param _next - Express next function (unused).
  */
-export function errorMiddleware(
+export const errorMiddleware = (
     error: unknown,
     _req: Request,
     res: Response,
     _next: NextFunction,
-) {
+) => {
     if (error instanceof AppError) {
         if (process.env.NODE_ENV !== 'production') {
             console.log(`[AppError] ${error.code}: ${error.message}`);
@@ -49,4 +49,4 @@ export function errorMiddleware(
     };
 
     return res.status(500).json(response);
-}
+};
