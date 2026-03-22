@@ -1,24 +1,17 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
 import { SignInForm, SocialSignIn } from '../components/auth';
+import { AuthLayout } from '../components/layouts';
 
 const RouteComponent = () => {
     return (
-        <div className="flex w-full flex-col items-center">
-            <div className="max-w-sm space-y-8 p-4">
-                <div>
-                    <h1 className="text-2xl font-bold">Sign In</h1>
-                    <p className="text-secondary-11">
-                        Enter your credentials bellow to Sign In to your account
-                    </p>
-                </div>
+        <AuthLayout
+            title="Sign In"
+            description="Enter your credentials bellow to Sign In to your account"
+        >
+            <SignInForm />
 
-                <div className="flex gap-2 flex-col">
-                    <SignInForm />
-
-                    <SocialSignIn />
-                </div>
-            </div>
-        </div>
+            <SocialSignIn />
+        </AuthLayout>
     );
 };
 
