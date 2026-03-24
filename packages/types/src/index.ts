@@ -11,6 +11,7 @@ export type ErrorCode = (typeof ErrorCodes)[keyof typeof ErrorCodes];
 export type ApiError = {
     message: string;
     code: ErrorCode;
+    fields?: Record<string, string>;
 };
 
 export type ApiResponse<T> =

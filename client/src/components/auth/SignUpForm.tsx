@@ -3,6 +3,7 @@ import { Link } from '@tanstack/react-router';
 import { useState, type SubmitEvent } from 'react';
 import { handleEmailSignUp } from '../../modules/auth';
 import toast from '../../modules/toast';
+import { validateWithZod } from '../../modules/zod';
 import { Button, Input } from '../ui';
 
 export const SignUpForm = () => {
@@ -15,7 +16,7 @@ export const SignUpForm = () => {
     const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const result = signUpSchema.safeParse({
+        const result = validateWithZod(signUpSchema, {
             name,
             email,
             password,
@@ -23,20 +24,11 @@ export const SignUpForm = () => {
         });
 
         if (!result.success) {
-            const fieldErrors: Record<string, string> = {};
-
-            result.error.issues.forEach((err) => {
-                const field = err.path[0] as string;
-                fieldErrors[field] = err.message;
-            });
-
-            setErrors(fieldErrors);
-
+            setErrors(result.error.fields ?? {});
             return;
         }
 
         setErrors({});
-
         toast.promise(
             handleEmailSignUp(
                 result.data.name,

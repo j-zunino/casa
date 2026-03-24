@@ -3,6 +3,7 @@ import { Link } from '@tanstack/react-router';
 import { useState, type SubmitEvent } from 'react';
 import { handleEmailSignIn } from '../../modules/auth';
 import toast from '../../modules/toast';
+import { validateWithZod } from '../../modules/zod';
 import { Button, Input } from '../ui';
 
 // TODO: Forgot password
@@ -14,26 +15,17 @@ export const SignInForm = () => {
     const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const result = signInSchema.safeParse({
+        const result = validateWithZod(signInSchema, {
             email,
             password,
         });
 
         if (!result.success) {
-            const fieldErrors: Record<string, string> = {};
-
-            result.error.issues.forEach((err) => {
-                const field = err.path[0] as string;
-                fieldErrors[field] = err.message;
-            });
-
-            setErrors(fieldErrors);
-
+            setErrors(result.error.fields ?? {});
             return;
         }
 
         setErrors({});
-
         toast.promise(handleEmailSignIn(email, password), {
             loading: 'Signing in...',
             success: 'Successfully signed In',
