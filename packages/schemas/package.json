@@ -15,5 +15,8 @@
   "dependencies": {
     "@casa/types": "workspace:*",
     "zod": "catalog:"
+  },
+  "devDependencies": {
+    "typescript": "catalog:"
   }
 }

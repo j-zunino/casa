@@ -3,11 +3,6 @@
   "type": "module",
   "private": true,
   "version": "0.0.1",
-  "workspaces": [
-    "client",
-    "server",
-    "shared"
-  ],
   "scripts": {
     "dev": "pnpm -r --parallel dev",
     "dev:client": "pnpm --filter client dev",
