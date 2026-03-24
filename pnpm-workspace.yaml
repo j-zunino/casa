@@ -3,3 +3,13 @@ packages:
   - server
   - packages/types
   - packages/schemas
+
+catalog:
+  zod: ^4.3.6
+  better-auth: ^1.4.18
+  '@types/node': ^22.10.5
+  '@prisma/adapter-pg': 7.2.0
+  '@prisma/client': 7.2.0
+  prisma: 7.2.0
+  typescript: ^5.4.0
+  eslint: ^9.39.2
