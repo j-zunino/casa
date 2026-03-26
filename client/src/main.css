@@ -49,6 +49,8 @@
 
     --brightness-active: 1.08;
     --outline-default: 2px solid var(--color-primary-8);
+    --scale-active: 98%;
+
     --outline-default-offset: 2px;
 
     --animate-slide-in: slideIn 0.3s ease-out;

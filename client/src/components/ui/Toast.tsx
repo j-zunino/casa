@@ -12,7 +12,7 @@ interface Props {
 }
 
 const toastVariants = createVariants({
-    base: 'border flex bg-secondary-2 max-w-sm items-center gap-2 animate-slide-in cursor-pointer active:scale-98',
+    base: 'border flex bg-secondary-2 max-w-sm items-center gap-2 animate-slide-in cursor-pointer active:scale-(--scale-active)',
     variants: {
         default: 'border-secondary-6',
         success: 'border-primary-green',
