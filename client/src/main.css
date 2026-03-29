@@ -48,9 +48,11 @@
     --color-secondary-blue: #456e69;
 
     --brightness-active: 1.08;
-    --outline-default: 2px solid var(--color-primary-8);
     --scale-active: 98%;
 
+    --outline-size: 2px;
+    --outline-color: var(--color-primary-8);
+    --outline-default: var(--outline-size) solid var(--outline-color);
     --outline-default-offset: 2px;
 
     --animate-slide-in: slideIn 0.3s ease-out;
