@@ -1,22 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { HouseSelectCard } from '../../components/house';
+import { CreateHouseForm, HouseSelectCard } from '../../components/house';
 import { Button } from '../../components/ui';
+import { Modal } from '../../components/ui/Modal';
 import { authClient } from '../../modules/auth';
+import { useModal } from '../../modules/modal';
 
 const Index = () => {
+    const createHouseModal = useModal();
+
     // TODO: Move to context
     const { data: orgs } = authClient.useListOrganizations();
-
-    // TODO: Show in Modal
-    //     return (
-    //         <AuthLayout
-    //             title="Create House"
-    //             description="This will be your shared space"
-    //         >
-    //             <CreateHouseForm />
-    //         </AuthLayout>
-    //     );
-    // }
 
     return (
         <div className="flex items-center flex-col gap-8">
@@ -28,12 +21,25 @@ const Index = () => {
                         onClick={() => {}}
                     />
                 ))}
-                <HouseSelectCard name="Add one" onClick={() => {}} />
+
+                <HouseSelectCard
+                    name="Add one"
+                    onClick={createHouseModal.open}
+                />
             </div>
 
             <Button onClick={() => {}} variant="outline">
                 Manage House
             </Button>
+
+            <Modal
+                ref={createHouseModal.ref}
+                onClose={createHouseModal.close}
+                title="Create House"
+                description="This will be your shared space"
+            >
+                <CreateHouseForm />
+            </Modal>
         </div>
     );
 };
