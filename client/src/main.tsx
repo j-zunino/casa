@@ -5,12 +5,18 @@ import ReactDOM from 'react-dom/client';
 import './main.css';
 
 import { App } from './components/shared/App';
+import { Loading } from './components/shared';
 import { Toaster } from './modules/toast';
 import { routeTree } from './routeTree.gen';
 
 const queryClient = new QueryClient();
 const router = createRouter({
     routeTree,
+    defaultPendingComponent: () => (
+        <div className="flex h-screen items-center justify-center">
+            <Loading size="xl" />
+        </div>
+    ),
     context: {
         auth: {
             isAuthenticated: false,

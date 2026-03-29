@@ -2,6 +2,7 @@ import { RouterProvider } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import { router } from '../../main';
 import { useAuth } from '../../modules/auth';
+import { Loading } from '.';
 
 export const App = () => {
     const auth = useAuth();
@@ -10,7 +11,13 @@ export const App = () => {
         router.invalidate();
     }, [auth.isAuthenticated]);
 
-    if (auth.isLoading) return null;
+    if (auth.isLoading) {
+        return (
+            <div className="flex h-screen items-center justify-center">
+                <Loading size="xl" />
+            </div>
+        );
+    }
 
     return (
         <RouterProvider
