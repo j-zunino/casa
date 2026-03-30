@@ -55,8 +55,8 @@
     --outline-default: var(--outline-size) solid var(--outline-color);
     --outline-default-offset: 2px;
 
-    --animate-slide-in: slideIn 0.3s ease-out;
-    --animate-slide-out: slideOut 0.3s ease-in;
+    --animate-slide-in: slideIn 0.25s ease-out;
+    --animate-slide-out: slideOut 0.25s ease-in;
 
     --toast-translate: 10%;
     @keyframes slideIn {
