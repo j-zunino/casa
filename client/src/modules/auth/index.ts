@@ -4,5 +4,6 @@ export {
     handleEmailSignUp,
     handleSignOut,
     handleGithubSingIn,
+    setActiveHouse,
 } from './auth.service.ts';
 export { useAuth } from './useAuth.ts';

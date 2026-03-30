@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { CreateHouseForm, HouseSelectCard } from '../../components/house';
 import { Button } from '../../components/ui';
 import { Modal } from '../../components/ui/Modal';
-import { authClient } from '../../modules/auth';
+import { authClient, setActiveHouse } from '../../modules/auth';
 import { useModal } from '../../modules/modal';
 
 const Index = () => {
@@ -13,12 +13,12 @@ const Index = () => {
 
     return (
         <div className="flex items-center flex-col gap-8">
-            <div className="flex flex-wrap gap-4 w-full justify-center p-2">
+            <div className="flex flex-wrap gap-2 w-full justify-center p-2">
                 {orgs?.map((org) => (
                     <HouseSelectCard
                         key={org.id}
                         name={org.name}
-                        onClick={() => {}}
+                        onClick={() => setActiveHouse(org.id, org.slug)}
                     />
                 ))}
 
