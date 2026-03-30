@@ -16,10 +16,11 @@ const inputVariants = createVariants({
         error: 'text-primary-red border-primary-red outline-secondary-red',
     },
     sizes: {
-        md: 'px-4 py-2 text-base',
+        md: 'p-2 text-base',
     },
 });
 
+// TODO: Add '*' to required inputs
 export const Input = ({ variant, size, label, error, ...props }: Props) => {
     if (error) variant = 'error';
 
