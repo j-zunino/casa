@@ -96,6 +96,11 @@
         &:focus-visible {
             outline: var(--outline-default);
         }
+
+        &::selection {
+            background-color: var(--color-primary-6);
+            color: var(--color-secondary-12);
+        }
     }
 
     a,
