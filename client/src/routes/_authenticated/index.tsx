@@ -12,8 +12,8 @@ const Index = () => {
     const { data: orgs } = authClient.useListOrganizations();
 
     return (
-        <div className="flex items-center flex-col gap-8">
-            <div className="flex flex-wrap gap-2 w-full justify-center p-2">
+        <div className="flex grow flex-col items-center justify-center gap-8">
+            <div className="flex w-full flex-wrap justify-center gap-2 p-2">
                 {orgs?.map((org) => (
                     <HouseSelectCard
                         key={org.id}

@@ -13,13 +13,13 @@ interface RouterContext {
 
 const RootLayout = () => {
     return (
-        <>
+        <div className="flex min-h-dvh flex-col">
             <NavBar />
 
             <Outlet />
 
             <TanStackRouterDevtools />
-        </>
+        </div>
     );
 };
 
