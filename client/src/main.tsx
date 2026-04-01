@@ -21,7 +21,7 @@ const router = createRouter({
         auth: {
             isAuthenticated: false,
             user: null,
-            isLoading: false,
+            isLoading: true,
         },
     },
 });

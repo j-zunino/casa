@@ -7,7 +7,7 @@ const AuthenticatedLayout = () => {
 export const Route = createFileRoute('/_authenticated')({
     component: AuthenticatedLayout,
     beforeLoad: ({ context }) => {
-        if (!context.auth.isAuthenticated) {
+        if (!context.auth.isLoading && !context.auth.isAuthenticated) {
             throw redirect({
                 to: '/sign-in',
                 replace: true,
