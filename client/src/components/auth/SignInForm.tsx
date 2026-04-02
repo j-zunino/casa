@@ -4,21 +4,36 @@ import { useState, type SubmitEvent } from 'react';
 import { handleEmailSignIn } from '../../modules/auth';
 import toast from '../../modules/toast';
 import { validateWithZod } from '../../modules/zod';
-import { Button, Input } from '../ui';
+import { FieldInput } from '../ui';
+import { Button } from '../ui/button';
+import {
+    Field,
+    FieldDescription,
+    FieldGroup,
+    FieldLegend,
+    FieldSet,
+} from '../ui/field';
+import { SocialSignIn } from './SocialSignIn';
 
 // TODO: Forgot password
 export const SignInForm = () => {
     const [errors, setErrors] = useState<Record<string, string>>({});
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+
+    const [form, setForm] = useState({
+        email: '',
+        password: '',
+    });
+
+    const updateField =
+        (key: keyof typeof form) =>
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            setForm((prev) => ({ ...prev, [key]: e.target.value }));
+        };
 
     const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const result = validateWithZod(signInSchema, {
-            email,
-            password,
-        });
+        const result = validateWithZod(signInSchema, form);
 
         if (!result.success) {
             setErrors(result.error.fields ?? {});
@@ -26,48 +41,60 @@ export const SignInForm = () => {
         }
 
         setErrors({});
-        toast.promise(handleEmailSignIn(email, password), {
-            loading: 'Signing in...',
-            success: 'Successfully signed In',
-            error: (err) => err.message,
-        });
+
+        toast.promise(
+            handleEmailSignIn(result.data.email, result.data.password),
+            {
+                loading: 'Signing in...',
+                success: 'Successfully signed In',
+                error: (err) => err.message,
+            },
+        );
     };
 
     return (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-2">
-            <Input
-                value={email}
-                onChange={(e) => {
-                    setEmail(e.target.value);
-                    setErrors((prev) => ({ ...prev, name: '' }));
-                }}
-                label="Email"
-                type="email"
-                placeholder="me@example.com"
-                error={errors.email}
-            />
-            <Input
-                value={password}
-                onChange={(e) => {
-                    setPassword(e.target.value);
-                    setErrors((prev) => ({ ...prev, password: '' }));
-                }}
-                label="Password"
-                type="password"
-                placeholder="Password"
-                error={errors.password}
-            />
+        <>
+            <form onSubmit={handleSubmit}>
+                <FieldSet>
+                    <FieldLegend>Create account</FieldLegend>
+                    <FieldDescription>
+                        Enter your credentials bellow to Sign In to your account
+                    </FieldDescription>
 
-            <span className="flex w-full justify-end">
-                <Link
-                    to="/sign-up"
-                    className="text-secondary-8 hover:underline"
-                >
-                    I don't have an account
-                </Link>
-            </span>
+                    <FieldGroup>
+                        <FieldInput
+                            id="email"
+                            label="Email"
+                            type="email"
+                            value={form.email}
+                            onChange={updateField('email')}
+                            error={errors.email}
+                            placeholder="me@example.com"
+                        />
 
-            <Button type="submit">Sign In</Button>
-        </form>
+                        <FieldInput
+                            id="password"
+                            label="Password"
+                            type="password"
+                            value={form.password}
+                            onChange={updateField('password')}
+                            error={errors.password}
+                            placeholder="••••••••••••"
+                        />
+
+                        <Field>
+                            <Button type="submit">Sign In</Button>
+                            <SocialSignIn />
+
+                            <FieldDescription className="text-right">
+                                <Link to="/sign-up">
+                                    I don't have an account
+                                </Link>
+                            </FieldDescription>
+                        </Field>
+                    </FieldGroup>
+                </FieldSet>
+            </form>
+        </>
     );
 };
