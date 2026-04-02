@@ -3,6 +3,9 @@ import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import type { User } from 'better-auth';
 import { NavBar } from '../components/shared';
 
+import '@fontsource-variable/funnel-display/wght.css';
+import '@fontsource-variable/jetbrains-mono/wght.css';
+
 interface RouterContext {
     auth: {
         user: User | null;

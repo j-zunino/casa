@@ -1,21 +1,30 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
-@import '@fontsource-variable/jetbrains-mono';
 
 @custom-variant dark (&:is(.dark *));
 
 @layer base {
     * {
+        @apply border-border;
         scrollbar-width: thin;
-        @apply border-border outline-ring/50;
+
+        &::selection {
+            background-color: var(--ring);
+            color: var(--background);
+        }
     }
 
     body {
         @apply bg-background text-foreground;
     }
+
     html {
         @apply font-sans;
+        font-size: 110%;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
     }
 }
 
@@ -25,8 +34,7 @@
     --tracking-normal: 0.025em;
     --shadow-opacity: 0;
 
-    --font-sans: Funnel Sans, ui-sans-serif, sans-serif, system-ui;
-    --font-serif: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+    --font-sans: 'Funnel Display Variable', sans-serif, system-ui;
     --font-mono: 'JetBrains Mono Variable', monospace;
 
     --font-heading: var(--font-sans);
