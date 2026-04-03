@@ -6,7 +6,7 @@ export const SocialSignIn = () => {
     return (
         <Button type="button" onClick={handleGithubSingIn} variant="outline">
             <GithubLogoIcon weight="bold" />
-            Sign In with GitHub
+            Continue with GitHub
         </Button>
     );
 };
