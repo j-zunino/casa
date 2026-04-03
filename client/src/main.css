@@ -7,16 +7,17 @@
 @layer base {
     * {
         @apply border-border;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+
         scrollbar-width: thin;
 
         &::selection {
             background-color: var(--ring);
             color: var(--background);
         }
-    }
-
-    body {
-        @apply bg-background text-foreground;
     }
 
     html {
