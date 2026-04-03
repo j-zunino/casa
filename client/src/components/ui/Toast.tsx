@@ -14,10 +14,10 @@ interface Props {
 const toastVariants = createVariants({
     base: 'border flex bg-secondary-2 max-w-sm items-center gap-2 animate-slide-in cursor-pointer active:scale-(--scale-active)',
     variants: {
-        default: 'border-secondary-6',
+        default: 'border-border',
         success: 'border-primary-green',
-        error: 'border-primary-red',
-        loading: 'border-secondary-6 animate-pulse',
+        error: 'border-destructive',
+        loading: 'border-border animate-pulse',
     },
     sizes: {
         md: 'px-4 py-2',
