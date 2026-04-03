@@ -3,16 +3,33 @@ import { useState, type SubmitEvent } from 'react';
 import { handleHouseCreation } from '../../modules/house';
 import toast from '../../modules/toast';
 import { validateWithZod } from '../../modules/zod';
-import { Button, Input } from '../ui';
+import { FieldInput } from '../ui';
+import { Button } from '../ui/button';
+import {
+    Field,
+    FieldDescription,
+    FieldGroup,
+    FieldLegend,
+    FieldSet,
+} from '../ui/field';
 
 export const CreateHouseForm = () => {
     const [errors, setErrors] = useState<Record<string, string>>({});
-    const [name, setName] = useState('');
+
+    const [form, setForm] = useState({
+        name: '',
+    });
+
+    const updateField =
+        (key: keyof typeof form) =>
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            setForm((prev) => ({ ...prev, [key]: e.target.value }));
+        };
 
     const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const result = validateWithZod(houseSchema, { name });
+        const result = validateWithZod(houseSchema, form);
 
         if (!result.success) {
             setErrors(result.error.fields ?? {});
@@ -20,6 +37,7 @@ export const CreateHouseForm = () => {
         }
 
         setErrors({});
+
         toast.promise(handleHouseCreation(result.data.name), {
             loading: 'Creating house...',
             success: 'House created successfully!',
@@ -29,19 +47,22 @@ export const CreateHouseForm = () => {
 
     return (
         <form onSubmit={handleSubmit} className="flex flex-col gap-2">
-            <Input
-                value={name}
-                onChange={(e) => {
-                    setName(e.target.value);
-                    setErrors((prev) => ({ ...prev, name: '' }));
-                }}
-                label="House Name"
-                type="text"
-                placeholder="My House"
-                error={errors.name}
-            />
+            <FieldSet>
+                <FieldGroup>
+                    <FieldInput
+                        id="house"
+                        label="House Name"
+                        value={form.name}
+                        onChange={updateField('name')}
+                        error={errors.name}
+                        placeholder="My House"
+                    />
 
-            <Button type="submit">Create House</Button>
+                    <Field>
+                        <Button type="submit">Create</Button>
+                    </Field>
+                </FieldGroup>
+            </FieldSet>
         </form>
     );
 };

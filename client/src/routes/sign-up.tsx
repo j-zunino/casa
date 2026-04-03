@@ -1,16 +1,11 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
-import { SignUpForm, SocialSignIn } from '../components/auth';
+import { SignUpForm } from '../components/auth';
 import { AuthLayout } from '../components/layouts';
 
 const RouteComponent = () => {
     return (
-        <AuthLayout
-            title="Create account"
-            description="Enter your credentials bellow to create your account"
-        >
+        <AuthLayout>
             <SignUpForm />
-
-            <SocialSignIn />
         </AuthLayout>
     );
 };

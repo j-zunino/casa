@@ -4,24 +4,37 @@ import { useState, type SubmitEvent } from 'react';
 import { handleEmailSignUp } from '../../modules/auth';
 import toast from '../../modules/toast';
 import { validateWithZod } from '../../modules/zod';
-import { Button, Input } from '../ui';
+import { FieldInput } from '../ui';
+import { Button } from '../ui/button';
+import {
+    Field,
+    FieldDescription,
+    FieldGroup,
+    FieldLegend,
+    FieldSet,
+} from '../ui/field';
+import { SocialSignIn } from './SocialSignIn';
 
 export const SignUpForm = () => {
     const [errors, setErrors] = useState<Record<string, string>>({});
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordConfirmation, setPasswordConfirmation] = useState('');
+
+    const [form, setForm] = useState({
+        name: '',
+        email: '',
+        password: '',
+        passwordConfirmation: '',
+    });
+
+    const updateField =
+        (key: keyof typeof form) =>
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            setForm((prev) => ({ ...prev, [key]: e.target.value }));
+        };
 
     const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const result = validateWithZod(signUpSchema, {
-            name,
-            email,
-            password,
-            passwordConfirmation,
-        });
+        const result = validateWithZod(signUpSchema, form);
 
         if (!result.success) {
             setErrors(result.error.fields ?? {});
@@ -29,6 +42,7 @@ export const SignUpForm = () => {
         }
 
         setErrors({});
+
         toast.promise(
             handleEmailSignUp(
                 result.data.name,
@@ -44,65 +58,63 @@ export const SignUpForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-2">
-            <Input
-                value={name}
-                onChange={(e) => {
-                    setName(e.target.value);
-                    setErrors((prev) => ({ ...prev, name: '' }));
-                }}
-                label="Full Name"
-                type="text"
-                placeholder="John Doe"
-                error={errors.name}
-            />
-            <Input
-                value={email}
-                onChange={(e) => {
-                    setEmail(e.target.value);
-                    setErrors((prev) => ({ ...prev, email: '' }));
-                }}
-                label="Email"
-                type="email"
-                placeholder="me@example.com"
-                error={errors.email}
-            />
-            <Input
-                value={password}
-                onChange={(e) => {
-                    setPassword(e.target.value);
-                    setErrors((prev) => ({ ...prev, password: '' }));
-                }}
-                label="Password"
-                type="password"
-                placeholder="Password"
-                error={errors.password}
-            />
-            <Input
-                value={passwordConfirmation}
-                onChange={(e) => {
-                    setPasswordConfirmation(e.target.value);
-                    setErrors((prev) => ({
-                        ...prev,
-                        passwordConfirmation: '',
-                    }));
-                }}
-                label="Confirm password"
-                type="password"
-                placeholder="Confirm password"
-                error={errors.passwordConfirmation}
-            />
+        <form onSubmit={handleSubmit}>
+            <FieldSet>
+                <FieldLegend>Create account</FieldLegend>
+                <FieldDescription>
+                    Enter your credentials below to create your account
+                </FieldDescription>
 
-            <span className="flex w-full justify-end">
-                <Link
-                    to="/sign-in"
-                    className="text-secondary-8 hover:underline"
-                >
-                    I already have an account
-                </Link>
-            </span>
+                <FieldGroup>
+                    <FieldInput
+                        id="name"
+                        label="Full Name"
+                        value={form.name}
+                        onChange={updateField('name')}
+                        error={errors.name}
+                        placeholder="John Doe"
+                    />
 
-            <Button>Create account</Button>
+                    <FieldInput
+                        id="email"
+                        label="Email"
+                        type="email"
+                        value={form.email}
+                        onChange={updateField('email')}
+                        error={errors.email}
+                        placeholder="me@example.com"
+                    />
+
+                    <FieldInput
+                        id="password"
+                        label="Password"
+                        type="password"
+                        value={form.password}
+                        onChange={updateField('password')}
+                        error={errors.password}
+                        placeholder="••••••••••••"
+                    />
+
+                    <FieldInput
+                        id="passwordConfirmation"
+                        label="Confirm Password"
+                        type="password"
+                        value={form.passwordConfirmation}
+                        onChange={updateField('passwordConfirmation')}
+                        error={errors.passwordConfirmation}
+                        placeholder="••••••••••••"
+                    />
+
+                    <Field>
+                        <Button type="submit">Create account</Button>
+                        <SocialSignIn />
+
+                        <FieldDescription className="text-right">
+                            <Link to="/sign-in">I already have an account</Link>
+                        </FieldDescription>
+                    </Field>
+                </FieldGroup>
+            </FieldSet>
         </form>
     );
 };
