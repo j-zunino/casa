@@ -1,7 +1,7 @@
 import { Outlet, createRootRouteWithContext } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import type { User } from 'better-auth';
-import { NavBar } from '../components/shared';
+import { Navbar } from '../components/shared';
 
 import '@fontsource-variable/funnel-display/wght.css';
 import '@fontsource-variable/jetbrains-mono/wght.css';
@@ -16,13 +16,13 @@ interface RouterContext {
 
 const RootLayout = () => {
     return (
-        <div className="flex min-h-dvh flex-col">
-            <NavBar />
+        <>
+            <Navbar />
 
             <Outlet />
 
             <TanStackRouterDevtools />
-        </div>
+        </>
     );
 };
 
