@@ -8,7 +8,7 @@ import {
     DialogTrigger,
 } from '@/components/ui/dialog';
 import { createFileRoute } from '@tanstack/react-router';
-import { CreateHouseForm, HouseSelectCard } from '../../components/house';
+import { CreateHouseForm, HouseSelect } from '../../components/house';
 import { authClient, setActiveHouse } from '../../modules/auth';
 
 const Index = () => {
@@ -19,7 +19,7 @@ const Index = () => {
         <div className="flex grow flex-col items-center justify-center gap-8">
             <div className="flex w-full flex-wrap justify-center gap-2 p-2">
                 {orgs?.map((org) => (
-                    <HouseSelectCard
+                    <HouseSelect
                         key={org.id}
                         name={org.name}
                         onClick={() => setActiveHouse(org.id, org.slug)}
@@ -28,7 +28,7 @@ const Index = () => {
 
                 <Dialog>
                     <DialogTrigger asChild>
-                        <HouseSelectCard name="Add one" />
+                        <HouseSelect name="Add one" />
                     </DialogTrigger>
                     <DialogContent>
                         <DialogHeader>
