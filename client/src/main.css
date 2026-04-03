@@ -26,6 +26,22 @@
         -moz-osx-font-smoothing: grayscale;
         text-rendering: optimizeLegibility;
     }
+
+    .hover-ring {
+        @apply border border-border transition;
+
+        .group:hover & {
+            @apply border-ring ring-3 ring-ring/50;
+        }
+    }
+
+    .focus-ring {
+        @apply border border-border transition;
+
+        .group:focus-visible & {
+            @apply border-ring ring-3 ring-ring/50 outline-none;
+        }
+    }
 }
 
 @theme inline {
