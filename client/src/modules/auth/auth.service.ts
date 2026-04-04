@@ -34,7 +34,11 @@ export const handleEmailSignIn = async (email: string, password: string) => {
 };
 
 export const handleGithubSingIn = async () => {
-    await authClient.signIn.social({ provider: 'github' });
+    await authClient.signIn.social({
+        provider: 'github',
+        callbackURL: 'http://localhost:5173',
+    });
+};
 
 export const setActiveHouse = async (houseid: string, houseSlug: string) => {
     const { data, error } = await authClient.organization.setActive({
