@@ -8,19 +8,22 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from './dropdown-menu';
+import type { User } from '@/modules/auth';
 
 interface Props {
-    name: string;
-    avatar?: string;
+    user: User;
 }
 
-export const DropdownAvatar = ({ name, avatar }: Props) => {
+export const DropdownAvatar = ({ user }: Props) => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon-sm" className="rounded-full">
                     <Avatar size="sm">
-                        <AvatarImage src={avatar} alt={name} />
+                        <AvatarImage
+                            src={user.image ?? undefined}
+                            alt={user.name}
+                        />
                         <AvatarFallback>
                             <UserIcon weight="bold" />
                         </AvatarFallback>

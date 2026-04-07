@@ -30,10 +30,7 @@ export function Navbar() {
                     <NavigationMenuList>
                         {session?.user ? (
                             <NavigationMenuItem>
-                                <DropdownAvatar
-                                    name={session.user.name}
-                                    avatar={session.user.image}
-                                />
+                                <DropdownAvatar user={session.user} />
                             </NavigationMenuItem>
                         ) : (
                             <>
