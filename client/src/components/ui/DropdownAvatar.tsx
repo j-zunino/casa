@@ -18,8 +18,7 @@ export const DropdownAvatar = ({ name, avatar }: Props) => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="ghost">
-                    {name}
+                <Button variant="ghost" size="icon-sm" className="rounded-full">
                     <Avatar size="sm">
                         <AvatarImage src={avatar} alt={name} />
                         <AvatarFallback>
