@@ -1,6 +1,6 @@
+import type { User } from '@/modules/auth';
 import { Outlet, createRootRouteWithContext } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
-import type { User } from 'better-auth';
 import { Navbar } from '../components/shared';
 
 import '@fontsource-variable/funnel-display/wght.css';
