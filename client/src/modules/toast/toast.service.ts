@@ -22,7 +22,7 @@ export const toast = Object.assign(
             messages: {
                 loading: string;
                 success: string;
-                error: (err: any) => string; // TODO: Update type
+                error: (err: Error) => string;
             },
             options?: ToastOptions,
         ) => {
