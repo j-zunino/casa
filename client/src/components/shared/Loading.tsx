@@ -1,4 +1,4 @@
-import { createVariants } from '../../modules/tailwindcss';
+import { createVariants } from '@/modules/tailwindcss';
 interface Props {
     variant?: string;
     size?: string;

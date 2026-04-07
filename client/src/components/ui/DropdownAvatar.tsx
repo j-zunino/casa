@@ -1,13 +1,13 @@
 import { handleSignOut } from '@/modules/auth';
 import { SignOutIcon, UserIcon } from '@phosphor-icons/react';
-import { Avatar, AvatarFallback, AvatarImage } from './avatar';
-import { Button } from './button';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
-} from './dropdown-menu';
+} from '@/components/ui/dropdown-menu';
 import type { User } from '@/modules/auth';
 
 interface Props {

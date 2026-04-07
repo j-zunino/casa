@@ -1,4 +1,4 @@
-import { router } from '../../main';
+import { router } from '@/main';
 import { authClient } from './auth.client';
 
 // TODO: Move logic to server

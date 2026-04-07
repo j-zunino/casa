@@ -3,8 +3,8 @@ import {
     type ToastConfig,
     type ToastOptions,
     type ToastVariant,
-} from './toast.config';
-import { generateId } from './toast.config';
+} from '@/modules/toast/toast.config';
+import { generateId } from '@/modules/toast/toast.config';
 
 type Listener = (toasts: ToastConfig[]) => void;
 

@@ -1,5 +1,5 @@
-import { Input } from './input';
-import { Field, FieldDescription, FieldLabel } from './field';
+import { Input } from '@/components/ui/input';
+import { Field, FieldDescription, FieldLabel } from '@/components/ui/field';
 
 type Props = {
     id: string;

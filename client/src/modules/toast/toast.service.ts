@@ -1,5 +1,5 @@
-import type { ToastOptions } from './toast.config';
-import { createToast, dismiss } from './toast.store';
+import type { ToastOptions } from '@/modules/toast/toast.config';
+import { createToast, dismiss } from '@/modules/toast/toast.store';
 
 export const toast = Object.assign(
     (message: string, options?: ToastOptions) =>

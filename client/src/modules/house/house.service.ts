@@ -1,4 +1,4 @@
-import { authClient } from '../auth';
+import { authClient } from '@/modules/auth';
 
 // TODO: Move logic to server
 

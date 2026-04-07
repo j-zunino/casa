@@ -1,12 +1,12 @@
 import { authClient } from '@/modules/auth';
 import { Link } from '@tanstack/react-router';
-import { DropdownAvatar } from '../ui';
+import { DropdownAvatar } from '@/components/ui';
 import {
     NavigationMenu,
     NavigationMenuItem,
     NavigationMenuList,
     navigationMenuTriggerStyle,
-} from '../ui/navigation-menu';
+} from '@/components/ui/navigation-menu';
 
 export function Navbar() {
     const { data: session } = authClient.useSession(); // TODO: Use router context

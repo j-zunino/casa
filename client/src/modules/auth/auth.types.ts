@@ -1,4 +1,4 @@
-import { authClient } from './auth.client.ts';
+import { authClient } from '@/modules/auth/auth.client.ts';
 
 export type User = typeof authClient.$Infer.Session.user;
 export type Session = typeof authClient.$Infer.Session.session;

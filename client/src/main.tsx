@@ -2,12 +2,12 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createRouter } from '@tanstack/react-router';
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
-import './main.css';
+import '@/main.css';
 
-import { App } from './components/shared/App';
-import { Loading } from './components/shared';
-import { Toaster } from './modules/toast';
-import { routeTree } from './routeTree.gen';
+import { App } from '@/components/shared/App';
+import { Loading } from '@/components/shared';
+import { Toaster } from '@/modules/toast';
+import { routeTree } from '@/routeTree.gen';
 
 const queryClient = new QueryClient();
 const router = createRouter({

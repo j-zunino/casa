@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import toast, { subscribe, type ToastConfig } from '.';
-import { Toast } from '../../components/ui';
-import type { ToastVariant } from './toast.config.ts';
+import toast, { subscribe, type ToastConfig } from '@/modules/toast';
+import { Toast } from '@/components/ui';
+import type { ToastVariant } from '@/modules/toast/toast.config.ts';
 
 export const Toaster = () => {
     const [toasts, setToasts] = useState<ToastConfig[]>([]);

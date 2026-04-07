@@ -1,7 +1,7 @@
 import { memo } from 'react';
-import { createVariants } from '../../modules/tailwindcss';
-import type { ToastVariant } from '../../modules/toast';
-import { Loading } from '../shared';
+import { createVariants } from '@/modules/tailwindcss';
+import type { ToastVariant } from '@/modules/toast';
+import { Loading } from '@/components/shared';
 
 interface Props {
     id?: string;

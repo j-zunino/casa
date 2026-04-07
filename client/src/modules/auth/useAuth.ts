@@ -1,4 +1,4 @@
-import { authClient } from './auth.client';
+import { authClient } from '@/modules/auth/auth.client';
 
 export const useAuth = () => {
     const { data: session, isPending } = authClient.useSession();

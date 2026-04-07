@@ -1,18 +1,18 @@
 import { signInSchema } from '@casa/schemas';
 import { Link } from '@tanstack/react-router';
 import { useState, type SubmitEvent } from 'react';
-import { handleEmailSignIn } from '../../modules/auth';
-import toast from '../../modules/toast';
-import { validateWithZod } from '../../modules/zod';
-import { FieldInput } from '../ui';
-import { Button } from '../ui/button';
+import { handleEmailSignIn } from '@/modules/auth';
+import toast from '@/modules/toast';
+import { validateWithZod } from '@/modules/zod';
+import { FieldInput } from '@/components/ui';
+import { Button } from '@/components/ui/button';
 import {
     Field,
     FieldDescription,
     FieldGroup,
     FieldLegend,
     FieldSet,
-} from '../ui/field';
+} from '@/components/ui/field';
 import { SocialSignIn } from './SocialSignIn';
 
 // TODO: Forgot password

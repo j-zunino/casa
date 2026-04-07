@@ -8,8 +8,8 @@ import {
     DialogTrigger,
 } from '@/components/ui/dialog';
 import { createFileRoute } from '@tanstack/react-router';
-import { CreateHouseForm, HouseSelect } from '../../components/house';
-import { authClient, setActiveHouse } from '../../modules/auth';
+import { CreateHouseForm, HouseSelect } from '@/components/house';
+import { authClient, setActiveHouse } from '@/modules/auth';
 
 const Index = () => {
     // TODO: Move to context

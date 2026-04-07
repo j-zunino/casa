@@ -1,8 +1,8 @@
 import { RouterProvider } from '@tanstack/react-router';
 import { useEffect } from 'react';
-import { router } from '../../main';
-import { useAuth } from '../../modules/auth';
-import { Loading } from '.';
+import { router } from '@/main';
+import { useAuth } from '@/modules/auth';
+import { Loading } from '@/components/shared';
 
 export const App = () => {
     const auth = useAuth();
