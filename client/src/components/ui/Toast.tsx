@@ -1,7 +1,7 @@
-import { memo } from 'react';
+import { Spinner } from '@/components/ui/spinner';
 import { createVariants } from '@/modules/tailwindcss';
 import type { ToastVariant } from '@/modules/toast';
-import { Loading } from '@/components/shared';
+import { memo } from 'react';
 
 interface Props {
     id?: string;
@@ -32,7 +32,7 @@ export const Toast = memo(({ variant, size, message, onDismiss }: Props) => {
                 onClick={onDismiss}
                 role="alert"
             >
-                {variant === 'loading' && <Loading size="sm" />}
+                {variant === 'loading' && <Spinner />}
 
                 {message}
             </div>

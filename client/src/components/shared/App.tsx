@@ -1,7 +1,7 @@
-import { RouterProvider } from '@tanstack/react-router';
-import { useEffect } from 'react';
 import { router } from '@/main';
 import { useAuth } from '@/modules/auth';
+import { RouterProvider } from '@tanstack/react-router';
+import { useEffect } from 'react';
 import { Loading } from '@/components/shared';
 
 export const App = () => {
@@ -12,11 +12,7 @@ export const App = () => {
     }, [auth.isAuthenticated]);
 
     if (auth.isLoading) {
-        return (
-            <div className="flex h-screen items-center justify-center">
-                <Loading size="xl" />
-            </div>
-        );
+        return <Loading />;
     }
 
     return (
