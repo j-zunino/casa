@@ -14,7 +14,7 @@ export function Navbar() {
     return (
         <header className="sticky top-0 border-b bg-background">
             <NavigationMenu className="max-w-none">
-                <div className="flex w-full justify-between">
+                <div className="flex w-full items-center justify-between">
                     <NavigationMenuList>
                         <NavigationMenuItem>
                             <Link
