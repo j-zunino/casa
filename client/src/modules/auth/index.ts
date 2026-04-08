@@ -7,5 +7,6 @@ export {
     setActiveHouse,
 } from './auth.service.ts';
 export { useAuth } from './useAuth.ts';
+export { useActiveHouse } from './useActiveHouse.ts';
 
 export type { House, Invitation, Member, Session, User } from './auth.types.ts';

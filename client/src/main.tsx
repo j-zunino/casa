@@ -10,6 +10,7 @@ import { Toaster } from '@/modules/toast';
 import { routeTree } from '@/routeTree.gen';
 
 const queryClient = new QueryClient();
+
 const router = createRouter({
     routeTree,
     defaultPendingComponent: () => <Loading />,
@@ -17,6 +18,10 @@ const router = createRouter({
         auth: {
             isAuthenticated: false,
             user: null,
+            isLoading: true,
+        },
+        activeHouse: {
+            data: null,
             isLoading: true,
         },
     },
