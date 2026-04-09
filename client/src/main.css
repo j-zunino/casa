@@ -22,7 +22,6 @@
 
     html {
         @apply font-sans;
-        font-size: 110%;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         text-rendering: optimizeLegibility;

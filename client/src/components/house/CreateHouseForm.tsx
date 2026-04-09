@@ -1,11 +1,11 @@
-import { houseSchema } from '@casa/schemas';
-import { useState, type SubmitEvent } from 'react';
-import { handleHouseCreation } from '@/modules/house';
-import toast from '@/modules/toast';
-import { validateWithZod } from '@/modules/zod';
 import { FieldInput } from '@/components/ui';
 import { Button } from '@/components/ui/button';
 import { Field, FieldGroup, FieldSet } from '@/components/ui/field';
+import { handleHouseCreation } from '@/modules/house';
+import { validateWithZod } from '@/modules/zod';
+import { houseSchema } from '@casa/schemas';
+import { useState, type SubmitEvent } from 'react';
+import { toast } from 'sonner';
 
 export const CreateHouseForm = () => {
     const [errors, setErrors] = useState<Record<string, string>>({});

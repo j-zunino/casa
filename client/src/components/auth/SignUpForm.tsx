@@ -2,7 +2,7 @@ import { signUpSchema } from '@casa/schemas';
 import { Link } from '@tanstack/react-router';
 import { useState, type SubmitEvent } from 'react';
 import { handleEmailSignUp } from '@/modules/auth';
-import toast from '@/modules/toast';
+import { toast } from 'sonner';
 import { validateWithZod } from '@/modules/zod';
 import { FieldInput } from '@/components/ui';
 import { Button } from '@/components/ui/button';

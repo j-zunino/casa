@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom/client';
 import { Loading } from '@/components/shared';
 import { App } from '@/components/shared/App';
 import type { AuthContext, HouseContext } from '@/modules/auth';
-import { Toaster } from '@/modules/toast';
+import { Toaster } from '@/components/ui/sonner';
 import { routeTree } from '@/routeTree.gen';
 
 const queryClient = new QueryClient();
