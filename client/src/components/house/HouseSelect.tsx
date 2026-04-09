@@ -12,7 +12,7 @@ export const HouseSelect = ({ name, onClick }: Props) => {
         >
             <div className="focus-ring hover-ring aspect-square w-40 bg-background" />
 
-            <span className="text-center wrap-break-word">{name}</span>
+            <span className="text-center text-sm wrap-break-word">{name}</span>
         </button>
     );
 };
