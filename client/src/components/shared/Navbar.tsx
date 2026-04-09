@@ -1,5 +1,3 @@
-import { authClient } from '@/modules/auth';
-import { Link } from '@tanstack/react-router';
 import { DropdownAvatar } from '@/components/ui';
 import {
     NavigationMenu,
@@ -7,9 +5,10 @@ import {
     NavigationMenuList,
     navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
+import { Link, useRouteContext } from '@tanstack/react-router';
 
 export function Navbar() {
-    const { data: session } = authClient.useSession(); // TODO: Use router context
+    const { auth } = useRouteContext({ from: '__root__' });
 
     return (
         <header className="sticky top-0 border-b bg-background">
@@ -28,9 +27,9 @@ export function Navbar() {
                     </NavigationMenuList>
 
                     <NavigationMenuList>
-                        {session?.user ? (
+                        {auth.isAuthenticated ? (
                             <NavigationMenuItem>
-                                <DropdownAvatar user={session.user} />
+                                <DropdownAvatar user={auth.user} />
                             </NavigationMenuItem>
                         ) : (
                             <>
