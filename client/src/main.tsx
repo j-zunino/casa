@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom/client';
 
 import { Loading } from '@/components/shared';
 import { App } from '@/components/shared/App';
+import type { AuthContext, HouseContext } from '@/modules/auth';
 import { Toaster } from '@/modules/toast';
 import { routeTree } from '@/routeTree.gen';
 
@@ -19,11 +20,12 @@ const router = createRouter({
             isAuthenticated: false,
             user: null,
             isLoading: true,
-        },
-        activeHouse: {
-            data: null,
+        } as AuthContext,
+        house: {
+            active: null,
+            list: [],
             isLoading: true,
-        },
+        } as HouseContext,
     },
 });
 

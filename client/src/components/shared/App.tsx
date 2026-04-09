@@ -1,18 +1,18 @@
 import { Loading } from '@/components/shared';
 import { router } from '@/main';
-import { useActiveHouse, useAuth } from '@/modules/auth';
+import { useAuth, useHouse } from '@/modules/auth';
 import { RouterProvider } from '@tanstack/react-router';
 import { useEffect } from 'react';
 
 export const App = () => {
     const auth = useAuth();
-    const activeHouse = useActiveHouse();
+    const house = useHouse();
 
     useEffect(() => {
         router.invalidate();
-    }, [auth.isAuthenticated, activeHouse.data]);
+    }, [auth.isAuthenticated, house.active]);
 
-    if (auth.isLoading || activeHouse.isLoading) {
+    if (auth.isLoading || house.isLoading) {
         return <Loading />;
     }
 
@@ -21,7 +21,7 @@ export const App = () => {
             router={router}
             context={{
                 auth,
-                activeHouse,
+                house,
             }}
         />
     );
