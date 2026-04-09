@@ -39,7 +39,7 @@ export function Navbar() {
                                         className={navigationMenuTriggerStyle()}
                                         activeProps={{ className: 'underline' }}
                                     >
-                                        SignUp
+                                        Sign Up
                                     </Link>
                                 </NavigationMenuItem>
 
