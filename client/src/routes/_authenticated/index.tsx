@@ -1,3 +1,4 @@
+import { CreateHouseForm, HouseSelect } from '@/components/house';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -7,22 +8,20 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog';
-import { createFileRoute } from '@tanstack/react-router';
-import { CreateHouseForm, HouseSelect } from '@/components/house';
-import { authClient, setActiveHouse } from '@/modules/auth';
+import { setActiveHouse, type House } from '@/modules/auth';
+import { createFileRoute, useRouteContext } from '@tanstack/react-router';
 
 const Index = () => {
-    // TODO: Move to context
-    const { data: orgs } = authClient.useListOrganizations();
+    const { house } = useRouteContext({ from: '__root__' });
 
     return (
         <div className="flex grow flex-col items-center justify-center gap-8">
             <div className="flex w-full flex-wrap justify-center gap-2 p-2">
-                {orgs?.map((org) => (
+                {house.list?.map((h: House) => (
                     <HouseSelect
-                        key={org.id}
-                        name={org.name}
-                        onClick={() => setActiveHouse(org.id, org.slug)}
+                        key={h.id}
+                        name={h.name}
+                        onClick={() => setActiveHouse(h.id, h.slug)}
                     />
                 ))}
 
