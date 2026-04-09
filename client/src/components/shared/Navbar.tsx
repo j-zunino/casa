@@ -29,7 +29,7 @@ export function Navbar() {
                     <NavigationMenuList>
                         {auth.isAuthenticated ? (
                             <NavigationMenuItem>
-                                <DropdownAvatar user={auth.user} />
+                                <DropdownAvatar />
                             </NavigationMenuItem>
                         ) : (
                             <>

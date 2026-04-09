@@ -1,5 +1,3 @@
-import { handleSignOut } from '@/modules/auth';
-import { SignOutIcon, UserIcon } from '@phosphor-icons/react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -8,21 +6,21 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import type { User } from '@/modules/auth';
+import { handleSignOut, setActiveHouse } from '@/modules/auth';
+import { SignOutIcon, UserIcon } from '@phosphor-icons/react';
+import { useRouteContext } from '@tanstack/react-router';
 
-interface Props {
-    user: User;
-}
+export const DropdownAvatar = () => {
+    const { auth, house } = useRouteContext({ from: '__root__' });
 
-export const DropdownAvatar = ({ user }: Props) => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="rounded-full">
                     <Avatar size="sm">
                         <AvatarImage
-                            src={user.image ?? undefined}
-                            alt={user.name}
+                            src={auth.user?.image ?? undefined}
+                            alt={auth.user?.name}
                         />
                         <AvatarFallback>
                             <UserIcon weight="bold" />
@@ -32,6 +30,15 @@ export const DropdownAvatar = ({ user }: Props) => {
             </DropdownMenuTrigger>
 
             <DropdownMenuContent align="end">
+                {house.list.map((h) => (
+                    <DropdownMenuItem
+                        key={h.id}
+                        onSelect={() => setActiveHouse(h.id, h.slug)}
+                    >
+                        {h.name}
+                    </DropdownMenuItem>
+                ))}
+
                 <DropdownMenuItem
                     onSelect={handleSignOut}
                     variant="destructive"
