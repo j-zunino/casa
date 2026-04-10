@@ -21,9 +21,7 @@
     }
 
     html {
-        @apply font-sans;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
+        @apply font-sans antialiased md:subpixel-antialiased;
         text-rendering: optimizeLegibility;
     }
 
