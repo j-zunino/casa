@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 export const SocialSignIn = () => {
     return (
         <Button type="button" onClick={handleGithubSingIn} variant="outline">
-            <GithubLogoIcon weight="bold" />
+            <GithubLogoIcon />
             Continue with GitHub
         </Button>
     );
