@@ -8,7 +8,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { handleSignOut, setActiveHouse } from '@/modules/auth';
-import { PencilSimpleIcon, SignOutIcon, UserIcon } from '@phosphor-icons/react';
+import { GearSixIcon, SignOutIcon, UserIcon } from '@phosphor-icons/react';
 import { useRouteContext } from '@tanstack/react-router';
 
 export const DropdownAvatar = () => {
@@ -24,7 +24,7 @@ export const DropdownAvatar = () => {
                             alt={auth.user?.name}
                         />
                         <AvatarFallback>
-                            <UserIcon weight="bold" />
+                            <UserIcon />
                         </AvatarFallback>
                     </Avatar>
                 </Button>
@@ -41,12 +41,12 @@ export const DropdownAvatar = () => {
                 ))}
 
                 <DropdownMenuItem>
-                    <PencilSimpleIcon weight="bold" />
+                    <GearSixIcon />
                     Manage Houses
                 </DropdownMenuItem>
 
                 <DropdownMenuItem>
-                    <UserIcon weight="bold" />
+                    <UserIcon />
                     Account
                 </DropdownMenuItem>
 
@@ -56,7 +56,7 @@ export const DropdownAvatar = () => {
                     onSelect={handleSignOut}
                     variant="destructive"
                 >
-                    <SignOutIcon weight="bold" />
+                    <SignOutIcon />
                     Sign Out
                 </DropdownMenuItem>
             </DropdownMenuContent>
