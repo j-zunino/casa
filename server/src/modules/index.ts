@@ -8,6 +8,7 @@ import { AppError, registerRoutes } from '../utils/index';
 import { authRouter } from './auth/index';
 import { healthRouter } from './health/index';
 import { meRouter } from './me/index';
+import { usersRouter } from './users';
 
 const router: Router = Router();
 
@@ -18,6 +19,7 @@ registerRoutes(router, [
     { prefix: '/auth', router: authRouter, skipJson: true },
     { prefix: '/health', router: healthRouter },
     { prefix: '/me', router: meRouter },
+    { prefix: '/users', router: usersRouter },
 ]);
 
 // Handle 404 routes
