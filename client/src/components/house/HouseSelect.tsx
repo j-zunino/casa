@@ -16,7 +16,7 @@ export const HouseSelect = () => {
             {house.list?.map((h: House) => (
                 <button
                     onClick={() => setActiveHouse(h.id, h.slug)}
-                    className="group w-30 transition outline-none select-none"
+                    className="group w-30 rounded-md transition outline-none select-none"
                 >
                     <HouseAvatar>
                         <HouseAvatarImage

@@ -4,7 +4,7 @@ import { HouseLabel } from './HouseLabel';
 
 export const CreateHouse = () => {
     return (
-        <div className="group w-30 transition outline-none select-none">
+        <div className="group w-30 rounded-md transition outline-none select-none">
             <HouseAvatar>
                 <HouseAvatarFallback>
                     <PlusIcon />

@@ -37,7 +37,7 @@ const Index = () => {
             </div>
 
             <Button onClick={() => {}} variant="outline">
-                Manage House
+                Manage Houses
             </Button>
         </div>
     );

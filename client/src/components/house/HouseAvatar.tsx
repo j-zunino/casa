@@ -11,7 +11,7 @@ export const HouseAvatar = ({
         <AvatarPrimitive.Root
             data-slot="house-avatar"
             className={cn(
-                'focus-ring hover-ring flex size-30 shrink-0 select-none',
+                'focus-ring hover-ring flex size-30 shrink-0 rounded-md select-none',
                 className,
             )}
             {...props}
@@ -26,7 +26,10 @@ export const HouseAvatarImage = ({
     return (
         <AvatarPrimitive.Image
             data-slot="house-avatar-image"
-            className={cn('aspect-square size-full object-cover', className)}
+            className={cn(
+                'aspect-square size-full rounded-md object-cover',
+                className,
+            )}
             {...props}
         />
     );
@@ -40,7 +43,7 @@ export const HouseAvatarFallback = ({
         <AvatarPrimitive.Fallback
             data-slot="house-avatar-fallback"
             className={cn(
-                'flex size-full items-center justify-center bg-muted text-2xl text-muted-foreground',
+                'flex size-full items-center justify-center rounded-md bg-muted text-2xl text-muted-foreground',
                 className,
             )}
             {...props}
