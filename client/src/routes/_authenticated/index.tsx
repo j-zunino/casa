@@ -16,6 +16,7 @@ const Index = () => {
     return (
         <div className="flex grow flex-col items-center justify-center gap-8">
             <div className="flex w-full max-w-3xl flex-wrap justify-center gap-2 p-8">
+                {/* TODO: Limit to max 5 */}
                 <HouseSelect />
 
                 {house.list.length < 5 && (

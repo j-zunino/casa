@@ -6,3 +6,4 @@ export {
 } from './HouseAvatar.tsx';
 export { HouseSelect } from './HouseSelect.tsx';
 export { CreateHouse } from './CreateHouse.tsx';
+export { HouseLabel } from './HouseLabel.tsx';
