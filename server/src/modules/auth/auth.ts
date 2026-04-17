@@ -18,7 +18,7 @@ export const auth = betterAuth({
 
     plugins: [
         organization({
-            organizationLimit: 1,
+            organizationLimit: 5,
             schema: {
                 organization: {
                     modelName: 'House',
