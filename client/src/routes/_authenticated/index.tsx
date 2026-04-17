@@ -1,4 +1,4 @@
-import { CreateHouseForm, HouseSelect } from '@/components/house';
+import { CreateHouse, CreateHouseForm, HouseSelect } from '@/components/house';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -8,7 +8,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog';
-import { setActiveHouse, type House } from '@/modules/auth';
 import { createFileRoute, useRouteContext } from '@tanstack/react-router';
 
 const Index = () => {
@@ -16,29 +15,25 @@ const Index = () => {
 
     return (
         <div className="flex grow flex-col items-center justify-center gap-8">
-            <div className="flex w-full flex-wrap justify-center gap-2 p-2">
-                {house.list?.map((h: House) => (
-                    <HouseSelect
-                        key={h.id}
-                        name={h.name}
-                        onClick={() => setActiveHouse(h.id, h.slug)}
-                    />
-                ))}
+            <div className="flex w-full max-w-3xl flex-wrap justify-center gap-2 p-8">
+                <HouseSelect />
 
-                <Dialog>
-                    <DialogTrigger asChild>
-                        <HouseSelect name="Add one" />
-                    </DialogTrigger>
-                    <DialogContent>
-                        <DialogHeader>
-                            <DialogTitle>Create House</DialogTitle>
-                            <DialogDescription>
-                                This will be your shared space
-                            </DialogDescription>
-                        </DialogHeader>
-                        <CreateHouseForm />
-                    </DialogContent>
-                </Dialog>
+                {house.list.length < 5 && (
+                    <Dialog>
+                        <DialogTrigger>
+                            <CreateHouse />
+                        </DialogTrigger>
+                        <DialogContent>
+                            <DialogHeader>
+                                <DialogTitle>Create House</DialogTitle>
+                                <DialogDescription>
+                                    This will be your shared space
+                                </DialogDescription>
+                            </DialogHeader>
+                            <CreateHouseForm />
+                        </DialogContent>
+                    </Dialog>
+                )}
             </div>
 
             <Button onClick={() => {}} variant="outline">
