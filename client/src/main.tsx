@@ -6,15 +6,15 @@ import ReactDOM from 'react-dom/client';
 
 import { Loading } from '@/components/shared';
 import { App } from '@/components/shared/App';
-import type { AuthContext, HouseContext } from '@/modules/auth';
 import { Toaster } from '@/components/ui/sonner';
+import type { AuthContext, HouseContext } from '@/modules/auth';
 import { routeTree } from '@/routeTree.gen';
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
-const router = createRouter({
+export const router = createRouter({
     routeTree,
-    defaultPendingComponent: () => <Loading />,
+    scrollRestoration: true,
     context: {
         auth: {
             isAuthenticated: false,
@@ -27,6 +27,8 @@ const router = createRouter({
             isLoading: true,
         } as HouseContext,
     },
+
+    defaultPendingComponent: () => <Loading />,
 });
 
 declare module '@tanstack/react-router' {
@@ -35,15 +37,16 @@ declare module '@tanstack/react-router' {
     }
 }
 
-export { queryClient, router };
+const rootElement = document.getElementById('root')!;
 
-const root = ReactDOM.createRoot(document.getElementById('root')!);
-
-root.render(
-    <StrictMode>
-        <QueryClientProvider client={queryClient}>
-            <App />
-            <Toaster />
-        </QueryClientProvider>
-    </StrictMode>,
-);
+if (!rootElement.innerHTML) {
+    const root = ReactDOM.createRoot(rootElement);
+    root.render(
+        <StrictMode>
+            <QueryClientProvider client={queryClient}>
+                <App />
+                <Toaster />
+            </QueryClientProvider>
+        </StrictMode>,
+    );
+}
