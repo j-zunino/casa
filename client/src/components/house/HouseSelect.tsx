@@ -15,6 +15,7 @@ export const HouseSelect = () => {
         <>
             {house.list?.map((h: House) => (
                 <button
+                    key={h.id}
                     onClick={() => setActiveHouse(h.id, h.slug)}
                     className="group w-30 rounded-md transition outline-none select-none"
                 >
