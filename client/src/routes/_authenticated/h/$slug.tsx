@@ -1,9 +1,14 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
+
+const RouteComponent = () => {
+    return (
+        <div>
+            <Link to="/">Back</Link>
+        </div>
+    );
+};
 
 export const Route = createFileRoute('/_authenticated/h/$slug')({
+    staticData: { homePath: '/h/$slug' },
     component: RouteComponent,
 });
-
-function RouteComponent() {
-    return <div>Hello</div>;
-}

@@ -5,10 +5,14 @@ import {
     NavigationMenuList,
     navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
-import { Link, useRouteContext } from '@tanstack/react-router';
+import { Link, useMatches, useRouteContext } from '@tanstack/react-router';
 
 export function Navbar() {
     const { auth } = useRouteContext({ from: '__root__' });
+    const matches = useMatches();
+    const homePath =
+        matches.find((m) => m.staticData?.homePath)?.staticData.homePath ??
+        '/';
 
     return (
         <header className="sticky top-0 border-b bg-background">
@@ -17,7 +21,7 @@ export function Navbar() {
                     <NavigationMenuList>
                         <NavigationMenuItem>
                             <Link
-                                to="/"
+                                to={homePath}
                                 className={navigationMenuTriggerStyle()}
                                 activeProps={{ className: 'underline' }}
                             >
