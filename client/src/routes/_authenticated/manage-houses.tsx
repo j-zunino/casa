@@ -9,7 +9,7 @@ const RouteComponent = () => {
     return (
         <div className="flex grow flex-col items-center justify-center gap-8">
             <div className="flex w-full max-w-3xl flex-wrap justify-center gap-2 p-8">
-                <HouseSelect />
+                <HouseSelect editMode />
 
                 {house.list.length < 5 && <CreateHouseDialog />}
             </div>

@@ -1,5 +1,7 @@
 import { router } from '@/main';
 import { authClient } from './auth.client';
+import type { House } from './auth.types';
+import type { Register } from '@tanstack/react-query';
 
 // TODO: Move logic to server
 
@@ -40,14 +42,18 @@ export const handleGithubSingIn = async () => {
     });
 };
 
-export const setActiveHouse = async (houseid: string, houseSlug: string) => {
+export const setActiveHouse = async (
+    houseid: House['id'],
+    houseSlug: House['slug'],
+    path: string | undefined = '/h/$slug',
+) => {
     const { data, error } = await authClient.organization.setActive({
         organizationId: houseid,
     });
 
     if (error) throw new Error(error.message);
 
-    router.navigate({ to: `/h/${houseSlug}` });
+    router.navigate({ to: path, params: { slug: houseSlug } });
 
     return data;
 };

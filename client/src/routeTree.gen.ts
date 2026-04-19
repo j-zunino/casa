@@ -15,6 +15,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
 import { Route as AuthenticatedManageHousesRouteImport } from './routes/_authenticated/manage-houses'
 import { Route as AuthenticatedHSlugRouteImport } from './routes/_authenticated/h/$slug'
+import { Route as AuthenticatedAccountHousesSlugRouteImport } from './routes/_authenticated/account/houses/$slug'
 
 const SignUpRoute = SignUpRouteImport.update({
   id: '/sign-up',
@@ -46,6 +47,12 @@ const AuthenticatedHSlugRoute = AuthenticatedHSlugRouteImport.update({
   path: '/h/$slug',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAccountHousesSlugRoute =
+  AuthenticatedAccountHousesSlugRouteImport.update({
+    id: '/account/houses/$slug',
+    path: '/account/houses/$slug',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
@@ -53,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/sign-up': typeof SignUpRoute
   '/manage-houses': typeof AuthenticatedManageHousesRoute
   '/h/$slug': typeof AuthenticatedHSlugRoute
+  '/account/houses/$slug': typeof AuthenticatedAccountHousesSlugRoute
 }
 export interface FileRoutesByTo {
   '/sign-in': typeof SignInRoute
@@ -60,6 +68,7 @@ export interface FileRoutesByTo {
   '/manage-houses': typeof AuthenticatedManageHousesRoute
   '/': typeof AuthenticatedIndexRoute
   '/h/$slug': typeof AuthenticatedHSlugRoute
+  '/account/houses/$slug': typeof AuthenticatedAccountHousesSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -69,12 +78,25 @@ export interface FileRoutesById {
   '/_authenticated/manage-houses': typeof AuthenticatedManageHousesRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/h/$slug': typeof AuthenticatedHSlugRoute
+  '/_authenticated/account/houses/$slug': typeof AuthenticatedAccountHousesSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/sign-in' | '/sign-up' | '/manage-houses' | '/h/$slug'
+  fullPaths:
+    | '/'
+    | '/sign-in'
+    | '/sign-up'
+    | '/manage-houses'
+    | '/h/$slug'
+    | '/account/houses/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/sign-in' | '/sign-up' | '/manage-houses' | '/' | '/h/$slug'
+  to:
+    | '/sign-in'
+    | '/sign-up'
+    | '/manage-houses'
+    | '/'
+    | '/h/$slug'
+    | '/account/houses/$slug'
   id:
     | '__root__'
     | '/_authenticated'
@@ -83,6 +105,7 @@ export interface FileRouteTypes {
     | '/_authenticated/manage-houses'
     | '/_authenticated/'
     | '/_authenticated/h/$slug'
+    | '/_authenticated/account/houses/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -135,6 +158,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedHSlugRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/account/houses/$slug': {
+      id: '/_authenticated/account/houses/$slug'
+      path: '/account/houses/$slug'
+      fullPath: '/account/houses/$slug'
+      preLoaderRoute: typeof AuthenticatedAccountHousesSlugRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -142,12 +172,14 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedManageHousesRoute: typeof AuthenticatedManageHousesRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedHSlugRoute: typeof AuthenticatedHSlugRoute
+  AuthenticatedAccountHousesSlugRoute: typeof AuthenticatedAccountHousesSlugRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedManageHousesRoute: AuthenticatedManageHousesRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedHSlugRoute: AuthenticatedHSlugRoute,
+  AuthenticatedAccountHousesSlugRoute: AuthenticatedAccountHousesSlugRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
