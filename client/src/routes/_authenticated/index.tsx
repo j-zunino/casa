@@ -1,14 +1,7 @@
-import { CreateHouse, CreateHouseForm, HouseSelect } from '@/components/house';
+import { CreateHouseDialog, HouseSelect } from '@/components/house';
 import { Button } from '@/components/ui/button';
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from '@/components/ui/dialog';
-import { createFileRoute, useRouteContext } from '@tanstack/react-router';
+import { GearSixIcon } from '@phosphor-icons/react';
+import { createFileRoute, Link, useRouteContext } from '@tanstack/react-router';
 
 const Index = () => {
     const { house } = useRouteContext({ from: '__root__' });
@@ -18,22 +11,7 @@ const Index = () => {
             <div className="flex w-full max-w-3xl flex-wrap justify-center gap-2 p-8">
                 <HouseSelect />
 
-                {house.list.length < 5 && (
-                    <Dialog>
-                        <DialogTrigger>
-                            <CreateHouse />
-                        </DialogTrigger>
-                        <DialogContent>
-                            <DialogHeader>
-                                <DialogTitle>Create House</DialogTitle>
-                                <DialogDescription>
-                                    This will be your shared space
-                                </DialogDescription>
-                            </DialogHeader>
-                            <CreateHouseForm />
-                        </DialogContent>
-                    </Dialog>
-                )}
+                {house.list.length < 5 && <CreateHouseDialog />}
             </div>
 
             <Button onClick={() => {}} variant="outline">
