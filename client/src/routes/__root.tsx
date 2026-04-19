@@ -1,6 +1,10 @@
 import { Navbar } from '@/components/shared';
 import type { AuthContext, HouseContext } from '@/modules/auth';
-import { Outlet, createRootRouteWithContext } from '@tanstack/react-router';
+import {
+    Outlet,
+    createRootRouteWithContext,
+    useMatches,
+} from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 
 import '@fontsource-variable/funnel-display/wght.css';
@@ -12,9 +16,14 @@ interface RouterContext {
 }
 
 const RootLayout = () => {
+    const showNavbar = useMatches({
+        select: (matches) =>
+            !matches.some((m) => m.staticData?.showNavbar === false),
+    });
+
     return (
         <div className="flex min-h-screen flex-col">
-            <Navbar />
+            {showNavbar && <Navbar />}
 
             <div className="flex grow flex-col">
                 <Outlet />

@@ -35,6 +35,10 @@ declare module '@tanstack/react-router' {
     interface Register {
         router: typeof router;
     }
+
+    interface StaticDataRouteOption {
+        showNavbar?: boolean;
+    }
 }
 
 const rootElement = document.getElementById('root')!;

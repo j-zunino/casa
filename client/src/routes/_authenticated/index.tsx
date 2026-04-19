@@ -22,5 +22,6 @@ const Index = () => {
 };
 
 export const Route = createFileRoute('/_authenticated/')({
+    staticData: { showNavbar: false },
     component: Index,
 });
