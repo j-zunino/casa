@@ -15,6 +15,7 @@ import {
     UserIcon,
 } from '@phosphor-icons/react';
 import { Link, useRouteContext } from '@tanstack/react-router';
+import { HouseAvatar, HouseAvatarFallback, HouseAvatarImage } from '../house';
 
 export const DropdownAvatar = () => {
     const { auth, house } = useRouteContext({ from: '__root__' });
@@ -41,16 +42,16 @@ export const DropdownAvatar = () => {
                         key={h.id}
                         onSelect={() => setActiveHouse(h.id, h.slug)}
                     >
-                        <Avatar size="sm">
-                            <AvatarImage
+                        <HouseAvatar size="sm">
+                            <HouseAvatarImage
                                 src={h.logo ?? undefined}
                                 alt={h.name}
                             />
 
-                            <AvatarFallback>
+                            <HouseAvatarFallback>
                                 <HouseLineIcon />
-                            </AvatarFallback>
-                        </Avatar>
+                            </HouseAvatarFallback>
+                        </HouseAvatar>
 
                         <span className="truncate">{h.name}</span>
                     </DropdownMenuItem>
