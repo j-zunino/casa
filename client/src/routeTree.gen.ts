@@ -13,6 +13,7 @@ import { Route as SignUpRouteImport } from './routes/sign-up'
 import { Route as SignInRouteImport } from './routes/sign-in'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedManageHousesRouteImport } from './routes/_authenticated/manage-houses'
 import { Route as AuthenticatedHSlugRouteImport } from './routes/_authenticated/h/$slug'
 
 const SignUpRoute = SignUpRouteImport.update({
@@ -34,6 +35,12 @@ const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedManageHousesRoute =
+  AuthenticatedManageHousesRouteImport.update({
+    id: '/manage-houses',
+    path: '/manage-houses',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedHSlugRoute = AuthenticatedHSlugRouteImport.update({
   id: '/h/$slug',
   path: '/h/$slug',
@@ -44,11 +51,13 @@ export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
+  '/manage-houses': typeof AuthenticatedManageHousesRoute
   '/h/$slug': typeof AuthenticatedHSlugRoute
 }
 export interface FileRoutesByTo {
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
+  '/manage-houses': typeof AuthenticatedManageHousesRoute
   '/': typeof AuthenticatedIndexRoute
   '/h/$slug': typeof AuthenticatedHSlugRoute
 }
@@ -57,19 +66,21 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
+  '/_authenticated/manage-houses': typeof AuthenticatedManageHousesRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/h/$slug': typeof AuthenticatedHSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/sign-in' | '/sign-up' | '/h/$slug'
+  fullPaths: '/' | '/sign-in' | '/sign-up' | '/manage-houses' | '/h/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/sign-in' | '/sign-up' | '/' | '/h/$slug'
+  to: '/sign-in' | '/sign-up' | '/manage-houses' | '/' | '/h/$slug'
   id:
     | '__root__'
     | '/_authenticated'
     | '/sign-in'
     | '/sign-up'
+    | '/_authenticated/manage-houses'
     | '/_authenticated/'
     | '/_authenticated/h/$slug'
   fileRoutesById: FileRoutesById
@@ -110,6 +121,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/manage-houses': {
+      id: '/_authenticated/manage-houses'
+      path: '/manage-houses'
+      fullPath: '/manage-houses'
+      preLoaderRoute: typeof AuthenticatedManageHousesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/h/$slug': {
       id: '/_authenticated/h/$slug'
       path: '/h/$slug'
@@ -121,11 +139,13 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedManageHousesRoute: typeof AuthenticatedManageHousesRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedHSlugRoute: typeof AuthenticatedHSlugRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedManageHousesRoute: AuthenticatedManageHousesRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedHSlugRoute: AuthenticatedHSlugRoute,
 }

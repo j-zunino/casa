@@ -1,9 +1,9 @@
 import { CreateHouseDialog, HouseSelect } from '@/components/house';
 import { Button } from '@/components/ui/button';
-import { GearSixIcon } from '@phosphor-icons/react';
+import { CheckIcon } from '@phosphor-icons/react';
 import { createFileRoute, Link, useRouteContext } from '@tanstack/react-router';
 
-const Index = () => {
+const RouteComponent = () => {
     const { house } = useRouteContext({ from: '__root__' });
 
     return (
@@ -15,16 +15,16 @@ const Index = () => {
             </div>
 
             <Button variant="outline" asChild>
-                <Link to="/manage-houses">
-                    <GearSixIcon />
-                    Manage Houses
+                <Link to="/">
+                    <CheckIcon />
+                    Done
                 </Link>
             </Button>
         </div>
     );
 };
 
-export const Route = createFileRoute('/_authenticated/')({
+export const Route = createFileRoute('/_authenticated/manage-houses')({
     staticData: { showNavbar: false },
-    component: Index,
+    component: RouteComponent,
 });

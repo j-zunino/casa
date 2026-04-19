@@ -14,7 +14,7 @@ import {
     SignOutIcon,
     UserIcon,
 } from '@phosphor-icons/react';
-import { useRouteContext } from '@tanstack/react-router';
+import { Link, useRouteContext } from '@tanstack/react-router';
 
 export const DropdownAvatar = () => {
     const { auth, house } = useRouteContext({ from: '__root__' });
@@ -56,9 +56,11 @@ export const DropdownAvatar = () => {
                     </DropdownMenuItem>
                 ))}
 
-                <DropdownMenuItem>
-                    <GearSixIcon />
-                    Manage Houses
+                <DropdownMenuItem asChild>
+                    <Link to="/manage-houses">
+                        <GearSixIcon />
+                        Manage Houses
+                    </Link>
                 </DropdownMenuItem>
 
                 <DropdownMenuItem>
