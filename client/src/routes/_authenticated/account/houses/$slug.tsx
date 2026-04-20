@@ -4,7 +4,9 @@ import {
     HouseAvatarImage,
     HouseLabel,
 } from '@/components/house';
+import { NoActiveHouse } from '@/components/shared';
 import { Button } from '@/components/ui/button';
+import { deleteHouse } from '@/modules/auth';
 import {
     CaretLeftIcon,
     CaretRightIcon,
@@ -16,6 +18,8 @@ import { createFileRoute, Link, useRouteContext } from '@tanstack/react-router';
 
 const RouteComponent = () => {
     const { house } = useRouteContext({ from: '__root__' });
+
+    if (!house || !house.active) return <NoActiveHouse />;
 
     return (
         <div className="flex grow flex-col items-center p-8">
@@ -32,8 +36,8 @@ const RouteComponent = () => {
                 <div className="w-30 rounded-md transition outline-none select-none">
                     <HouseAvatar>
                         <HouseAvatarImage
-                            src={house.active?.logo ?? undefined}
-                            alt={house.active?.name}
+                            src={house.active.logo ?? undefined}
+                            alt={house.active.name}
                         />
 
                         <HouseAvatarFallback>
@@ -41,7 +45,7 @@ const RouteComponent = () => {
                         </HouseAvatarFallback>
                     </HouseAvatar>
 
-                    <HouseLabel label={house.active?.name} />
+                    <HouseLabel label={house.active.name} />
                 </div>
 
                 <div className="flex w-full flex-col gap-2">
@@ -62,10 +66,10 @@ const RouteComponent = () => {
                     </Button>
 
                     <Button asChild size="lg" variant="destructive">
-                        <Link to=".">
+                        <Button onClick={() => deleteHouse(house.active?.id)}>
                             <TrashIcon />
                             Delete house
-                        </Link>
+                        </Button>
                     </Button>
                 </div>
             </div>

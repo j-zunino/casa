@@ -1,6 +1,11 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { NoActiveHouse } from '@/components/shared';
+import { createFileRoute, Link, useRouteContext } from '@tanstack/react-router';
 
 const RouteComponent = () => {
+    const { house } = useRouteContext({ from: '__root__' });
+
+    if (!house || !house.active) return <NoActiveHouse />;
+
     return (
         <div>
             <Link to="/">Back</Link>

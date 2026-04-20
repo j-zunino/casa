@@ -4,7 +4,7 @@ import { createRouter } from '@tanstack/react-router';
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 
-import { Loading } from '@/components/shared';
+import { Loading, NotFound } from '@/components/shared';
 import { App } from '@/components/shared/App';
 import { Toaster } from '@/components/ui/sonner';
 import type { AuthContext, HouseContext } from '@/modules/auth';
@@ -29,6 +29,7 @@ export const router = createRouter({
     },
 
     defaultPendingComponent: () => <Loading />,
+    defaultNotFoundComponent: () => <NotFound />,
 });
 
 declare module '@tanstack/react-router' {
