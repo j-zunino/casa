@@ -43,12 +43,12 @@ export const handleGithubSingIn = async () => {
 };
 
 export const setActiveHouse = async (
-    houseid: House['id'],
+    houseId: House['id'],
     houseSlug: House['slug'],
     path: string | undefined = '/h/$slug',
 ) => {
     const { data, error } = await authClient.organization.setActive({
-        organizationId: houseid,
+        organizationId: houseId,
     });
 
     if (error) throw new Error(error.message);
