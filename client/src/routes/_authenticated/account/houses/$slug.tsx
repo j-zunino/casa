@@ -1,4 +1,5 @@
 import {
+    DeleteHouseAlert,
     HouseAvatar,
     HouseAvatarFallback,
     HouseAvatarImage,
@@ -6,12 +7,10 @@ import {
 } from '@/components/house';
 import { NoActiveHouse } from '@/components/shared';
 import { Button } from '@/components/ui/button';
-import { deleteHouse } from '@/modules/auth';
 import {
     CaretLeftIcon,
     CaretRightIcon,
     HouseLineIcon,
-    TrashIcon,
     UserIcon,
 } from '@phosphor-icons/react';
 import { createFileRoute, Link, useRouteContext } from '@tanstack/react-router';
@@ -19,13 +18,15 @@ import { createFileRoute, Link, useRouteContext } from '@tanstack/react-router';
 const RouteComponent = () => {
     const { house } = useRouteContext({ from: '__root__' });
 
-    if (!house || !house.active) return <NoActiveHouse />;
+    if (!house || !house.active) {
+        return <NoActiveHouse />;
+    }
 
     return (
         <div className="flex grow flex-col items-center p-8">
             <div className="flex w-full max-w-xl flex-col items-center justify-start gap-8">
                 <div className="w-full justify-start">
-                    <Button variant="ghost">
+                    <Button variant="ghost" asChild>
                         <Link to=".." className="flex items-center">
                             <CaretLeftIcon />
                             Back
@@ -65,12 +66,7 @@ const RouteComponent = () => {
                         </Link>
                     </Button>
 
-                    <Button asChild size="lg" variant="destructive">
-                        <Button onClick={() => deleteHouse(house.active?.id)}>
-                            <TrashIcon />
-                            Delete house
-                        </Button>
-                    </Button>
+                    <DeleteHouseAlert houseId={house.active.id} />
                 </div>
             </div>
         </div>

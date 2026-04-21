@@ -1,7 +1,6 @@
 import { router } from '@/main';
 import { authClient } from './auth.client';
 import type { House } from './auth.types';
-import type { Register } from '@tanstack/react-query';
 
 // TODO: Move logic to server
 
@@ -54,6 +53,18 @@ export const setActiveHouse = async (
     if (error) throw new Error(error.message);
 
     router.navigate({ to: path, params: { slug: houseSlug } });
+
+    return data;
+};
+
+export const deleteHouse = async (houseId: House['id']) => {
+    const { data, error } = await authClient.organization.delete({
+        organizationId: houseId,
+    });
+
+    if (error) throw new Error(error.message);
+
+    router.navigate({ to: '/' });
 
     return data;
 };

@@ -1,5 +1,6 @@
 export { authClient } from './auth.client.ts';
 export {
+    deleteHouse,
     handleEmailSignIn,
     handleEmailSignUp,
     handleGithubSingIn,
