@@ -14,12 +14,14 @@ const Index = () => {
                 {house.list.length < 5 && <CreateHouseDialog />}
             </div>
 
-            <Button variant="outline" asChild>
-                <Link to="/manage-houses">
-                    <GearSixIcon />
-                    Manage Houses
-                </Link>
-            </Button>
+            {house.list.length > 0 && (
+                <Button variant="outline" asChild>
+                    <Link to="/manage-houses">
+                        <GearSixIcon />
+                        Manage Houses
+                    </Link>
+                </Button>
+            )}
         </div>
     );
 };
