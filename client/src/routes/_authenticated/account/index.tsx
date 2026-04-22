@@ -1,15 +1,25 @@
 import {
     Avatar,
     AvatarFallback,
+    AvatarGroup,
+    AvatarGroupCount,
     AvatarImage,
     AvatarLabel,
 } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { CaretLeftIcon, UserIcon } from '@phosphor-icons/react';
+import {
+    CaretLeftIcon,
+    CaretRightIcon,
+    EnvelopeSimpleIcon,
+    HouseLineIcon,
+    PasswordIcon,
+    TrashIcon,
+    UserIcon,
+} from '@phosphor-icons/react';
 import { createFileRoute, Link, useRouteContext } from '@tanstack/react-router';
 
 const RouteComponent = () => {
-    const { auth } = useRouteContext({ from: '__root__' });
+    const { auth, house } = useRouteContext({ from: '__root__' });
 
     return (
         <div className="flex grow flex-col items-center p-8">
@@ -36,6 +46,90 @@ const RouteComponent = () => {
                     </Avatar>
 
                     <AvatarLabel>{auth.user?.name}</AvatarLabel>
+                </div>
+
+                <div className="flex w-full flex-col gap-2">
+                    <Button
+                        asChild
+                        size="lg"
+                        variant="outline"
+                        className="justify-between"
+                    >
+                        <Link to=".">
+                            <span className="flex items-center gap-2">
+                                <EnvelopeSimpleIcon />
+                                Invitations
+                            </span>
+
+                            <CaretRightIcon />
+                        </Link>
+                    </Button>
+
+                    <Button
+                        asChild
+                        size="lg"
+                        variant="outline"
+                        className="justify-between"
+                    >
+                        <Link to=".">
+                            <span className="flex items-center gap-2">
+                                <PasswordIcon />
+                                Update password
+                            </span>
+
+                            <CaretRightIcon />
+                        </Link>
+                    </Button>
+
+                    {house.list.length > 0 && (
+                        <Button
+                            asChild
+                            size="lg"
+                            variant="outline"
+                            className="justify-between"
+                        >
+                            <Link to=".">
+                                <span className="flex items-center gap-2">
+                                    <HouseLineIcon />
+                                    Manage houses
+                                </span>
+
+                                <div className="flex items-center gap-2">
+                                    <AvatarGroup>
+                                        {house.list.slice(0, 2).map((h) => (
+                                            <Avatar
+                                                key={h.id}
+                                                size="sm"
+                                                rounded="normal"
+                                            >
+                                                <AvatarImage
+                                                    src={h.logo ?? undefined}
+                                                    alt={h.name}
+                                                />
+
+                                                <AvatarFallback>
+                                                    <HouseLineIcon />
+                                                </AvatarFallback>
+                                            </Avatar>
+                                        ))}
+
+                                        {house.list.length > 2 && (
+                                            <AvatarGroupCount>
+                                                +{house.list.length - 2}
+                                            </AvatarGroupCount>
+                                        )}
+                                    </AvatarGroup>
+
+                                    <CaretRightIcon />
+                                </div>
+                            </Link>
+                        </Button>
+                    )}
+
+                    <Button disabled variant="destructive" size="lg">
+                        <TrashIcon />
+                        Delete account
+                    </Button>
                 </div>
             </div>
         </div>
