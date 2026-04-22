@@ -1,11 +1,11 @@
-import {
-    DeleteHouseAlert,
-    HouseAvatar,
-    HouseAvatarFallback,
-    HouseAvatarImage,
-    HouseLabel,
-} from '@/components/house';
+import { DeleteHouseAlert } from '@/components/house';
 import { NoActiveHouse } from '@/components/shared';
+import {
+    Avatar,
+    AvatarFallback,
+    AvatarImage,
+    AvatarLabel,
+} from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
     CaretLeftIcon,
@@ -35,18 +35,18 @@ const RouteComponent = () => {
                 </div>
 
                 <div className="w-30 rounded-md transition outline-none select-none">
-                    <HouseAvatar>
-                        <HouseAvatarImage
+                    <Avatar size="lg" rounded="normal">
+                        <AvatarImage
                             src={house.active.logo ?? undefined}
                             alt={house.active.name}
                         />
 
-                        <HouseAvatarFallback>
+                        <AvatarFallback>
                             <HouseLineIcon />
-                        </HouseAvatarFallback>
-                    </HouseAvatar>
+                        </AvatarFallback>
+                    </Avatar>
 
-                    <HouseLabel label={house.active.name} />
+                    <AvatarLabel>{house.active.name}</AvatarLabel>
                 </div>
 
                 <div className="flex w-full flex-col gap-2">

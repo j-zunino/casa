@@ -1,12 +1,7 @@
 import { setActiveHouse, type House } from '@/modules/auth';
 import { HouseLineIcon, PencilIcon } from '@phosphor-icons/react';
 import { useRouteContext } from '@tanstack/react-router';
-import {
-    HouseAvatar,
-    HouseAvatarFallback,
-    HouseAvatarImage,
-} from './HouseAvatar';
-import { HouseLabel } from './HouseLabel';
+import { Avatar, AvatarFallback, AvatarImage, AvatarLabel } from '../ui/avatar';
 
 interface Props {
     editMode?: boolean;
@@ -25,24 +20,21 @@ export const HouseSelect = ({ editMode }: Props) => {
                     onClick={() => setActiveHouse(h.id, h.slug, path)}
                     className="group relative w-30 rounded-md transition outline-none select-none"
                 >
-                    <HouseAvatar>
-                        <HouseAvatarImage
-                            src={h.logo ?? undefined}
-                            alt={h.name}
-                        />
+                    <Avatar size="lg" rounded="normal" ring={true}>
+                        <AvatarImage src={h.logo ?? undefined} alt={h.name} />
 
-                        <HouseAvatarFallback>
+                        <AvatarFallback>
                             <HouseLineIcon />
-                        </HouseAvatarFallback>
+                        </AvatarFallback>
 
                         {editMode && (
                             <div className="absolute inset-0 flex aspect-square items-center justify-center text-3xl backdrop-brightness-70">
                                 <PencilIcon />
                             </div>
                         )}
-                    </HouseAvatar>
+                    </Avatar>
 
-                    <HouseLabel label={h.name} />
+                    <AvatarLabel>{h.name}</AvatarLabel>
                 </button>
             ))}
         </>

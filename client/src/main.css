@@ -25,7 +25,8 @@
         text-rendering: optimizeLegibility;
     }
 
-    .hover-ring {
+    .hover-ring,
+    [data-ring='true'] {
         @apply border border-border transition;
 
         .group:hover & {
@@ -33,7 +34,8 @@
         }
     }
 
-    .focus-ring {
+    .focus-ring,
+    [data-ring='true'] {
         @apply border border-border transition;
 
         .group:focus-visible & {

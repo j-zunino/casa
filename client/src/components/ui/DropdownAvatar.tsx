@@ -1,4 +1,9 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import {
+    Avatar,
+    AvatarFallback,
+    AvatarImage,
+    AvatarLabel,
+} from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
@@ -15,7 +20,6 @@ import {
     UserIcon,
 } from '@phosphor-icons/react';
 import { Link, useRouteContext } from '@tanstack/react-router';
-import { HouseAvatar, HouseAvatarFallback, HouseAvatarImage } from '../house';
 
 export const DropdownAvatar = () => {
     const { auth, house } = useRouteContext({ from: '__root__' });
@@ -42,18 +46,18 @@ export const DropdownAvatar = () => {
                         key={h.id}
                         onSelect={() => setActiveHouse(h.id, h.slug)}
                     >
-                        <HouseAvatar size="sm">
-                            <HouseAvatarImage
+                        <Avatar size="sm" rounded="normal">
+                            <AvatarImage
                                 src={h.logo ?? undefined}
                                 alt={h.name}
                             />
 
-                            <HouseAvatarFallback>
+                            <AvatarFallback>
                                 <HouseLineIcon />
-                            </HouseAvatarFallback>
-                        </HouseAvatar>
+                            </AvatarFallback>
+                        </Avatar>
 
-                        <span className="truncate">{h.name}</span>
+                        <AvatarLabel className="py-0">{h.name}</AvatarLabel>
                     </DropdownMenuItem>
                 ))}
 
@@ -64,9 +68,11 @@ export const DropdownAvatar = () => {
                     </Link>
                 </DropdownMenuItem>
 
-                <DropdownMenuItem>
-                    <UserIcon />
-                    My account
+                <DropdownMenuItem asChild>
+                    <Link to="/account">
+                        <UserIcon />
+                        My account
+                    </Link>
                 </DropdownMenuItem>
 
                 <DropdownMenuSeparator />

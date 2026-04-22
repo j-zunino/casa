@@ -1,17 +1,20 @@
 import { PlusIcon } from '@phosphor-icons/react';
-import { HouseAvatar, HouseAvatarFallback } from './HouseAvatar';
-import { HouseLabel } from './HouseLabel';
+import type { ComponentProps } from 'react';
+import { Avatar, AvatarFallback, AvatarLabel } from '../ui/avatar';
 
-export const CreateHouse = () => {
+export const CreateHouse = ({ ...props }: ComponentProps<'button'>) => {
     return (
-        <div className="group w-30 rounded-md transition outline-none select-none">
-            <HouseAvatar>
-                <HouseAvatarFallback className="bg-muted/30">
+        <button
+            className="group w-30 rounded-md transition outline-none select-none"
+            {...props}
+        >
+            <Avatar size="lg" rounded="normal" ring={true}>
+                <AvatarFallback className="bg-muted/30">
                     <PlusIcon />
-                </HouseAvatarFallback>
-            </HouseAvatar>
+                </AvatarFallback>
+            </Avatar>
 
-            <HouseLabel label="Create" />
-        </div>
+            <AvatarLabel>Create</AvatarLabel>
+        </button>
     );
 };

@@ -12,7 +12,7 @@ import { CreateHouseForm } from './CreateHouseForm';
 export const CreateHouseDialog = () => {
     return (
         <Dialog>
-            <DialogTrigger>
+            <DialogTrigger asChild>
                 <CreateHouse />
             </DialogTrigger>
             <DialogContent>
