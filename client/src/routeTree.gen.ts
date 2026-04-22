@@ -14,6 +14,7 @@ import { Route as SignInRouteImport } from './routes/sign-in'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
 import { Route as AuthenticatedManageHousesRouteImport } from './routes/_authenticated/manage-houses'
+import { Route as AuthenticatedAccountIndexRouteImport } from './routes/_authenticated/account/index'
 import { Route as AuthenticatedHSlugRouteImport } from './routes/_authenticated/h/$slug'
 import { Route as AuthenticatedAccountHousesSlugRouteImport } from './routes/_authenticated/account/houses/$slug'
 
@@ -42,6 +43,12 @@ const AuthenticatedManageHousesRoute =
     path: '/manage-houses',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAccountIndexRoute =
+  AuthenticatedAccountIndexRouteImport.update({
+    id: '/account/',
+    path: '/account/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedHSlugRoute = AuthenticatedHSlugRouteImport.update({
   id: '/h/$slug',
   path: '/h/$slug',
@@ -60,6 +67,7 @@ export interface FileRoutesByFullPath {
   '/sign-up': typeof SignUpRoute
   '/manage-houses': typeof AuthenticatedManageHousesRoute
   '/h/$slug': typeof AuthenticatedHSlugRoute
+  '/account/': typeof AuthenticatedAccountIndexRoute
   '/account/houses/$slug': typeof AuthenticatedAccountHousesSlugRoute
 }
 export interface FileRoutesByTo {
@@ -68,6 +76,7 @@ export interface FileRoutesByTo {
   '/manage-houses': typeof AuthenticatedManageHousesRoute
   '/': typeof AuthenticatedIndexRoute
   '/h/$slug': typeof AuthenticatedHSlugRoute
+  '/account': typeof AuthenticatedAccountIndexRoute
   '/account/houses/$slug': typeof AuthenticatedAccountHousesSlugRoute
 }
 export interface FileRoutesById {
@@ -78,6 +87,7 @@ export interface FileRoutesById {
   '/_authenticated/manage-houses': typeof AuthenticatedManageHousesRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/h/$slug': typeof AuthenticatedHSlugRoute
+  '/_authenticated/account/': typeof AuthenticatedAccountIndexRoute
   '/_authenticated/account/houses/$slug': typeof AuthenticatedAccountHousesSlugRoute
 }
 export interface FileRouteTypes {
@@ -88,6 +98,7 @@ export interface FileRouteTypes {
     | '/sign-up'
     | '/manage-houses'
     | '/h/$slug'
+    | '/account/'
     | '/account/houses/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -96,6 +107,7 @@ export interface FileRouteTypes {
     | '/manage-houses'
     | '/'
     | '/h/$slug'
+    | '/account'
     | '/account/houses/$slug'
   id:
     | '__root__'
@@ -105,6 +117,7 @@ export interface FileRouteTypes {
     | '/_authenticated/manage-houses'
     | '/_authenticated/'
     | '/_authenticated/h/$slug'
+    | '/_authenticated/account/'
     | '/_authenticated/account/houses/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -151,6 +164,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedManageHousesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/account/': {
+      id: '/_authenticated/account/'
+      path: '/account'
+      fullPath: '/account/'
+      preLoaderRoute: typeof AuthenticatedAccountIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/h/$slug': {
       id: '/_authenticated/h/$slug'
       path: '/h/$slug'
@@ -172,6 +192,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedManageHousesRoute: typeof AuthenticatedManageHousesRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedHSlugRoute: typeof AuthenticatedHSlugRoute
+  AuthenticatedAccountIndexRoute: typeof AuthenticatedAccountIndexRoute
   AuthenticatedAccountHousesSlugRoute: typeof AuthenticatedAccountHousesSlugRoute
 }
 
@@ -179,6 +200,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedManageHousesRoute: AuthenticatedManageHousesRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedHSlugRoute: AuthenticatedHSlugRoute,
+  AuthenticatedAccountIndexRoute: AuthenticatedAccountIndexRoute,
   AuthenticatedAccountHousesSlugRoute: AuthenticatedAccountHousesSlugRoute,
 }
 

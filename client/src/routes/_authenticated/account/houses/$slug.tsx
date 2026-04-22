@@ -27,7 +27,7 @@ const RouteComponent = () => {
             <div className="flex w-full max-w-xl flex-col items-center justify-start gap-8">
                 <div className="w-full justify-start">
                     <Button variant="ghost" asChild>
-                        <Link to=".." className="flex items-center">
+                        <Link to="/account" className="flex items-center">
                             <CaretLeftIcon />
                             Back
                         </Link>
