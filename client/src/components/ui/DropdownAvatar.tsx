@@ -40,7 +40,10 @@ export const DropdownAvatar = () => {
                 </Button>
             </DropdownMenuTrigger>
 
-            <DropdownMenuContent align="end" className="w-auto max-w-60">
+            <DropdownMenuContent
+                align="end"
+                className="w-auto max-w-60 min-w-50"
+            >
                 {house.list.map((h) => (
                     <DropdownMenuItem
                         key={h.id}
