@@ -7,7 +7,6 @@ import ReactDOM from 'react-dom/client';
 import { Loading, NotFound } from '@/components/shared';
 import { App } from '@/components/shared/App';
 import { Toaster } from '@/components/ui/sonner';
-import type { AuthContext, HouseContext } from '@/modules/auth';
 import { routeTree } from '@/routeTree.gen';
 
 export const queryClient = new QueryClient();
@@ -17,15 +16,15 @@ export const router = createRouter({
     scrollRestoration: true,
     context: {
         auth: {
-            isAuthenticated: false,
             user: null,
+            isAuthenticated: false,
             isLoading: true,
-        } as AuthContext,
+        },
         house: {
             active: null,
             list: [],
             isLoading: true,
-        } as HouseContext,
+        },
     },
 
     defaultPendingComponent: () => <Loading />,

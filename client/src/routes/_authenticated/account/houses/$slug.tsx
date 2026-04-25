@@ -16,9 +16,9 @@ import {
 import { createFileRoute, Link, useRouteContext } from '@tanstack/react-router';
 
 const RouteComponent = () => {
-    const { house } = useRouteContext({ from: '__root__' });
+    const { auth, house } = useRouteContext({ from: '__root__' });
 
-    if (!house || !house.active) {
+    if (!auth.isAuthenticated || !house.active) {
         return <NoActiveHouse />;
     }
 

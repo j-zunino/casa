@@ -12,6 +12,11 @@ export interface HouseContext {
     isLoading: boolean;
 }
 
+export interface AuthHouseContext {
+    auth: AuthContext;
+    house: HouseContext;
+}
+
 export type User = typeof authClient.$Infer.Session.user;
 export type Session = typeof authClient.$Infer.Session.session;
 export type House = typeof authClient.$Infer.Organization;

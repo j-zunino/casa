@@ -9,12 +9,15 @@ interface Props {
 
 export const HouseSelect = ({ editMode }: Props) => {
     const { house } = useRouteContext({ from: '__root__' });
+    const houses = house.list ?? [];
+
+    if (houses.length === 0) return null;
 
     const path = editMode ? '/account/houses/$slug' : undefined;
 
     return (
         <>
-            {house.list?.map((h: House) => (
+            {houses.map((h: House) => (
                 <button
                     key={h.id}
                     onClick={() => setActiveHouse(h.id, h.slug, path)}
