@@ -1,10 +1,11 @@
 import { CreateHouseDialog, HouseSelect } from '@/components/house';
 import { Button } from '@/components/ui/button';
 import { GearSixIcon } from '@phosphor-icons/react';
-import { createFileRoute, Link, useRouteContext } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
+import { useAuth } from '@/modules/auth';
 
 const Index = () => {
-    const { house } = useRouteContext({ from: '__root__' });
+    const { house } = useAuth();
 
     return (
         <div className="flex grow flex-col items-center justify-center gap-8">

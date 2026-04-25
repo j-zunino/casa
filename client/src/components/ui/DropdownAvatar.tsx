@@ -12,17 +12,17 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { handleSignOut, setActiveHouse } from '@/modules/auth';
+import { handleSignOut, setActiveHouse, useAuth } from '@/modules/auth';
 import {
     GearSixIcon,
     HouseLineIcon,
     SignOutIcon,
     UserIcon,
 } from '@phosphor-icons/react';
-import { Link, useRouteContext } from '@tanstack/react-router';
+import { Link } from '@tanstack/react-router';
 
 export const DropdownAvatar = () => {
-    const { auth, house } = useRouteContext({ from: '__root__' });
+    const { auth, house } = useAuth();
 
     return (
         <DropdownMenu>

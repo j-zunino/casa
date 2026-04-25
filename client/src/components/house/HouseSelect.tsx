@@ -1,6 +1,5 @@
-import { setActiveHouse, type House } from '@/modules/auth';
+import { setActiveHouse, type House, useAuth } from '@/modules/auth';
 import { HouseLineIcon, PencilIcon } from '@phosphor-icons/react';
-import { useRouteContext } from '@tanstack/react-router';
 import { Avatar, AvatarFallback, AvatarImage, AvatarLabel } from '../ui/avatar';
 
 interface Props {
@@ -8,7 +7,7 @@ interface Props {
 }
 
 export const HouseSelect = ({ editMode }: Props) => {
-    const { house } = useRouteContext({ from: '__root__' });
+    const { house } = useAuth();
     const houses = house.list ?? [];
 
     if (houses.length === 0) return null;

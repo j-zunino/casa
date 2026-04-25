@@ -1,8 +1,9 @@
 import { NoActiveHouse } from '@/components/shared';
-import { createFileRoute, Link, useRouteContext } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
+import { useAuth } from '@/modules/auth';
 
 const RouteComponent = () => {
-    const { house } = useRouteContext({ from: '__root__' });
+    const { house } = useAuth();
 
     if (!house || !house.active) return <NoActiveHouse />;
 

@@ -16,10 +16,11 @@ import {
     TrashIcon,
     UserIcon,
 } from '@phosphor-icons/react';
-import { createFileRoute, Link, useRouteContext } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
+import { useAuth } from '@/modules/auth';
 
 const RouteComponent = () => {
-    const { auth, house } = useRouteContext({ from: '__root__' });
+    const { auth, house } = useAuth();
 
     return (
         <div className="flex grow flex-col items-center p-8">

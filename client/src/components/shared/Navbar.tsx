@@ -5,10 +5,11 @@ import {
     NavigationMenuList,
     navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
-import { Link, useMatches, useRouteContext } from '@tanstack/react-router';
+import { useAuth } from '@/modules/auth';
+import { Link, useMatches } from '@tanstack/react-router';
 
 export function Navbar() {
-    const { auth } = useRouteContext({ from: '__root__' });
+    const { auth } = useAuth();
     const matches = useMatches();
     const homePath =
         matches.find((m) => m.staticData?.homePath)?.staticData.homePath ??
