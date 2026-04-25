@@ -1,11 +1,13 @@
 import { Navbar } from '@/components/shared';
 import type { AuthContext, HouseContext } from '@/modules/auth';
+import { TanStackDevtools } from '@tanstack/react-devtools';
+import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools';
 import {
     Outlet,
     createRootRouteWithContext,
     useMatches,
 } from '@tanstack/react-router';
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
+import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 
 import '@fontsource-variable/funnel-display/wght.css';
 import '@fontsource-variable/jetbrains-mono/wght.css';
@@ -29,7 +31,18 @@ const RootLayout = () => {
                 <Outlet />
             </div>
 
-            <TanStackRouterDevtools />
+            <TanStackDevtools
+                plugins={[
+                    {
+                        name: 'TanStack Query',
+                        render: <ReactQueryDevtoolsPanel />,
+                    },
+                    {
+                        name: 'TanStack Router',
+                        render: <TanStackRouterDevtoolsPanel />,
+                    },
+                ]}
+            />
         </div>
     );
 };
