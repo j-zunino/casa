@@ -3,7 +3,7 @@ export {
     deleteHouse,
     handleEmailSignIn,
     handleEmailSignUp,
-    handleGithubSingIn,
+    handleGithubSignIn,
     handleSignOut,
     setActiveHouse,
 } from './auth.service.ts';

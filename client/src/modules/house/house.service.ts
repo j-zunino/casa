@@ -16,7 +16,6 @@ const generateSlug = (input: string) => {
 };
 
 export const handleHouseCreation = async (name: string) => {
-    // TODO: Check if slug is already used
     const slug = generateSlug(name);
 
     const { data, error } = await authClient.organization.create({

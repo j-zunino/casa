@@ -35,7 +35,7 @@ export const handleEmailSignIn = async (email: string, password: string) => {
     return data;
 };
 
-export const handleGithubSingIn = async () => {
+export const handleGithubSignIn = async () => {
     await authClient.signIn.social({
         provider: 'github',
         callbackURL: env.VITE_BETTER_AUTH_CALLBACK_URL,

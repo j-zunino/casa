@@ -1,10 +1,10 @@
 import { GithubLogoIcon } from '@phosphor-icons/react';
-import { handleGithubSingIn } from '@/modules/auth';
+import { handleGithubSignIn } from '@/modules/auth';
 import { Button } from '@/components/ui/button';
 
 export const SocialSignIn = () => {
     return (
-        <Button type="button" onClick={handleGithubSingIn} variant="outline">
+        <Button type="button" onClick={handleGithubSignIn} variant="outline">
             <GithubLogoIcon />
             Continue with GitHub
         </Button>
