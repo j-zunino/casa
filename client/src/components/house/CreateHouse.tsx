@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarLabel } from '../ui/avatar';
 export const CreateHouse = ({ ...props }: ComponentProps<'button'>) => {
     return (
         <button
-            className="group w-30 rounded-md transition outline-none select-none"
+            className="group rounded-md transition outline-none select-none"
             {...props}
         >
             <Avatar size="lg" rounded="normal" ring={true}>

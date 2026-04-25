@@ -34,7 +34,7 @@ const RouteComponent = () => {
                     </Button>
                 </div>
 
-                <div className="w-30 rounded-md transition outline-none select-none">
+                <div className="rounded-md transition outline-none select-none">
                     <Avatar size="lg" rounded="normal">
                         <AvatarImage
                             src={house.active.logo ?? undefined}
