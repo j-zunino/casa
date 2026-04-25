@@ -1,6 +1,7 @@
 import { router } from '@/main';
 import { authClient } from './auth.client';
 import type { House } from './auth.types';
+import { env } from '@/lib/env';
 
 // TODO: Move logic to server
 
@@ -37,7 +38,7 @@ export const handleEmailSignIn = async (email: string, password: string) => {
 export const handleGithubSingIn = async () => {
     await authClient.signIn.social({
         provider: 'github',
-        callbackURL: 'http://localhost:5173',
+        callbackURL: env.VITE_BETTER_AUTH_CALLBACK_URL,
     });
 };
 
