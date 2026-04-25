@@ -47,7 +47,7 @@ export const DropdownAvatar = () => {
                 {house.list.map((h) => (
                     <DropdownMenuItem
                         key={h.id}
-                        onSelect={() => setActiveHouse(h.id, h.slug)}
+                        onClick={() => setActiveHouse(h.id, h.slug)}
                     >
                         <Avatar size="sm" rounded="normal">
                             <AvatarImage
@@ -80,10 +80,7 @@ export const DropdownAvatar = () => {
 
                 <DropdownMenuSeparator />
 
-                <DropdownMenuItem
-                    onSelect={handleSignOut}
-                    variant="destructive"
-                >
+                <DropdownMenuItem onClick={handleSignOut} variant="destructive">
                     <SignOutIcon />
                     Sign Out
                 </DropdownMenuItem>
