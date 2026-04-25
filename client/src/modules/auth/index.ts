@@ -8,8 +8,10 @@ export {
     setActiveHouse,
 } from './auth.service.ts';
 export type {
+    AuthContext,
     AuthHouseContext,
     House,
+    HouseContext,
     Invitation,
     Member,
     Session,
