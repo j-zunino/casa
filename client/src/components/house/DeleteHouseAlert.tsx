@@ -1,5 +1,5 @@
 import { deleteHouse } from '@/modules/auth';
-import type { House } from '@casa/types';
+import type { House } from '@/modules/auth/auth.types';
 import { TrashIcon, XIcon } from '@phosphor-icons/react';
 import { toast } from 'sonner';
 import {
