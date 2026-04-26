@@ -15,10 +15,5 @@ export const App = () => {
 
     if (auth.isLoading || house.isLoading) return <Loading />;
 
-    return (
-        <RouterProvider
-            router={router}
-            context={{ auth: auth, house: house }}
-        />
-    );
+    return <RouterProvider router={router} context={{ auth, house }} />;
 };
