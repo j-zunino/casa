@@ -2,7 +2,7 @@ import { RouterProvider } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import { router } from '@/main';
 
-import { Toaster } from 'sonner';
+import { Toaster } from '@/components/ui/sonner';
 import { Loading } from './components/common/Loading';
 import { useAuth } from './features/auth/hooks/useAuth';
 
