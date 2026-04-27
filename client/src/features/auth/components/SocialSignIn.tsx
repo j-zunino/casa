@@ -1,6 +1,6 @@
-import { GithubLogoIcon } from '@phosphor-icons/react';
-import { handleGithubSignIn } from '@/modules/auth';
 import { Button } from '@/components/ui/button';
+import { GithubLogoIcon } from '@phosphor-icons/react';
+import { handleGithubSignIn } from '../services';
 
 export const SocialSignIn = () => {
     return (

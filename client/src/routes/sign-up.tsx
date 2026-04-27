@@ -1,6 +1,6 @@
+import { SignUpForm } from '@/features/auth/components';
+import { AuthLayout } from '@/layouts';
 import { createFileRoute, redirect } from '@tanstack/react-router';
-import { SignUpForm } from '@/components/auth';
-import { AuthLayout } from '@/components/layouts';
 
 const RouteComponent = () => {
     return (

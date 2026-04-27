@@ -12,7 +12,6 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { handleSignOut, setActiveHouse, useAuth } from '@/modules/auth';
 import {
     GearSixIcon,
     HouseLineIcon,
@@ -20,6 +19,10 @@ import {
     UserIcon,
 } from '@phosphor-icons/react';
 import { Link } from '@tanstack/react-router';
+
+import { useAuth } from '@/features/auth/hooks';
+import { handleSignOut } from '@/features/auth/services';
+import { setActiveHouse } from '@/features/houses/services';
 
 export const DropdownAvatar = () => {
     const { auth, house } = useAuth();

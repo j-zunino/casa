@@ -1,7 +1,3 @@
-import { deleteHouse } from '@/modules/auth';
-import type { House } from '@/modules/auth/auth.types';
-import { TrashIcon, XIcon } from '@phosphor-icons/react';
-import { toast } from 'sonner';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -13,8 +9,12 @@ import {
     AlertDialogMedia,
     AlertDialogTitle,
     AlertDialogTrigger,
-} from '../ui/alert-dialog';
-import { Button } from '../ui/button';
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+import type { House } from '@/features/auth/types';
+import { TrashIcon, XIcon } from '@phosphor-icons/react';
+import { toast } from 'sonner';
+import { handleDeleteHouse } from '../services/houses.service.ts';
 
 interface Props {
     houseId: House['id'];
@@ -22,7 +22,7 @@ interface Props {
 
 export const DeleteHouseAlert = ({ houseId }: Props) => {
     const handleDelete = (id: typeof houseId) => {
-        toast.promise(deleteHouse(id), {
+        toast.promise(handleDeleteHouse(id), {
             loading: 'Deleting house...',
             success: 'House deleted successfully!',
             error: (err) => err.message,

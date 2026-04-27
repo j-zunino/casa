@@ -1,4 +1,4 @@
-import { FieldInput } from '@/components/ui';
+import { FieldInput } from '@/components/common/FieldInput';
 import { Button } from '@/components/ui/button';
 import {
     Field,
@@ -7,12 +7,12 @@ import {
     FieldLegend,
     FieldSet,
 } from '@/components/ui/field';
-import { handleEmailSignIn } from '@/modules/auth';
-import { validateWithZod } from '@/modules/zod';
+import { validateWithZod } from '@/lib/zod';
 import { signInSchema } from '@casa/schemas';
 import { Link } from '@tanstack/react-router';
 import { useState, type SubmitEvent } from 'react';
 import { toast } from 'sonner';
+import { handleEmailSignIn } from '../services';
 import { SocialSignIn } from './SocialSignIn';
 
 // TODO: Forgot password

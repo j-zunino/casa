@@ -1,9 +1,7 @@
-import { router } from '@/main';
-import { authClient } from './auth.client';
-import type { House } from './auth.types';
-import { env } from '@/lib/env';
-
 // TODO: Move logic to server
+
+import { env } from '@/lib/zod';
+import { authClient } from '../auth.client';
 
 export const handleSignOut = async () => await authClient.signOut();
 
@@ -40,32 +38,4 @@ export const handleGithubSignIn = async () => {
         provider: 'github',
         callbackURL: env.VITE_BETTER_AUTH_CALLBACK_URL,
     });
-};
-
-export const setActiveHouse = async (
-    houseId: House['id'],
-    houseSlug: House['slug'],
-    path: string | undefined = '/h/$slug',
-) => {
-    const { data, error } = await authClient.organization.setActive({
-        organizationId: houseId,
-    });
-
-    if (error) throw new Error(error.message);
-
-    router.navigate({ to: path, params: { slug: houseSlug } });
-
-    return data;
-};
-
-export const deleteHouse = async (houseId: House['id']) => {
-    const { data, error } = await authClient.organization.delete({
-        organizationId: houseId,
-    });
-
-    if (error) throw new Error(error.message);
-
-    router.navigate({ to: '/' });
-
-    return data;
 };

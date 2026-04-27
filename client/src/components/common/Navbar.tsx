@@ -1,19 +1,18 @@
-import { DropdownAvatar } from '@/components/ui';
 import {
     NavigationMenu,
     NavigationMenuItem,
     NavigationMenuList,
     navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
-import { useAuth } from '@/modules/auth';
+import { useAuth } from '@/features/auth/hooks';
 import { Link, useMatches } from '@tanstack/react-router';
+import { DropdownAvatar } from './DropdownAvatar';
 
 export function Navbar() {
     const { auth } = useAuth();
     const matches = useMatches();
     const homePath =
-        matches.find((m) => m.staticData?.homePath)?.staticData.homePath ??
-        '/';
+        matches.find((m) => m.staticData?.homePath)?.staticData.homePath ?? '/';
 
     return (
         <header className="sticky top-0 border-b bg-background">

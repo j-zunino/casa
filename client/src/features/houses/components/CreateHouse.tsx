@@ -1,6 +1,6 @@
+import { Avatar, AvatarFallback, AvatarLabel } from '@/components/ui/avatar';
 import { PlusIcon } from '@phosphor-icons/react';
 import type { ComponentProps } from 'react';
-import { Avatar, AvatarFallback, AvatarLabel } from '../ui/avatar';
 
 export const CreateHouse = ({ ...props }: ComponentProps<'button'>) => {
     return (

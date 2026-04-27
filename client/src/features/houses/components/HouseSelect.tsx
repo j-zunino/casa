@@ -1,6 +1,13 @@
-import { setActiveHouse, type House, useAuth } from '@/modules/auth';
+import {
+    Avatar,
+    AvatarFallback,
+    AvatarImage,
+    AvatarLabel,
+} from '@/components/ui/avatar';
+import { useAuth } from '@/features/auth/hooks';
 import { HouseLineIcon, PencilIcon } from '@phosphor-icons/react';
-import { Avatar, AvatarFallback, AvatarImage, AvatarLabel } from '../ui/avatar';
+import { setActiveHouse } from '../services/houses.service.ts';
+import type { House } from '@/features/auth/types';
 
 interface Props {
     editMode?: boolean;

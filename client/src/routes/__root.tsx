@@ -1,5 +1,5 @@
-import { Navbar } from '@/components/shared';
-import type { AuthContext, HouseContext } from '@/modules/auth';
+import '@fontsource-variable/funnel-display/wght.css';
+import '@fontsource-variable/jetbrains-mono/wght.css';
 import { TanStackDevtools } from '@tanstack/react-devtools';
 import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools';
 import {
@@ -9,8 +9,8 @@ import {
 } from '@tanstack/react-router';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 
-import '@fontsource-variable/funnel-display/wght.css';
-import '@fontsource-variable/jetbrains-mono/wght.css';
+import { Navbar } from '@/components/common/Navbar';
+import type { AuthContext, HouseContext } from '@/features/auth/types';
 
 interface RouterContext {
     auth: AuthContext;

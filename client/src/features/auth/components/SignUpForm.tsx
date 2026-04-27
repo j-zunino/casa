@@ -1,10 +1,4 @@
-import { signUpSchema } from '@casa/schemas';
-import { Link } from '@tanstack/react-router';
-import { useState, type SubmitEvent } from 'react';
-import { handleEmailSignUp } from '@/modules/auth';
-import { toast } from 'sonner';
-import { validateWithZod } from '@/modules/zod';
-import { FieldInput } from '@/components/ui';
+import { FieldInput } from '@/components/common/FieldInput';
 import { Button } from '@/components/ui/button';
 import {
     Field,
@@ -13,6 +7,12 @@ import {
     FieldLegend,
     FieldSet,
 } from '@/components/ui/field';
+import { validateWithZod } from '@/lib/zod';
+import { signUpSchema } from '@casa/schemas';
+import { Link } from '@tanstack/react-router';
+import { useState, type SubmitEvent } from 'react';
+import { toast } from 'sonner';
+import { handleEmailSignUp } from '../services';
 import { SocialSignIn } from './SocialSignIn';
 
 export const SignUpForm = () => {

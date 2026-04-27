@@ -5,7 +5,7 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-} from '../ui/dialog';
+} from '@/components/ui/dialog';
 import { CreateHouse } from './CreateHouse';
 import { CreateHouseForm } from './CreateHouseForm';
 

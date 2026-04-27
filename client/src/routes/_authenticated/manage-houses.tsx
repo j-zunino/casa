@@ -1,8 +1,8 @@
-import { CreateHouseDialog, HouseSelect } from '@/components/house';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/features/auth/hooks';
+import { CreateHouseDialog, HouseSelect } from '@/features/houses/components';
 import { CheckIcon } from '@phosphor-icons/react';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { useAuth } from '@/modules/auth';
 
 const RouteComponent = () => {
     const { house } = useAuth();
