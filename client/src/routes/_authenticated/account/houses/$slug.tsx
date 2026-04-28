@@ -1,16 +1,17 @@
 import { NoActiveHouse } from '@/components/common/ErrorComponents';
-import {
-    Avatar,
-    AvatarFallback,
-    AvatarImage,
-    AvatarLabel,
-} from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import { ButtonGroup } from '@/components/ui/button-group';
+import { Field, FieldLabel } from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
 import { useAuth } from '@/features/auth/hooks';
 import { DeleteHouseAlert } from '@/features/houses/components';
 import {
     CaretLeftIcon,
     CaretRightIcon,
+    EnvelopeSimpleIcon,
+    FloppyDiskIcon,
     HouseLineIcon,
     UserIcon,
 } from '@phosphor-icons/react';
@@ -35,7 +36,7 @@ const RouteComponent = () => {
                     </Button>
                 </div>
 
-                <div className="rounded-md transition outline-none select-none">
+                <div className="flex w-full flex-wrap items-center justify-center gap-2 sm:flex-nowrap">
                     <Avatar size="lg" rounded="normal">
                         <AvatarImage
                             src={house.active.logo ?? undefined}
@@ -47,7 +48,19 @@ const RouteComponent = () => {
                         </AvatarFallback>
                     </Avatar>
 
-                    <AvatarLabel>{house.active.name}</AvatarLabel>
+                    <Field className="w-full">
+                        <FieldLabel>House name</FieldLabel>
+
+                        <ButtonGroup>
+                            <Input placeholder="Name" />
+                            <Button
+                                variant="outline"
+                                aria-label="Save house name"
+                            >
+                                <FloppyDiskIcon weight="fill" />
+                            </Button>
+                        </ButtonGroup>
+                    </Field>
                 </div>
 
                 <div className="flex w-full flex-col gap-2">
@@ -59,13 +72,31 @@ const RouteComponent = () => {
                     >
                         <Link to=".">
                             <span className="flex items-center gap-2">
-                                <UserIcon />
-                                Members
+                                <EnvelopeSimpleIcon />
+                                Invite members
                             </span>
 
                             <CaretRightIcon />
                         </Link>
                     </Button>
+
+                    <Button
+                        asChild
+                        size="lg"
+                        variant="outline"
+                        className="justify-between"
+                    >
+                        <Link to=".">
+                            <span className="flex items-center gap-2">
+                                <UserIcon />
+                                Manage members
+                            </span>
+
+                            <CaretRightIcon />
+                        </Link>
+                    </Button>
+
+                    <Separator />
 
                     <DeleteHouseAlert houseId={house.active.id} />
                 </div>
