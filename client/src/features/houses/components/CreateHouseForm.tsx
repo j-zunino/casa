@@ -1,38 +1,29 @@
-import { FieldInput } from '@/components/common/FieldInput';
 import { Button } from '@/components/ui/button';
-import { Field, FieldGroup, FieldSet } from '@/components/ui/field';
-import { validateWithZod } from '@/lib/zod';
+import {
+    Field,
+    FieldError,
+    FieldGroup,
+    FieldLabel,
+    FieldSet,
+} from '@/components/ui/field';
+import { Input } from '@/components/ui/input.tsx';
 import { houseSchema } from '@casa/schemas';
-import { useState, type SubmitEvent } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
+import z from 'zod';
 import { handleHouseCreation } from '../services/houses.service.ts';
 
-export const CreateHouseForm = () => {
-    const [errors, setErrors] = useState<Record<string, string>>({});
+type FormValues = z.infer<typeof houseSchema>;
 
-    const [form, setForm] = useState({
-        name: '',
+export const CreateHouseForm = () => {
+    const form = useForm<FormValues>({
+        resolver: zodResolver(houseSchema),
+        defaultValues: { name: '' },
     });
 
-    const updateField =
-        (key: keyof typeof form) =>
-        (e: React.ChangeEvent<HTMLInputElement>) => {
-            setForm((prev) => ({ ...prev, [key]: e.target.value }));
-        };
-
-    const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        const result = validateWithZod(houseSchema, form);
-
-        if (!result.success) {
-            setErrors(result.error.fields ?? {});
-            return;
-        }
-
-        setErrors({});
-
-        toast.promise(handleHouseCreation(result.data.name), {
+    const onSubmit = (data: FormValues) => {
+        toast.promise(handleHouseCreation(data.name), {
             loading: 'Creating house...',
             success: 'House created successfully!',
             error: (err) => err.message,
@@ -40,16 +31,33 @@ export const CreateHouseForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+        <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col gap-2"
+        >
             <FieldSet>
                 <FieldGroup>
-                    <FieldInput
-                        id="house"
-                        label="House Name"
-                        value={form.name}
-                        onChange={updateField('name')}
-                        error={errors.name}
-                        placeholder="My House"
+                    <Controller
+                        name="name"
+                        control={form.control}
+                        render={({ field, fieldState }) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldLabel htmlFor="name">
+                                    House name
+                                </FieldLabel>
+                                <Input
+                                    {...field}
+                                    id="name"
+                                    type="text"
+                                    aria-invalid={fieldState.invalid}
+                                    placeholder="My house"
+                                    autoComplete="on"
+                                />
+                                {fieldState.invalid && (
+                                    <FieldError errors={[fieldState.error]} />
+                                )}
+                            </Field>
+                        )}
                     />
 
                     <Field>

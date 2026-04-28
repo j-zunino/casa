@@ -1,64 +1,46 @@
-import { FieldInput } from '@/components/common/FieldInput';
 import { Button } from '@/components/ui/button';
 import {
     Field,
     FieldDescription,
+    FieldError,
     FieldGroup,
+    FieldLabel,
     FieldLegend,
     FieldSet,
 } from '@/components/ui/field';
-import { validateWithZod } from '@/lib/zod';
+import { Input } from '@/components/ui/input';
 import { signUpSchema } from '@casa/schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Link } from '@tanstack/react-router';
-import { useState, type SubmitEvent } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
+import z from 'zod';
 import { handleEmailSignUp } from '../services';
 import { SocialSignIn } from './SocialSignIn';
 
-export const SignUpForm = () => {
-    const [errors, setErrors] = useState<Record<string, string>>({});
+type FormValues = z.infer<typeof signUpSchema>;
 
-    const [form, setForm] = useState({
-        name: '',
-        email: '',
-        password: '',
-        passwordConfirmation: '',
+export const SignUpForm = () => {
+    const form = useForm<FormValues>({
+        resolver: zodResolver(signUpSchema),
+        defaultValues: {
+            name: '',
+            email: '',
+            password: '',
+            passwordConfirmation: '',
+        },
     });
 
-    const updateField =
-        (key: keyof typeof form) =>
-        (e: React.ChangeEvent<HTMLInputElement>) => {
-            setForm((prev) => ({ ...prev, [key]: e.target.value }));
-        };
-
-    const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        const result = validateWithZod(signUpSchema, form);
-
-        if (!result.success) {
-            setErrors(result.error.fields ?? {});
-            return;
-        }
-
-        setErrors({});
-
-        toast.promise(
-            handleEmailSignUp(
-                result.data.name,
-                result.data.email,
-                result.data.password,
-            ),
-            {
-                loading: 'Creating account...',
-                success: 'Account created successfully!',
-                error: (err) => err.message,
-            },
-        );
+    const onSubmit = (data: FormValues) => {
+        toast.promise(handleEmailSignUp(data.name, data.email, data.password), {
+            loading: 'Creating account...',
+            success: 'Account created successfully!',
+            error: (err) => err.message,
+        });
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
             <FieldSet>
                 <FieldLegend>Create account</FieldLegend>
                 <FieldDescription>
@@ -66,43 +48,94 @@ export const SignUpForm = () => {
                 </FieldDescription>
 
                 <FieldGroup>
-                    <FieldInput
-                        id="name"
-                        label="Full Name"
-                        value={form.name}
-                        onChange={updateField('name')}
-                        error={errors.name}
-                        placeholder="John Doe"
+                    <Controller
+                        name="name"
+                        control={form.control}
+                        render={({ field, fieldState }) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldLabel htmlFor="name">
+                                    Full name
+                                </FieldLabel>
+                                <Input
+                                    {...field}
+                                    id="name"
+                                    type="text"
+                                    aria-invalid={fieldState.invalid}
+                                    placeholder="John Doe"
+                                    autoComplete="off"
+                                />
+                                {fieldState.invalid && (
+                                    <FieldError errors={[fieldState.error]} />
+                                )}
+                            </Field>
+                        )}
                     />
 
-                    <FieldInput
-                        id="email"
-                        label="Email"
-                        type="email"
-                        value={form.email}
-                        onChange={updateField('email')}
-                        error={errors.email}
-                        placeholder="me@example.com"
+                    <Controller
+                        name="email"
+                        control={form.control}
+                        render={({ field, fieldState }) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldLabel htmlFor="email">Email</FieldLabel>
+                                <Input
+                                    {...field}
+                                    id="email"
+                                    type="email"
+                                    aria-invalid={fieldState.invalid}
+                                    placeholder="me@example.com"
+                                    autoComplete="on"
+                                />
+                                {fieldState.invalid && (
+                                    <FieldError errors={[fieldState.error]} />
+                                )}
+                            </Field>
+                        )}
                     />
 
-                    <FieldInput
-                        id="password"
-                        label="Password"
-                        type="password"
-                        value={form.password}
-                        onChange={updateField('password')}
-                        error={errors.password}
-                        placeholder="••••••••••••"
+                    <Controller
+                        name="password"
+                        control={form.control}
+                        render={({ field, fieldState }) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldLabel htmlFor="password">
+                                    Password
+                                </FieldLabel>
+                                <Input
+                                    {...field}
+                                    id="password"
+                                    type="password"
+                                    aria-invalid={fieldState.invalid}
+                                    placeholder="••••••••••••"
+                                    autoComplete="off"
+                                />
+                                {fieldState.invalid && (
+                                    <FieldError errors={[fieldState.error]} />
+                                )}
+                            </Field>
+                        )}
                     />
 
-                    <FieldInput
-                        id="passwordConfirmation"
-                        label="Confirm Password"
-                        type="password"
-                        value={form.passwordConfirmation}
-                        onChange={updateField('passwordConfirmation')}
-                        error={errors.passwordConfirmation}
-                        placeholder="••••••••••••"
+                    <Controller
+                        name="passwordConfirmation"
+                        control={form.control}
+                        render={({ field, fieldState }) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldLabel htmlFor="passwordConfirmation">
+                                    Confirm password
+                                </FieldLabel>
+                                <Input
+                                    {...field}
+                                    id="passwordConfirmation"
+                                    type="password"
+                                    aria-invalid={fieldState.invalid}
+                                    placeholder="••••••••••••"
+                                    autoComplete="off"
+                                />
+                                {fieldState.invalid && (
+                                    <FieldError errors={[fieldState.error]} />
+                                )}
+                            </Field>
+                        )}
                     />
 
                     <Field>
