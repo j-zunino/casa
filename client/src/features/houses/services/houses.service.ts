@@ -46,7 +46,28 @@ export const setActiveHouse = async (
     return data;
 };
 
-export const handleDeleteHouse = async (houseId: House['id']) => {
+export const handleHouseUpdate = async (
+    id: House['id'],
+    name: House['name'],
+) => {
+    if (!id) throw new Error('House to update not found');
+
+    const newSlug = generateSlug(name);
+
+    const { data, error } = await authClient.organization.update({
+        organizationId: id,
+        data: {
+            name: name,
+            slug: newSlug,
+        },
+    });
+
+    if (error) throw new Error(error.message);
+
+    return data;
+};
+
+export const handleDeleteHouse = async (id: House['id']) => {
     const { data, error } = await authClient.organization.delete({
         organizationId: id,
     });

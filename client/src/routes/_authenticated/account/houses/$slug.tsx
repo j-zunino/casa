@@ -2,11 +2,15 @@ import { NoActiveHouse } from '@/components/common/ErrorComponents';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
-import { Field, FieldLabel } from '@/components/ui/field';
+import { Field, FieldError } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { useAuth } from '@/features/auth/hooks';
 import { DeleteHouseAlert } from '@/features/houses/components';
+import { handleHouseUpdate } from '@/features/houses/services';
+import { router } from '@/main';
+import { houseSchema } from '@casa/schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
     CaretLeftIcon,
     CaretRightIcon,
@@ -16,6 +20,11 @@ import {
     UserIcon,
 } from '@phosphor-icons/react';
 import { createFileRoute, Link } from '@tanstack/react-router';
+import { Controller, useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import z from 'zod';
+
+type FormValues = z.infer<typeof houseSchema>;
 
 const RouteComponent = () => {
     const { auth, house } = useAuth();
@@ -23,6 +32,27 @@ const RouteComponent = () => {
     if (!auth.isAuthenticated || !house.active) {
         return <NoActiveHouse />;
     }
+
+    const form = useForm<FormValues>({
+        resolver: zodResolver(houseSchema),
+        defaultValues: {
+            name: house.active?.name,
+        },
+    });
+
+    const onSubmit = (data: FormValues) => {
+        toast.promise(handleHouseUpdate(house.active.id, data.name), {
+            loading: 'Updating house...',
+            success: (updatedHouse) => {
+                router.navigate({
+                    to: '/account/houses/$slug',
+                    params: { slug: updatedHouse.slug },
+                });
+                return 'House updated successfully!';
+            },
+            error: (err) => err.message,
+        });
+    };
 
     return (
         <div className="flex grow flex-col items-center p-8">
@@ -48,19 +78,38 @@ const RouteComponent = () => {
                         </AvatarFallback>
                     </Avatar>
 
-                    <Field className="w-full">
-                        <FieldLabel>House name</FieldLabel>
+                    <form onSubmit={form.handleSubmit(onSubmit)}>
+                        <Controller
+                            name="name"
+                            control={form.control}
+                            render={({ field, fieldState }) => (
+                                <ButtonGroup>
+                                    <Field data-invalid={fieldState.invalid}>
+                                        <Input
+                                            {...field}
+                                            id="name"
+                                            type="text"
+                                            aria-invalid={fieldState.invalid}
+                                            placeholder="House name"
+                                            autoComplete="on"
+                                        />
+                                        {fieldState.invalid && (
+                                            <FieldError
+                                                errors={[fieldState.error]}
+                                            />
+                                        )}
+                                    </Field>
 
-                        <ButtonGroup>
-                            <Input placeholder="Name" />
-                            <Button
-                                variant="outline"
-                                aria-label="Save house name"
-                            >
-                                <FloppyDiskIcon weight="fill" />
-                            </Button>
-                        </ButtonGroup>
-                    </Field>
+                                    <Button
+                                        variant="outline"
+                                        aria-label="Save house name"
+                                    >
+                                        <FloppyDiskIcon weight="fill" />
+                                    </Button>
+                                </ButtonGroup>
+                            )}
+                        />
+                    </form>
                 </div>
 
                 <div className="flex w-full flex-col gap-2">
