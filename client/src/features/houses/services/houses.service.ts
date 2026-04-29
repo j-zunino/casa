@@ -31,24 +31,24 @@ export const handleHouseCreation = async (name: string) => {
 };
 
 export const setActiveHouse = async (
-    houseId: House['id'],
-    houseSlug: House['slug'],
+    id: House['id'],
+    slug: House['slug'],
     path: string | undefined = '/h/$slug',
 ) => {
     const { data, error } = await authClient.organization.setActive({
-        organizationId: houseId,
+        organizationId: id,
     });
 
     if (error) throw new Error(error.message);
 
-    router.navigate({ to: path, params: { slug: houseSlug } });
+    router.navigate({ to: path, params: { slug: slug } });
 
     return data;
 };
 
 export const handleDeleteHouse = async (houseId: House['id']) => {
     const { data, error } = await authClient.organization.delete({
-        organizationId: houseId,
+        organizationId: id,
     });
 
     if (error) throw new Error(error.message);
