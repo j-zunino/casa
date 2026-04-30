@@ -35,6 +35,7 @@ export const signUpSchema = z
         path: ['passwordConfirmation'],
     });
 
+// TODO: Add logo
 export const houseSchema = z.object({
     name: z
         .string()

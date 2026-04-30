@@ -4,6 +4,7 @@ export const ErrorCodes = {
     INTERNAL_ERROR: 'INTERNAL_ERROR',
     NOT_AUTHENTICATED: 'NOT_AUTHENTICATED',
     VALIDATION_ERROR: 'VALIDATION_ERROR',
+    BAD_REQUEST: 'BAD_REQUEST',
 } as const;
 
 export type ErrorCode = (typeof ErrorCodes)[keyof typeof ErrorCodes];
@@ -11,7 +12,7 @@ export type ErrorCode = (typeof ErrorCodes)[keyof typeof ErrorCodes];
 export type ApiError = {
     message: string;
     code: ErrorCode;
-    fields?: Record<string, string>;
+    errors?: { path: string; message: string }[];
 };
 
 export type ApiResponse<T> =

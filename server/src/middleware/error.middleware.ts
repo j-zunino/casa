@@ -3,8 +3,6 @@ import { ErrorCodes } from '@casa/types';
 import type { NextFunction, Request, Response } from 'express';
 import { AppError } from '../utils/index';
 
-// TODO: Handle Zod validation
-
 /**
  * Error-handling middleware.
  * Converts thrown errors into a standardized {@link ApiResponse}
@@ -20,6 +18,18 @@ export const errorMiddleware = (
     res: Response,
     _next: NextFunction,
 ) => {
+    if (error instanceof SyntaxError && 'body' in error) {
+        const response: ApiResponse<never> = {
+            success: false,
+            error: {
+                message: 'Invalid JSON',
+                code: ErrorCodes.BAD_REQUEST,
+            },
+        };
+
+        return res.status(400).json(response);
+    }
+
     if (error instanceof AppError) {
         if (process.env.NODE_ENV !== 'production') {
             console.log(`[AppError] ${error.code}: ${error.message}`);
@@ -30,6 +40,7 @@ export const errorMiddleware = (
             error: {
                 message: error.message,
                 code: error.code,
+                errors: error.errors,
             },
         };
 
@@ -37,7 +48,7 @@ export const errorMiddleware = (
     }
 
     if (process.env.NODE_ENV !== 'production') {
-        console.error('[ERROR]', (error as Error).message);
+        console.error('[ERROR]', error);
     }
 
     const response: ApiResponse<never> = {
