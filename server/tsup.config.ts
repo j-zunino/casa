@@ -1,4 +1,5 @@
 import { defineConfig } from 'tsup';
+import path from 'path';
 
 export default defineConfig({
   platform: 'node',
@@ -8,4 +9,7 @@ export default defineConfig({
   splitting: false,
   sourcemap: true,
   external: ['@casa/types', '@casa/schemas'],
+  alias: {
+    '@': path.resolve(__dirname, './src'),
+  },
 });

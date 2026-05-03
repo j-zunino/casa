@@ -1,5 +1,5 @@
+import { AppError } from '@/utils';
 import { ErrorCodes } from '@casa/types';
-import { AppError } from '../../utils';
 
 export const mapAuthError = (err: any) => {
     const code = err?.body.code;

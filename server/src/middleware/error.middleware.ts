@@ -1,7 +1,7 @@
 import type { ApiResponse } from '@casa/types';
 import { ErrorCodes } from '@casa/types';
 import type { NextFunction, Request, Response } from 'express';
-import { AppError } from '../utils/index';
+import { AppError } from '@/utils';
 
 /**
  * Error-handling middleware.

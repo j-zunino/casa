@@ -1,7 +1,7 @@
 import { ErrorCodes } from '@casa/types';
 import type { NextFunction, Request, Response } from 'express';
 import { z, type ZodType } from 'zod';
-import { AppError } from '../utils';
+import { AppError } from '@/utils';
 
 export type ValidateTarget = 'body' | 'query' | 'params';
 

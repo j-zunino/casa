@@ -1,10 +1,10 @@
+import { corsOptions } from '@/config';
+import { errorMiddleware } from '@/middleware';
+import { AppError, registerRoutes } from '@/utils';
 import { ErrorCodes } from '@casa/types';
 import cors from 'cors';
 import { NextFunction, Request, Response, Router } from 'express';
 import helmet from 'helmet';
-import { corsOptions } from '../config';
-import { errorMiddleware } from '../middleware';
-import { AppError, registerRoutes } from '../utils';
 
 import { authRouter } from './auth';
 import { healthRouter } from './health';

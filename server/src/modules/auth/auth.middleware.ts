@@ -1,6 +1,6 @@
+import { AppError } from '@/utils';
 import { ErrorCodes } from '@casa/types';
 import { type NextFunction, type Request, type Response } from 'express';
-import { AppError } from '../../utils/index';
 import { auth } from './auth';
 
 export const requireAuth = async (

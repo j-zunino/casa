@@ -1,10 +1,10 @@
+import { validate } from '@/middleware';
+import { auth, requireAuth } from '@/modules/auth';
+import { mapAuthError } from '@/modules/auth/auth.utils';
+import { houseSchema } from '@casa/schemas';
 import { type ApiResponse } from '@casa/types';
 import { Router, type Request, type Response } from 'express';
 import z from 'zod';
-import { houseSchema } from '../../../../packages/schemas/src';
-import { validate } from '../../middleware';
-import { mapAuthError } from '../auth/auth.utils';
-import { auth, requireAuth } from '../auth/index';
 import { generateHouseSlug } from './houses.utils';
 
 export const router: Router = Router();
