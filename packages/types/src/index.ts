@@ -1,10 +1,11 @@
 export const ErrorCodes = {
-    NOT_FOUND: 'NOT_FOUND',
+    BAD_REQUEST: 'BAD_REQUEST',
+    CONFLICT: 'CONFLICT',
     FORBIDDEN: 'FORBIDDEN',
     INTERNAL_ERROR: 'INTERNAL_ERROR',
     NOT_AUTHENTICATED: 'NOT_AUTHENTICATED',
+    NOT_FOUND: 'NOT_FOUND',
     VALIDATION_ERROR: 'VALIDATION_ERROR',
-    BAD_REQUEST: 'BAD_REQUEST',
 } as const;
 
 export type ErrorCode = (typeof ErrorCodes)[keyof typeof ErrorCodes];

@@ -9,6 +9,15 @@
 GET {{URL}}/health HTTP/1.1
 Content-Type: application/json
 
+##############################################################################
+### AUTHENTICATION
+##############################################################################
+
+### Sign out
+
+POST {{URL}}/auth/sign-out HTTP/1.1
+Content-Type: application/json
+
 
 ### Sign up with email/password
 
@@ -33,11 +42,9 @@ Content-Type: application/json
 }
 
 
-### Sign out
-
-POST {{URL}}/auth/sign-out HTTP/1.1
-Content-Type: application/json
-
+##############################################################################
+### USER
+##############################################################################
 
 ### Get current user
 
@@ -51,6 +58,10 @@ GET {{URL}}/me HTTP/1.1
 # @attach-cookie-jar
 
 GET {{URL}}/users HTTP/1.1
+
+##############################################################################
+### HOUSES
+##############################################################################
 
 ### List user houses
 
@@ -66,5 +77,5 @@ POST {{URL}}/houses
 Content-Type: application/json
 
 {
-    "name": "Lorem Ipsum 2"
+    "name": "Lorem Ipsum"
 }

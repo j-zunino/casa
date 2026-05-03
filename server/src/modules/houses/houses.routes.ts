@@ -1,8 +1,9 @@
 import { type ApiResponse } from '@casa/types';
-import { type Request, type Response, Router } from 'express';
+import { Router, type Request, type Response } from 'express';
 import z from 'zod';
 import { houseSchema } from '../../../../packages/schemas/src';
 import { validate } from '../../middleware';
+import { mapAuthError } from '../auth/auth.utils';
 import { auth, requireAuth } from '../auth/index';
 import { generateHouseSlug } from './houses.utils';
 
@@ -27,19 +28,24 @@ router.post(
         const data = req.body as z.infer<typeof houseSchema>;
 
         const slug = generateHouseSlug(data.name);
-        const house = await auth.api.createOrganization({
-            headers: req.headers,
-            body: {
-                name: data.name,
-                slug: slug,
-            },
-        });
 
-        const response: ApiResponse<typeof house> = {
-            success: true,
-            data: house,
-        };
+        try {
+            const house = await auth.api.createOrganization({
+                headers: req.headers,
+                body: {
+                    name: data.name,
+                    slug: slug,
+                },
+            });
 
-        res.json(response);
+            const response: ApiResponse<typeof house> = {
+                success: true,
+                data: house,
+            };
+
+            res.status(201).json(response);
+        } catch (err) {
+            mapAuthError(err);
+        }
     },
 );
