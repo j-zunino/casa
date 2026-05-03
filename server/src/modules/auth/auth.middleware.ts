@@ -8,25 +8,26 @@ export const requireAuth = async (
     res: Response,
     next: NextFunction,
 ) => {
-    const session = await auth.api.getSession({
-        headers: {
-            cookie: req.headers.cookie,
-            authorization: req.headers.authorization,
-        },
-    });
+    try {
+        const session = await auth.api.getSession({
+            headers: req.headers,
+        });
 
-    if (!session) {
-        return next(
-            new AppError(
-                'Not authenticated',
-                401,
-                ErrorCodes.NOT_AUTHENTICATED,
-            ),
-        );
+        if (!session) {
+            return next(
+                new AppError(
+                    'Not authenticated',
+                    401,
+                    ErrorCodes.NOT_AUTHENTICATED,
+                ),
+            );
+        }
+
+        res.locals.user = session.user;
+        res.locals.session = session.session;
+
+        next();
+    } catch (err) {
+        next(err);
     }
-
-    res.locals.user = session.user;
-    res.locals.session = session.session;
-
-    next();
 };
