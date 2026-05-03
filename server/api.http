@@ -16,9 +16,9 @@ POST {{URL}}/auth/sign-up/email HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "test@example.com",
-  "name": "Test User",
-  "password": "password123"
+  "email": "john.doe@example.com",
+  "name": "John Doe",
+  "password": "password1234!"
 }
 
 
@@ -28,8 +28,8 @@ POST {{URL}}/auth/sign-in/email HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "test@example.com",
-  "password": "password123"
+  "email": "john.doe@example.com",
+  "password": "password1234!"
 }
 
 
@@ -37,13 +37,6 @@ Content-Type: application/json
 
 POST {{URL}}/auth/sign-out HTTP/1.1
 Content-Type: application/json
-
-
-### Get session (better-auth endpoint)
-
-# @attach-cookie-jar
-
-GET {{URL}}/auth/get-session HTTP/1.1
 
 
 ### Get current user
@@ -58,3 +51,20 @@ GET {{URL}}/me HTTP/1.1
 # @attach-cookie-jar
 
 GET {{URL}}/users HTTP/1.1
+
+### List user houses
+
+# @attach-cookie-jar
+
+GET {{URL}}/houses
+
+### Create House
+
+# @attach-cookie-jar
+
+POST {{URL}}/houses
+Content-Type: application/json
+
+{
+    "name": "Lorem Ipsum 2"
+}
