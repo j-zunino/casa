@@ -1,7 +1,6 @@
 import { authClient } from '../auth.client';
-import type { AuthHouseContext } from '../types';
 
-export const useAuth = (): AuthHouseContext => {
+export const useAuth = () => {
     const { data: session, isPending: isPendingAuth } = authClient.useSession();
 
     const { data: active, isPending: isPendingActive } =
