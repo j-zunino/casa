@@ -67,3 +67,33 @@ router.get(
         res.json(response);
     },
 );
+
+router.put(
+    '/:id',
+    requireAuth,
+    validate(houseSchema),
+    async (req: Request<{ id: string }>, res: Response) => {
+        const data = req.body as z.infer<typeof houseSchema>;
+        const { id } = req.params;
+
+        const slug = generateHouseSlug(data.name);
+
+        const house = await auth.api.updateOrganization({
+            headers: req.headers,
+            body: {
+                organizationId: id,
+                data: {
+                    name: data.name,
+                    slug: slug,
+                },
+            },
+        });
+
+        const response: ApiResponse<typeof house> = {
+            success: true,
+            data: house,
+        };
+
+        res.json(response);
+    },
+);

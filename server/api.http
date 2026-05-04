@@ -85,3 +85,14 @@ Content-Type: application/json
 # @attach-cookie-jar
 
 GET {{URL}}/houses/YQW3FFp7AjcPDt1Ji070AaJ7I8iRyqru
+
+### Update House
+
+# @attach-cookie-jar
+
+PUT {{URL}}/houses/YQW3FFp7AjcPDt1Ji070AaJ7I8iRyqru
+Content-Type: application/json
+
+{
+    "name": "Hello world 4"
+}
