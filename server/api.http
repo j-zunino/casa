@@ -79,3 +79,9 @@ Content-Type: application/json
 {
     "name": "Lorem Ipsum"
 }
+
+### Get full House
+
+# @attach-cookie-jar
+
+GET {{URL}}/houses/YQW3FFp7AjcPDt1Ji070AaJ7I8iRyqru
