@@ -1,29 +1,11 @@
+import { mapBetterAuthError } from '@/modules/auth';
+import { normalizeHouseError } from '@/modules/houses';
 import { AppError } from '@/utils';
 import type { ApiResponse } from '@casa/types';
 import { ErrorCodes } from '@casa/types';
 import { isAPIError } from 'better-auth/api';
 import type { NextFunction, Request, Response } from 'express';
 import { ZodError } from 'zod';
-
-const normalizeBetterAuth = (message: string) =>
-    message.replace(/\borganization\b/gi, 'house');
-
-const mapBetterAuthCode = (status?: number) => {
-    switch (status) {
-        case 400:
-            return ErrorCodes.BAD_REQUEST;
-        case 401:
-            return ErrorCodes.NOT_AUTHENTICATED;
-        case 403:
-            return ErrorCodes.FORBIDDEN;
-        case 404:
-            return ErrorCodes.NOT_FOUND;
-        case 409:
-            return ErrorCodes.CONFLICT;
-        default:
-            return ErrorCodes.INTERNAL_ERROR;
-    }
-};
 
 /**
  * Error-handling middleware.
@@ -70,7 +52,7 @@ export const errorMiddleware = (
     if (isAPIError(error)) {
         console.log(error);
 
-        const message = normalizeBetterAuth(
+        const message = normalizeHouseError(
             error.body?.message ?? error.message ?? 'something went wrong',
         );
 
@@ -78,7 +60,7 @@ export const errorMiddleware = (
             success: false,
             error: {
                 message: message,
-                code: mapBetterAuthCode(error.statusCode),
+                code: mapBetterAuthError(error.statusCode),
             },
         });
     }

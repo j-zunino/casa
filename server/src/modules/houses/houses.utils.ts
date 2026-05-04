@@ -10,3 +10,6 @@ export const generateHouseSlug = (input: string) => {
         .replace(/^-+|-+$/g, '')
         .slice(0, 50);
 };
+
+export const normalizeHouseError = (message: string) =>
+    message.replace(/\borganization\b/gi, 'house');
