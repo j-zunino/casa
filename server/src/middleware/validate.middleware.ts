@@ -1,7 +1,5 @@
-import { ErrorCodes } from '@casa/types';
 import type { NextFunction, Request, Response } from 'express';
-import { z, type ZodType } from 'zod';
-import { AppError } from '@/utils';
+import { type ZodType } from 'zod';
 
 export type ValidateTarget = 'body' | 'query' | 'params';
 
@@ -27,28 +25,11 @@ type ValidateOptions = {
 export const validate =
     <T extends ZodType>(schema: T, { target = 'body' }: ValidateOptions = {}) =>
     (req: Request, _res: Response, next: NextFunction) => {
-        try {
-            const validated = schema.parse(req[target]);
-            (req as any)[target] = validated;
-
-            next();
-        } catch (error) {
-            if (error instanceof z.ZodError) {
-                const errors = error.issues.map((issue) => ({
-                    path: issue.path.join('.'),
-                    message: issue.message,
-                }));
-
-                return next(
-                    new AppError(
-                        'Validation failed',
-                        400,
-                        ErrorCodes.VALIDATION_ERROR,
-                        errors,
-                    ),
-                );
-            }
-
-            next(error);
-        }
+        schema
+            .parseAsync(req[target])
+            .then((validated) => {
+                (req as any)[target] = validated;
+                next();
+            })
+            .catch(next);
     };

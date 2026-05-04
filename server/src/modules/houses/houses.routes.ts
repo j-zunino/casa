@@ -1,6 +1,5 @@
 import { validate } from '@/middleware';
 import { auth, requireAuth } from '@/modules/auth';
-import { mapAuthError } from '@/modules/auth/auth.utils';
 import { houseSchema } from '@casa/schemas';
 import { type ApiResponse } from '@casa/types';
 import { Router, type Request, type Response } from 'express';
@@ -29,23 +28,19 @@ router.post(
 
         const slug = generateHouseSlug(data.name);
 
-        try {
-            const house = await auth.api.createOrganization({
-                headers: req.headers,
-                body: {
-                    name: data.name,
-                    slug: slug,
-                },
-            });
+        const house = await auth.api.createOrganization({
+            headers: req.headers,
+            body: {
+                name: data.name,
+                slug: slug,
+            },
+        });
 
-            const response: ApiResponse<typeof house> = {
-                success: true,
-                data: house,
-            };
+        const response: ApiResponse<typeof house> = {
+            success: true,
+            data: house,
+        };
 
-            res.status(201).json(response);
-        } catch (err) {
-            mapAuthError(err);
-        }
+        res.status(201).json(response);
     },
 );
