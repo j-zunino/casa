@@ -7,7 +7,7 @@ export const corsOptions: CorsOptions = {
         if (!origin || env.CORS_WHITELIST.includes(origin)) {
             callback(null, true);
         } else {
-            callback(new Error('Not allowed by CORS'));
+            callback(new Error('not allowed by CORS'));
         }
     },
 };

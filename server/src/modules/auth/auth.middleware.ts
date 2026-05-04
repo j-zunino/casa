@@ -16,7 +16,7 @@ export const requireAuth = async (
         if (!session) {
             return next(
                 new AppError(
-                    'Not authenticated',
+                    'not authenticated',
                     401,
                     ErrorCodes.NOT_AUTHENTICATED,
                 ),

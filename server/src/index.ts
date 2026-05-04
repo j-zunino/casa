@@ -9,12 +9,12 @@ const PORT = env.PORT;
 app.use('/api', mainRouter);
 
 const server: Server = app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
+    console.log(`server running at http://localhost:${PORT}`);
 });
 
 server.on('error', (error: NodeJS.ErrnoException) => {
     if (error.code === 'EADDRINUSE') {
-        console.error(`Port ${PORT} is already in use. Try a different port`);
+        console.error(`port ${PORT} is already in use. Try a different port`);
         process.exit(1);
     }
     throw error;
@@ -34,7 +34,7 @@ const gracefulShutdown = (signal: string) => {
     // Force close after 10 seconds
     setTimeout(() => {
         console.error(
-            'Could not close connections in time, forcefully shutting down',
+            'could not close connections in time, forcefully shutting down',
         );
         process.exit(1);
     }, 10000);
