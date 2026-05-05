@@ -90,3 +90,25 @@ router.put(
         res.json(response);
     },
 );
+
+router.post(
+    '/:id',
+    requireAuth,
+    async (req: Request<{ id: string }>, res: Response) => {
+        const { id } = req.params;
+
+        const house = await auth.api.setActiveOrganization({
+            headers: req.headers,
+            body: {
+                organizationId: id,
+            },
+        });
+
+        const response: ApiResponse<typeof house> = {
+            success: true,
+            data: house,
+        };
+
+        res.json(response);
+    },
+);

@@ -96,3 +96,9 @@ Content-Type: application/json
 {
     "name": "Hello world"
 }
+
+### Set active House
+
+# @attach-cookie-jar
+
+POST {{URL}}/houses/YQW3FFp7AjcPDt1Ji070AaJ7I8iRyqru
