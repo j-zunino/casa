@@ -1,9 +1,8 @@
-import { validate } from '@/middleware';
 import { auth, requireAuth } from '@/modules/auth';
 import { houseSchema } from '@casa/schemas';
 import { type ApiResponse } from '@casa/types';
 import { Router, type Request, type Response } from 'express';
-import z from 'zod';
+import { parse } from 'zod';
 import { generateHouseSlug } from './houses.utils';
 
 export const router: Router = Router();
@@ -19,31 +18,26 @@ router.get('/', requireAuth, async (req: Request, res: Response) => {
     res.json(response);
 });
 
-router.post(
-    '/',
-    requireAuth,
-    validate(houseSchema),
-    async (req: Request, res: Response) => {
-        const data = req.body as z.infer<typeof houseSchema>;
+router.post('/', requireAuth, async (req: Request, res: Response) => {
+    const validated = parse(houseSchema, req.body);
 
-        const slug = generateHouseSlug(data.name);
+    const slug = generateHouseSlug(validated.name);
 
-        const house = await auth.api.createOrganization({
-            headers: req.headers,
-            body: {
-                name: data.name,
-                slug: slug,
-            },
-        });
+    const house = await auth.api.createOrganization({
+        headers: req.headers,
+        body: {
+            name: validated.name,
+            slug: slug,
+        },
+    });
 
-        const response: ApiResponse<typeof house> = {
-            success: true,
-            data: house,
-        };
+    const response: ApiResponse<typeof house> = {
+        success: true,
+        data: house,
+    };
 
-        res.status(201).json(response);
-    },
-);
+    res.status(201).json(response);
+});
 
 router.get(
     '/:id',
@@ -71,19 +65,18 @@ router.get(
 router.put(
     '/:id',
     requireAuth,
-    validate(houseSchema),
     async (req: Request<{ id: string }>, res: Response) => {
-        const data = req.body as z.infer<typeof houseSchema>;
         const { id } = req.params;
+        const validated = parse(houseSchema, req.body);
 
-        const slug = generateHouseSlug(data.name);
+        const slug = generateHouseSlug(validated.name);
 
         const house = await auth.api.updateOrganization({
             headers: req.headers,
             body: {
                 organizationId: id,
                 data: {
-                    name: data.name,
+                    name: validated.name,
                     slug: slug,
                 },
             },
