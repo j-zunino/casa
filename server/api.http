@@ -102,3 +102,9 @@ Content-Type: application/json
 # @attach-cookie-jar
 
 POST {{URL}}/houses/YQW3FFp7AjcPDt1Ji070AaJ7I8iRyqru
+
+### Delete house
+
+# @attach-cookie-jar
+
+DELETE {{URL}}/houses/YQW3FFp7AjcPDt1Ji070AaJ7I8iRyqru
