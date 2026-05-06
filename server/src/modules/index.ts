@@ -1,4 +1,4 @@
-import { corsOptions } from '@/config';
+import { corsOptions, limiter } from '@/config';
 import { errorMiddleware } from '@/middleware';
 import { AppError, registerRoutes } from '@/utils';
 import { ErrorCodes } from '@casa/types';
@@ -14,6 +14,7 @@ import { usersRouter } from './users';
 
 const router: Router = Router();
 
+router.use(limiter);
 router.use(helmet());
 router.use(cors(corsOptions));
 

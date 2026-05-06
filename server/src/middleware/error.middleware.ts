@@ -50,8 +50,6 @@ export const errorMiddleware = (
     }
 
     if (isAPIError(error)) {
-        console.log(error);
-
         const message = normalizeHouseError(
             error.body?.message ?? error.message ?? 'something went wrong',
         );

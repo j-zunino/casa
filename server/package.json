@@ -19,6 +19,7 @@
     "better-auth": "catalog:",
     "cors": "^2.8.6",
     "express": "^5.0.0",
+    "express-rate-limit": "^8.5.1",
     "helmet": "^8.1.0",
     "pg": "^8.18.0",
     "zod": "catalog:"
