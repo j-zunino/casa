@@ -77,20 +77,20 @@ POST {{URL}}/houses
 Content-Type: application/json
 
 {
-    "name": "Lorem Ipsum"
+    "name": "House"
 }
 
 ### Get full House
 
 # @attach-cookie-jar
 
-GET {{URL}}/houses/YQW3FFp7AjcPDt1Ji070AaJ7I8iRyqru
+GET {{URL}}/houses/s8fdbGtxjHYgVOXePLXGhzTciuDhFp4X
 
 ### Update House
 
 # @attach-cookie-jar
 
-PUT {{URL}}/houses/YQW3FFp7AjcPDt1Ji070AaJ7I8iRyqru
+PUT {{URL}}/houses/s8fdbGtxjHYgVOXePLXGhzTciuDhFp4X
 Content-Type: application/json
 
 {
@@ -101,10 +101,10 @@ Content-Type: application/json
 
 # @attach-cookie-jar
 
-POST {{URL}}/houses/YQW3FFp7AjcPDt1Ji070AaJ7I8iRyqru
+POST {{URL}}/houses/s8fdbGtxjHYgVOXePLXGhzTciuDhFp4X/set-active
 
 ### Delete house
 
 # @attach-cookie-jar
 
-DELETE {{URL}}/houses/YQW3FFp7AjcPDt1Ji070AaJ7I8iRyqru
+DELETE {{URL}}/houses/s8fdbGtxjHYgVOXePLXGhzTciuDhFp4X

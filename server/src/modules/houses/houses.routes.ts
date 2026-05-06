@@ -92,7 +92,7 @@ router.put(
 );
 
 router.post(
-    '/:id',
+    '/:id/set-active',
     requireAuth,
     async (req: Request<{ id: string }>, res: Response) => {
         const { id } = req.params;
