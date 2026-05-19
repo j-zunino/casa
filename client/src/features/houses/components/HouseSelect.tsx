@@ -7,7 +7,7 @@ import {
 import { useAuth } from '@/features/auth/hooks';
 import { HouseLineIcon, PencilIcon } from '@phosphor-icons/react';
 import { setActiveHouse } from '../services/houses.service.ts';
-import type { House } from '@/features/auth/types';
+import type { House } from '@/features/houses/types';
 
 interface Props {
     editMode?: boolean;
