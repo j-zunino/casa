@@ -1,28 +1,23 @@
 import '@/main.css';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { routeTree } from '@/routeTree.gen';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { createRouter } from '@tanstack/react-router';
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
-import { routeTree } from '@/routeTree.gen';
+import { queryClient } from './lib/query-client';
 
 import { App } from './App';
 import { NotFound } from './components/common/ErrorComponents';
 import { Loading } from './components/common/Loading';
 
-export const queryClient = new QueryClient();
-
 export const router = createRouter({
     routeTree,
     scrollRestoration: true,
     context: {
+        queryClient,
         auth: {
             user: null,
             isAuthenticated: false,
-            isLoading: true,
-        },
-        house: {
-            active: null,
-            list: [],
             isLoading: true,
         },
     },
