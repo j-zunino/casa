@@ -6,7 +6,7 @@ import { Field, FieldError } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { useAuth } from '@/features/auth/hooks';
-import { DeleteHouseAlert } from '@/features/houses/components';
+import { DeleteHouse } from '@/features/houses/components';
 import { handleHouseUpdate } from '@/features/houses/services';
 import { router } from '@/main';
 import { houseSchema } from '@casa/schemas';
@@ -147,7 +147,7 @@ const RouteComponent = () => {
 
                     <Separator />
 
-                    <DeleteHouseAlert houseId={house.active.id} />
+                    <DeleteHouse houseId={house.active.id} />
                 </div>
             </div>
         </div>

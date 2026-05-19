@@ -1,4 +1,4 @@
 export { CreateHouse } from './CreateHouse.tsx';
 export { CreateHouseForm } from './CreateHouseForm.tsx';
-export { DeleteHouseAlert } from './DeleteHouseAlert.tsx';
+export { DeleteHouse } from './DeleteHouse.tsx';
 export { HouseSelect } from './HouseSelect.tsx';
