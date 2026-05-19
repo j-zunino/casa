@@ -1,3 +1,10 @@
+import { houseSchema } from '@casa/schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import z from 'zod';
+import { handleHouseCreation } from '../services';
+
 import { Button } from '@/components/ui/button';
 import {
     Field,
@@ -7,12 +14,7 @@ import {
     FieldSet,
 } from '@/components/ui/field';
 import { Input } from '@/components/ui/input.tsx';
-import { houseSchema } from '@casa/schemas';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Controller, useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import z from 'zod';
-import { handleHouseCreation } from '../services/houses.service.ts';
+import { Controller } from 'react-hook-form';
 
 type FormValues = z.infer<typeof houseSchema>;
 
