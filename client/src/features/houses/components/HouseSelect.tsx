@@ -1,29 +1,28 @@
+import { setActiveHouse } from '../services/houses.service.ts';
+
 import {
     Avatar,
     AvatarFallback,
     AvatarImage,
     AvatarLabel,
 } from '@/components/ui/avatar';
-import { useAuth } from '@/features/auth/hooks';
 import { HouseLineIcon, PencilIcon } from '@phosphor-icons/react';
-import { setActiveHouse } from '../services/houses.service.ts';
+
 import type { House } from '@/features/houses/types';
 
 interface Props {
+    list: House[];
     editMode?: boolean;
 }
 
-export const HouseSelect = ({ editMode }: Props) => {
-    const { house } = useAuth();
-    const houses = house.list ?? [];
-
-    if (houses.length === 0) return null;
+export const HouseSelect = ({ list, editMode }: Props) => {
+    if (list.length === 0) return null;
 
     const path = editMode ? '/account/houses/$slug' : undefined;
 
     return (
         <>
-            {houses.map((h: House) => (
+            {list.map((h: House) => (
                 <button
                     key={h.id}
                     onClick={() => setActiveHouse(h.id, h.slug, path)}
