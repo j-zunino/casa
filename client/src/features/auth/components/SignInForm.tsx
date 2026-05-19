@@ -1,3 +1,10 @@
+import { signInSchema } from '@casa/schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import z from 'zod';
+import { handleEmailSignIn } from '../services';
+
 import { Button } from '@/components/ui/button';
 import {
     Field,
@@ -9,13 +16,8 @@ import {
     FieldSet,
 } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import { signInSchema } from '@casa/schemas';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { Link } from '@tanstack/react-router';
-import { Controller, useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import z from 'zod';
-import { handleEmailSignIn } from '../services';
+import { Controller } from 'react-hook-form';
 import { SocialSignIn } from './SocialSignIn';
 
 type FormValues = z.infer<typeof signInSchema>;

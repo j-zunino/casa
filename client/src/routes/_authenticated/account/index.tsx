@@ -1,3 +1,6 @@
+import { useAuth } from '@/features/auth/hooks';
+import { createFileRoute } from '@tanstack/react-router';
+
 import {
     Avatar,
     AvatarFallback,
@@ -7,7 +10,6 @@ import {
     AvatarLabel,
 } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { useAuth } from '@/features/auth/hooks';
 import {
     CaretLeftIcon,
     CaretRightIcon,
@@ -17,7 +19,7 @@ import {
     TrashIcon,
     UserIcon,
 } from '@phosphor-icons/react';
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { Link } from '@tanstack/react-router';
 
 const RouteComponent = () => {
     const { auth, house } = useAuth();

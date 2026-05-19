@@ -1,6 +1,8 @@
-import { NoActiveHouse } from '@/components/common/ErrorComponents';
 import { useAuth } from '@/features/auth/hooks';
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
+
+import { NoActiveHouse } from '@/components/common/ErrorComponents';
+import { Link } from '@tanstack/react-router';
 
 const RouteComponent = () => {
     const { house } = useAuth();

@@ -1,3 +1,13 @@
+import { useAuth } from '@/features/auth/hooks';
+import { handleHouseUpdate } from '@/features/houses/services';
+import { router } from '@/main';
+import { houseSchema } from '@casa/schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { createFileRoute } from '@tanstack/react-router';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import z from 'zod';
+
 import { NoActiveHouse } from '@/components/common/ErrorComponents';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -5,12 +15,7 @@ import { ButtonGroup } from '@/components/ui/button-group';
 import { Field, FieldError } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
-import { useAuth } from '@/features/auth/hooks';
 import { DeleteHouse } from '@/features/houses/components';
-import { handleHouseUpdate } from '@/features/houses/services';
-import { router } from '@/main';
-import { houseSchema } from '@casa/schemas';
-import { zodResolver } from '@hookform/resolvers/zod';
 import {
     CaretLeftIcon,
     CaretRightIcon,
@@ -19,10 +24,8 @@ import {
     HouseLineIcon,
     UserIcon,
 } from '@phosphor-icons/react';
-import { createFileRoute, Link } from '@tanstack/react-router';
-import { Controller, useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import z from 'zod';
+import { Link } from '@tanstack/react-router';
+import { Controller } from 'react-hook-form';
 
 type FormValues = z.infer<typeof houseSchema>;
 

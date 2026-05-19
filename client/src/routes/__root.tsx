@@ -1,20 +1,17 @@
 import '@fontsource-variable/funnel-display/wght.css';
 import '@fontsource-variable/jetbrains-mono/wght.css';
-import { TanStackDevtools } from '@tanstack/react-devtools';
-import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools';
-import {
-    Outlet,
-    createRootRouteWithContext,
-    useMatches,
-} from '@tanstack/react-router';
-import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
+import { createRootRouteWithContext, useMatches } from '@tanstack/react-router';
 
 import { Navbar } from '@/components/common/Navbar';
-import type { AuthContext, HouseContext } from '@/features/auth/types';
+import { TanStackDevtools } from '@tanstack/react-devtools';
+import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools';
+import { Outlet } from '@tanstack/react-router';
+import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
+
+import type { AuthContext } from '@/features/auth/types';
 
 interface RouterContext {
     auth: AuthContext;
-    house: HouseContext;
 }
 
 const RootLayout = () => {

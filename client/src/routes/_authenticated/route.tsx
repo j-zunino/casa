@@ -1,4 +1,6 @@
-import { Outlet, createFileRoute, redirect } from '@tanstack/react-router';
+import { createFileRoute, redirect } from '@tanstack/react-router';
+
+import { Outlet } from '@tanstack/react-router';
 
 const AuthenticatedLayout = () => {
     return <Outlet />;

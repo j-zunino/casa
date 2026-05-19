@@ -1,6 +1,7 @@
+import { createFileRoute, redirect } from '@tanstack/react-router';
+
 import { SignInForm } from '@/features/auth/components';
 import { AuthLayout } from '@/layouts';
-import { createFileRoute, redirect } from '@tanstack/react-router';
 
 const RouteComponent = () => {
     return (
