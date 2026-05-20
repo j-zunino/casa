@@ -1,4 +1,6 @@
 import { useAuth } from '@/features/auth/hooks';
+import { housesQueries } from '@/features/houses/queries';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 
 import {
@@ -21,8 +23,11 @@ import {
 } from '@phosphor-icons/react';
 import { Link } from '@tanstack/react-router';
 
+import type { House } from '@/features/houses/types';
+
 const RouteComponent = () => {
-    const { auth, house } = useAuth();
+    const { auth } = useAuth();
+    const { data: houses } = useSuspenseQuery(housesQueries.all());
 
     return (
         <div className="flex grow flex-col items-center p-8">
@@ -84,7 +89,7 @@ const RouteComponent = () => {
                         </Link>
                     </Button>
 
-                    {house.list.length > 0 && (
+                    {houses.length > 0 && (
                         <Button
                             asChild
                             size="lg"
@@ -99,7 +104,7 @@ const RouteComponent = () => {
 
                                 <div className="flex items-center gap-2">
                                     <AvatarGroup>
-                                        {house.list.slice(0, 2).map((h) => (
+                                        {houses.slice(0, 2).map((h: House) => (
                                             <Avatar
                                                 key={h.id}
                                                 size="sm"
@@ -116,9 +121,9 @@ const RouteComponent = () => {
                                             </Avatar>
                                         ))}
 
-                                        {house.list.length > 2 && (
+                                        {houses.length > 2 && (
                                             <AvatarGroupCount>
-                                                +{house.list.length - 2}
+                                                +{houses.length - 2}
                                             </AvatarGroupCount>
                                         )}
                                     </AvatarGroup>
@@ -141,4 +146,7 @@ const RouteComponent = () => {
 
 export const Route = createFileRoute('/_authenticated/account/')({
     component: RouteComponent,
+    loader: async ({ context }) => {
+        await context.queryClient.ensureQueryData(housesQueries.all());
+    },
 });
