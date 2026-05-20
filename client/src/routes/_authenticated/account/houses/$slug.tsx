@@ -150,7 +150,7 @@ const RouteComponent = () => {
 
                     <Separator />
 
-                    <DeleteHouse houseId={house.active.id} />
+                    <DeleteHouse id={house.active.id} />
                 </div>
             </div>
         </div>

@@ -1,5 +1,6 @@
+import { router } from '@/main';
 import { toast } from 'sonner';
-import { handleDeleteHouse } from '../services/houses.service.ts';
+import { useHouses } from '../hooks/useHouses.ts';
 
 import {
     AlertDialog,
@@ -19,14 +20,22 @@ import { TrashIcon, XIcon } from '@phosphor-icons/react';
 import type { House } from '../types/houses.types.ts';
 
 interface Props {
-    houseId: House['id'];
+    id: House['id'];
 }
 
-export const DeleteHouse = ({ houseId }: Props) => {
-    const handleDelete = (id: typeof houseId) => {
-        toast.promise(handleDeleteHouse(id), {
+export const DeleteHouse = ({ id }: Props) => {
+    const { mutateAsync, isPending } = useHouses.useDelete();
+
+    const onSubmit = async (houseId: typeof id) => {
+        toast.promise(mutateAsync(houseId), {
             loading: 'Deleting house...',
-            success: 'House deleted successfully!',
+            success: () => {
+                router.navigate({
+                    to: '/',
+                });
+
+                return 'House deleted successfully!';
+            },
             error: (err) => err.message,
         });
     };
@@ -34,7 +43,7 @@ export const DeleteHouse = ({ houseId }: Props) => {
     return (
         <AlertDialog>
             <AlertDialogTrigger asChild>
-                <Button size="lg" variant="destructive">
+                <Button size="lg" variant="destructive" disabled={isPending}>
                     <TrashIcon />
                     Delete house
                 </Button>
@@ -62,7 +71,8 @@ export const DeleteHouse = ({ houseId }: Props) => {
 
                     <AlertDialogAction
                         variant="destructive"
-                        onClick={() => handleDelete(houseId)}
+                        onClick={() => onSubmit(id)}
+                        disabled={isPending}
                     >
                         <TrashIcon />
                         Delete

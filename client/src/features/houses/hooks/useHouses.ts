@@ -18,4 +18,17 @@ export const useHouses = {
             },
         });
     },
+
+    useDelete() {
+        const queryClient = useQueryClient();
+
+        return useMutation({
+            ...housesMutations.delete(),
+            onSuccess: () => {
+                queryClient.invalidateQueries({
+                    queryKey: housesKeys.base(),
+                });
+            },
+        });
+    },
 };

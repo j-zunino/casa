@@ -7,4 +7,10 @@ export const housesMutations = {
             mutationFn: housesApi.create,
         });
     },
+
+    delete() {
+        return mutationOptions({
+            mutationFn: housesApi.delete,
+        });
+    },
 };

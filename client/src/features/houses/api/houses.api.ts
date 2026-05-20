@@ -20,4 +20,10 @@ export const housesApi = {
             body: JSON.stringify({ name }),
         });
     },
+
+    async delete(id: House['id']) {
+        return api(`/api/houses/${id}`, {
+            method: 'DELETE',
+        });
+    },
 };
