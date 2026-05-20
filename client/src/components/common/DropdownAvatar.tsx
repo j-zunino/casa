@@ -1,3 +1,8 @@
+import { useAuth } from '@/features/auth/hooks';
+import { handleSignOut } from '@/features/auth/services';
+import { useHouses } from '@/features/houses/hooks';
+import { setActiveHouse } from '@/features/houses/services';
+
 import {
     Avatar,
     AvatarFallback,
@@ -19,13 +24,13 @@ import {
     UserIcon,
 } from '@phosphor-icons/react';
 import { Link } from '@tanstack/react-router';
+import { Spinner } from '../ui/spinner';
 
-import { useAuth } from '@/features/auth/hooks';
-import { handleSignOut } from '@/features/auth/services';
-import { setActiveHouse } from '@/features/houses/services';
+import type { House } from '@/features/houses/types';
 
 export const DropdownAvatar = () => {
-    const { auth, house } = useAuth();
+    const { auth } = useAuth();
+    const { data: houses, isPending: isHousesPending } = useHouses.useAll();
 
     return (
         <DropdownMenu>
@@ -47,25 +52,32 @@ export const DropdownAvatar = () => {
                 align="end"
                 className="w-auto max-w-60 min-w-50"
             >
-                {house.list.map((h) => (
-                    <DropdownMenuItem
-                        key={h.id}
-                        onClick={() => setActiveHouse(h.id, h.slug)}
-                    >
-                        <Avatar size="sm" rounded="normal">
-                            <AvatarImage
-                                src={h.logo ?? undefined}
-                                alt={h.name}
-                            />
-
-                            <AvatarFallback>
-                                <HouseLineIcon />
-                            </AvatarFallback>
-                        </Avatar>
-
-                        <AvatarLabel className="py-0">{h.name}</AvatarLabel>
+                {isHousesPending ? (
+                    <DropdownMenuItem className="hover:bg-transparent!">
+                        <Spinner />
+                        Loading houses...
                     </DropdownMenuItem>
-                ))}
+                ) : (
+                    houses.map((h: House) => (
+                        <DropdownMenuItem
+                            key={h.id}
+                            onClick={() => setActiveHouse(h.id, h.slug)}
+                        >
+                            <Avatar size="sm" rounded="normal">
+                                <AvatarImage
+                                    src={h.logo ?? undefined}
+                                    alt={h.name}
+                                />
+
+                                <AvatarFallback>
+                                    <HouseLineIcon />
+                                </AvatarFallback>
+                            </Avatar>
+
+                            <AvatarLabel className="py-0">{h.name}</AvatarLabel>
+                        </DropdownMenuItem>
+                    ))
+                )}
 
                 <DropdownMenuItem asChild>
                     <Link to="/manage-houses">
