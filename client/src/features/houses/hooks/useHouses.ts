@@ -1,6 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { housesApi } from '../api';
-import { housesKeys, housesQueries } from '../queries';
+import { housesKeys, housesMutations, housesQueries } from '../queries';
 
 export const useHouses = {
     useAll() {
@@ -11,7 +10,7 @@ export const useHouses = {
         const queryClient = useQueryClient();
 
         return useMutation({
-            mutationFn: housesApi.create,
+            ...housesMutations.create(),
             onSuccess: () => {
                 queryClient.invalidateQueries({
                     queryKey: housesKeys.base(),

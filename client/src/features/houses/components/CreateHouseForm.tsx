@@ -3,7 +3,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import z from 'zod';
-import { handleHouseCreation } from '../services';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -15,19 +14,26 @@ import {
 } from '@/components/ui/field';
 import { Input } from '@/components/ui/input.tsx';
 import { Controller } from 'react-hook-form';
+import { useHouses } from '../hooks';
 
 type FormValues = z.infer<typeof houseSchema>;
 
 export const CreateHouseForm = () => {
+    const { mutateAsync, isPending } = useHouses.useCreate();
+
     const form = useForm<FormValues>({
         resolver: zodResolver(houseSchema),
         defaultValues: { name: '' },
     });
 
-    const onSubmit = (data: FormValues) => {
-        toast.promise(handleHouseCreation(data.name), {
+    const onSubmit = async (data: FormValues) => {
+        toast.promise(mutateAsync(data.name), {
             loading: 'Creating house...',
-            success: 'House created successfully!',
+            success: () => {
+                form.reset();
+
+                return 'House created successfully!';
+            },
             error: (err) => err.message,
         });
     };
@@ -63,7 +69,9 @@ export const CreateHouseForm = () => {
                     />
 
                     <Field>
-                        <Button type="submit">Create</Button>
+                        <Button type="submit" disabled={isPending}>
+                            Create
+                        </Button>
                     </Field>
                 </FieldGroup>
             </FieldSet>
