@@ -19,4 +19,10 @@ export const authMutations = {
             mutationFn: authApi.signInEmail,
         });
     },
+
+    signInSocial() {
+        return mutationOptions({
+            mutationFn: authApi.signInSocial,
+        });
+    },
 };

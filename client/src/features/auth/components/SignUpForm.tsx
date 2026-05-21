@@ -19,7 +19,7 @@ import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
 import { Link } from '@tanstack/react-router';
 import { Controller } from 'react-hook-form';
-import { SocialSignIn } from './SocialSignIn';
+import { GitHubSignIn } from './GitHubSignIn';
 
 type FormValues = z.infer<typeof signUpFormSchema>;
 
@@ -155,7 +155,7 @@ export const SignUpForm = () => {
                                 'Create account'
                             )}
                         </Button>
-                        <SocialSignIn />
+                        <GitHubSignIn />
 
                         <FieldDescription className="text-right">
                             <Link to="/sign-in">I already have an account</Link>

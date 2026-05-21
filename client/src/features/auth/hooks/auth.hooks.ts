@@ -48,4 +48,17 @@ export const authHooks = {
             },
         });
     },
+
+    useSignInSocial() {
+        const queryClient = useQueryClient();
+
+        return useMutation({
+            ...authMutations.signInSocial(),
+            onSuccess: async () => {
+                queryClient.invalidateQueries({
+                    queryKey: housesKeys.base(),
+                });
+            },
+        });
+    },
 };

@@ -2,6 +2,7 @@ import { env } from '@/lib/zod';
 import { authClient } from '../auth.client';
 
 import type { SignInDto, SignUpDto } from '../types';
+import type { SocialProvider } from 'better-auth';
 
 export const authApi = {
     async getSession() {
@@ -28,6 +29,13 @@ export const authApi = {
             email: data.email,
             password: data.password,
             rememberMe: true,
+            callbackURL: env.VITE_BETTER_AUTH_CALLBACK_URL,
+        });
+    },
+
+    async signInSocial(provider: SocialProvider) {
+        return authClient.signIn.social({
+            provider: provider,
             callbackURL: env.VITE_BETTER_AUTH_CALLBACK_URL,
         });
     },

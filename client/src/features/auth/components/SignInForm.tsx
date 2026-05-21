@@ -19,7 +19,7 @@ import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
 import { Link } from '@tanstack/react-router';
 import { Controller } from 'react-hook-form';
-import { SocialSignIn } from './SocialSignIn';
+import { GitHubSignIn } from './GitHubSignIn';
 
 type FormValues = z.infer<typeof signInSchema>;
 
@@ -108,7 +108,7 @@ export const SignInForm = () => {
                                 'Sign In'
                             )}
                         </Button>
-                        <SocialSignIn disabled={isSigningIn} />
+                        <GitHubSignIn disabled={isSigningIn} />
 
                         <FieldDescription className="text-right">
                             <Link to="/sign-up">I don't have an account</Link>
