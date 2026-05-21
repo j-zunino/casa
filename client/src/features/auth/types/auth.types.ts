@@ -1,3 +1,6 @@
+import z from 'zod';
+import { signUpSchema } from '@casa/schemas';
+
 import type { authClient } from '../auth.client';
 
 export interface AuthContext {
@@ -8,3 +11,5 @@ export interface AuthContext {
 
 export type User = typeof authClient.$Infer.Session.user;
 export type Session = typeof authClient.$Infer.Session.session;
+
+export type SignUpDto = z.infer<typeof signUpSchema>;

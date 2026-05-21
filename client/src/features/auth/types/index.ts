@@ -1,1 +1,1 @@
-export type { AuthContext, Session, User } from './auth.types.ts';
+export type { AuthContext, Session, SignUpDto, User } from './auth.types.ts';

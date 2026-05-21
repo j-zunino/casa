@@ -20,18 +20,25 @@ export const signInSchema = z.object({
     password: signInPasswordSchema,
 });
 
-export const signUpSchema = z
-    .object({
-        name: z
-            .string()
-            .min(1, { error: 'name is required' })
-            .max(50, { error: 'name is too long' }),
-        email: emailSchema,
-        password: signUpPasswordSchema,
-        passwordConfirmation: signUpPasswordSchema,
-    })
+/**
+ * Back-end/API schema
+ */
+export const signUpSchema = z.object({
+    name: z
+        .string()
+        .min(1, { error: 'name is required' })
+        .max(50, { error: 'name is too long' }),
+    email: emailSchema,
+    password: signUpPasswordSchema,
+});
+
+/**
+ * Frontend form schema
+ */
+export const signUpFormSchema = signUpSchema
+    .extend({ passwordConfirmation: signUpPasswordSchema })
     .refine((data) => data.password === data.passwordConfirmation, {
-        error: 'password do not match',
+        error: 'passwords do not match',
         path: ['passwordConfirmation'],
     });
 

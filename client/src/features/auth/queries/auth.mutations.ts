@@ -7,4 +7,10 @@ export const authMutations = {
             mutationFn: authApi.signOut,
         });
     },
+
+    emailSignUp() {
+        return mutationOptions({
+            mutationFn: authApi.signUpEmail,
+        });
+    },
 };
