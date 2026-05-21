@@ -5,20 +5,28 @@ import type { House } from '../types';
 
 export const housesApi = {
     async getAll() {
-        const result = await authClient.organization.list();
-        return result.data;
+        const { data, error } = await authClient.organization.list();
+
+        if (error) throw error;
+
+        return data;
     },
 
     async getById(id: House['id']) {
-        const result = await authClient.organization.getFullOrganization({
-            query: {
-                organizationId: id,
-                membersLimit: 10,
-            },
-        });
-        return result.data;
+        const { data, error } =
+            await authClient.organization.getFullOrganization({
+                query: {
+                    organizationId: id,
+                    membersLimit: 10,
+                },
+            });
+
+        if (error) throw error;
+
+        return data;
     },
 
+    // TODO: Replace with better auth
     async create(name: House['name']) {
         return api('/api/houses', {
             method: 'POST',

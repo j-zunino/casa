@@ -11,8 +11,8 @@ export const useHouses = {
 
         return useMutation({
             ...housesMutations.create(),
-            onSuccess: () => {
-                queryClient.invalidateQueries({
+            onSuccess: async () => {
+                await queryClient.invalidateQueries({
                     queryKey: housesKeys.base(),
                 });
             },
@@ -24,8 +24,8 @@ export const useHouses = {
 
         return useMutation({
             ...housesMutations.delete(),
-            onSuccess: () => {
-                queryClient.invalidateQueries({
+            onSuccess: async () => {
+                await queryClient.invalidateQueries({
                     queryKey: housesKeys.base(),
                 });
             },

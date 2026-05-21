@@ -6,36 +6,46 @@ import type { SocialProvider } from 'better-auth';
 
 export const authApi = {
     async getSession() {
-        const result = await authClient.getSession();
-        return result.data;
+        const { data, error } = await authClient.getSession();
+
+        if (error) throw error;
+
+        return data;
     },
 
-    async signOut() {
-        const result = await authClient.signOut();
-        return result.data;
+    signOut() {
+        return authClient.signOut();
     },
 
-    async signUpEmail(data: SignUpDto) {
-        return authClient.signUp.email({
-            name: data.name,
-            email: data.email,
-            password: data.password,
+    async signUpEmail(input: SignUpDto) {
+        const { data, error } = await authClient.signUp.email({
+            name: input.name,
+            email: input.email,
+            password: input.password,
             callbackURL: env.VITE_BETTER_AUTH_CALLBACK_URL,
         });
+
+        if (error) throw error;
+
+        return data;
     },
 
-    async signInEmail(data: SignInDto) {
-        return authClient.signIn.email({
-            email: data.email,
-            password: data.password,
+    async signInEmail(input: SignInDto) {
+        const { data, error } = await authClient.signIn.email({
+            email: input.email,
+            password: input.password,
             rememberMe: true,
             callbackURL: env.VITE_BETTER_AUTH_CALLBACK_URL,
         });
+
+        if (error) throw error;
+
+        return data;
     },
 
-    async signInSocial(provider: SocialProvider) {
+    signInSocial(provider: SocialProvider) {
         return authClient.signIn.social({
-            provider: provider,
+            provider,
             callbackURL: env.VITE_BETTER_AUTH_CALLBACK_URL,
         });
     },

@@ -29,7 +29,7 @@ export const authHooks = {
         return useMutation({
             ...authMutations.signUpEmail(),
             onSuccess: async () => {
-                queryClient.invalidateQueries({
+                await queryClient.invalidateQueries({
                     queryKey: housesKeys.base(),
                 });
             },
@@ -42,7 +42,7 @@ export const authHooks = {
         return useMutation({
             ...authMutations.signInEmail(),
             onSuccess: async () => {
-                queryClient.invalidateQueries({
+                await queryClient.invalidateQueries({
                     queryKey: housesKeys.base(),
                 });
             },
@@ -55,7 +55,7 @@ export const authHooks = {
         return useMutation({
             ...authMutations.signInSocial(),
             onSuccess: async () => {
-                queryClient.invalidateQueries({
+                await queryClient.invalidateQueries({
                     queryKey: housesKeys.base(),
                 });
             },
