@@ -1,6 +1,9 @@
 import { env, prisma } from '@/config';
+import { signUpSchema } from '@casa/schemas';
+import { ErrorCodes } from '@casa/types';
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
+import { APIError, createAuthMiddleware } from 'better-auth/api';
 import { organization } from 'better-auth/plugins';
 
 export const auth = betterAuth({
@@ -43,4 +46,19 @@ export const auth = betterAuth({
             },
         }),
     ],
+
+    hooks: {
+        before: createAuthMiddleware(async (ctx) => {
+            if (ctx.path.startsWith('/sign-up/email')) {
+                const result = signUpSchema.safeParse(ctx.body);
+
+                if (!result.success) {
+                    throw new APIError(ErrorCodes.BAD_REQUEST, {
+                        message:
+                            result.error.issues[0]?.message ?? 'invalid input',
+                    });
+                }
+            }
+        }),
+    },
 });
