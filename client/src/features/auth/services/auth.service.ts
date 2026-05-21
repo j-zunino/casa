@@ -3,8 +3,6 @@
 import { env } from '@/lib/zod';
 import { authClient } from '../auth.client';
 
-export const handleSignOut = async () => await authClient.signOut();
-
 export const handleEmailSignUp = async (
     name: string,
     email: string,
