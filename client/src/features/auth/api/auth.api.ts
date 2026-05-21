@@ -1,6 +1,7 @@
+import { env } from '@/lib/zod';
 import { authClient } from '../auth.client';
 
-import type { SignUpDto } from '../types';
+import type { SignInDto, SignUpDto } from '../types';
 
 export const authApi = {
     async getSession() {
@@ -18,6 +19,16 @@ export const authApi = {
             name: data.name,
             email: data.email,
             password: data.password,
+            callbackURL: env.VITE_BETTER_AUTH_CALLBACK_URL,
+        });
+    },
+
+    async signInEmail(data: SignInDto) {
+        return authClient.signIn.email({
+            email: data.email,
+            password: data.password,
+            rememberMe: true,
+            callbackURL: env.VITE_BETTER_AUTH_CALLBACK_URL,
         });
     },
 };

@@ -1,3 +1,4 @@
+import { housesKeys } from '@/features/houses/queries';
 import { router } from '@/main';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { authMutations, authQueries } from '../queries';
@@ -23,11 +24,26 @@ export const authHooks = {
     },
 
     useSignUpEmail() {
+        const queryClient = useQueryClient();
+
         return useMutation({
             ...authMutations.signUpEmail(),
             onSuccess: async () => {
-                await router.navigate({
-                    to: '/',
+                queryClient.invalidateQueries({
+                    queryKey: housesKeys.base(),
+                });
+            },
+        });
+    },
+
+    useSignInEmail() {
+        const queryClient = useQueryClient();
+
+        return useMutation({
+            ...authMutations.signInEmail(),
+            onSuccess: async () => {
+                queryClient.invalidateQueries({
+                    queryKey: housesKeys.base(),
                 });
             },
         });

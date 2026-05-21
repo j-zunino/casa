@@ -13,4 +13,10 @@ export const authMutations = {
             mutationFn: authApi.signUpEmail,
         });
     },
+
+    signInEmail() {
+        return mutationOptions({
+            mutationFn: authApi.signInEmail,
+        });
+    },
 };

@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import z from 'zod';
-import { handleEmailSignIn } from '../services';
+import { authHooks } from '../hooks';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -16,6 +16,7 @@ import {
     FieldSet,
 } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
+import { Spinner } from '@/components/ui/spinner';
 import { Link } from '@tanstack/react-router';
 import { Controller } from 'react-hook-form';
 import { SocialSignIn } from './SocialSignIn';
@@ -24,6 +25,9 @@ type FormValues = z.infer<typeof signInSchema>;
 
 // TODO: Forgot password
 export const SignInForm = () => {
+    const { mutateAsync: signIn, isPending: isSigningIn } =
+        authHooks.useSignInEmail();
+
     const form = useForm<FormValues>({
         resolver: zodResolver(signInSchema),
         defaultValues: {
@@ -33,7 +37,7 @@ export const SignInForm = () => {
     });
 
     const onSubmit = (data: FormValues) => {
-        toast.promise(handleEmailSignIn(data.email, data.password), {
+        toast.promise(signIn(data), {
             loading: 'Signing in...',
             success: 'Successfully signed In',
             error: (err) => err.message,
@@ -94,8 +98,17 @@ export const SignInForm = () => {
                     />
 
                     <Field>
-                        <Button type="submit">Sign In</Button>
-                        <SocialSignIn />
+                        <Button type="submit" disabled={isSigningIn}>
+                            {isSigningIn ? (
+                                <>
+                                    <Spinner />
+                                    Signing In
+                                </>
+                            ) : (
+                                'Sign In'
+                            )}
+                        </Button>
+                        <SocialSignIn disabled={isSigningIn} />
 
                         <FieldDescription className="text-right">
                             <Link to="/sign-up">I don't have an account</Link>
