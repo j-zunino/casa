@@ -1,6 +1,6 @@
 import { authClient } from '@/features/auth/auth.client';
-import type { House } from '@/features/auth/types';
 import { router } from '@/main.tsx';
+import type { House } from '../types';
 
 // TODO: Move logic to server
 
@@ -15,19 +15,6 @@ const generateSlug = (input: string) => {
         .replace(/\s+/g, '-')
         .replace(/-+/g, '-')
         .replace(/^-+|-+$/g, '');
-};
-
-export const handleHouseCreation = async (name: string) => {
-    const slug = generateSlug(name);
-
-    const { data, error } = await authClient.organization.create({
-        name: name,
-        slug: slug,
-    });
-
-    if (error) throw new Error(error.message);
-
-    return data;
 };
 
 export const setActiveHouse = async (

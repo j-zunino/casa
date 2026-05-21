@@ -29,7 +29,7 @@ export const CreateHouseForm = () => {
     });
 
     const onSubmit = async (data: FormValues) => {
-        toast.promise(createHouse(data.name), {
+        toast.promise(createHouse(data), {
             loading: 'Creating house...',
             success: () => {
                 form.reset();

@@ -1,7 +1,7 @@
 import { authClient } from '@/features/auth/auth.client';
 import { api } from '@/lib/api';
 
-import type { House } from '../types';
+import type { House, HouseDto } from '../types';
 
 export const housesApi = {
     async getAll() {
@@ -26,12 +26,17 @@ export const housesApi = {
         return data;
     },
 
-    // TODO: Replace with better auth
-    async create(name: House['name']) {
-        return api('/api/houses', {
-            method: 'POST',
-            body: JSON.stringify({ name }),
+    async create(input: HouseDto) {
+        const { data, error } = await authClient.organization.create({
+            name: input.name,
+            // HACK: Pass temp slug and generate in server with before hooks
+            //       https://better-auth.com/docs/concepts/hooks
+            slug: crypto.randomUUID(),
         });
+
+        if (error) throw error;
+
+        return data;
     },
 
     async delete(id: House['id']) {
