@@ -1,5 +1,1 @@
-export {
-    handleEmailSignIn,
-    handleEmailSignUp,
-    handleGithubSignIn,
-} from './auth.service.ts';
+export { handleEmailSignIn, handleGithubSignIn } from './auth.service.ts';

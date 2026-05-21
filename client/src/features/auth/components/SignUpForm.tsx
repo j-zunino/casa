@@ -1,9 +1,9 @@
-import { signUpSchema } from '@casa/schemas';
+import { signUpFormSchema } from '@casa/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import z from 'zod';
-import { handleEmailSignUp } from '../services';
+import { authHooks } from '../hooks';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -20,11 +20,14 @@ import { Link } from '@tanstack/react-router';
 import { Controller } from 'react-hook-form';
 import { SocialSignIn } from './SocialSignIn';
 
-type FormValues = z.infer<typeof signUpSchema>;
+type FormValues = z.infer<typeof signUpFormSchema>;
 
 export const SignUpForm = () => {
+    const { mutateAsync: signUp, isPending: isSigningUp } =
+        authHooks.useEmailSignUp();
+
     const form = useForm<FormValues>({
-        resolver: zodResolver(signUpSchema),
+        resolver: zodResolver(signUpFormSchema),
         defaultValues: {
             name: '',
             email: '',
@@ -34,7 +37,7 @@ export const SignUpForm = () => {
     });
 
     const onSubmit = (data: FormValues) => {
-        toast.promise(handleEmailSignUp(data.name, data.email, data.password), {
+        toast.promise(signUp(data), {
             loading: 'Creating account...',
             success: 'Account created successfully!',
             error: (err) => err.message,
@@ -141,7 +144,11 @@ export const SignUpForm = () => {
                     />
 
                     <Field>
-                        <Button type="submit">Create account</Button>
+                        <Button type="submit" disabled={isSigningUp}>
+                            {isSigningUp
+                                ? 'Creating account...'
+                                : 'Create account'}
+                        </Button>
                         <SocialSignIn />
 
                         <FieldDescription className="text-right">

@@ -3,22 +3,6 @@
 import { env } from '@/lib/zod';
 import { authClient } from '../auth.client';
 
-export const handleEmailSignUp = async (
-    name: string,
-    email: string,
-    password: string,
-) => {
-    const { data, error } = await authClient.signUp.email({
-        name: name,
-        email: email,
-        password: password,
-    });
-
-    if (error) throw new Error(error.message);
-
-    return data;
-};
-
 export const handleEmailSignIn = async (email: string, password: string) => {
     const { data, error } = await authClient.signIn.email({
         email,
