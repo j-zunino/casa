@@ -25,7 +25,7 @@ type FormValues = z.infer<typeof signUpFormSchema>;
 
 export const SignUpForm = () => {
     const { mutateAsync: signUp, isPending: isSigningUp } =
-        authHooks.useEmailSignUp();
+        authHooks.useSignUpEmail();
 
     const form = useForm<FormValues>({
         resolver: zodResolver(signUpFormSchema),

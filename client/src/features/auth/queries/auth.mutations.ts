@@ -8,7 +8,7 @@ export const authMutations = {
         });
     },
 
-    emailSignUp() {
+    signUpEmail() {
         return mutationOptions({
             mutationFn: authApi.signUpEmail,
         });

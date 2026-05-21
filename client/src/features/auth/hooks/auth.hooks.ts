@@ -22,9 +22,9 @@ export const authHooks = {
         });
     },
 
-    useEmailSignUp() {
+    useSignUpEmail() {
         return useMutation({
-            ...authMutations.emailSignUp(),
+            ...authMutations.signUpEmail(),
             onSuccess: async () => {
                 await router.navigate({
                     to: '/',
