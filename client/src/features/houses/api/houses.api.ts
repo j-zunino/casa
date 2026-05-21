@@ -1,17 +1,22 @@
+import { authClient } from '@/features/auth/auth.client';
 import { api } from '@/lib/api';
+
 import type { House } from '../types';
 
 export const housesApi = {
     async getAll() {
-        return api('/api/houses', {
-            method: 'GET',
-        });
+        const result = await authClient.organization.list();
+        return result.data;
     },
 
     async getById(id: House['id']) {
-        return api(`/api/houses/${id}`, {
-            method: 'GET',
+        const result = await authClient.organization.getFullOrganization({
+            query: {
+                organizationId: id,
+                membersLimit: 10,
+            },
         });
+        return result.data;
     },
 
     async create(name: House['name']) {

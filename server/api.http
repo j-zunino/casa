@@ -63,12 +63,6 @@ GET {{URL}}/users HTTP/1.1
 ### HOUSES
 ##############################################################################
 
-### List user houses
-
-# @attach-cookie-jar
-
-GET {{URL}}/houses
-
 ### Create House
 
 # @attach-cookie-jar
@@ -79,12 +73,6 @@ Content-Type: application/json
 {
     "name": "House"
 }
-
-### Get full House
-
-# @attach-cookie-jar
-
-GET {{URL}}/houses/s8fdbGtxjHYgVOXePLXGhzTciuDhFp4X
 
 ### Update House
 
