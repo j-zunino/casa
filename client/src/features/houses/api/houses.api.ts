@@ -1,5 +1,4 @@
 import { authClient } from '@/features/auth/auth.client';
-import { api } from '@/lib/api';
 
 import type { House, HouseDto } from '../types';
 
@@ -40,8 +39,12 @@ export const housesApi = {
     },
 
     async delete(id: House['id']) {
-        return api(`/api/houses/${id}`, {
-            method: 'DELETE',
+        const { data, error } = await authClient.organization.delete({
+            organizationId: id,
         });
+
+        if (error) throw error;
+
+        return data;
     },
 };
