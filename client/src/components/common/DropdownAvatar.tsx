@@ -1,7 +1,7 @@
 import { useAuth } from '@/features/auth/hooks';
-import { handleSignOut } from '@/features/auth/services';
 import { useHouses } from '@/features/houses/hooks';
 import { setActiveHouse } from '@/features/houses/services';
+import { authHooks } from '@/features/auth/hooks';
 
 import {
     Avatar,
@@ -29,8 +29,11 @@ import { Spinner } from '../ui/spinner';
 import type { House } from '@/features/houses/types';
 
 export const DropdownAvatar = () => {
+    // TODO: Remove
     const { auth } = useAuth();
-    const { data: houses, isPending: isHousesPending } = useHouses.useAll();
+
+    const { mutate: signOut, isPending: isSigningOut } = authHooks.useSignOut();
+    const { data: houses } = useHouses.useAll();
 
     return (
         <DropdownMenu>
@@ -95,7 +98,11 @@ export const DropdownAvatar = () => {
 
                 <DropdownMenuSeparator />
 
-                <DropdownMenuItem onClick={handleSignOut} variant="destructive">
+                <DropdownMenuItem
+                    onClick={() => signOut()}
+                    disabled={isSigningOut}
+                    variant="destructive"
+                >
                     <SignOutIcon />
                     Sign Out
                 </DropdownMenuItem>
