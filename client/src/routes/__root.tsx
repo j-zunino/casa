@@ -1,3 +1,4 @@
+import { authQueries } from '@/features/auth/queries';
 import '@fontsource-variable/funnel-display/wght.css';
 import '@fontsource-variable/jetbrains-mono/wght.css';
 import { createRootRouteWithContext, useMatches } from '@tanstack/react-router';
@@ -48,4 +49,7 @@ const RootLayout = () => {
 
 export const Route = createRootRouteWithContext<RouterContext>()({
     component: RootLayout,
+    loader: async ({ context }) => {
+        await context.queryClient.ensureQueryData(authQueries.session());
+    },
 });

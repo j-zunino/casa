@@ -3,20 +3,20 @@ import { createFileRoute, redirect } from '@tanstack/react-router';
 
 import { Outlet } from '@tanstack/react-router';
 
-const AuthenticatedLayout = () => {
+const GuestLayout = () => {
     return <Outlet />;
 };
 
-export const Route = createFileRoute('/_authenticated')({
-    component: AuthenticatedLayout,
+export const Route = createFileRoute('/_guest')({
+    component: GuestLayout,
     beforeLoad: async ({ context }) => {
         const session = await context.queryClient.ensureQueryData(
             authQueries.session(),
         );
 
-        if (!session) {
+        if (session) {
             throw redirect({
-                to: '/sign-in',
+                to: '/',
                 replace: true,
             });
         }
