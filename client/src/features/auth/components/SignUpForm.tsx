@@ -16,6 +16,7 @@ import {
     FieldSet,
 } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
+import { Spinner } from '@/components/ui/spinner';
 import { Link } from '@tanstack/react-router';
 import { Controller } from 'react-hook-form';
 import { SocialSignIn } from './SocialSignIn';
@@ -145,9 +146,14 @@ export const SignUpForm = () => {
 
                     <Field>
                         <Button type="submit" disabled={isSigningUp}>
-                            {isSigningUp
-                                ? 'Creating account...'
-                                : 'Create account'}
+                            {isSigningUp ? (
+                                <>
+                                    <Spinner />
+                                    Creating account...
+                                </>
+                            ) : (
+                                'Create account'
+                            )}
                         </Button>
                         <SocialSignIn />
 

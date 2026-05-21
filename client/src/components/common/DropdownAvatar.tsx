@@ -33,7 +33,7 @@ export const DropdownAvatar = () => {
     const { auth } = useAuth();
 
     const { mutate: signOut, isPending: isSigningOut } = authHooks.useSignOut();
-    const { data: houses } = useHouses.useAll();
+    const { data: houses, isPending: isHousesPending } = useHouses.useAll();
 
     return (
         <DropdownMenu>

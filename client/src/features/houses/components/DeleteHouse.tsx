@@ -15,6 +15,7 @@ import {
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
+import { Spinner } from '@/components/ui/spinner';
 import { TrashIcon, XIcon } from '@phosphor-icons/react';
 
 import type { House } from '../types/houses.types.ts';
@@ -24,10 +25,11 @@ interface Props {
 }
 
 export const DeleteHouse = ({ id }: Props) => {
-    const { mutateAsync, isPending } = useHouses.useDelete();
+    const { mutateAsync: deleteHouse, isPending: isDeletingHouse } =
+        useHouses.useDelete();
 
     const onSubmit = async (houseId: typeof id) => {
-        toast.promise(mutateAsync(houseId), {
+        toast.promise(deleteHouse(houseId), {
             loading: 'Deleting house...',
             success: () => {
                 router.navigate({
@@ -43,9 +45,22 @@ export const DeleteHouse = ({ id }: Props) => {
     return (
         <AlertDialog>
             <AlertDialogTrigger asChild>
-                <Button size="lg" variant="destructive" disabled={isPending}>
-                    <TrashIcon />
-                    Delete house
+                <Button
+                    size="lg"
+                    variant="destructive"
+                    disabled={isDeletingHouse}
+                >
+                    {isDeletingHouse ? (
+                        <>
+                            <Spinner />
+                            Deleting house...
+                        </>
+                    ) : (
+                        <>
+                            <TrashIcon />
+                            Delete house
+                        </>
+                    )}
                 </Button>
             </AlertDialogTrigger>
 
@@ -72,10 +87,19 @@ export const DeleteHouse = ({ id }: Props) => {
                     <AlertDialogAction
                         variant="destructive"
                         onClick={() => onSubmit(id)}
-                        disabled={isPending}
+                        disabled={isDeletingHouse}
                     >
-                        <TrashIcon />
-                        Delete
+                        {isDeletingHouse ? (
+                            <>
+                                <Spinner />
+                                Deleting house...
+                            </>
+                        ) : (
+                            <>
+                                <TrashIcon />
+                                Delete house
+                            </>
+                        )}
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>

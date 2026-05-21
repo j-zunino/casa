@@ -3,6 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import z from 'zod';
+import { useHouses } from '../hooks';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -13,13 +14,14 @@ import {
     FieldSet,
 } from '@/components/ui/field';
 import { Input } from '@/components/ui/input.tsx';
+import { Spinner } from '@/components/ui/spinner';
 import { Controller } from 'react-hook-form';
-import { useHouses } from '../hooks';
 
 type FormValues = z.infer<typeof houseSchema>;
 
 export const CreateHouseForm = () => {
-    const { mutateAsync, isPending } = useHouses.useCreate();
+    const { mutateAsync: createHouse, isPending: isCreatingHouse } =
+        useHouses.useCreate();
 
     const form = useForm<FormValues>({
         resolver: zodResolver(houseSchema),
@@ -27,7 +29,7 @@ export const CreateHouseForm = () => {
     });
 
     const onSubmit = async (data: FormValues) => {
-        toast.promise(mutateAsync(data.name), {
+        toast.promise(createHouse(data.name), {
             loading: 'Creating house...',
             success: () => {
                 form.reset();
@@ -69,8 +71,15 @@ export const CreateHouseForm = () => {
                     />
 
                     <Field>
-                        <Button type="submit" disabled={isPending}>
-                            Create
+                        <Button type="submit" disabled={isCreatingHouse}>
+                            {isCreatingHouse ? (
+                                <>
+                                    <Spinner />
+                                    Creating house...
+                                </>
+                            ) : (
+                                'Create'
+                            )}
                         </Button>
                     </Field>
                 </FieldGroup>
