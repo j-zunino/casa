@@ -1,15 +1,13 @@
-import { useAuth } from '@/features/auth/hooks';
+import { useHouses } from '@/features/houses/hooks';
 import { housesQueries } from '@/features/houses/queries';
-import { handleHouseUpdate } from '@/features/houses/services';
-import { router } from '@/main';
 import { houseSchema } from '@casa/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute, notFound } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import z from 'zod';
 
-import { NoActiveHouse } from '@/components/common/ErrorComponents';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
@@ -27,15 +25,13 @@ import {
 } from '@phosphor-icons/react';
 import { Link } from '@tanstack/react-router';
 import { Controller } from 'react-hook-form';
-import { useSuspenseQuery } from '@tanstack/react-query';
 
 type FormValues = z.infer<typeof houseSchema>;
 
 const RouteComponent = () => {
-    const { auth } = useAuth();
     const { slug } = Route.useParams();
-
     const { data: house } = useSuspenseQuery(housesQueries.details({ slug }));
+    const { mutateAsync: update } = useHouses.useUpdate();
 
     const form = useForm<FormValues>({
         resolver: zodResolver(houseSchema),
@@ -45,15 +41,11 @@ const RouteComponent = () => {
     });
 
     const onSubmit = (data: FormValues) => {
-        toast.promise(handleHouseUpdate(house.id, data.name), {
+        if (house.name === data.name) return;
+
+        toast.promise(update({ id: house.id, input: data }), {
             loading: 'Updating house...',
-            success: (updatedHouse) => {
-                router.navigate({
-                    to: '/account/houses/$slug',
-                    params: { slug: updatedHouse.slug },
-                });
-                return 'House updated successfully!';
-            },
+            success: 'House updated successfully!',
             error: (err) => err.message,
         });
     };

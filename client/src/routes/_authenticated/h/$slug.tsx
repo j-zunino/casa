@@ -1,13 +1,12 @@
-import { useAuth } from '@/features/auth/hooks';
-import { createFileRoute } from '@tanstack/react-router';
+import { housesQueries } from '@/features/houses/queries';
+import { createFileRoute, notFound } from '@tanstack/react-router';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { NoActiveHouse } from '@/components/common/ErrorComponents';
 import { Link } from '@tanstack/react-router';
 
 const RouteComponent = () => {
-    const { house } = useAuth();
-
-    if (!house || !house.active) return <NoActiveHouse />;
+    const { slug } = Route.useParams();
+    const { data: house } = useSuspenseQuery(housesQueries.details({ slug }));
 
     return (
         <div>
@@ -19,4 +18,13 @@ const RouteComponent = () => {
 export const Route = createFileRoute('/_authenticated/h/$slug')({
     staticData: { homePath: '/h/$slug' },
     component: RouteComponent,
+    loader: async ({ context, params }) => {
+        const house = await context.queryClient.ensureQueryData(
+            housesQueries.details({ slug: params.slug }),
+        );
+
+        if (!house) throw notFound();
+
+        return { house };
+    },
 });

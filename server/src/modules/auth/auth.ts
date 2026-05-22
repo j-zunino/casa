@@ -25,7 +25,46 @@ export const auth = betterAuth({
             organizationLimit: 5,
             organizationHooks: {
                 // TODO: Find a better way to do this lol
+                // TODO: Make this a function and use before create/update
                 beforeCreateOrganization: async ({ organization }) => {
+                    const result = houseSchema.safeParse({
+                        name: organization.name,
+                    });
+
+                    if (!result.success) {
+                        throw new APIError(ErrorCodes.BAD_REQUEST, {
+                            message:
+                                result.error.issues[0]?.message ??
+                                'invalid input',
+                        });
+                    }
+
+                    const slug = slugify(result.data.name, {
+                        lower: true,
+                        strict: true,
+                        trim: true,
+                    });
+
+                    try {
+                        await auth.api.checkOrganizationSlug({
+                            body: { slug },
+                        });
+                    } catch {
+                        throw new APIError(ErrorCodes.CONFLICT, {
+                            message: 'House name already taken',
+                        });
+                    }
+
+                    return {
+                        data: {
+                            ...organization,
+                            name: result.data.name,
+                            slug,
+                        },
+                    };
+                },
+
+                beforeUpdateOrganization: async ({ organization }) => {
                     const result = houseSchema.safeParse({
                         name: organization.name,
                     });

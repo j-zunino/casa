@@ -8,6 +8,12 @@ export const housesMutations = {
         });
     },
 
+    update() {
+        return mutationOptions({
+            mutationFn: housesApi.update,
+        });
+    },
+
     delete() {
         return mutationOptions({
             mutationFn: housesApi.delete,
