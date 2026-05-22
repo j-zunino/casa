@@ -11,11 +11,15 @@ export const housesApi = {
         return data;
     },
 
-    async getById(id: House['id']) {
+    async getDetails(input: { id: House['id'] } | { slug: House['slug'] }) {
+        const query =
+            'id' in input
+                ? { organizationId: input.id }
+                : { organizationSlug: input.slug };
         const { data, error } =
             await authClient.organization.getFullOrganization({
                 query: {
-                    organizationId: id,
+                    ...query,
                     membersLimit: 10,
                 },
             });
@@ -31,6 +35,19 @@ export const housesApi = {
             // HACK: Pass temp slug and generate in server with before hooks
             //       https://better-auth.com/docs/concepts/hooks
             slug: crypto.randomUUID(),
+        });
+
+        if (error) throw error;
+
+        return data;
+    },
+
+    async update({ id, input }: { id: House['id']; input: HouseDto }) {
+        const { data, error } = await authClient.organization.update({
+            organizationId: id,
+            data: {
+                name: input.name,
+            },
         });
 
         if (error) throw error;

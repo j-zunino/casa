@@ -1,9 +1,10 @@
 import { useAuth } from '@/features/auth/hooks';
+import { housesQueries } from '@/features/houses/queries';
 import { handleHouseUpdate } from '@/features/houses/services';
 import { router } from '@/main';
 import { houseSchema } from '@casa/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, notFound } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import z from 'zod';
@@ -26,25 +27,25 @@ import {
 } from '@phosphor-icons/react';
 import { Link } from '@tanstack/react-router';
 import { Controller } from 'react-hook-form';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 type FormValues = z.infer<typeof houseSchema>;
 
 const RouteComponent = () => {
-    const { auth, house } = useAuth();
+    const { auth } = useAuth();
+    const { slug } = Route.useParams();
 
-    if (!auth.isAuthenticated || !house.active) {
-        return <NoActiveHouse />;
-    }
+    const { data: house } = useSuspenseQuery(housesQueries.details({ slug }));
 
     const form = useForm<FormValues>({
         resolver: zodResolver(houseSchema),
         defaultValues: {
-            name: house.active?.name,
+            name: house.name,
         },
     });
 
     const onSubmit = (data: FormValues) => {
-        toast.promise(handleHouseUpdate(house.active.id, data.name), {
+        toast.promise(handleHouseUpdate(house.id, data.name), {
             loading: 'Updating house...',
             success: (updatedHouse) => {
                 router.navigate({
@@ -72,8 +73,8 @@ const RouteComponent = () => {
                 <div className="flex w-full flex-wrap items-center justify-center gap-2 sm:flex-nowrap">
                     <Avatar size="lg" rounded="normal">
                         <AvatarImage
-                            src={house.active.logo ?? undefined}
-                            alt={house.active.name}
+                            src={house.logo ?? undefined}
+                            alt={house.name}
                         />
 
                         <AvatarFallback>
@@ -150,7 +151,7 @@ const RouteComponent = () => {
 
                     <Separator />
 
-                    <DeleteHouse id={house.active.id} />
+                    <DeleteHouse id={house.id} />
                 </div>
             </div>
         </div>
@@ -160,4 +161,13 @@ const RouteComponent = () => {
 export const Route = createFileRoute('/_authenticated/account/houses/$slug')({
     staticData: { homePath: '/h/$slug' },
     component: RouteComponent,
+    loader: async ({ context, params }) => {
+        const house = await context.queryClient.ensureQueryData(
+            housesQueries.details({ slug: params.slug }),
+        );
+
+        if (!house) throw notFound();
+
+        return { house };
+    },
 });

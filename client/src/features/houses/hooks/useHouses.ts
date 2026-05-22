@@ -28,6 +28,10 @@ export const useHouses = {
                 await queryClient.invalidateQueries({
                     queryKey: housesKeys.base(),
                 });
+
+                queryClient.removeQueries({
+                    queryKey: [...housesKeys.detailsBase()],
+                });
             },
         });
     },
