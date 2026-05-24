@@ -15,8 +15,15 @@ import {
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
+import {
+    Item,
+    ItemActions,
+    ItemContent,
+    ItemMedia,
+    ItemTitle,
+} from '@/components/ui/item.tsx';
 import { Spinner } from '@/components/ui/spinner';
-import { TrashIcon, XIcon } from '@phosphor-icons/react';
+import { TrashIcon, WarningIcon } from '@phosphor-icons/react';
 
 import type { House } from '../types/houses.types.ts';
 
@@ -45,29 +52,33 @@ export const DeleteHouse = ({ id }: Props) => {
     return (
         <AlertDialog>
             <AlertDialogTrigger asChild>
-                <Button
-                    size="lg"
-                    variant="destructive"
-                    disabled={isDeletingHouse}
-                >
-                    {isDeletingHouse ? (
-                        <>
-                            <Spinner />
-                            Deleting house...
-                        </>
-                    ) : (
-                        <>
+                <Item asChild>
+                    <Button
+                        variant="destructive"
+                        className="h-auto"
+                        disabled={isDeletingHouse}
+                    >
+                        <ItemMedia>
                             <TrashIcon />
-                            Delete house
-                        </>
-                    )}
-                </Button>
+                        </ItemMedia>
+
+                        <ItemContent>
+                            <ItemTitle>Delete house</ItemTitle>
+                        </ItemContent>
+
+                        {isDeletingHouse && (
+                            <ItemActions>
+                                <Spinner />
+                            </ItemActions>
+                        )}
+                    </Button>
+                </Item>
             </AlertDialogTrigger>
 
             <AlertDialogContent size="sm">
                 <AlertDialogHeader>
-                    <AlertDialogMedia className="bg-destructive/10 text-destructive">
-                        <TrashIcon />
+                    <AlertDialogMedia>
+                        <WarningIcon />
                     </AlertDialogMedia>
 
                     <AlertDialogTitle>Delete house?</AlertDialogTitle>
@@ -80,7 +91,6 @@ export const DeleteHouse = ({ id }: Props) => {
 
                 <AlertDialogFooter>
                     <AlertDialogCancel variant="outline">
-                        <XIcon />
                         Cancel
                     </AlertDialogCancel>
 

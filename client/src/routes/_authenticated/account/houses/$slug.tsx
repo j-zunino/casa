@@ -13,6 +13,13 @@ import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
 import { Field, FieldError } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
+import {
+    Item,
+    ItemContent,
+    ItemDescription,
+    ItemMedia,
+    ItemTitle,
+} from '@/components/ui/item';
 import { Separator } from '@/components/ui/separator';
 import { DeleteHouse } from '@/features/houses/components';
 import {
@@ -62,7 +69,7 @@ const RouteComponent = () => {
                     </Button>
                 </div>
 
-                <div className="flex w-full flex-wrap items-center justify-center gap-2 sm:flex-nowrap">
+                <section className="flex w-full flex-wrap items-center justify-center gap-2 sm:flex-nowrap">
                     <Avatar size="lg" rounded="normal">
                         <AvatarImage
                             src={house.logo ?? undefined}
@@ -106,44 +113,54 @@ const RouteComponent = () => {
                             )}
                         />
                     </form>
-                </div>
+                </section>
 
-                <div className="flex w-full flex-col gap-2">
-                    <Button
-                        asChild
-                        size="lg"
-                        variant="outline"
-                        className="justify-between"
-                    >
-                        <Link to=".">
-                            <span className="flex items-center gap-2">
-                                <EnvelopeSimpleIcon />
-                                Invite members
-                            </span>
+                <div className="flex w-full flex-col gap-1.5">
+                    <section className="flex flex-col gap-1">
+                        <Item asChild variant="outline">
+                            <Link to=".">
+                                <ItemMedia variant="icon">
+                                    <EnvelopeSimpleIcon />
+                                </ItemMedia>
 
-                            <CaretRightIcon />
-                        </Link>
-                    </Button>
+                                <ItemContent>
+                                    <ItemTitle>Invites</ItemTitle>
+                                    <ItemDescription>
+                                        Create and manage invite links
+                                    </ItemDescription>
+                                </ItemContent>
 
-                    <Button
-                        asChild
-                        size="lg"
-                        variant="outline"
-                        className="justify-between"
-                    >
-                        <Link to=".">
-                            <span className="flex items-center gap-2">
-                                <UserIcon />
-                                Manage members
-                            </span>
+                                <ItemMedia variant="image">
+                                    <CaretRightIcon />
+                                </ItemMedia>
+                            </Link>
+                        </Item>
 
-                            <CaretRightIcon />
-                        </Link>
-                    </Button>
+                        <Item asChild variant="outline">
+                            <Link to=".">
+                                <ItemMedia variant="icon">
+                                    <UserIcon />
+                                </ItemMedia>
+
+                                <ItemContent>
+                                    <ItemTitle>Users</ItemTitle>
+                                    <ItemDescription>
+                                        Manage users
+                                    </ItemDescription>
+                                </ItemContent>
+
+                                <ItemMedia variant="image">
+                                    <CaretRightIcon />
+                                </ItemMedia>
+                            </Link>
+                        </Item>
+                    </section>
 
                     <Separator />
 
-                    <DeleteHouse id={house.id} />
+                    <section>
+                        <DeleteHouse id={house.id} />
+                    </section>
                 </div>
             </div>
         </div>
