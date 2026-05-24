@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import z from 'zod';
 
+import { BackButton } from '@/components/common/BackButton';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
@@ -23,7 +24,6 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { DeleteHouse } from '@/features/houses/components';
 import {
-    CaretLeftIcon,
     CaretRightIcon,
     EnvelopeSimpleIcon,
     FloppyDiskIcon,
@@ -61,12 +61,7 @@ const RouteComponent = () => {
         <div className="flex grow flex-col items-center p-8">
             <div className="flex w-full max-w-xl flex-col items-center justify-start gap-8">
                 <div className="w-full justify-start">
-                    <Button variant="ghost" asChild>
-                        <Link to="/account" className="flex items-center">
-                            <CaretLeftIcon />
-                            Back
-                        </Link>
-                    </Button>
+                    <BackButton />
                 </div>
 
                 <section className="flex w-full flex-wrap items-center justify-center gap-2 sm:flex-nowrap">

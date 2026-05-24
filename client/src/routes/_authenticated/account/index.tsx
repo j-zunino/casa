@@ -3,6 +3,7 @@ import { housesQueries } from '@/features/houses/queries';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 
+import { BackButton } from '@/components/common/BackButton';
 import {
     Avatar,
     AvatarFallback,
@@ -13,7 +14,6 @@ import {
 } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
-    CaretLeftIcon,
     CaretRightIcon,
     EnvelopeSimpleIcon,
     HouseLineIcon,
@@ -33,12 +33,7 @@ const RouteComponent = () => {
         <div className="flex grow flex-col items-center p-8">
             <div className="flex w-full max-w-xl flex-col items-center justify-start gap-8">
                 <div className="w-full justify-start">
-                    <Button variant="ghost" asChild>
-                        <Link to="/" className="flex items-center">
-                            <CaretLeftIcon />
-                            Back
-                        </Link>
-                    </Button>
+                    <BackButton />
                 </div>
 
                 <div className="rounded-md transition outline-none select-none">
