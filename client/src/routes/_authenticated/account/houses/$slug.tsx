@@ -9,18 +9,12 @@ import { toast } from 'sonner';
 import z from 'zod';
 
 import { BackButton } from '@/components/common/BackButton';
+import { SettingContent, SettingLink } from '@/components/common/Settings';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
 import { Field, FieldError } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import {
-    Item,
-    ItemContent,
-    ItemDescription,
-    ItemMedia,
-    ItemTitle,
-} from '@/components/ui/item';
 import { Separator } from '@/components/ui/separator';
 import { DeleteHouse } from '@/features/houses/components';
 import {
@@ -30,7 +24,6 @@ import {
     HouseLineIcon,
     UserIcon,
 } from '@phosphor-icons/react';
-import { Link } from '@tanstack/react-router';
 import { Controller } from 'react-hook-form';
 
 type FormValues = z.infer<typeof houseSchema>;
@@ -112,43 +105,23 @@ const RouteComponent = () => {
 
                 <div className="flex w-full flex-col gap-1.5">
                     <section className="flex flex-col gap-1">
-                        <Item asChild variant="outline">
-                            <Link to=".">
-                                <ItemMedia variant="icon">
-                                    <EnvelopeSimpleIcon />
-                                </ItemMedia>
+                        <SettingLink to=".">
+                            <SettingContent
+                                title="Invites"
+                                description="Create and manage invite links"
+                                icon={<EnvelopeSimpleIcon />}
+                                iconEnd={<CaretRightIcon />}
+                            />
+                        </SettingLink>
 
-                                <ItemContent>
-                                    <ItemTitle>Invites</ItemTitle>
-                                    <ItemDescription>
-                                        Create and manage invite links
-                                    </ItemDescription>
-                                </ItemContent>
-
-                                <ItemMedia variant="image">
-                                    <CaretRightIcon />
-                                </ItemMedia>
-                            </Link>
-                        </Item>
-
-                        <Item asChild variant="outline">
-                            <Link to=".">
-                                <ItemMedia variant="icon">
-                                    <UserIcon />
-                                </ItemMedia>
-
-                                <ItemContent>
-                                    <ItemTitle>Users</ItemTitle>
-                                    <ItemDescription>
-                                        Manage users
-                                    </ItemDescription>
-                                </ItemContent>
-
-                                <ItemMedia variant="image">
-                                    <CaretRightIcon />
-                                </ItemMedia>
-                            </Link>
-                        </Item>
+                        <SettingLink to=".">
+                            <SettingContent
+                                title="Users"
+                                description="Manage users"
+                                icon={<UserIcon />}
+                                iconEnd={<CaretRightIcon />}
+                            />
+                        </SettingLink>
                     </section>
 
                     <Separator />
