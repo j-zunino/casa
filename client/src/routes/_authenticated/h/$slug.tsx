@@ -6,7 +6,7 @@ import { Link } from '@tanstack/react-router';
 
 const RouteComponent = () => {
     const { slug } = Route.useParams();
-    const { data: house } = useSuspenseQuery(housesQueries.details({ slug }));
+    const { data: house } = useSuspenseQuery(housesQueries.details(slug));
 
     return (
         <div>
@@ -20,7 +20,7 @@ export const Route = createFileRoute('/_authenticated/h/$slug')({
     component: RouteComponent,
     loader: async ({ context, params }) => {
         const house = await context.queryClient.ensureQueryData(
-            housesQueries.details({ slug: params.slug }),
+            housesQueries.details(params.slug),
         );
 
         if (!house) throw notFound();

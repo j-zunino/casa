@@ -30,7 +30,7 @@ type FormValues = z.infer<typeof houseSchema>;
 
 const RouteComponent = () => {
     const { slug } = Route.useParams();
-    const { data: house } = useSuspenseQuery(housesQueries.details({ slug }));
+    const { data: house } = useSuspenseQuery(housesQueries.details(slug));
     const { mutateAsync: update } = useHouses.useUpdate();
 
     const form = useForm<FormValues>({
@@ -140,7 +140,7 @@ export const Route = createFileRoute('/_authenticated/account/houses/$slug')({
     component: RouteComponent,
     loader: async ({ context, params }) => {
         const house = await context.queryClient.ensureQueryData(
-            housesQueries.details({ slug: params.slug }),
+            housesQueries.details(params.slug),
         );
 
         if (!house) throw notFound();

@@ -13,10 +13,10 @@ export const housesQueries = {
         });
     },
 
-    details(input: { id: House['id'] } | { slug: House['slug'] }) {
+    details(slug: House['slug']) {
         return queryOptions({
-            queryKey: housesKeys.details(input),
-            queryFn: () => housesApi.getDetails(input),
+            queryKey: housesKeys.details(slug),
+            queryFn: () => housesApi.getDetails(slug),
         });
     },
 };

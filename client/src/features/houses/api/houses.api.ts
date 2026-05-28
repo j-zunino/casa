@@ -11,15 +11,11 @@ export const housesApi = {
         return data;
     },
 
-    async getDetails(input: { id: House['id'] } | { slug: House['slug'] }) {
-        const query =
-            'id' in input
-                ? { organizationId: input.id }
-                : { organizationSlug: input.slug };
+    async getDetails(slug: House['slug']) {
         const { data, error } =
             await authClient.organization.getFullOrganization({
                 query: {
-                    ...query,
+                    organizationSlug: slug,
                     membersLimit: 10,
                 },
             });
