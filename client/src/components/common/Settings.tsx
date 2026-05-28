@@ -28,12 +28,7 @@ interface SettingContentProps {
 }
 
 export const Settings = ({ ...props }: ComponentProps<'div'>) => {
-    return (
-        <div
-            className="mx-auto flex w-full max-w-xl flex-col gap-1.5"
-            {...props}
-        />
-    );
+    return <div className="flex w-full flex-col gap-1.5" {...props} />;
 };
 
 export const SettingLink = ({

@@ -3,9 +3,7 @@ import { housesQueries } from '@/features/houses/queries';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 
-import { BackButton } from '@/components/common/BackButton';
 import {
-    Setting,
     SettingButton,
     SettingContent,
     SettingLink,
@@ -19,7 +17,6 @@ import {
     AvatarImage,
     AvatarLabel,
 } from '@/components/ui/avatar';
-import { Separator } from '@/components/ui/separator';
 import {
     CaretRightIcon,
     EnvelopeSimpleIcon,
@@ -35,99 +32,82 @@ const RouteComponent = () => {
     const { auth } = useAuth();
     const { data: houses } = useSuspenseQuery(housesQueries.all());
 
+    // TODO: If account is email allow to change username
     return (
-        <div className="flex grow flex-col items-center p-8">
-            <div className="flex w-full max-w-xl flex-col items-center justify-start gap-8">
-                <div className="w-full justify-start">
-                    <BackButton />
-                </div>
+        <Settings>
+            <div className="flex flex-col items-center py-1.5">
+                <Avatar size="lg">
+                    <AvatarImage
+                        src={auth.user?.image ?? undefined}
+                        alt={auth.user?.name}
+                    />
 
-                <div className="rounded-md transition outline-none select-none">
-                    <Avatar size="lg">
-                        <AvatarImage
-                            src={auth.user?.image ?? undefined}
-                            alt={auth.user?.name}
-                        />
+                    <AvatarFallback>
+                        <UserIcon />
+                    </AvatarFallback>
+                </Avatar>
 
-                        <AvatarFallback>
-                            <UserIcon />
-                        </AvatarFallback>
-                    </Avatar>
-
-                    <AvatarLabel>{auth.user?.name}</AvatarLabel>
-                </div>
-
-                <Settings>
-                    <SettingButton disabled={true}>
-                        <SettingContent
-                            title="Invitations"
-                            icon={<EnvelopeSimpleIcon />}
-                        />
-                    </SettingButton>
-
-                    <SettingButton disabled={true}>
-                        <SettingContent
-                            title="Update password"
-                            icon={<PasswordIcon />}
-                        />
-                    </SettingButton>
-
-                    {houses.length > 0 && (
-                        <SettingLink to=".">
-                            <SettingContent
-                                title="Manage houses"
-                                description={`${houses.length} Houses`}
-                                icon={<HouseLineIcon />}
-                                iconEnd={
-                                    <span className="flex items-center gap-1.5">
-                                        <AvatarGroup>
-                                            {houses
-                                                .slice(0, 2)
-                                                .map((h: House) => (
-                                                    <Avatar
-                                                        key={h.id}
-                                                        size="sm"
-                                                        rounded="normal"
-                                                    >
-                                                        <AvatarImage
-                                                            src={
-                                                                h.logo ??
-                                                                undefined
-                                                            }
-                                                            alt={h.name}
-                                                        />
-
-                                                        <AvatarFallback>
-                                                            <HouseLineIcon />
-                                                        </AvatarFallback>
-                                                    </Avatar>
-                                                ))}
-
-                                            {houses.length > 2 && (
-                                                <AvatarGroupCount>
-                                                    +{houses.length - 2}
-                                                </AvatarGroupCount>
-                                            )}
-                                        </AvatarGroup>
-
-                                        <CaretRightIcon />
-                                    </span>
-                                }
-                            />
-                        </SettingLink>
-                    )}
-
-                    <Separator />
-
-                    <SettingButton variant="destructive" disabled={true}>
-                        <SettingContent
-                            title="Delete account"
-                            icon={<TrashIcon />}
-                        />
-                    </SettingButton>
-                </Settings>
+                <AvatarLabel>{auth.user?.name}</AvatarLabel>
             </div>
-        </div>
+
+            <SettingButton disabled={true}>
+                <SettingContent
+                    title="Invitations"
+                    icon={<EnvelopeSimpleIcon />}
+                />
+            </SettingButton>
+
+            <SettingButton disabled={true}>
+                <SettingContent
+                    title="Update password"
+                    icon={<PasswordIcon />}
+                />
+            </SettingButton>
+
+            {houses.length > 0 && (
+                <SettingLink to="/account/houses">
+                    <SettingContent
+                        title="Manage houses"
+                        description={`${houses.length} Houses`}
+                        icon={<HouseLineIcon />}
+                        iconEnd={
+                            <span className="flex items-center gap-1.5">
+                                <AvatarGroup>
+                                    {houses.slice(0, 2).map((h: House) => (
+                                        <Avatar
+                                            key={h.id}
+                                            size="sm"
+                                            rounded="normal"
+                                        >
+                                            <AvatarImage
+                                                src={h.logo ?? undefined}
+                                                alt={h.name}
+                                            />
+
+                                            <AvatarFallback>
+                                                <HouseLineIcon />
+                                            </AvatarFallback>
+                                        </Avatar>
+                                    ))}
+
+                                    {houses.length > 2 && (
+                                        <AvatarGroupCount>
+                                            +{houses.length - 2}
+                                        </AvatarGroupCount>
+                                    )}
+                                </AvatarGroup>
+
+                                <CaretRightIcon />
+                            </span>
+                        }
+                    />
+                </SettingLink>
+            )}
+
+            <SettingButton variant="destructive" disabled={true}>
+                <SettingContent title="Delete account" icon={<TrashIcon />} />
+            </SettingButton>
+        </Settings>
     );
 };
 

@@ -35,7 +35,8 @@ type FormValues = z.infer<typeof houseSchema>;
 const RouteComponent = () => {
     const { slug } = Route.useParams();
     const { data: house } = useSuspenseQuery(housesQueries.details(slug));
-    const { mutateAsync: update } = useHouses.useUpdate();
+    const { mutateAsync: update, isPending: isUpdating } =
+        useHouses.useUpdate();
 
     const form = useForm<FormValues>({
         resolver: zodResolver(houseSchema),
@@ -55,83 +56,77 @@ const RouteComponent = () => {
     };
 
     return (
-        <div className="flex grow flex-col items-center p-8">
-            <div className="flex w-full max-w-xl flex-col items-center justify-start gap-8">
-                <div className="w-full justify-start">
-                    <BackButton />
-                </div>
+        <Settings>
+            <section className="flex items-center gap-1.5 py-1.5">
+                <Avatar size="lg" rounded="normal">
+                    <AvatarImage
+                        src={house.logo ?? undefined}
+                        alt={house.name}
+                    />
 
-                <section className="flex w-full flex-wrap items-center justify-center gap-2 sm:flex-nowrap">
-                    <Avatar size="lg" rounded="normal">
-                        <AvatarImage
-                            src={house.logo ?? undefined}
-                            alt={house.name}
-                        />
+                    <AvatarFallback>
+                        <HouseLineIcon />
+                    </AvatarFallback>
+                </Avatar>
 
-                        <AvatarFallback>
-                            <HouseLineIcon />
-                        </AvatarFallback>
-                    </Avatar>
-
-                    <form onSubmit={form.handleSubmit(onSubmit)}>
-                        <Controller
-                            name="name"
-                            control={form.control}
-                            render={({ field, fieldState }) => (
-                                <ButtonGroup>
-                                    <Field data-invalid={fieldState.invalid}>
-                                        <Input
-                                            {...field}
-                                            id="name"
-                                            type="text"
-                                            aria-invalid={fieldState.invalid}
-                                            placeholder="House name"
-                                            autoComplete="on"
+                <form className="w-full" onSubmit={form.handleSubmit(onSubmit)}>
+                    <Controller
+                        name="name"
+                        control={form.control}
+                        render={({ field, fieldState }) => (
+                            <ButtonGroup className="w-full">
+                                <Field data-invalid={fieldState.invalid}>
+                                    <Input
+                                        {...field}
+                                        id="name"
+                                        type="text"
+                                        aria-invalid={fieldState.invalid}
+                                        placeholder="House name"
+                                        autoComplete="on"
+                                    />
+                                    {fieldState.invalid && (
+                                        <FieldError
+                                            errors={[fieldState.error]}
                                         />
-                                        {fieldState.invalid && (
-                                            <FieldError
-                                                errors={[fieldState.error]}
-                                            />
-                                        )}
-                                    </Field>
+                                    )}
+                                </Field>
 
-                                    <Button
-                                        variant="outline"
-                                        aria-label="Save house name"
-                                    >
-                                        <FloppyDiskIcon weight="fill" />
-                                    </Button>
-                                </ButtonGroup>
-                            )}
-                        />
-                    </form>
-                </section>
+                                <Button
+                                    variant="outline"
+                                    aria-label="Save house name"
+                                    disabled={
+                                        isUpdating || house.name === field.value
+                                            ? true
+                                            : false
+                                    }
+                                >
+                                    <FloppyDiskIcon weight="fill" />
+                                </Button>
+                            </ButtonGroup>
+                        )}
+                    />
+                </form>
+            </section>
+            <SettingLink to=".">
+                <SettingContent
+                    title="Invites"
+                    description="Create and manage invite links"
+                    icon={<EnvelopeSimpleIcon />}
+                    iconEnd={<CaretRightIcon />}
+                />
+            </SettingLink>
 
-                <Settings>
-                    <SettingLink to=".">
-                        <SettingContent
-                            title="Invites"
-                            description="Create and manage invite links"
-                            icon={<EnvelopeSimpleIcon />}
-                            iconEnd={<CaretRightIcon />}
-                        />
-                    </SettingLink>
+            <SettingLink to=".">
+                <SettingContent
+                    title="Users"
+                    description="Manage users"
+                    icon={<UserIcon />}
+                    iconEnd={<CaretRightIcon />}
+                />
+            </SettingLink>
 
-                    <SettingLink to=".">
-                        <SettingContent
-                            title="Users"
-                            description="Manage users"
-                            icon={<UserIcon />}
-                            iconEnd={<CaretRightIcon />}
-                        />
-                    </SettingLink>
-
-                    <Separator />
-
-                    <DeleteHouse id={house.id} />
-                </Settings>
-            </div>
-        </div>
+            <DeleteHouse id={house.id} />
+        </Settings>
     );
 };
 
