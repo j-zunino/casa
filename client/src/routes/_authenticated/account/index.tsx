@@ -5,6 +5,13 @@ import { createFileRoute } from '@tanstack/react-router';
 
 import { BackButton } from '@/components/common/BackButton';
 import {
+    Setting,
+    SettingButton,
+    SettingContent,
+    SettingLink,
+    Settings,
+} from '@/components/common/Settings';
+import {
     Avatar,
     AvatarFallback,
     AvatarGroup,
@@ -12,7 +19,7 @@ import {
     AvatarImage,
     AvatarLabel,
 } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 import {
     CaretRightIcon,
     EnvelopeSimpleIcon,
@@ -21,7 +28,6 @@ import {
     TrashIcon,
     UserIcon,
 } from '@phosphor-icons/react';
-import { Link } from '@tanstack/react-router';
 
 import type { House } from '@/features/houses/types';
 
@@ -51,89 +57,75 @@ const RouteComponent = () => {
                     <AvatarLabel>{auth.user?.name}</AvatarLabel>
                 </div>
 
-                <div className="flex w-full flex-col gap-2">
-                    <Button
-                        asChild
-                        size="lg"
-                        variant="outline"
-                        className="justify-between"
-                    >
-                        <Link to=".">
-                            <span className="flex items-center gap-2">
-                                <EnvelopeSimpleIcon />
-                                Invitations
-                            </span>
+                <Settings>
+                    <SettingButton disabled={true}>
+                        <SettingContent
+                            title="Invitations"
+                            icon={<EnvelopeSimpleIcon />}
+                        />
+                    </SettingButton>
 
-                            <CaretRightIcon />
-                        </Link>
-                    </Button>
-
-                    <Button
-                        asChild
-                        size="lg"
-                        variant="outline"
-                        className="justify-between"
-                    >
-                        <Link to=".">
-                            <span className="flex items-center gap-2">
-                                <PasswordIcon />
-                                Update password
-                            </span>
-
-                            <CaretRightIcon />
-                        </Link>
-                    </Button>
+                    <SettingButton disabled={true}>
+                        <SettingContent
+                            title="Update password"
+                            icon={<PasswordIcon />}
+                        />
+                    </SettingButton>
 
                     {houses.length > 0 && (
-                        <Button
-                            asChild
-                            size="lg"
-                            variant="outline"
-                            className="justify-between"
-                        >
-                            <Link to=".">
-                                <span className="flex items-center gap-2">
-                                    <HouseLineIcon />
-                                    Manage houses
-                                </span>
+                        <SettingLink to=".">
+                            <SettingContent
+                                title="Manage houses"
+                                description={`${houses.length} Houses`}
+                                icon={<HouseLineIcon />}
+                                iconEnd={
+                                    <span className="flex items-center gap-1.5">
+                                        <AvatarGroup>
+                                            {houses
+                                                .slice(0, 2)
+                                                .map((h: House) => (
+                                                    <Avatar
+                                                        key={h.id}
+                                                        size="sm"
+                                                        rounded="normal"
+                                                    >
+                                                        <AvatarImage
+                                                            src={
+                                                                h.logo ??
+                                                                undefined
+                                                            }
+                                                            alt={h.name}
+                                                        />
 
-                                <div className="flex items-center gap-2">
-                                    <AvatarGroup>
-                                        {houses.slice(0, 2).map((h: House) => (
-                                            <Avatar
-                                                key={h.id}
-                                                size="sm"
-                                                rounded="normal"
-                                            >
-                                                <AvatarImage
-                                                    src={h.logo ?? undefined}
-                                                    alt={h.name}
-                                                />
+                                                        <AvatarFallback>
+                                                            <HouseLineIcon />
+                                                        </AvatarFallback>
+                                                    </Avatar>
+                                                ))}
 
-                                                <AvatarFallback>
-                                                    <HouseLineIcon />
-                                                </AvatarFallback>
-                                            </Avatar>
-                                        ))}
+                                            {houses.length > 2 && (
+                                                <AvatarGroupCount>
+                                                    +{houses.length - 2}
+                                                </AvatarGroupCount>
+                                            )}
+                                        </AvatarGroup>
 
-                                        {houses.length > 2 && (
-                                            <AvatarGroupCount>
-                                                +{houses.length - 2}
-                                            </AvatarGroupCount>
-                                        )}
-                                    </AvatarGroup>
-
-                                    <CaretRightIcon />
-                                </div>
-                            </Link>
-                        </Button>
+                                        <CaretRightIcon />
+                                    </span>
+                                }
+                            />
+                        </SettingLink>
                     )}
 
-                    <Button disabled variant="destructive" size="lg">
-                        <TrashIcon />
-                        Delete account
-                    </Button>
-                </div>
+                    <Separator />
+
+                    <SettingButton variant="destructive" disabled={true}>
+                        <SettingContent
+                            title="Delete account"
+                            icon={<TrashIcon />}
+                        />
+                    </SettingButton>
+                </Settings>
             </div>
         </div>
     );

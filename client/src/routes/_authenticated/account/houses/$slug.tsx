@@ -9,7 +9,11 @@ import { toast } from 'sonner';
 import z from 'zod';
 
 import { BackButton } from '@/components/common/BackButton';
-import { SettingContent, SettingLink } from '@/components/common/Settings';
+import {
+    SettingContent,
+    SettingLink,
+    Settings,
+} from '@/components/common/Settings';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
@@ -103,33 +107,29 @@ const RouteComponent = () => {
                     </form>
                 </section>
 
-                <div className="flex w-full flex-col gap-1.5">
-                    <section className="flex flex-col gap-1">
-                        <SettingLink to=".">
-                            <SettingContent
-                                title="Invites"
-                                description="Create and manage invite links"
-                                icon={<EnvelopeSimpleIcon />}
-                                iconEnd={<CaretRightIcon />}
-                            />
-                        </SettingLink>
+                <Settings>
+                    <SettingLink to=".">
+                        <SettingContent
+                            title="Invites"
+                            description="Create and manage invite links"
+                            icon={<EnvelopeSimpleIcon />}
+                            iconEnd={<CaretRightIcon />}
+                        />
+                    </SettingLink>
 
-                        <SettingLink to=".">
-                            <SettingContent
-                                title="Users"
-                                description="Manage users"
-                                icon={<UserIcon />}
-                                iconEnd={<CaretRightIcon />}
-                            />
-                        </SettingLink>
-                    </section>
+                    <SettingLink to=".">
+                        <SettingContent
+                            title="Users"
+                            description="Manage users"
+                            icon={<UserIcon />}
+                            iconEnd={<CaretRightIcon />}
+                        />
+                    </SettingLink>
 
                     <Separator />
 
-                    <section>
-                        <DeleteHouse id={house.id} />
-                    </section>
-                </div>
+                    <DeleteHouse id={house.id} />
+                </Settings>
             </div>
         </div>
     );
