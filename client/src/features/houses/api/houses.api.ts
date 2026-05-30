@@ -25,6 +25,16 @@ export const housesApi = {
         return data;
     },
 
+    async setActive(slug: House['slug']) {
+        const { data, error } = await authClient.organization.setActive({
+            organizationSlug: slug,
+        });
+
+        if (error) throw error;
+
+        return data;
+    },
+
     async create(input: HouseDto) {
         const { data, error } = await authClient.organization.create({
             name: input.name,
