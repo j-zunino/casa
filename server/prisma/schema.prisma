@@ -122,19 +122,22 @@ model Member {
 }
 
 model Invitation {
-    id        String  @id
-    email     String
-    user      User    @relation(fields: [inviterId], references: [id], onDelete: Cascade)
-    house     House   @relation(fields: [houseId], references: [id], onDelete: Cascade)
+    id        String   @id
+    email     String?
+    code      String?  @unique
+    maxUses   Int?
+    useCount  Int      @default(0)
+    inviter   User     @relation(fields: [inviterId], references: [id])
+    inviterId String
+    house     House    @relation(fields: [houseId], references: [id], onDelete: Cascade)
     houseId   String
     role      String?
-    status    String  @default("pending")
-    inviterId String
+    status    String   @default("pending")
 
     expiresAt DateTime
     createdAt DateTime @default(now())
 
     @@index([houseId])
-    @@index([email])
+    @@index([code])
     @@map("invitation")
 }
