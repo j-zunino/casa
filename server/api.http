@@ -80,11 +80,15 @@ Content-Type: application/json
 }
 
 
+##############################################################################
+### INVITE
+##############################################################################
+
 ### Create invite link
 
 # @attach-cookie-jar
 
-POST {{URL}}/houses/create-invite/{{HOUSE_ID}}
+POST {{URL}}/invites/create/{{HOUSE_ID}}
 Content-Type: application/json
 
 {

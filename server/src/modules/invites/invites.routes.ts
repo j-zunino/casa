@@ -10,7 +10,7 @@ import type { Request, Response } from 'express';
 export const router: Router = Router();
 
 router.post(
-    '/create-invite/:houseId',
+    '/create/:houseId',
     requireAuth,
     async (req: Request<{ houseId: string }>, res: Response) => {
         const { houseId } = req.params;
