@@ -9,6 +9,36 @@ import type { Request, Response } from 'express';
 
 export const router: Router = Router();
 
+router.get(
+    '/list/:houseId',
+    requireAuth,
+    async (req: Request<{ houseId: string }>, res: Response) => {
+        const { houseId } = req.params;
+
+        await auth.api.hasPermission({
+            headers: req.headers,
+            body: {
+                organizationId: houseId,
+                permissions: {
+                    // TODO: add "view" permission
+                    invitation: ['create'],
+                },
+            },
+        });
+
+        const invitations = await prisma.invitation.findMany({
+            where: { houseId },
+        });
+
+        const response: ApiResponse<typeof invitations> = {
+            success: true,
+            data: invitations,
+        };
+
+        res.json(response);
+    },
+);
+
 router.post(
     '/create/:houseId',
     requireAuth,

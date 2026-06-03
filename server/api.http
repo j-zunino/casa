@@ -84,6 +84,13 @@ Content-Type: application/json
 ### INVITE
 ##############################################################################
 
+### List house invites
+
+# @attach-cookie-jar
+
+GET {{URL}}/invites/list/{{HOUSE_ID}}
+
+
 ### Create invite link
 
 # @attach-cookie-jar
