@@ -53,3 +53,8 @@ export const houseSchema = z.object({
             error: 'name can only contain letters, numbers, spaces, dots, commas, hyphens and underscores',
         }),
 });
+
+export const inviteLinkSchema = z.object({
+    maxUses: z.number().int().positive().optional(),
+    expiresAt: z.iso.datetime().optional(),
+});

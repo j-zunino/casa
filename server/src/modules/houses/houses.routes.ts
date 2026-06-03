@@ -1,25 +1,46 @@
+import { prisma } from '@/config';
 import { auth, requireAuth } from '@/modules/auth';
-import { type ApiResponse } from '@casa/types';
-import { Router, type Request, type Response } from 'express';
+import { inviteLinkSchema } from '@casa/schemas';
+import { Router } from 'express';
+import crypto from 'node:crypto';
+
+import type { ApiResponse } from '@casa/types';
+import type { Request, Response } from 'express';
 
 export const router: Router = Router();
 
 router.post(
-    '/:id/set-active',
+    '/create-invite/:houseId',
     requireAuth,
-    async (req: Request<{ id: string }>, res: Response) => {
-        const { id } = req.params;
+    async (req: Request<{ houseId: string }>, res: Response) => {
+        const { houseId } = req.params;
+        const { maxUses, expiresAt } = inviteLinkSchema.parse(req.body);
 
-        const house = await auth.api.setActiveOrganization({
+        await auth.api.hasPermission({
             headers: req.headers,
             body: {
-                organizationId: id,
+                organizationId: houseId,
+                permissions: {
+                    invitation: ['create'],
+                },
             },
         });
 
-        const response: ApiResponse<typeof house> = {
+        const code = crypto.randomBytes(16).toString('base64url');
+        const invitation = await prisma.invitation.create({
+            data: {
+                id: crypto.randomUUID(),
+                code,
+                houseId,
+                inviterId: res.locals.user.id,
+                maxUses,
+                expiresAt: expiresAt ? new Date(expiresAt) : null,
+            },
+        });
+
+        const response: ApiResponse<typeof invitation> = {
             success: true,
-            data: house,
+            data: invitation,
         };
 
         res.json(response);

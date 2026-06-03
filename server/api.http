@@ -53,9 +53,42 @@ Content-Type: application/json
 GET {{URL}}/me HTTP/1.1
 
 
-### List all users
+##############################################################################
+### HOUSES
+##############################################################################
+
+@HOUSE_ID = sbHDmAiiqYCwzI7nE0z7QDXNGSnO7aAC
+
+### Get user houses
 
 # @attach-cookie-jar
 
-GET {{URL}}/users HTTP/1.1
+GET {{URL}}/auth/organization/list
+
+
+### Create house
+
+# @attach-cookie-jar
+
+POST {{URL}}/auth/organization/create
+Origin: http://localhost:5173
+Content-Type: application/json
+
+{
+    "name": "test house",
+    "slug": "test-house"
+}
+
+
+### Create invite link
+
+# @attach-cookie-jar
+
+POST {{URL}}/houses/create-invite/{{HOUSE_ID}}
+Content-Type: application/json
+
+{
+  "maxUses": 10,
+  "expiresAt": "2026-12-31T23:59:59.000Z"
+}
 
