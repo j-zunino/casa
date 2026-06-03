@@ -1,5 +1,5 @@
 import { prisma } from '@/config';
-import { auth, requireAuth } from '@/modules/auth';
+import { auth, requireAuth, requirePermission } from '@/modules/auth';
 import { inviteLinkSchema } from '@casa/schemas';
 import { Router } from 'express';
 import crypto from 'node:crypto';
@@ -12,19 +12,10 @@ export const router: Router = Router();
 router.get(
     '/list/:houseId',
     requireAuth,
+    // TODO: add "view" permission
+    requirePermission({ invitation: ['create'] }),
     async (req: Request<{ houseId: string }>, res: Response) => {
         const { houseId } = req.params;
-
-        await auth.api.hasPermission({
-            headers: req.headers,
-            body: {
-                organizationId: houseId,
-                permissions: {
-                    // TODO: add "view" permission
-                    invitation: ['create'],
-                },
-            },
-        });
 
         const invitations = await prisma.invitation.findMany({
             where: { houseId },
@@ -42,19 +33,10 @@ router.get(
 router.post(
     '/create/:houseId',
     requireAuth,
+    requirePermission({ invitation: ['create'] }),
     async (req: Request<{ houseId: string }>, res: Response) => {
         const { houseId } = req.params;
         const { maxUses, expiresAt } = inviteLinkSchema.parse(req.body);
-
-        await auth.api.hasPermission({
-            headers: req.headers,
-            body: {
-                organizationId: houseId,
-                permissions: {
-                    invitation: ['create'],
-                },
-            },
-        });
 
         const code = crypto.randomBytes(16).toString('base64url');
         const invitation = await prisma.invitation.create({
