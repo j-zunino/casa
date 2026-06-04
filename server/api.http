@@ -90,11 +90,20 @@ Content-Type: application/json
 ### INVITE
 ##############################################################################
 
+@INVITE_CODE = 2kuVGHsNMdF777HOy5zzeQ
+
 ### List house invites
 
 # @attach-cookie-jar
 
 GET {{URL}}/invites/list/{{HOUSE_ID}}
+
+
+### Get invite code info
+
+# @attach-cookie-jar
+
+GET {{URL}}/invites/{{INVITE_CODE}}
 
 
 ### Create invite link

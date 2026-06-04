@@ -30,6 +30,41 @@ router.get(
     },
 );
 
+router.get(
+    '/:inviteCode',
+    async (req: Request<{ inviteCode: string }>, res: Response) => {
+        const { inviteCode } = req.params;
+
+        const invitation = await prisma.invitation.findUnique({
+            where: { code: inviteCode },
+            select: {
+                id: true,
+                code: true,
+                status: true,
+                house: {
+                    select: {
+                        id: true,
+                        name: true,
+                        slug: true,
+                        logo: true,
+                    },
+                },
+            },
+        });
+
+        if (!invitation) {
+            throw new AppError('invite not found', 404, ErrorCodes.NOT_FOUND);
+        }
+
+        const response: ApiResponse<typeof invitation> = {
+            success: true,
+            data: invitation,
+        };
+
+        res.json(response);
+    },
+);
+
 router.post(
     '/create/:houseId',
     requireAuth,
