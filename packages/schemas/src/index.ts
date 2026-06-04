@@ -56,5 +56,4 @@ export const houseSchema = z.object({
 
 export const inviteLinkSchema = z.object({
     maxUses: z.number().int().positive().optional(),
-    expiresAt: z.iso.datetime().optional(),
 });

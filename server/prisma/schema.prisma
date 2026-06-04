@@ -141,8 +141,7 @@ model Invitation {
     role      String           @default("member")
     status    InvitationStatus @default(active)
 
-    expiresAt DateTime?
-    createdAt DateTime  @default(now())
+    createdAt DateTime @default(now())
 
     @@index([houseId])
     @@index([code])

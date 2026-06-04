@@ -71,7 +71,7 @@ router.post(
     requirePermission({ invitation: ['create'] }),
     async (req: Request<{ houseId: string }>, res: Response) => {
         const { houseId } = req.params;
-        const { maxUses, expiresAt } = inviteLinkSchema.parse(req.body);
+        const { maxUses } = inviteLinkSchema.parse(req.body);
 
         const code = crypto.randomBytes(16).toString('base64url');
         const invitation = await prisma.invitation.create({
@@ -81,7 +81,6 @@ router.post(
                 houseId,
                 inviterId: res.locals.user.id,
                 maxUses,
-                expiresAt: expiresAt ? new Date(expiresAt) : null,
             },
         });
 
