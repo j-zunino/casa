@@ -117,3 +117,10 @@ Content-Type: application/json
   "maxUses": 10
 }
 
+
+### Join house
+
+# @attach-cookie-jar
+
+POST {{URL}}/invites/{{INVITE_CODE}}/join
+

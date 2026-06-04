@@ -128,6 +128,7 @@ model Member {
     @@map("member")
 }
 
+// TODO: Add updatedAt
 model Invitation {
     id        String           @id
     email     String?
@@ -138,7 +139,6 @@ model Invitation {
     inviterId String
     house     House            @relation(fields: [houseId], references: [id], onDelete: Cascade)
     houseId   String
-    role      String           @default("member")
     status    InvitationStatus @default(active)
 
     createdAt DateTime @default(now())
