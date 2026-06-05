@@ -105,7 +105,10 @@ const RouteComponent = () => {
                     />
                 </form>
             </section>
-            <SettingLink to=".">
+            <SettingLink
+                to="/account/houses/$slug/invites"
+                params={{ slug: house.slug }}
+            >
                 <SettingContent
                     title="Invites"
                     description="Create and manage invite links"
@@ -128,7 +131,7 @@ const RouteComponent = () => {
     );
 };
 
-export const Route = createFileRoute('/_authenticated/account/houses/$slug')({
+export const Route = createFileRoute('/_authenticated/account/houses/$slug/')({
     staticData: { homePath: '/h/$slug' },
     component: RouteComponent,
     loader: async ({ context, params }) => {

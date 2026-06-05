@@ -1,7 +1,8 @@
 import { AppError } from '@/utils';
 import { ErrorCodes } from '@casa/types';
-import { type NextFunction, type Request, type Response } from 'express';
 import { auth } from './auth';
+
+import type { NextFunction, Request, Response } from 'express';
 
 export const requireAuth = async (
     req: Request,
@@ -31,3 +32,32 @@ export const requireAuth = async (
         next(err);
     }
 };
+
+export const requirePermission =
+    (permissions: Record<string, string[]>, message?: string) =>
+    async (req: Request, _res: Response, next: NextFunction) => {
+        const { houseId } = req.params;
+
+        if (typeof houseId !== 'string') {
+            return next(
+                new AppError('invalid house id', 400, ErrorCodes.BAD_REQUEST),
+            );
+        }
+
+        const { success } = await auth.api.hasPermission({
+            headers: req.headers,
+            body: { organizationId: houseId, permissions },
+        });
+
+        if (!success) {
+            return next(
+                new AppError(
+                    message ?? 'insufficient permissions',
+                    403,
+                    ErrorCodes.FORBIDDEN,
+                ),
+            );
+        }
+
+        next();
+    };

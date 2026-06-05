@@ -8,7 +8,7 @@ import helmet from 'helmet';
 
 import { authRouter } from './auth';
 import { healthRouter } from './health';
-import { housesRouter } from './houses';
+import { invitesRouter } from './invites';
 import { meRouter } from './me';
 
 const router: Router = Router();
@@ -21,7 +21,7 @@ registerRoutes(router, [
     { prefix: '/auth', router: authRouter, skipJson: true },
     { prefix: '/health', router: healthRouter },
     { prefix: '/me', router: meRouter },
-    { prefix: '/houses', router: housesRouter },
+    { prefix: '/invites', router: invitesRouter },
 ]);
 
 // Handle 404 routes

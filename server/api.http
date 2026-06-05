@@ -53,9 +53,74 @@ Content-Type: application/json
 GET {{URL}}/me HTTP/1.1
 
 
-### List all users
+##############################################################################
+### HOUSES
+##############################################################################
+
+@HOUSE_ID = sbHDmAiiqYCwzI7nE0z7QDXNGSnO7aAC
+
+### Get user houses
 
 # @attach-cookie-jar
 
-GET {{URL}}/users HTTP/1.1
+GET {{URL}}/auth/organization/list
+
+
+### Get house members
+
+# @attach-cookie-jar
+
+GET {{URL}}/auth/organization/list-members?organizationId=sbHDmAiiqYCwzI7nE0z7QDXNGSnO7aAC
+
+### Create house
+
+# @attach-cookie-jar
+
+POST {{URL}}/auth/organization/create
+Origin: http://localhost:5173
+Content-Type: application/json
+
+{
+    "name": "test house",
+    "slug": "test-house"
+}
+
+
+##############################################################################
+### INVITE
+##############################################################################
+
+@INVITE_CODE = 2kuVGHsNMdF777HOy5zzeQ
+
+### List house invites
+
+# @attach-cookie-jar
+
+GET {{URL}}/invites/list/{{HOUSE_ID}}
+
+
+### Get invite code info
+
+# @attach-cookie-jar
+
+GET {{URL}}/invites/{{INVITE_CODE}}
+
+
+### Create invite link
+
+# @attach-cookie-jar
+
+POST {{URL}}/invites/create/{{HOUSE_ID}}
+Content-Type: application/json
+
+{
+  "maxUses": 10
+}
+
+
+### Join house
+
+# @attach-cookie-jar
+
+POST {{URL}}/invites/{{INVITE_CODE}}/join
 
