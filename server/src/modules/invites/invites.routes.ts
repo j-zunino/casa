@@ -12,6 +12,9 @@ import type { Request, Response } from 'express';
 export const router: Router = Router();
 
 // TODO: Add pagination
+// TODO: Allow to revoke codes
+// TODO: Add revokedAt & revokedBy
+
 router.get(
     '/list/:houseId',
     requireAuth,

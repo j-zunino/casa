@@ -8,7 +8,6 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import z from 'zod';
 
-import { BackButton } from '@/components/common/BackButton';
 import {
     SettingContent,
     SettingLink,
@@ -19,7 +18,6 @@ import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
 import { Field, FieldError } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import { Separator } from '@/components/ui/separator';
 import { DeleteHouse } from '@/features/houses/components';
 import {
     CaretRightIcon,
@@ -57,7 +55,7 @@ const RouteComponent = () => {
 
     return (
         <Settings>
-            <section className="flex items-center gap-1.5 py-1.5">
+            <section className="flex items-center gap-1">
                 <Avatar size="lg" rounded="normal">
                     <AvatarImage
                         src={house.logo ?? undefined}
@@ -107,7 +105,10 @@ const RouteComponent = () => {
                     />
                 </form>
             </section>
-            <SettingLink to=".">
+            <SettingLink
+                to="/account/houses/$slug/invites"
+                params={{ slug: house.slug }}
+            >
                 <SettingContent
                     title="Invites"
                     description="Create and manage invite links"
@@ -130,7 +131,7 @@ const RouteComponent = () => {
     );
 };
 
-export const Route = createFileRoute('/_authenticated/account/houses/$slug')({
+export const Route = createFileRoute('/_authenticated/account/houses/$slug/')({
     staticData: { homePath: '/h/$slug' },
     component: RouteComponent,
     loader: async ({ context, params }) => {

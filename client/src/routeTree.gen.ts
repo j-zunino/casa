@@ -19,7 +19,8 @@ import { Route as AuthenticatedAccountRouteRouteImport } from './routes/_authent
 import { Route as AuthenticatedAccountIndexRouteImport } from './routes/_authenticated/account/index'
 import { Route as AuthenticatedHSlugRouteImport } from './routes/_authenticated/h/$slug'
 import { Route as AuthenticatedAccountHousesIndexRouteImport } from './routes/_authenticated/account/houses/index'
-import { Route as AuthenticatedAccountHousesSlugRouteImport } from './routes/_authenticated/account/houses/$slug'
+import { Route as AuthenticatedAccountHousesSlugIndexRouteImport } from './routes/_authenticated/account/houses/$slug/index'
+import { Route as AuthenticatedAccountHousesSlugInvitesRouteImport } from './routes/_authenticated/account/houses/$slug/invites'
 
 const GuestRouteRoute = GuestRouteRouteImport.update({
   id: '/_guest',
@@ -73,10 +74,16 @@ const AuthenticatedAccountHousesIndexRoute =
     path: '/houses/',
     getParentRoute: () => AuthenticatedAccountRouteRoute,
   } as any)
-const AuthenticatedAccountHousesSlugRoute =
-  AuthenticatedAccountHousesSlugRouteImport.update({
-    id: '/houses/$slug',
-    path: '/houses/$slug',
+const AuthenticatedAccountHousesSlugIndexRoute =
+  AuthenticatedAccountHousesSlugIndexRouteImport.update({
+    id: '/houses/$slug/',
+    path: '/houses/$slug/',
+    getParentRoute: () => AuthenticatedAccountRouteRoute,
+  } as any)
+const AuthenticatedAccountHousesSlugInvitesRoute =
+  AuthenticatedAccountHousesSlugInvitesRouteImport.update({
+    id: '/houses/$slug/invites',
+    path: '/houses/$slug/invites',
     getParentRoute: () => AuthenticatedAccountRouteRoute,
   } as any)
 
@@ -88,8 +95,9 @@ export interface FileRoutesByFullPath {
   '/sign-up': typeof GuestSignUpRoute
   '/h/$slug': typeof AuthenticatedHSlugRoute
   '/account/': typeof AuthenticatedAccountIndexRoute
-  '/account/houses/$slug': typeof AuthenticatedAccountHousesSlugRoute
   '/account/houses/': typeof AuthenticatedAccountHousesIndexRoute
+  '/account/houses/$slug/invites': typeof AuthenticatedAccountHousesSlugInvitesRoute
+  '/account/houses/$slug/': typeof AuthenticatedAccountHousesSlugIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof AuthenticatedIndexRoute
@@ -98,8 +106,9 @@ export interface FileRoutesByTo {
   '/sign-up': typeof GuestSignUpRoute
   '/h/$slug': typeof AuthenticatedHSlugRoute
   '/account': typeof AuthenticatedAccountIndexRoute
-  '/account/houses/$slug': typeof AuthenticatedAccountHousesSlugRoute
   '/account/houses': typeof AuthenticatedAccountHousesIndexRoute
+  '/account/houses/$slug/invites': typeof AuthenticatedAccountHousesSlugInvitesRoute
+  '/account/houses/$slug': typeof AuthenticatedAccountHousesSlugIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -112,8 +121,9 @@ export interface FileRoutesById {
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/h/$slug': typeof AuthenticatedHSlugRoute
   '/_authenticated/account/': typeof AuthenticatedAccountIndexRoute
-  '/_authenticated/account/houses/$slug': typeof AuthenticatedAccountHousesSlugRoute
   '/_authenticated/account/houses/': typeof AuthenticatedAccountHousesIndexRoute
+  '/_authenticated/account/houses/$slug/invites': typeof AuthenticatedAccountHousesSlugInvitesRoute
+  '/_authenticated/account/houses/$slug/': typeof AuthenticatedAccountHousesSlugIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -125,8 +135,9 @@ export interface FileRouteTypes {
     | '/sign-up'
     | '/h/$slug'
     | '/account/'
-    | '/account/houses/$slug'
     | '/account/houses/'
+    | '/account/houses/$slug/invites'
+    | '/account/houses/$slug/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -135,8 +146,9 @@ export interface FileRouteTypes {
     | '/sign-up'
     | '/h/$slug'
     | '/account'
-    | '/account/houses/$slug'
     | '/account/houses'
+    | '/account/houses/$slug/invites'
+    | '/account/houses/$slug'
   id:
     | '__root__'
     | '/_authenticated'
@@ -148,8 +160,9 @@ export interface FileRouteTypes {
     | '/_authenticated/'
     | '/_authenticated/h/$slug'
     | '/_authenticated/account/'
-    | '/_authenticated/account/houses/$slug'
     | '/_authenticated/account/houses/'
+    | '/_authenticated/account/houses/$slug/invites'
+    | '/_authenticated/account/houses/$slug/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -229,11 +242,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAccountHousesIndexRouteImport
       parentRoute: typeof AuthenticatedAccountRouteRoute
     }
-    '/_authenticated/account/houses/$slug': {
-      id: '/_authenticated/account/houses/$slug'
+    '/_authenticated/account/houses/$slug/': {
+      id: '/_authenticated/account/houses/$slug/'
       path: '/houses/$slug'
-      fullPath: '/account/houses/$slug'
-      preLoaderRoute: typeof AuthenticatedAccountHousesSlugRouteImport
+      fullPath: '/account/houses/$slug/'
+      preLoaderRoute: typeof AuthenticatedAccountHousesSlugIndexRouteImport
+      parentRoute: typeof AuthenticatedAccountRouteRoute
+    }
+    '/_authenticated/account/houses/$slug/invites': {
+      id: '/_authenticated/account/houses/$slug/invites'
+      path: '/houses/$slug/invites'
+      fullPath: '/account/houses/$slug/invites'
+      preLoaderRoute: typeof AuthenticatedAccountHousesSlugInvitesRouteImport
       parentRoute: typeof AuthenticatedAccountRouteRoute
     }
   }
@@ -241,15 +261,19 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAccountRouteRouteChildren {
   AuthenticatedAccountIndexRoute: typeof AuthenticatedAccountIndexRoute
-  AuthenticatedAccountHousesSlugRoute: typeof AuthenticatedAccountHousesSlugRoute
   AuthenticatedAccountHousesIndexRoute: typeof AuthenticatedAccountHousesIndexRoute
+  AuthenticatedAccountHousesSlugInvitesRoute: typeof AuthenticatedAccountHousesSlugInvitesRoute
+  AuthenticatedAccountHousesSlugIndexRoute: typeof AuthenticatedAccountHousesSlugIndexRoute
 }
 
 const AuthenticatedAccountRouteRouteChildren: AuthenticatedAccountRouteRouteChildren =
   {
     AuthenticatedAccountIndexRoute: AuthenticatedAccountIndexRoute,
-    AuthenticatedAccountHousesSlugRoute: AuthenticatedAccountHousesSlugRoute,
     AuthenticatedAccountHousesIndexRoute: AuthenticatedAccountHousesIndexRoute,
+    AuthenticatedAccountHousesSlugInvitesRoute:
+      AuthenticatedAccountHousesSlugInvitesRoute,
+    AuthenticatedAccountHousesSlugIndexRoute:
+      AuthenticatedAccountHousesSlugIndexRoute,
   }
 
 const AuthenticatedAccountRouteRouteWithChildren =

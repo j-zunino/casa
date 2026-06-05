@@ -35,7 +35,7 @@ const RouteComponent = () => {
     // TODO: If account is email allow to change username
     return (
         <Settings>
-            <div className="flex flex-col items-center py-1.5">
+            <div className="flex flex-col items-center">
                 <Avatar size="lg">
                     <AvatarImage
                         src={auth.user?.image ?? undefined}
