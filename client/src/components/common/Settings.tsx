@@ -27,8 +27,10 @@ interface SettingContentProps {
     iconEnd?: ReactNode;
 }
 
+// TODO:FIX: Destructive variant doesn't change ring
+
 export const Settings = ({ ...props }: ComponentProps<'div'>) => {
-    return <div className="flex w-full flex-col gap-1.5" {...props} />;
+    return <div className="flex w-full flex-col gap-1" {...props} />;
 };
 
 export const SettingLink = ({

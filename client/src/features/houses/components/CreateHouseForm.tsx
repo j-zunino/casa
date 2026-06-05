@@ -41,10 +41,7 @@ export const CreateHouseForm = () => {
     };
 
     return (
-        <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-2"
-        >
+        <form onSubmit={form.handleSubmit(onSubmit)}>
             <FieldSet>
                 <FieldGroup>
                     <Controller

@@ -8,7 +8,6 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import z from 'zod';
 
-import { BackButton } from '@/components/common/BackButton';
 import {
     SettingContent,
     SettingLink,
@@ -19,7 +18,6 @@ import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
 import { Field, FieldError } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import { Separator } from '@/components/ui/separator';
 import { DeleteHouse } from '@/features/houses/components';
 import {
     CaretRightIcon,
@@ -57,7 +55,7 @@ const RouteComponent = () => {
 
     return (
         <Settings>
-            <section className="flex items-center gap-1.5 py-1.5">
+            <section className="mb-2 flex items-center gap-1">
                 <Avatar size="lg" rounded="normal">
                     <AvatarImage
                         src={house.logo ?? undefined}

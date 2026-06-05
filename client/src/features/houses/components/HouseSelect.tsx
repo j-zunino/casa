@@ -7,6 +7,7 @@ import {
     AvatarLabel,
 } from '@/components/ui/avatar';
 import { HouseLineIcon, PencilIcon } from '@phosphor-icons/react';
+import { CreateHouse } from './CreateHouse.tsx';
 
 import type { House } from '@/features/houses/types';
 
@@ -21,7 +22,7 @@ export const HouseSelect = ({ list, editMode }: Props) => {
     const path = editMode ? '/account/houses/$slug' : undefined;
 
     return (
-        <>
+        <div className="flex w-full max-w-3xl flex-wrap justify-center gap-1.5 p-4">
             {list.map((h: House) => (
                 <button
                     key={h.id}
@@ -45,6 +46,8 @@ export const HouseSelect = ({ list, editMode }: Props) => {
                     <AvatarLabel>{h.name}</AvatarLabel>
                 </button>
             ))}
-        </>
+
+            {list.length < 5 && <CreateHouse />}
+        </div>
     );
 };
