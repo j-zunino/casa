@@ -19,7 +19,7 @@ import {
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Spinner } from '@/components/ui/spinner';
-import { TrashIcon, WarningIcon } from '@phosphor-icons/react';
+import { SealWarningIcon, TrashIcon } from '@phosphor-icons/react';
 
 import type { House } from '../types/houses.types.ts';
 
@@ -60,7 +60,7 @@ export const DeleteHouse = ({ id }: Props) => {
             <AlertDialogContent size="sm">
                 <AlertDialogHeader>
                     <AlertDialogMedia>
-                        <WarningIcon />
+                        <SealWarningIcon />
                     </AlertDialogMedia>
 
                     <AlertDialogTitle>Delete house?</AlertDialogTitle>

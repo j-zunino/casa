@@ -1,8 +1,8 @@
 import {
     CheckIcon,
     InfoIcon,
+    SealWarningIcon,
     SpinnerGapIcon,
-    WarningIcon,
     XIcon,
 } from '@phosphor-icons/react';
 import { Toaster as Sonner, type ToasterProps } from 'sonner';
@@ -14,7 +14,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
             icons={{
                 success: <CheckIcon className="size-4" />,
                 info: <InfoIcon className="size-4" />,
-                warning: <WarningIcon className="size-4" />,
+                warning: <SealWarningIcon className="size-4" />,
                 error: <XIcon className="size-4" />,
                 loading: <SpinnerGapIcon className="size-4 animate-spin" />,
             }}
@@ -28,7 +28,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
             }
             toastOptions={{
                 classNames: {
-                    toast: 'cn-toast font-sans text-sm!',
+                    toast: 'cn-toast font-sans text-sm! select-none',
                 },
             }}
             {...props}
