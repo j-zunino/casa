@@ -16,8 +16,6 @@ interface Props {
 }
 
 export const HouseSelect = ({ list, editMode }: Props) => {
-    if (list.length === 0) return null;
-
     const path = editMode ? '/account/houses/$slug' : '/h/$slug';
 
     return (
