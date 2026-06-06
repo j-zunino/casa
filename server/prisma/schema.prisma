@@ -107,7 +107,7 @@ model House {
     members     Member[]
     invitations Invitation[]
 
-    createdAt DateTime
+    createdAt DateTime @default(now())
 
     @@unique([slug])
     @@map("house")
@@ -121,7 +121,7 @@ model Member {
     houseId String
     role    String @default("member")
 
-    createdAt DateTime
+    createdAt DateTime @default(now())
 
     @@index([houseId])
     @@index([userId])
