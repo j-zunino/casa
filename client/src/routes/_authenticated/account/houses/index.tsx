@@ -17,13 +17,14 @@ const RouteComponent = () => {
         <Settings>
             {houses.map((h) => (
                 <SettingLink
+                    key={h.id}
                     to="/account/houses/$slug"
                     params={{ slug: h.slug }}
                 >
                     <SettingContent
                         title={h.name}
                         icon={
-                            <Avatar key={h.id} size="sm" rounded="normal">
+                            <Avatar size="sm" rounded="normal">
                                 <AvatarImage
                                     src={h.logo ?? undefined}
                                     alt={h.name}

@@ -1,32 +1,38 @@
 {
-  "extends": "../tsconfig.base.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
+    "extends": "../tsconfig.base.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@/*": [
+                "./src/*"
+            ]
+        },
+        "module": "ESNext",
+        "moduleResolution": "Bundler",
+        "lib": [
+            "ES2022"
+        ],
+        "outDir": "dist",
+        "rootDir": "src",
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
+        "declaration": true,
+        "sourceMap": true
     },
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "lib": [
-      "ES2022"
+    "references": [
+        {
+            "path": "../packages/types"
+        },
+        {
+            "path": "../packages/schemas"
+        }
     ],
-    "outDir": "dist",
-    "rootDir": "src",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "declaration": true,
-    "sourceMap": true
-  },
-  "references": [
-    { "path": "../packages/types" },
-    { "path": "../packages/schemas" }
-  ],
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+    "include": [
+        "src"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
 }

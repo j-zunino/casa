@@ -1,14 +1,17 @@
 {
-  "files": [],
-  "references": [
-    {
-      "path": "./server"
-    },
-    {
-      "path": "./client"
-    },
-    {
-      "path": "./shared"
-    }
-  ]
+    "files": [],
+    "references": [
+        {
+            "path": "./server"
+        },
+        {
+            "path": "./client"
+        },
+        {
+            "path": "./packages/schemas"
+        },
+        {
+            "path": "./packages/types"
+        }
+    ]
 }

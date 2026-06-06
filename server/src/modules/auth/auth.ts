@@ -26,6 +26,7 @@ export const auth = betterAuth({
             organizationHooks: {
                 // TODO: Find a better way to do this lol
                 // TODO: Make this a function and use before create/update
+                // TODO: De-duplicate slug generation logic
                 beforeCreateOrganization: async ({ organization }) => {
                     const result = houseSchema.safeParse({
                         name: organization.name,
