@@ -19,11 +19,4 @@ export const housesQueries = {
             queryFn: () => housesApi.getDetails(slug),
         });
     },
-
-    active(slug: House['slug']) {
-        return queryOptions({
-            queryKey: housesKeys.active(),
-            queryFn: () => housesApi.getDetails(slug),
-        });
-    },
 };
