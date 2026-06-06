@@ -1,3 +1,4 @@
+import { getHouseBySlug } from '@/modules/houses';
 import { AppError } from '@/utils';
 import { ErrorCodes } from '@casa/types';
 import { auth } from './auth';
@@ -36,17 +37,19 @@ export const requireAuth = async (
 export const requirePermission =
     (permissions: Record<string, string[]>, message?: string) =>
     async (req: Request, _res: Response, next: NextFunction) => {
-        const { houseId } = req.params;
+        const { houseSlug } = req.params;
 
-        if (typeof houseId !== 'string') {
+        if (typeof houseSlug !== 'string') {
             return next(
-                new AppError('invalid house id', 400, ErrorCodes.BAD_REQUEST),
+                new AppError('invalid house slug', 400, ErrorCodes.BAD_REQUEST),
             );
         }
 
+        const house = await getHouseBySlug(houseSlug);
+
         const { success } = await auth.api.hasPermission({
             headers: req.headers,
-            body: { organizationId: houseId, permissions },
+            body: { organizationId: house.id, permissions },
         });
 
         if (!success) {

@@ -1,1 +1,1 @@
-export { normalizeHouseError } from './houses.utils';
+export { getHouseBySlug, normalizeHouseError } from './houses.utils';

@@ -1,5 +1,6 @@
 import { prisma } from '@/config';
 import { auth, requireAuth, requirePermission } from '@/modules/auth';
+import { getHouseBySlug } from '@/modules/houses';
 import { AppError } from '@/utils';
 import { inviteLinkSchema } from '@casa/schemas';
 import { ErrorCodes } from '@casa/types';
@@ -16,15 +17,17 @@ export const router: Router = Router();
 // TODO: Add revokedAt & revokedBy
 
 router.get(
-    '/list/:houseId',
+    '/list/:houseSlug',
     requireAuth,
     // TODO: add "view" permission
     requirePermission({ invitation: ['create'] }),
-    async (req: Request<{ houseId: string }>, res: Response) => {
-        const { houseId } = req.params;
+    async (req: Request<{ houseSlug: string }>, res: Response) => {
+        const { houseSlug } = req.params;
+
+        const house = await getHouseBySlug(houseSlug);
 
         const invitations = await prisma.invitation.findMany({
-            where: { houseId },
+            where: { houseId: house.id },
         });
 
         const response: ApiResponse<typeof invitations> = {
@@ -74,19 +77,21 @@ router.get(
 );
 
 router.post(
-    '/create/:houseId',
+    '/create/:houseSlug',
     requireAuth,
     requirePermission({ invitation: ['create'] }),
-    async (req: Request<{ houseId: string }>, res: Response) => {
-        const { houseId } = req.params;
+    async (req: Request<{ houseSlug: string }>, res: Response) => {
+        const { houseSlug } = req.params;
         const { maxUses } = inviteLinkSchema.parse(req.body);
+
+        const house = await getHouseBySlug(houseSlug);
 
         const code = crypto.randomBytes(16).toString('base64url');
         const invitation = await prisma.invitation.create({
             data: {
                 id: crypto.randomUUID(),
                 code,
-                houseId,
+                houseId: house.id,
                 inviterId: res.locals.user.id,
                 maxUses,
             },

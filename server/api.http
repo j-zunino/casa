@@ -57,7 +57,7 @@ GET {{URL}}/me HTTP/1.1
 ### HOUSES
 ##############################################################################
 
-@HOUSE_ID = sbHDmAiiqYCwzI7nE0z7QDXNGSnO7aAC
+@HOUSE_SLUG = test-house
 
 ### Get user houses
 
@@ -70,7 +70,7 @@ GET {{URL}}/auth/organization/list
 
 # @attach-cookie-jar
 
-GET {{URL}}/auth/organization/list-members?organizationId=sbHDmAiiqYCwzI7nE0z7QDXNGSnO7aAC
+GET {{URL}}/auth/organization/list-members?organizationSlug={{HOUSE_SLUG}}
 
 ### Create house
 
@@ -96,7 +96,7 @@ Content-Type: application/json
 
 # @attach-cookie-jar
 
-GET {{URL}}/invites/list/{{HOUSE_ID}}
+GET {{URL}}/invites/list/{{HOUSE_SLUG}}
 
 
 ### Get invite code info
@@ -110,7 +110,7 @@ GET {{URL}}/invites/{{INVITE_CODE}}
 
 # @attach-cookie-jar
 
-POST {{URL}}/invites/create/{{HOUSE_ID}}
+POST {{URL}}/invites/create/{{HOUSE_SLUG}}
 Content-Type: application/json
 
 {
