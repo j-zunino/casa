@@ -1,5 +1,3 @@
-import { setActiveHouse } from '../services/houses.service.ts';
-
 import {
     Avatar,
     AvatarFallback,
@@ -8,6 +6,7 @@ import {
 } from '@/components/ui/avatar';
 import { HouseLineIcon, PencilIcon } from '@phosphor-icons/react';
 import { CreateHouse } from './CreateHouse.tsx';
+import { Link } from '@tanstack/react-router';
 
 import type { House } from '@/features/houses/types';
 
@@ -19,14 +18,15 @@ interface Props {
 export const HouseSelect = ({ list, editMode }: Props) => {
     if (list.length === 0) return null;
 
-    const path = editMode ? '/account/houses/$slug' : undefined;
+    const path = editMode ? '/account/houses/$slug' : '/h/$slug';
 
     return (
         <div className="flex w-full max-w-3xl flex-wrap justify-center gap-1.5 p-4">
             {list.map((h: House) => (
-                <button
+                <Link
                     key={h.id}
-                    onClick={() => setActiveHouse(h.id, h.slug, path)}
+                    to={path}
+                    params={{ slug: h.slug }}
                     className="group relative w-30 rounded-md transition outline-none select-none"
                 >
                     <Avatar size="lg" rounded="normal" ring={true}>
@@ -44,7 +44,7 @@ export const HouseSelect = ({ list, editMode }: Props) => {
                     </Avatar>
 
                     <AvatarLabel>{h.name}</AvatarLabel>
-                </button>
+                </Link>
             ))}
 
             {list.length < 5 && <CreateHouse />}
