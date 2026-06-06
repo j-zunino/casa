@@ -7,7 +7,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import { App } from './App';
-import { NotFound } from './components/common/ErrorComponents';
+import { ErrorComponent, NotFound } from './components/common/ErrorComponents';
 import { Loading } from './components/common/Loading';
 
 export const router = createRouter({
@@ -24,6 +24,7 @@ export const router = createRouter({
 
     defaultPendingComponent: () => <Loading />,
     defaultNotFoundComponent: () => <NotFound />,
+    defaultErrorComponent: ({ error }) => <ErrorComponent error={error} />,
 });
 
 declare module '@tanstack/react-router' {

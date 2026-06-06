@@ -10,7 +10,8 @@ import {
     EmptyTitle,
 } from '../ui/empty';
 
-export const NotFound = () => {
+// TODO:FIX: 'error' type is any
+export const ErrorComponent = ({ error }) => {
     return (
         <Empty>
             <EmptyHeader>
@@ -18,9 +19,11 @@ export const NotFound = () => {
                     <SealWarningIcon />
                 </EmptyMedia>
 
-                <EmptyTitle>404 - Not Found</EmptyTitle>
+                <EmptyTitle>
+                    {error.status} - {error.statusText}
+                </EmptyTitle>
                 <EmptyDescription>
-                    The page you&apos;re looking for doesn&apos;t exist.
+                    {error.message.replace('organization', 'house')}
                 </EmptyDescription>
 
                 <EmptyContent>
@@ -36,7 +39,7 @@ export const NotFound = () => {
     );
 };
 
-export const NoActiveHouse = () => {
+export const NotFound = () => {
     return (
         <Empty>
             <EmptyHeader>
@@ -44,10 +47,9 @@ export const NoActiveHouse = () => {
                     <SealWarningIcon />
                 </EmptyMedia>
 
-                <EmptyTitle>Access denied</EmptyTitle>
+                <EmptyTitle>404 - Not Found</EmptyTitle>
                 <EmptyDescription>
-                    We couldn&apos;t confirm you are a member of this house,
-                    please go back and try again.
+                    The page you&apos;re looking for doesn&apos;t exist.
                 </EmptyDescription>
 
                 <EmptyContent>
