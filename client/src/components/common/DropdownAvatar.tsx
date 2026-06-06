@@ -1,7 +1,7 @@
-import { useAuth } from '@/features/auth/hooks';
-import { useHouses } from '@/features/houses/hooks';
-import { setActiveHouse } from '@/features/houses/services';
 import { authHooks } from '@/features/auth/hooks';
+import { authQueries } from '@/features/auth/queries';
+import { housesQueries } from '@/features/houses/queries';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 import {
     Avatar,
@@ -24,16 +24,14 @@ import {
     UserIcon,
 } from '@phosphor-icons/react';
 import { Link } from '@tanstack/react-router';
-import { Spinner } from '../ui/spinner';
 
 import type { House } from '@/features/houses/types';
 
 export const DropdownAvatar = () => {
-    // TODO: Remove
-    const { auth } = useAuth();
+    const { data: session } = useSuspenseQuery(authQueries.session());
+    const { data: houses } = useSuspenseQuery(housesQueries.all());
 
     const { mutate: signOut, isPending: isSigningOut } = authHooks.useSignOut();
-    const { data: houses, isPending: isHousesPending } = useHouses.useAll();
 
     return (
         <DropdownMenu>
@@ -41,8 +39,9 @@ export const DropdownAvatar = () => {
                 <Button variant="ghost" size="icon" className="rounded-full">
                     <Avatar size="sm">
                         <AvatarImage
-                            src={auth.user?.image ?? undefined}
-                            alt={auth.user?.name}
+                            // TODO:FIX: 'session' is possibly undefined
+                            src={session?.user.image ?? undefined}
+                            alt={session?.user.name}
                         />
                         <AvatarFallback>
                             <UserIcon />
@@ -55,17 +54,9 @@ export const DropdownAvatar = () => {
                 align="end"
                 className="w-auto max-w-60 min-w-50"
             >
-                {isHousesPending ? (
-                    <DropdownMenuItem className="hover:bg-transparent!">
-                        <Spinner />
-                        Loading houses...
-                    </DropdownMenuItem>
-                ) : (
-                    houses.map((h: House) => (
-                        <DropdownMenuItem
-                            key={h.id}
-                            onClick={() => setActiveHouse(h.id, h.slug)}
-                        >
+                {houses.map((h: House) => (
+                    <DropdownMenuItem key={h.id} asChild>
+                        <Link to="/h/$slug" params={{ slug: h.slug }}>
                             <Avatar size="sm" rounded="normal">
                                 <AvatarImage
                                     src={h.logo ?? undefined}
@@ -78,9 +69,9 @@ export const DropdownAvatar = () => {
                             </Avatar>
 
                             <AvatarLabel className="py-0">{h.name}</AvatarLabel>
-                        </DropdownMenuItem>
-                    ))
-                )}
+                        </Link>
+                    </DropdownMenuItem>
+                ))}
 
                 <DropdownMenuItem asChild>
                     <Link to="/manage-houses">

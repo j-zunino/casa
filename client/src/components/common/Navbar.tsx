@@ -1,15 +1,19 @@
+import { navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
+import { authQueries } from '@/features/auth/queries';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { useMatches } from '@tanstack/react-router';
+
 import {
     NavigationMenu,
     NavigationMenuItem,
     NavigationMenuList,
-    navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
-import { useAuth } from '@/features/auth/hooks';
-import { Link, useMatches } from '@tanstack/react-router';
+import { Link } from '@tanstack/react-router';
 import { DropdownAvatar } from './DropdownAvatar';
 
 export function Navbar() {
-    const { auth } = useAuth();
+    const { data: session } = useSuspenseQuery(authQueries.session());
+
     const matches = useMatches();
     const homePath =
         matches.find((m) => m.staticData?.homePath)?.staticData.homePath ?? '/';
@@ -31,7 +35,8 @@ export function Navbar() {
                     </NavigationMenuList>
 
                     <NavigationMenuList>
-                        {auth.isAuthenticated ? (
+                        {/* TODO:FIX: 'session' is possibly undefined */}
+                        {session?.session ? (
                             <NavigationMenuItem>
                                 <DropdownAvatar />
                             </NavigationMenuItem>

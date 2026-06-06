@@ -1,4 +1,4 @@
-import { useAuth } from '@/features/auth/hooks';
+import { authQueries } from '@/features/auth/queries';
 import { housesQueries } from '@/features/houses/queries';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
@@ -29,7 +29,7 @@ import {
 import type { House } from '@/features/houses/types';
 
 const RouteComponent = () => {
-    const { auth } = useAuth();
+    const { data: session } = useSuspenseQuery(authQueries.session());
     const { data: houses } = useSuspenseQuery(housesQueries.all());
 
     // TODO: If account is email allow to change username
@@ -38,8 +38,8 @@ const RouteComponent = () => {
             <div className="flex flex-col items-center">
                 <Avatar size="lg">
                     <AvatarImage
-                        src={auth.user?.image ?? undefined}
-                        alt={auth.user?.name}
+                        src={session?.user.image ?? undefined}
+                        alt={session?.user.name}
                     />
 
                     <AvatarFallback>
@@ -47,7 +47,7 @@ const RouteComponent = () => {
                     </AvatarFallback>
                 </Avatar>
 
-                <AvatarLabel>{auth.user?.name}</AvatarLabel>
+                <AvatarLabel>{session?.user.name}</AvatarLabel>
             </div>
 
             <SettingButton disabled={true}>
