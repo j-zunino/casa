@@ -108,6 +108,7 @@ model House {
     invitations Invitation[]
 
     createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
     @@unique([slug])
     @@map("house")
@@ -122,13 +123,13 @@ model Member {
     role    String @default("member")
 
     createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
     @@index([houseId])
     @@index([userId])
     @@map("member")
 }
 
-// TODO: Add updatedAt
 model Invitation {
     id        String           @id
     email     String?
@@ -142,6 +143,7 @@ model Invitation {
     status    InvitationStatus @default(active)
 
     createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
     @@index([houseId])
     @@index([code])
