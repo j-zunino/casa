@@ -20,7 +20,8 @@ export const ErrorComponent = ({ error }) => {
                 </EmptyMedia>
 
                 <EmptyTitle>
-                    {error.status} - {error.statusText}
+                    {error.status || '500'} -{' '}
+                    {error.statusText || 'Something went wrong'}
                 </EmptyTitle>
                 <EmptyDescription>
                     {error.message.replace('organization', 'house')}
