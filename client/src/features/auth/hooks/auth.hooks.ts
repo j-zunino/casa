@@ -29,8 +29,10 @@ export const authHooks = {
         return useMutation({
             ...authMutations.signUpEmail(),
             onSuccess: async () => {
-                await queryClient.invalidateQueries({
-                    queryKey: housesKeys.base(),
+                queryClient.clear();
+
+                await router.navigate({
+                    to: '/',
                 });
             },
         });
