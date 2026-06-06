@@ -1,6 +1,6 @@
 import { router } from '@/main';
 import { toast } from 'sonner';
-import { useHouses } from '../hooks/useHouses.ts';
+import { housesHooks } from '../hooks/houses.hooks.ts';
 
 import {
     SettingButton,
@@ -29,7 +29,7 @@ interface Props {
 
 export const DeleteHouse = ({ id }: Props) => {
     const { mutateAsync: deleteHouse, isPending: isDeletingHouse } =
-        useHouses.useDelete();
+        housesHooks.useDelete();
 
     const onSubmit = async (houseId: typeof id) => {
         toast.promise(deleteHouse(houseId), {

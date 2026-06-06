@@ -2,7 +2,7 @@ import { router } from '@/main';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { housesKeys, housesMutations, housesQueries } from '../queries';
 
-export const useHouses = {
+export const housesHooks = {
     useAll() {
         return useQuery(housesQueries.all());
     },

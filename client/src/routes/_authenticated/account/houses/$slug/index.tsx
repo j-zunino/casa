@@ -1,4 +1,4 @@
-import { useHouses } from '@/features/houses/hooks';
+import { housesHooks } from '@/features/houses/hooks';
 import { housesQueries } from '@/features/houses/queries';
 import { houseSchema } from '@casa/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -34,7 +34,7 @@ const RouteComponent = () => {
     const { slug } = Route.useParams();
     const { data: house } = useSuspenseQuery(housesQueries.details(slug));
     const { mutateAsync: update, isPending: isUpdating } =
-        useHouses.useUpdate();
+        housesHooks.useUpdate();
 
     const form = useForm<FormValues>({
         resolver: zodResolver(houseSchema),

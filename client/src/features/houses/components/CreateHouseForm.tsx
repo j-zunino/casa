@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import z from 'zod';
-import { useHouses } from '../hooks';
+import { housesHooks } from '../hooks';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -21,7 +21,7 @@ type FormValues = z.infer<typeof houseSchema>;
 
 export const CreateHouseForm = () => {
     const { mutateAsync: createHouse, isPending: isCreatingHouse } =
-        useHouses.useCreate();
+        housesHooks.useCreate();
 
     const form = useForm<FormValues>({
         resolver: zodResolver(houseSchema),
