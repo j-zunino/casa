@@ -1,7 +1,7 @@
 import { env } from '@/lib/zod';
 
 export const api = async (path: string, init?: RequestInit) => {
-    const response = await fetch(`${env.VITE_API_URL}${path}`, {
+    const response = await fetch(`${env.VITE_API_URL}/api${path}`, {
         credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
