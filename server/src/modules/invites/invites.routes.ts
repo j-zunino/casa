@@ -86,7 +86,7 @@ router.post(
 
         const house = await getHouseBySlug(houseSlug);
 
-        const code = crypto.randomBytes(16).toString('base64url');
+        const code = crypto.randomBytes(6).toString('base64url');
         const invitation = await prisma.invitation.create({
             data: {
                 id: crypto.randomUUID(),
