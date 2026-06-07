@@ -75,7 +75,7 @@ export const CreateHouseForm = () => {
                                     Creating house...
                                 </>
                             ) : (
-                                'Create'
+                                'Create house'
                             )}
                         </Button>
                     </Field>

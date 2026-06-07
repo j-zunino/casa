@@ -4,8 +4,8 @@ import { housesApi } from '../api';
 
 import type { House } from '../types';
 
-// TODO: Include count?
 export const housesQueries = {
+    // TODO: Include count?
     all() {
         return queryOptions({
             queryKey: housesKeys.list(),
