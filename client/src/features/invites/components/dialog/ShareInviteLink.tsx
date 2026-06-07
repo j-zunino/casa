@@ -1,0 +1,47 @@
+import { Button } from '@/components/ui/button';
+import {
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+} from '@/components/ui/dialog';
+import {
+    InputGroup,
+    InputGroupAddon,
+    InputGroupButton,
+    InputGroupInput,
+} from '@/components/ui/input-group';
+import { CopyIcon } from '@phosphor-icons/react';
+
+interface Props {
+    inviteCode: string;
+    isPending: boolean;
+}
+
+export const ShareInviteLink = ({ inviteCode, isPending }: Props) => {
+    return (
+        <>
+            <DialogHeader>
+                <DialogTitle>Send a invite link to people</DialogTitle>
+                <DialogDescription>
+                    Your invite link will expire after 5 uses.
+                    <Button variant="link" size="xs">
+                        Edit invite link
+                    </Button>
+                </DialogDescription>
+            </DialogHeader>
+
+            <InputGroup>
+                <InputGroupInput
+                    value={`${window.location.origin}/${isPending ? '...' : inviteCode}`}
+                    readOnly
+                />
+                <InputGroupAddon align="inline-end">
+                    <InputGroupButton variant="secondary" disabled={isPending}>
+                        <CopyIcon />
+                        Copy
+                    </InputGroupButton>
+                </InputGroupAddon>
+            </InputGroup>
+        </>
+    );
+};
