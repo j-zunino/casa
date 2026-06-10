@@ -28,6 +28,14 @@ router.get(
 
         const invitations = await prisma.invitation.findMany({
             where: { houseId: house.id },
+            include: {
+                inviter: {
+                    select: {
+                        name: true,
+                        image: true,
+                    },
+                },
+            },
         });
 
         const response: ApiResponse<typeof invitations> = {
