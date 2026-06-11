@@ -17,7 +17,7 @@ interface Props {
     isPending: boolean;
 }
 
-export const ShareInviteLink = ({ inviteCode, isPending }: Props) => {
+export const CreateInviteLink = ({ inviteCode, isPending }: Props) => {
     return (
         <>
             <DialogHeader>

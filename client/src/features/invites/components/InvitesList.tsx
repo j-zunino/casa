@@ -1,3 +1,5 @@
+import { toast } from 'sonner';
+
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -11,6 +13,7 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
+    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import {
@@ -26,7 +29,6 @@ import {
     DotsThreeIcon,
     PencilIcon,
     ProhibitIcon,
-    ShareNetworkIcon,
     UserIcon,
 } from '@phosphor-icons/react';
 
@@ -40,6 +42,14 @@ interface Props {
 interface AvatarProps {
     name: User['name'];
     image: User['image'];
+}
+
+interface CopyInviteProps {
+    inviteCode: string;
+}
+
+interface ActionsProps {
+    inviteCode: string;
 }
 
 const InviteAvatar = ({ name, image }: AvatarProps) => {
@@ -57,7 +67,30 @@ const InviteAvatar = ({ name, image }: AvatarProps) => {
     );
 };
 
-const InviteActions = () => {
+// TODO: Replace string when 'invite' is typed
+const CopyInvite = ({ inviteCode }: CopyInviteProps) => {
+    const handleCopy = async () => {
+        if (!inviteCode) return;
+
+        try {
+            await navigator.clipboard.writeText(
+                `${window.location.origin}/${inviteCode}`,
+            );
+            toast.success('Copied to clipboard');
+        } catch {
+            toast.error('Failed to copy to clipboard');
+        }
+    };
+
+    return (
+        <DropdownMenuItem onClick={handleCopy}>
+            <CopyIcon />
+            Copy
+        </DropdownMenuItem>
+    );
+};
+
+const InviteActions = ({ inviteCode }: ActionsProps) => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -71,14 +104,11 @@ const InviteActions = () => {
                     <PencilIcon />
                     Edit
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                    <ShareNetworkIcon />
-                    Share
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                    <CopyIcon />
-                    Copy
-                </DropdownMenuItem>
+
+                <CopyInvite inviteCode={inviteCode} />
+
+                <DropdownMenuSeparator />
+
                 <DropdownMenuItem variant="destructive">
                     <ProhibitIcon />
                     Revoke
@@ -119,7 +149,7 @@ export const InvitesList = ({ invites }: Props) => {
                                 {invite.status}
                             </TableCell>
                             <TableCell className="text-right">
-                                <InviteActions />
+                                <InviteActions inviteCode={invite.code} />
                             </TableCell>
                         </TableRow>
                     ))}
@@ -136,7 +166,7 @@ export const InvitesList = ({ invites }: Props) => {
                             </CardDescription>
                         </div>
 
-                        <InviteActions />
+                        <InviteActions inviteCode={invite.code} />
                     </CardHeader>
                     <CardContent>
                         <InviteAvatar

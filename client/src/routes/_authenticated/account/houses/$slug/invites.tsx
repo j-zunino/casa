@@ -5,7 +5,7 @@ import { createFileRoute } from '@tanstack/react-router';
 
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { InvitesList, ShareInviteLink } from '@/features/invites/components';
+import { InvitesList, CreateInviteLink } from '@/features/invites/components';
 import { PlusIcon } from '@phosphor-icons/react';
 
 const RouteComponent = () => {
@@ -34,7 +34,7 @@ const RouteComponent = () => {
                         </Button>
                     </DialogTrigger>
                     <DialogContent>
-                        <ShareInviteLink
+                        <CreateInviteLink
                             inviteCode={createInvite.data?.code}
                             isPending={createInvite.isPending}
                         />
