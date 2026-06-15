@@ -11,7 +11,11 @@ import {
 } from '@/components/ui/select';
 import { FloppyDiskIcon } from '@phosphor-icons/react';
 
-export const EditInviteLink = () => {
+interface Props {
+    onCancel?: () => void;
+}
+
+export const EditInviteLink = ({ onCancel }: Props) => {
     return (
         <>
             <DialogHeader>
@@ -44,13 +48,17 @@ export const EditInviteLink = () => {
                     </Field>
 
                     <Field>
-                        <Button
-                            type="button"
-                            variant="outline"
-                            className="w-full"
-                        >
-                            Cancel
-                        </Button>
+                        {onCancel && (
+                            <Button
+                                type="button"
+                                variant="outline"
+                                className="w-full"
+                                onClick={onCancel}
+                            >
+                                Cancel
+                            </Button>
+                        )}
+
                         <Button type="submit" className="w-full">
                             <FloppyDiskIcon weight="fill" />
                             Save

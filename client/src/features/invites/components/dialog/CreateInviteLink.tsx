@@ -15,18 +15,21 @@ import { CopyIcon } from '@phosphor-icons/react';
 interface Props {
     inviteCode: string;
     isPending: boolean;
+    onEdit?: () => void;
 }
 
-export const CreateInviteLink = ({ inviteCode, isPending }: Props) => {
+export const CreateInviteLink = ({ inviteCode, isPending, onEdit }: Props) => {
     return (
         <>
             <DialogHeader>
                 <DialogTitle>Send a invite link to people</DialogTitle>
-                <DialogDescription>
+                <DialogDescription className="gap-[1ch]">
                     Your invite link will expire after 5 uses.
-                    <Button variant="link" size="xs">
-                        Edit invite link
-                    </Button>
+                    {onEdit && (
+                        <Button variant="link" size="xs" onClick={onEdit}>
+                            Edit invite link
+                        </Button>
+                    )}
                 </DialogDescription>
             </DialogHeader>
 

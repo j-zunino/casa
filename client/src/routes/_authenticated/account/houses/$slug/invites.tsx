@@ -2,13 +2,21 @@ import { invitesHooks } from '@/features/invites/hooks';
 import { invitesQueries } from '@/features/invites/queries';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { InvitesList, CreateInviteLink } from '@/features/invites/components';
+import { Tabs, TabsContent } from '@/components/ui/tabs';
+import {
+    CreateInviteLink,
+    EditInviteLink,
+    InvitesList,
+} from '@/features/invites/components';
 import { PlusIcon } from '@phosphor-icons/react';
 
 const RouteComponent = () => {
+    const [view, setView] = useState<'create' | 'edit'>('create');
+
     const { slug } = Route.useParams();
     const createInvite = invitesHooks.useCreateInvite(slug);
     const { data: invites } = useSuspenseQuery(invitesQueries.all(slug));
@@ -22,8 +30,12 @@ const RouteComponent = () => {
 
                 <Dialog
                     onOpenChange={(open) => {
-                        if (open && !createInvite.data) {
-                            createInvite.mutate();
+                        if (open) {
+                            setView('create');
+
+                            if (!createInvite.data) {
+                                createInvite.mutate();
+                            }
                         }
                     }}
                 >
@@ -33,11 +45,23 @@ const RouteComponent = () => {
                             Create invite
                         </Button>
                     </DialogTrigger>
+
                     <DialogContent>
-                        <CreateInviteLink
-                            inviteCode={createInvite.data?.code}
-                            isPending={createInvite.isPending}
-                        />
+                        <Tabs value={view} defaultValue="create">
+                            <TabsContent value="create" asChild>
+                                <CreateInviteLink
+                                    inviteCode={createInvite.data?.code}
+                                    isPending={createInvite.isPending}
+                                    onEdit={() => setView('edit')}
+                                />
+                            </TabsContent>
+
+                            <TabsContent value="edit" asChild>
+                                <EditInviteLink
+                                    onCancel={() => setView('create')}
+                                />
+                            </TabsContent>
+                        </Tabs>
                     </DialogContent>
                 </Dialog>
             </div>
