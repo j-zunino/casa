@@ -16,7 +16,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
-import { Field, FieldError } from '@/components/ui/field';
+import { Field, FieldContent, FieldError } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { DeleteHouse } from '@/features/houses/components';
 import {
@@ -55,7 +55,7 @@ const RouteComponent = () => {
 
     return (
         <Settings>
-            <section className="mb-2 flex items-center gap-1">
+            <section className="mb-2 flex items-center gap-1.5">
                 <Avatar size="lg" rounded="normal">
                     <AvatarImage
                         src={house.logo ?? undefined}
@@ -72,35 +72,38 @@ const RouteComponent = () => {
                         name="name"
                         control={form.control}
                         render={({ field, fieldState }) => (
-                            <ButtonGroup className="w-full">
-                                <Field data-invalid={fieldState.invalid}>
-                                    <Input
-                                        {...field}
-                                        id="name"
-                                        type="text"
-                                        aria-invalid={fieldState.invalid}
-                                        placeholder="House name"
-                                        autoComplete="on"
-                                    />
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldContent>
+                                    <ButtonGroup className="w-full">
+                                        <Input
+                                            {...field}
+                                            id="name"
+                                            type="text"
+                                            aria-invalid={fieldState.invalid}
+                                            placeholder="House name"
+                                            autoComplete="on"
+                                        />
+                                        <Button
+                                            variant="outline"
+                                            aria-label="Save house name"
+                                            disabled={
+                                                isUpdating ||
+                                                house.name === field.value
+                                                    ? true
+                                                    : false
+                                            }
+                                        >
+                                            <FloppyDiskIcon weight="fill" />
+                                        </Button>
+                                    </ButtonGroup>
+
                                     {fieldState.invalid && (
                                         <FieldError
                                             errors={[fieldState.error]}
                                         />
                                     )}
-                                </Field>
-
-                                <Button
-                                    variant="outline"
-                                    aria-label="Save house name"
-                                    disabled={
-                                        isUpdating || house.name === field.value
-                                            ? true
-                                            : false
-                                    }
-                                >
-                                    <FloppyDiskIcon weight="fill" />
-                                </Button>
-                            </ButtonGroup>
+                                </FieldContent>
+                            </Field>
                         )}
                     />
                 </form>
