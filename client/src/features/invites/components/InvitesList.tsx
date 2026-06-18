@@ -1,7 +1,3 @@
-import { toast } from 'sonner';
-
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
 import {
     Card,
     CardContent,
@@ -10,13 +6,6 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import {
     Table,
     TableBody,
     TableCell,
@@ -24,100 +13,15 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import {
-    CopyIcon,
-    DotsThreeIcon,
-    PencilIcon,
-    ProhibitIcon,
-    UserIcon,
-} from '@phosphor-icons/react';
-
-import type { User } from '@/features/auth/types';
+import { InviteAvatar } from './InviteAvatar';
+import { InviteDropdown } from './InviteDropdown';
 
 interface Props {
     // TODO: Type invites
     invites: any;
 }
 
-interface AvatarProps {
-    name: User['name'];
-    image: User['image'];
-}
-
-interface CopyInviteProps {
-    inviteCode: string;
-}
-
-interface ActionsProps {
-    inviteCode: string;
-}
-
-const InviteAvatar = ({ name, image }: AvatarProps) => {
-    return (
-        <div className="flex gap-1.5">
-            <Avatar size="sm">
-                <AvatarImage src={image ?? undefined} alt={name} />
-                <AvatarFallback>
-                    <UserIcon />
-                </AvatarFallback>
-            </Avatar>
-
-            <p>{name}</p>
-        </div>
-    );
-};
-
-// TODO: Replace string when 'invite' is typed
-const CopyInvite = ({ inviteCode }: CopyInviteProps) => {
-    const handleCopy = async () => {
-        if (!inviteCode) return;
-
-        try {
-            await navigator.clipboard.writeText(
-                `${window.location.origin}/${inviteCode}`,
-            );
-            toast.success('Copied to clipboard');
-        } catch {
-            toast.error('Failed to copy to clipboard');
-        }
-    };
-
-    return (
-        <DropdownMenuItem onClick={handleCopy}>
-            <CopyIcon />
-            Copy
-        </DropdownMenuItem>
-    );
-};
-
-const InviteActions = ({ inviteCode }: ActionsProps) => {
-    return (
-        <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="size-8">
-                    <DotsThreeIcon />
-                    <span className="sr-only">Open menu</span>
-                </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-                <DropdownMenuItem>
-                    <PencilIcon />
-                    Edit
-                </DropdownMenuItem>
-
-                <CopyInvite inviteCode={inviteCode} />
-
-                <DropdownMenuSeparator />
-
-                <DropdownMenuItem variant="destructive">
-                    <ProhibitIcon />
-                    Revoke
-                </DropdownMenuItem>
-            </DropdownMenuContent>
-        </DropdownMenu>
-    );
-};
-
+// TODO: Add pagination
 export const InvitesList = ({ invites }: Props) => {
     return (
         <>
@@ -149,7 +53,7 @@ export const InvitesList = ({ invites }: Props) => {
                                 {invite.status}
                             </TableCell>
                             <TableCell className="text-right">
-                                <InviteActions inviteCode={invite.code} />
+                                <InviteDropdown inviteCode={invite.code} />
                             </TableCell>
                         </TableRow>
                     ))}
@@ -166,7 +70,7 @@ export const InvitesList = ({ invites }: Props) => {
                             </CardDescription>
                         </div>
 
-                        <InviteActions inviteCode={invite.code} />
+                        <InviteDropdown inviteCode={invite.code} />
                     </CardHeader>
                     <CardContent>
                         <InviteAvatar
