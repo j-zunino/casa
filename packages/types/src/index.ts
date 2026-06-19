@@ -17,6 +17,15 @@ export type ApiError = {
     errors?: { path: string; message: string }[];
 };
 
+export type ApiPagination = {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+    hasNext: boolean;
+    hasPrevious: boolean;
+};
+
 export type ApiResponse<T> =
-    | { success: true; data: T }
+    | { success: true; data: T; pagination?: ApiPagination }
     | { success: false; error: ApiError };

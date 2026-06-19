@@ -12,7 +12,6 @@ import type { Request, Response } from 'express';
 
 export const router: Router = Router();
 
-// TODO: Add pagination
 // TODO: Allow to revoke codes
 // TODO: Add revokedAt & revokedBy
 
@@ -24,23 +23,48 @@ router.get(
     async (req: Request<{ houseSlug: string }>, res: Response) => {
         const { houseSlug } = req.params;
 
+        const page = Math.max(1, parseInt(req.query.page as string) || 1);
+        const limit = Math.min(50, Math.max(1, parseInt(req.query.limit as string) || 10));
+        const skip = (page - 1) * limit;
+        const take = limit;
+
         const house = await getHouseBySlug(houseSlug);
 
-        const invitations = await prisma.invitation.findMany({
-            where: { houseId: house.id },
-            include: {
-                inviter: {
-                    select: {
-                        name: true,
-                        image: true,
+        const [invitations, total] = await prisma.$transaction([
+            prisma.invitation.findMany({
+                where: { houseId: house.id },
+                include: {
+                    inviter: {
+                        select: {
+                            name: true,
+                            image: true,
+                        },
                     },
                 },
-            },
-        });
+                skip,
+                take,
+                orderBy: { createdAt: 'desc' },
+            }),
+            prisma.invitation.count({
+                where: { houseId: house.id },
+            }),
+        ]);
+
+        const totalPages = Math.ceil(total / limit);
+        const hasNext = page < totalPages;
+        const hasPrevious = page > 1;
 
         const response: ApiResponse<typeof invitations> = {
             success: true,
             data: invitations,
+            pagination: {
+                page,
+                limit,
+                total,
+                totalPages,
+                hasNext,
+                hasPrevious,
+            },
         };
 
         res.json(response);

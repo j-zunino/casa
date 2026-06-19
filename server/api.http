@@ -96,8 +96,7 @@ Content-Type: application/json
 
 # @attach-cookie-jar
 
-GET {{URL}}/invites/list/{{HOUSE_SLUG}}
-
+GET {{URL}}/invites/list/{{HOUSE_SLUG}}?page=1&limit=10
 
 ### Get invite code info
 
