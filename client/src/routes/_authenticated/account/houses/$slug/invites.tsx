@@ -41,42 +41,7 @@ const RouteComponent = () => {
                     Active invite links
                 </h2>
 
-                <Dialog
-                    onOpenChange={(open) => {
-                        if (open) {
-                            setView('create');
-
-                            if (!createInvite.data) {
-                                createInvite.mutate();
-                            }
-                        }
-                    }}
-                >
-                    <DialogTrigger asChild>
-                        <Button variant="outline">
-                            <PlusIcon />
-                            Create invite
-                        </Button>
-                    </DialogTrigger>
-
-                    <DialogContent>
-                        <Tabs value={view} defaultValue="create">
-                            <TabsContent value="create" asChild>
-                                <CreateInviteLink
-                                    inviteCode={createInvite.data?.code}
-                                    isPending={createInvite.isPending}
-                                    onEdit={() => setView('edit')}
-                                />
-                            </TabsContent>
-
-                            <TabsContent value="edit" asChild>
-                                <EditInviteLink
-                                    onCancel={() => setView('create')}
-                                />
-                            </TabsContent>
-                        </Tabs>
-                    </DialogContent>
-                </Dialog>
+                <CreateInviteDialog slug={slug} />
             </div>
 
             <InvitesList invites={invites} pagination={pagination} />
