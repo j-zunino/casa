@@ -3,11 +3,12 @@ import { routeTree } from '@/routeTree.gen';
 import { createRouter } from '@tanstack/react-router';
 import { queryClient } from './lib/query-client';
 
+import { GhostIcon } from '@phosphor-icons/react';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import { App } from './App';
-import { ErrorComponent, NotFound } from './components/common/ErrorComponents';
+import { ErrorComponent } from './components/common/ErrorComponent';
 import { Loading } from './components/common/Loading';
 
 export const router = createRouter({
@@ -23,7 +24,16 @@ export const router = createRouter({
     },
 
     defaultPendingComponent: () => <Loading />,
-    defaultNotFoundComponent: () => <NotFound />,
+    defaultNotFoundComponent: () => (
+        <ErrorComponent
+            icon={<GhostIcon />}
+            error={{
+                status: 404,
+                statusText: 'Not found',
+                message: "The page you're looking for doesn't exist.",
+            }}
+        />
+    ),
     defaultErrorComponent: ({ error }) => <ErrorComponent error={error} />,
 });
 

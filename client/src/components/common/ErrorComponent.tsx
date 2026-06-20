@@ -14,13 +14,19 @@ import {
     EmptyTitle,
 } from '../ui/empty';
 
+import type { ReactNode } from 'react';
+
 // TODO:FIX: 'error' type is any
-export const ErrorComponent = ({ error }) => {
+interface Props {
+    icon?: ReactNode;
+    error: any;
+}
+export const ErrorComponent = ({ icon, error }: Props) => {
     return (
         <Empty>
             <EmptyHeader>
                 <EmptyMedia variant="icon">
-                    <SealWarningIcon />
+                    {icon ? icon : <SealWarningIcon />}
                 </EmptyMedia>
 
                 <EmptyTitle>
@@ -29,32 +35,6 @@ export const ErrorComponent = ({ error }) => {
                 </EmptyTitle>
                 <EmptyDescription>
                     {error.message.replace('organization', 'house')}
-                </EmptyDescription>
-
-                <EmptyContent>
-                    <Button variant="outline" asChild>
-                        <Link to="/">
-                            <HouseLineIcon />
-                            Go home
-                        </Link>
-                    </Button>
-                </EmptyContent>
-            </EmptyHeader>
-        </Empty>
-    );
-};
-
-export const NotFound = () => {
-    return (
-        <Empty>
-            <EmptyHeader>
-                <EmptyMedia variant="icon">
-                    <GhostIcon />
-                </EmptyMedia>
-
-                <EmptyTitle>404 - Not Found</EmptyTitle>
-                <EmptyDescription>
-                    The page you&apos;re looking for doesn&apos;t exist.
                 </EmptyDescription>
 
                 <EmptyContent>
