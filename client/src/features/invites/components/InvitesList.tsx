@@ -6,6 +6,13 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import {
+    Pagination,
+    PaginationContent,
+    PaginationItem,
+    PaginationNext,
+    PaginationPrevious,
+} from '@/components/ui/pagination';
+import {
     Table,
     TableBody,
     TableCell,
@@ -16,13 +23,16 @@ import {
 import { InviteAvatar } from './InviteAvatar';
 import { InviteDropdown } from './InviteDropdown';
 
+import type { ApiPagination } from '@casa/types';
+
 interface Props {
     // TODO: Type invites
     invites: any;
+    pagination: ApiPagination;
 }
 
-// TODO: Add pagination
-export const InvitesList = ({ invites }: Props) => {
+// TODO: Add empty state
+export const InvitesList = ({ invites, pagination }: Props) => {
     return (
         <>
             <Table className="hidden sm:table">
@@ -37,7 +47,7 @@ export const InvitesList = ({ invites }: Props) => {
                 </TableHeader>
                 <TableBody>
                     {/* TODO:FIX: 'invite' is type any */}
-                    {invites.map((invite) => (
+                    {invites.map((invite: any) => (
                         <TableRow key={invite.id}>
                             <TableCell>
                                 <InviteAvatar
@@ -60,7 +70,7 @@ export const InvitesList = ({ invites }: Props) => {
                 </TableBody>
             </Table>
 
-            {invites.map((invite) => (
+            {invites.map((invite: any) => (
                 <Card className="sm:hidden" size="sm" key={invite.id}>
                     <CardHeader className="flex justify-between gap-1.5">
                         <div>
@@ -80,6 +90,34 @@ export const InvitesList = ({ invites }: Props) => {
                     </CardContent>
                 </Card>
             ))}
+
+            <div className="flex items-center justify-between">
+                <p className="text-sm text-muted-foreground">
+                    Page {pagination.page} of {pagination.totalPages}
+                    {' — '}
+                    {pagination.total} total
+                </p>
+
+                <Pagination className="mx-0 w-auto">
+                    <PaginationContent>
+                        {pagination.hasPrevious && (
+                            <PaginationItem>
+                                <PaginationPrevious
+                                    search={{ page: pagination.page - 1 }}
+                                />
+                            </PaginationItem>
+                        )}
+
+                        {pagination.hasNext && (
+                            <PaginationItem>
+                                <PaginationNext
+                                    search={{ page: pagination.page + 1 }}
+                                />
+                            </PaginationItem>
+                        )}
+                    </PaginationContent>
+                </Pagination>
+            </div>
         </>
     );
 };

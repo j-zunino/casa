@@ -5,11 +5,13 @@ import { invitesKeys } from './invites.keys';
 import type { House } from '@/features/houses/types';
 
 export const invitesQueries = {
-    // TODO: Include count?
-    all(houseSlug: House['slug']) {
+    all(houseSlug: House['slug'], options?: { page?: number; limit?: number }) {
+        const page = options?.page ?? 1;
+        const limit = options?.limit ?? 10;
+
         return queryOptions({
-            queryKey: invitesKeys.list(houseSlug),
-            queryFn: () => invitesApi.getAll(houseSlug),
+            queryKey: invitesKeys.list(houseSlug, page, limit),
+            queryFn: () => invitesApi.getAll(houseSlug, page, limit),
         });
     },
 
