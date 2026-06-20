@@ -31,7 +31,6 @@ interface Props {
     pagination: ApiPagination;
 }
 
-// TODO: Add empty state
 export const InvitesList = ({ invites, pagination }: Props) => {
     return (
         <>

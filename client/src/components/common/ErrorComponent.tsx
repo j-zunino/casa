@@ -1,8 +1,4 @@
-import {
-    GhostIcon,
-    HouseLineIcon,
-    SealWarningIcon,
-} from '@phosphor-icons/react';
+import { HouseLineIcon, SealWarningIcon } from '@phosphor-icons/react';
 import { Link } from '@tanstack/react-router';
 import { Button } from '../ui/button';
 import {
@@ -16,12 +12,17 @@ import {
 
 import type { ReactNode } from 'react';
 
-// TODO:FIX: 'error' type is any
 interface Props {
     icon?: ReactNode;
-    error: any;
+    goHome?: boolean;
+    error: {
+        status?: number;
+        statusText?: string;
+        message?: string;
+    };
 }
-export const ErrorComponent = ({ icon, error }: Props) => {
+
+export const ErrorComponent = ({ icon, goHome = true, error }: Props) => {
     return (
         <Empty>
             <EmptyHeader>
@@ -30,13 +31,19 @@ export const ErrorComponent = ({ icon, error }: Props) => {
                 </EmptyMedia>
 
                 <EmptyTitle>
-                    {error.status || '500'} -{' '}
+                    {error.status && <>{error.status} - </>}
                     {error.statusText || 'Something went wrong'}
                 </EmptyTitle>
-                <EmptyDescription>
-                    {error.message.replace('organization', 'house')}
-                </EmptyDescription>
 
+                {error.message && (
+                    <EmptyDescription>
+                        {/* TODO: Replace should be done in the server */}
+                        {error.message.replace('organization', 'house')}
+                    </EmptyDescription>
+                )}
+            </EmptyHeader>
+
+            {goHome && (
                 <EmptyContent>
                     <Button variant="outline" asChild>
                         <Link to="/">
@@ -45,7 +52,7 @@ export const ErrorComponent = ({ icon, error }: Props) => {
                         </Link>
                     </Button>
                 </EmptyContent>
-            </EmptyHeader>
+            )}
         </Empty>
     );
 };

@@ -1,19 +1,10 @@
-import { invitesHooks } from '@/features/invites/hooks';
 import { invitesQueries } from '@/features/invites/queries';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
-import { useState } from 'react';
 import z from 'zod';
 
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { Tabs, TabsContent } from '@/components/ui/tabs';
-import {
-    CreateInviteLink,
-    EditInviteLink,
-    InvitesList,
-} from '@/features/invites/components';
-import { PlusIcon } from '@phosphor-icons/react';
+import { ErrorComponent } from '@/components/common/ErrorComponent';
+import { CreateInviteDialog, InvitesList } from '@/features/invites/components';
 
 // TODO: Move to @casa/schemas
 const invitesSearchSchema = z.object({
@@ -21,14 +12,10 @@ const invitesSearchSchema = z.object({
     limit: z.coerce.number().int().min(1).max(50).default(10),
 });
 
-type InvitesSearch = z.infer<typeof invitesSearchSchema>;
-
 const RouteComponent = () => {
-    const [view, setView] = useState<'create' | 'edit'>('create');
-
     const { slug } = Route.useParams();
     const { page, limit } = Route.useSearch();
-    const createInvite = invitesHooks.useCreateInvite(slug);
+
     const { data } = useSuspenseQuery(
         invitesQueries.all(slug, { page, limit }),
     );
@@ -38,13 +25,24 @@ const RouteComponent = () => {
         <div className="flex flex-col gap-1.5">
             <div className="flex w-full justify-between">
                 <h2 className="font-heading text-base font-medium">
-                    Active invite links
+                    Invitation links
                 </h2>
 
                 <CreateInviteDialog slug={slug} />
             </div>
 
-            <InvitesList invites={invites} pagination={pagination} />
+            {invites.length <= 0 ? (
+                <ErrorComponent
+                    goHome={false}
+                    error={{
+                        statusText: 'No invitations are available',
+                        message:
+                            'To create a invitation you can use the "Create invite" button.',
+                    }}
+                />
+            ) : (
+                <InvitesList invites={invites} pagination={pagination} />
+            )}
         </div>
     );
 };
