@@ -90,7 +90,7 @@ Content-Type: application/json
 ### INVITE
 ##############################################################################
 
-@INVITE_CODE = 2kuVGHsNMdF777HOy5zzeQ
+@INVITE_CODE = rhUyN7wR
 
 ### List house invites
 
@@ -123,3 +123,9 @@ Content-Type: application/json
 
 POST {{URL}}/invites/{{INVITE_CODE}}/join
 
+
+### Revoke invite
+
+# @attach-cookie-jar
+
+POST {{URL}}/invites/{{INVITE_CODE}}/revoke/{{HOUSE_SLUG}}

@@ -12,9 +12,6 @@ import type { Request, Response } from 'express';
 
 export const router: Router = Router();
 
-// TODO: Allow to revoke codes
-// TODO: Add revokedAt & revokedBy
-
 router.get(
     '/list/:houseSlug',
     requireAuth,
@@ -24,7 +21,10 @@ router.get(
         const { houseSlug } = req.params;
 
         const page = Math.max(1, parseInt(req.query.page as string) || 1);
-        const limit = Math.min(50, Math.max(1, parseInt(req.query.limit as string) || 10));
+        const limit = Math.min(
+            50,
+            Math.max(1, parseInt(req.query.limit as string) || 10),
+        );
         const skip = (page - 1) * limit;
         const take = limit;
 
@@ -195,6 +195,53 @@ router.post(
             data: {
                 message: 'joined successfully',
             },
+        };
+
+        res.json(response);
+    },
+);
+
+router.post(
+    '/:inviteCode/revoke/:houseSlug',
+    requireAuth,
+    requirePermission({ invitation: ['cancel'] }),
+    async (
+        req: Request<{ inviteCode: string; houseSlug: string }>,
+        res: Response,
+    ) => {
+        const { inviteCode } = req.params;
+
+        const invitation = await prisma.invitation.findUnique({
+            where: { code: inviteCode },
+            select: { id: true, status: true },
+        });
+
+        console.log(invitation);
+
+        if (!invitation) {
+            throw new AppError('invite not found', 404, ErrorCodes.NOT_FOUND);
+        }
+
+        if (invitation.status === 'revoked') {
+            throw new AppError(
+                'invite already revoked',
+                400,
+                ErrorCodes.BAD_REQUEST,
+            );
+        }
+
+        const updated = await prisma.invitation.update({
+            where: { id: invitation.id },
+            data: {
+                status: 'revoked',
+                revokedAt: new Date(),
+                revokedById: res.locals.user.id,
+            },
+        });
+
+        const response: ApiResponse<typeof updated> = {
+            success: true,
+            data: updated,
         };
 
         res.json(response);
