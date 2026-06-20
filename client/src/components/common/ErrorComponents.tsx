@@ -1,4 +1,8 @@
-import { HouseLineIcon, SealWarningIcon } from '@phosphor-icons/react';
+import {
+    GhostIcon,
+    HouseLineIcon,
+    SealWarningIcon,
+} from '@phosphor-icons/react';
 import { Link } from '@tanstack/react-router';
 import { Button } from '../ui/button';
 import {
@@ -45,7 +49,7 @@ export const NotFound = () => {
         <Empty>
             <EmptyHeader>
                 <EmptyMedia variant="icon">
-                    <SealWarningIcon />
+                    <GhostIcon />
                 </EmptyMedia>
 
                 <EmptyTitle>404 - Not Found</EmptyTitle>
