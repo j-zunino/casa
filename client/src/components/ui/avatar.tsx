@@ -21,7 +21,8 @@ function Avatar({
             data-ring={ring}
             data-rounded={rounded}
             className={cn(
-                'group/avatar relative flex size-8 shrink-0 select-none',
+                // NOTE: removed 'relative', it messes up the z-index
+                'group/avatar flex size-8 shrink-0 select-none',
                 'data-[size=lg]:size-30 data-[size=sm]:size-6',
                 'data-[rounded=full]:rounded-full data-[rounded=normal]:rounded-md ',
                 className,
