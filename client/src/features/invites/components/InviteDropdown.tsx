@@ -1,19 +1,26 @@
+import { toast } from 'sonner';
+import { invitesHooks } from '../hooks';
+
 import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
     DropdownMenuContent,
+    DropdownMenuItem,
     DropdownMenuSeparator,
+    DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { CopyIcon, DotsThreeIcon, ProhibitIcon } from '@phosphor-icons/react';
-import { toast } from 'sonner';
+
+import type { House } from '@/features/houses/types';
 
 interface Props {
     inviteCode: string;
+    slug: House['slug'];
 }
 
-const CopyInviteItem = ({ inviteCode }: Props) => {
+export const InviteDropdown = ({ inviteCode, slug }: Props) => {
+    const { mutate: revokeInvite } = invitesHooks.useRevokeInvite(slug);
+
     const handleCopy = async () => {
         if (!inviteCode) return;
 
@@ -28,24 +35,6 @@ const CopyInviteItem = ({ inviteCode }: Props) => {
     };
 
     return (
-        <DropdownMenuItem onClick={handleCopy}>
-            <CopyIcon />
-            Copy
-        </DropdownMenuItem>
-    );
-};
-
-const RevokeInviteItem = () => {
-    return (
-        <DropdownMenuItem variant="destructive">
-            <ProhibitIcon />
-            Revoke
-        </DropdownMenuItem>
-    );
-};
-
-export const InviteDropdown = ({ inviteCode }: Props) => {
-    return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="size-8">
@@ -55,11 +44,20 @@ export const InviteDropdown = ({ inviteCode }: Props) => {
             </DropdownMenuTrigger>
 
             <DropdownMenuContent align="end">
-                <CopyInviteItem inviteCode={inviteCode} />
+                <DropdownMenuItem onClick={handleCopy}>
+                    <CopyIcon />
+                    Copy
+                </DropdownMenuItem>
 
                 <DropdownMenuSeparator />
 
-                <RevokeInviteItem />
+                <DropdownMenuItem
+                    variant="destructive"
+                    onClick={() => revokeInvite(inviteCode)}
+                >
+                    <ProhibitIcon />
+                    Revoke
+                </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
     );

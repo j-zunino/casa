@@ -41,7 +41,11 @@ const RouteComponent = () => {
                     }}
                 />
             ) : (
-                <InvitesList invites={invites} pagination={pagination} />
+                <InvitesList
+                    invites={invites}
+                    pagination={pagination}
+                    slug={slug}
+                />
             )}
         </div>
     );

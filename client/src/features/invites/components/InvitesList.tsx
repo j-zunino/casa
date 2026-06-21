@@ -23,15 +23,17 @@ import {
 import { InviteAvatar } from './InviteAvatar';
 import { InviteDropdown } from './InviteDropdown';
 
+import type { House } from '@/features/houses/types';
 import type { ApiPagination } from '@casa/types';
 
 interface Props {
     // TODO: Type invites
     invites: any;
     pagination: ApiPagination;
+    slug: House['slug'];
 }
 
-export const InvitesList = ({ invites, pagination }: Props) => {
+export const InvitesList = ({ invites, pagination, slug }: Props) => {
     return (
         <>
             <Table className="hidden sm:table">
@@ -62,7 +64,10 @@ export const InvitesList = ({ invites, pagination }: Props) => {
                                 {invite.status}
                             </TableCell>
                             <TableCell className="text-right">
-                                <InviteDropdown inviteCode={invite.code} />
+                                <InviteDropdown
+                                    inviteCode={invite.code}
+                                    slug={slug}
+                                />
                             </TableCell>
                         </TableRow>
                     ))}
@@ -79,7 +84,7 @@ export const InvitesList = ({ invites, pagination }: Props) => {
                             </CardDescription>
                         </div>
 
-                        <InviteDropdown inviteCode={invite.code} />
+                        <InviteDropdown inviteCode={invite.code} slug={slug} />
                     </CardHeader>
                     <CardContent>
                         <InviteAvatar
