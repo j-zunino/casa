@@ -88,13 +88,55 @@ router.post(
                 code,
                 houseId: house.id,
                 inviterId: res.locals.user.id,
-                maxUses: maxUses ? maxUses : 5,
+                maxUses,
             },
         });
 
         const response: ApiResponse<typeof invitation> = {
             success: true,
             data: invitation,
+        };
+
+        res.json(response);
+    },
+);
+
+router.patch(
+    '/:houseSlug/invites/:inviteCode',
+    requireAuth,
+    requirePermission({ invitation: ['create'] }),
+    async (
+        req: Request<{ inviteCode: string; houseSlug: string }>,
+        res: Response,
+    ) => {
+        const { inviteCode } = req.params;
+        const { maxUses } = inviteLinkSchema.parse(req.body);
+
+        const invitation = await prisma.invitation.findUnique({
+            where: { code: inviteCode },
+            select: { id: true, status: true },
+        });
+
+        if (!invitation) {
+            throw new AppError('invite not found', 404, ErrorCodes.NOT_FOUND);
+        }
+
+        if (invitation.status !== 'active') {
+            throw new AppError(
+                'can only edit active invites',
+                400,
+                ErrorCodes.BAD_REQUEST,
+            );
+        }
+
+        const updated = await prisma.invitation.update({
+            where: { id: invitation.id },
+            data: { maxUses },
+        });
+
+        const response: ApiResponse<typeof updated> = {
+            success: true,
+            data: updated,
         };
 
         res.json(response);
