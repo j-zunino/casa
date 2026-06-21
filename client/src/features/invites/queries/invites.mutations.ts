@@ -15,4 +15,10 @@ export const invitesMutations = {
             mutationFn: () => invitesApi.join(inviteCode),
         });
     },
+
+    revoke(houseSlug: House['slug']) {
+        return mutationOptions({
+            mutationFn: (inviteCode: string) => invitesApi.revoke(inviteCode, houseSlug),
+        });
+    },
 };

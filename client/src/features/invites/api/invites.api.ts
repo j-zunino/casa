@@ -28,4 +28,14 @@ export const invitesApi = {
         });
         return data;
     },
+
+    async revoke(inviteCode: string, houseSlug: House['slug']) {
+        const { data } = await api(
+            `/houses/${houseSlug}/invites/${inviteCode}/revoke`,
+            {
+                method: 'POST',
+            },
+        );
+        return data;
+    },
 };
