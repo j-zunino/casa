@@ -51,6 +51,7 @@ export const InviteDropdown = ({ inviteCode, slug }: Props) => {
 
                 <DropdownMenuSeparator />
 
+                {/* TODO: Confirm action */}
                 <DropdownMenuItem
                     variant="destructive"
                     onClick={() => revokeInvite(inviteCode)}

@@ -49,7 +49,10 @@ export const InvitesList = ({ invites, pagination, slug }: Props) => {
                 <TableBody>
                     {/* TODO:FIX: 'invite' is type any */}
                     {invites.map((invite: any) => (
-                        <TableRow key={invite.id}>
+                        <TableRow
+                            key={invite.id}
+                            className={`${invite.status !== 'active' && 'pointer-events-none opacity-50'}`}
+                        >
                             <TableCell>
                                 <InviteAvatar
                                     name={invite.inviter.name}
@@ -75,7 +78,11 @@ export const InvitesList = ({ invites, pagination, slug }: Props) => {
             </Table>
 
             {invites.map((invite: any) => (
-                <Card className="sm:hidden" size="sm" key={invite.id}>
+                <Card
+                    className={`sm:hidden ${invite.status !== 'active' && 'pointer-events-none opacity-50'}`}
+                    size="sm"
+                    key={invite.id}
+                >
                     <CardHeader className="flex justify-between gap-1.5">
                         <div>
                             <CardTitle>{invite.code}</CardTitle>
