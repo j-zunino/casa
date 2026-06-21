@@ -96,7 +96,7 @@ Content-Type: application/json
 
 # @attach-cookie-jar
 
-GET {{URL}}/invites/list/{{HOUSE_SLUG}}?page=1&limit=10
+GET {{URL}}/houses/{{HOUSE_SLUG}}/invites?page=1&limit=10
 
 ### Get invite code info
 
@@ -109,7 +109,7 @@ GET {{URL}}/invites/{{INVITE_CODE}}
 
 # @attach-cookie-jar
 
-POST {{URL}}/invites/create/{{HOUSE_SLUG}}
+POST {{URL}}/houses/{{HOUSE_SLUG}}/invites
 Content-Type: application/json
 
 {
@@ -128,4 +128,4 @@ POST {{URL}}/invites/{{INVITE_CODE}}/join
 
 # @attach-cookie-jar
 
-POST {{URL}}/invites/{{INVITE_CODE}}/revoke/{{HOUSE_SLUG}}
+POST {{URL}}/houses/{{HOUSE_SLUG}}/invites/{{INVITE_CODE}}/revoke
