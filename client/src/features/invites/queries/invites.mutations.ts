@@ -16,6 +16,13 @@ export const invitesMutations = {
         });
     },
 
+    update(houseSlug: House['slug']) {
+        return mutationOptions({
+            mutationFn: ({ inviteCode, maxUses }: { inviteCode: string; maxUses: number | null }) =>
+                invitesApi.update(houseSlug, inviteCode, maxUses),
+        });
+    },
+
     revoke(houseSlug: House['slug']) {
         return mutationOptions({
             mutationFn: (inviteCode: string) => invitesApi.revoke(inviteCode, houseSlug),
