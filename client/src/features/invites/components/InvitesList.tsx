@@ -62,6 +62,7 @@ export const InvitesList = ({ invites, pagination, slug }: Props) => {
                             <TableCell>{invite.code}</TableCell>
                             <TableCell className="text-center">
                                 {invite.useCount}
+                                {invite.maxUses && ` of ${invite.maxUses}`}
                             </TableCell>
                             <TableCell className="text-center">
                                 {invite.status}
@@ -88,6 +89,7 @@ export const InvitesList = ({ invites, pagination, slug }: Props) => {
                             <CardTitle>{invite.code}</CardTitle>
                             <CardDescription>
                                 Uses: {invite.useCount}
+                                {invite.maxUses && ` of ${invite.maxUses}`}
                             </CardDescription>
                         </div>
 
