@@ -8,6 +8,7 @@ import helmet from 'helmet';
 
 import { authRouter } from './auth';
 import { healthRouter } from './health';
+import { housesRouter } from './houses';
 import { invitesRouter } from './invites';
 import { meRouter } from './me';
 
@@ -20,6 +21,7 @@ router.use(cors(corsOptions));
 registerRoutes(router, [
     { prefix: '/auth', router: authRouter, skipJson: true },
     { prefix: '/health', router: healthRouter },
+    { prefix: '/houses', router: housesRouter },
     { prefix: '/me', router: meRouter },
     { prefix: '/invites', router: invitesRouter },
 ]);

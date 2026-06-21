@@ -90,13 +90,13 @@ Content-Type: application/json
 ### INVITE
 ##############################################################################
 
-@INVITE_CODE = 2kuVGHsNMdF777HOy5zzeQ
+@INVITE_CODE = rhUyN7wR
 
 ### List house invites
 
 # @attach-cookie-jar
 
-GET {{URL}}/invites/list/{{HOUSE_SLUG}}?page=1&limit=10
+GET {{URL}}/houses/{{HOUSE_SLUG}}/invites?page=1&limit=10
 
 ### Get invite code info
 
@@ -109,7 +109,7 @@ GET {{URL}}/invites/{{INVITE_CODE}}
 
 # @attach-cookie-jar
 
-POST {{URL}}/invites/create/{{HOUSE_SLUG}}
+POST {{URL}}/houses/{{HOUSE_SLUG}}/invites
 Content-Type: application/json
 
 {
@@ -123,3 +123,9 @@ Content-Type: application/json
 
 POST {{URL}}/invites/{{INVITE_CODE}}/join
 
+
+### Revoke invite
+
+# @attach-cookie-jar
+
+POST {{URL}}/houses/{{HOUSE_SLUG}}/invites/{{INVITE_CODE}}/revoke

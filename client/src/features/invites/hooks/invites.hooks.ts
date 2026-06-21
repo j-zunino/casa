@@ -29,4 +29,16 @@ export const invitesHooks = {
             },
         });
     },
+
+    useRevokeInvite(houseSlug: House['slug']) {
+        const queryClient = useQueryClient();
+        return useMutation({
+            ...invitesMutations.revoke(houseSlug),
+            onSuccess: async () => {
+                await queryClient.invalidateQueries({
+                    queryKey: invitesKeys.list(houseSlug),
+                });
+            },
+        });
+    },
 };

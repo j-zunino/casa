@@ -1,6 +1,6 @@
-import { getHouseBySlug } from '@/modules/houses';
 import { AppError } from '@/utils';
 import { ErrorCodes } from '@casa/types';
+import { getHouseBySlug } from '../houses/houses.utils';
 import { auth } from './auth';
 
 import type { NextFunction, Request, Response } from 'express';
