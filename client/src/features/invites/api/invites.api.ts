@@ -3,7 +3,7 @@ import { api } from '@/lib/api';
 
 export const invitesApi = {
     async getAll(houseSlug: House['slug'], page = 1, limit = 10) {
-        return api(`/invites/list/${houseSlug}`, { page, limit });
+        return api(`/houses/${houseSlug}/invites`, { page, limit });
     },
 
     // TODO: Create invite type
@@ -13,7 +13,7 @@ export const invitesApi = {
     },
 
     async create(houseSlug: House['slug'], maxUses: number) {
-        const { data } = await api(`/invites/create/${houseSlug}`, {
+        const { data } = await api(`/houses/${houseSlug}/invites`, {
             method: 'POST',
             body: JSON.stringify({
                 maxUses,
