@@ -88,7 +88,7 @@ router.post(
                 code,
                 houseId: house.id,
                 inviterId: res.locals.user.id,
-                maxUses,
+                maxUses: maxUses ? maxUses : 5,
             },
         });
 
