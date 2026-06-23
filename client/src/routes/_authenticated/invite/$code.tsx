@@ -12,6 +12,7 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { HouseLineIcon } from '@phosphor-icons/react';
+import { Link } from '@tanstack/react-router';
 
 const RouteComponent = () => {
     const { code } = Route.useParams();
@@ -44,8 +45,8 @@ const RouteComponent = () => {
 
                 <CardFooter className="flex flex-col gap-1">
                     <Button className="w-full">Accept invite</Button>
-                    <Button variant="outline" className="w-full">
-                        No thanks
+                    <Button variant="outline" className="w-full" asChild>
+                        <Link to="/">No thanks</Link>
                     </Button>
                 </CardFooter>
             </Card>
