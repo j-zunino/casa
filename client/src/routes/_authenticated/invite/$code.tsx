@@ -67,7 +67,7 @@ const RouteComponent = () => {
                     <Button
                         className="w-full"
                         onClick={handleJoinHouse}
-                        disable={isJoiningHouse}
+                        disabled={isJoiningHouse}
                     >
                         Accept invite
                     </Button>
