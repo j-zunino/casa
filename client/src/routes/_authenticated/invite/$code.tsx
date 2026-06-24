@@ -1,6 +1,9 @@
 import { invitesQueries } from '@/features/invites/queries';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute, notFound } from '@tanstack/react-router';
+import { invitesHooks } from '@/features/invites/hooks';
+import { toast } from 'sonner';
+import { router } from '@/main';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -17,6 +20,23 @@ import { Link } from '@tanstack/react-router';
 const RouteComponent = () => {
     const { code } = Route.useParams();
     const { data: invite } = useSuspenseQuery(invitesQueries.details(code));
+
+    const { mutateAsync: joinHouse, isPending: isJoiningHouse } =
+        invitesHooks.useJoinInvite(code);
+
+    const handleJoinHouse = () => {
+        toast.promise(joinHouse(), {
+            loading: 'Joining house...',
+            success: () => {
+                router.navigate({
+                    to: '/',
+                });
+
+                return 'Joined successfully!';
+            },
+            error: (err) => err.message,
+        });
+    };
 
     return (
         <div className="flex grow flex-col items-center justify-center">
@@ -44,7 +64,13 @@ const RouteComponent = () => {
                 </CardHeader>
 
                 <CardFooter className="flex flex-col gap-1">
-                    <Button className="w-full">Accept invite</Button>
+                    <Button
+                        className="w-full"
+                        onClick={handleJoinHouse}
+                        disable={isJoiningHouse}
+                    >
+                        Accept invite
+                    </Button>
                     <Button variant="outline" className="w-full" asChild>
                         <Link to="/">No thanks</Link>
                     </Button>
