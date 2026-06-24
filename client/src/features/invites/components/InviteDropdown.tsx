@@ -26,7 +26,7 @@ export const InviteDropdown = ({ inviteCode, slug }: Props) => {
 
         try {
             await navigator.clipboard.writeText(
-                `${window.location.origin}/${inviteCode}`,
+                `${window.location.origin}/invite/${inviteCode}`,
             );
             toast.success('Copied to clipboard');
         } catch {
