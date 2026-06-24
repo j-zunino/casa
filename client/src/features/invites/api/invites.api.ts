@@ -29,6 +29,14 @@ export const invitesApi = {
         return data;
     },
 
+    async update(houseSlug: House['slug'], inviteCode: string, maxUses: number | null) {
+        const { data } = await api(`/houses/${houseSlug}/invites/${inviteCode}`, {
+            method: 'PATCH',
+            body: JSON.stringify({ maxUses }),
+        });
+        return data;
+    },
+
     async revoke(inviteCode: string, houseSlug: House['slug']) {
         const { data } = await api(
             `/houses/${houseSlug}/invites/${inviteCode}/revoke`,

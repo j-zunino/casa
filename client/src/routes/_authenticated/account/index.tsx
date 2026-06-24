@@ -19,7 +19,6 @@ import {
 } from '@/components/ui/avatar';
 import {
     CaretRightIcon,
-    EnvelopeSimpleIcon,
     HouseLineIcon,
     PasswordIcon,
     TrashIcon,
@@ -49,13 +48,6 @@ const RouteComponent = () => {
 
                 <AvatarLabel>{session?.user.name}</AvatarLabel>
             </div>
-
-            <SettingButton disabled={true}>
-                <SettingContent
-                    title="Invitations"
-                    icon={<EnvelopeSimpleIcon />}
-                />
-            </SettingButton>
 
             <SettingButton disabled={true}>
                 <SettingContent

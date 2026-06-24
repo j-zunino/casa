@@ -17,6 +17,7 @@ import { Route as GuestSignInRouteImport } from './routes/_guest/sign-in'
 import { Route as AuthenticatedManageHousesRouteImport } from './routes/_authenticated/manage-houses'
 import { Route as AuthenticatedAccountRouteRouteImport } from './routes/_authenticated/account/route'
 import { Route as AuthenticatedAccountIndexRouteImport } from './routes/_authenticated/account/index'
+import { Route as AuthenticatedInviteCodeRouteImport } from './routes/_authenticated/invite/$code'
 import { Route as AuthenticatedHSlugRouteImport } from './routes/_authenticated/h/$slug'
 import { Route as AuthenticatedAccountHousesIndexRouteImport } from './routes/_authenticated/account/houses/index'
 import { Route as AuthenticatedAccountHousesSlugIndexRouteImport } from './routes/_authenticated/account/houses/$slug/index'
@@ -63,6 +64,11 @@ const AuthenticatedAccountIndexRoute =
     path: '/',
     getParentRoute: () => AuthenticatedAccountRouteRoute,
   } as any)
+const AuthenticatedInviteCodeRoute = AuthenticatedInviteCodeRouteImport.update({
+  id: '/invite/$code',
+  path: '/invite/$code',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedHSlugRoute = AuthenticatedHSlugRouteImport.update({
   id: '/h/$slug',
   path: '/h/$slug',
@@ -94,6 +100,7 @@ export interface FileRoutesByFullPath {
   '/sign-in': typeof GuestSignInRoute
   '/sign-up': typeof GuestSignUpRoute
   '/h/$slug': typeof AuthenticatedHSlugRoute
+  '/invite/$code': typeof AuthenticatedInviteCodeRoute
   '/account/': typeof AuthenticatedAccountIndexRoute
   '/account/houses/': typeof AuthenticatedAccountHousesIndexRoute
   '/account/houses/$slug/invites': typeof AuthenticatedAccountHousesSlugInvitesRoute
@@ -105,6 +112,7 @@ export interface FileRoutesByTo {
   '/sign-in': typeof GuestSignInRoute
   '/sign-up': typeof GuestSignUpRoute
   '/h/$slug': typeof AuthenticatedHSlugRoute
+  '/invite/$code': typeof AuthenticatedInviteCodeRoute
   '/account': typeof AuthenticatedAccountIndexRoute
   '/account/houses': typeof AuthenticatedAccountHousesIndexRoute
   '/account/houses/$slug/invites': typeof AuthenticatedAccountHousesSlugInvitesRoute
@@ -120,6 +128,7 @@ export interface FileRoutesById {
   '/_guest/sign-up': typeof GuestSignUpRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/h/$slug': typeof AuthenticatedHSlugRoute
+  '/_authenticated/invite/$code': typeof AuthenticatedInviteCodeRoute
   '/_authenticated/account/': typeof AuthenticatedAccountIndexRoute
   '/_authenticated/account/houses/': typeof AuthenticatedAccountHousesIndexRoute
   '/_authenticated/account/houses/$slug/invites': typeof AuthenticatedAccountHousesSlugInvitesRoute
@@ -134,6 +143,7 @@ export interface FileRouteTypes {
     | '/sign-in'
     | '/sign-up'
     | '/h/$slug'
+    | '/invite/$code'
     | '/account/'
     | '/account/houses/'
     | '/account/houses/$slug/invites'
@@ -145,6 +155,7 @@ export interface FileRouteTypes {
     | '/sign-in'
     | '/sign-up'
     | '/h/$slug'
+    | '/invite/$code'
     | '/account'
     | '/account/houses'
     | '/account/houses/$slug/invites'
@@ -159,6 +170,7 @@ export interface FileRouteTypes {
     | '/_guest/sign-up'
     | '/_authenticated/'
     | '/_authenticated/h/$slug'
+    | '/_authenticated/invite/$code'
     | '/_authenticated/account/'
     | '/_authenticated/account/houses/'
     | '/_authenticated/account/houses/$slug/invites'
@@ -228,6 +240,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAccountIndexRouteImport
       parentRoute: typeof AuthenticatedAccountRouteRoute
     }
+    '/_authenticated/invite/$code': {
+      id: '/_authenticated/invite/$code'
+      path: '/invite/$code'
+      fullPath: '/invite/$code'
+      preLoaderRoute: typeof AuthenticatedInviteCodeRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/h/$slug': {
       id: '/_authenticated/h/$slug'
       path: '/h/$slug'
@@ -286,6 +305,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedManageHousesRoute: typeof AuthenticatedManageHousesRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedHSlugRoute: typeof AuthenticatedHSlugRoute
+  AuthenticatedInviteCodeRoute: typeof AuthenticatedInviteCodeRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -293,6 +313,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedManageHousesRoute: AuthenticatedManageHousesRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedHSlugRoute: AuthenticatedHSlugRoute,
+  AuthenticatedInviteCodeRoute: AuthenticatedInviteCodeRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

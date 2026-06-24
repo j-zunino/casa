@@ -23,7 +23,7 @@ export const CreateInviteLink = ({ inviteCode, isPending, onEdit }: Props) => {
         <>
             <DialogHeader>
                 <DialogTitle>Send a invite link to people</DialogTitle>
-                <DialogDescription className="gap-[1ch]">
+                <DialogDescription>
                     Your invite link will expire after 5 uses.
                     {onEdit && (
                         <Button variant="link" size="xs" onClick={onEdit}>

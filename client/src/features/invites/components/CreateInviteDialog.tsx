@@ -49,7 +49,11 @@ export const CreateInviteDialog = ({ slug }: Props) => {
                     </TabsContent>
 
                     <TabsContent value="edit" asChild>
-                        <EditInviteLink onCancel={() => setView('create')} />
+                        <EditInviteLink
+                            slug={slug}
+                            inviteCode={createInvite.data?.code}
+                            onCancel={() => setView('create')}
+                        />
                     </TabsContent>
                 </Tabs>
             </DialogContent>
