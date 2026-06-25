@@ -1,10 +1,10 @@
-import { invitesQueries } from '@/features/invites/queries';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { createFileRoute } from '@tanstack/react-router';
-import z from 'zod';
+import { invitesQueries } from "@/features/invites/queries";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
+import z from "zod";
 
-import { ErrorComponent } from '@/components/common/ErrorComponent';
-import { CreateInviteDialog, InvitesList } from '@/features/invites/components';
+import { ErrorComponent } from "@/components/common/ErrorComponent";
+import { CreateInviteDialog, InvitesList } from "@/features/invites/components";
 
 // TODO: Move to @casa/schemas
 const invitesSearchSchema = z.object({
@@ -35,7 +35,7 @@ const RouteComponent = () => {
                 <ErrorComponent
                     goHome={false}
                     error={{
-                        statusText: 'No invitations are available',
+                        statusText: "No invitations are available",
                         message:
                             'To create a invitation you can use the "Create invite" button.',
                     }}
@@ -52,7 +52,7 @@ const RouteComponent = () => {
 };
 
 export const Route = createFileRoute(
-    '/_authenticated/account/houses/$slug/invites',
+    "/_authenticated/account/houses/$slug/invites",
 )({
     validateSearch: invitesSearchSchema,
     component: RouteComponent,

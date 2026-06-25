@@ -1,1 +1,1 @@
-export { invitesApi } from './invites.api.ts';
+export { invitesApi } from "./invites.api.ts";

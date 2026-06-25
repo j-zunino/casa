@@ -1,21 +1,21 @@
-import { invitesQueries } from '@/features/invites/queries';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { createFileRoute, notFound } from '@tanstack/react-router';
-import { invitesHooks } from '@/features/invites/hooks';
-import { toast } from 'sonner';
-import { router } from '@/main';
+import { invitesQueries } from "@/features/invites/queries";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute, notFound } from "@tanstack/react-router";
+import { invitesHooks } from "@/features/invites/hooks";
+import { toast } from "sonner";
+import { router } from "@/main";
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
     Card,
     CardDescription,
     CardFooter,
     CardHeader,
     CardTitle,
-} from '@/components/ui/card';
-import { HouseLineIcon } from '@phosphor-icons/react';
-import { Link } from '@tanstack/react-router';
+} from "@/components/ui/card";
+import { HouseLineIcon } from "@phosphor-icons/react";
+import { Link } from "@tanstack/react-router";
 
 const RouteComponent = () => {
     const { code } = Route.useParams();
@@ -26,13 +26,13 @@ const RouteComponent = () => {
 
     const handleJoinHouse = () => {
         toast.promise(joinHouse(), {
-            loading: 'Joining house...',
+            loading: "Joining house...",
             success: () => {
                 router.navigate({
-                    to: '/',
+                    to: "/",
                 });
 
-                return 'Joined successfully!';
+                return "Joined successfully!";
             },
             error: (err) => err.message,
         });
@@ -80,7 +80,7 @@ const RouteComponent = () => {
     );
 };
 
-export const Route = createFileRoute('/_authenticated/invite/$code')({
+export const Route = createFileRoute("/_authenticated/invite/$code")({
     staticData: { showNavbar: false },
     component: RouteComponent,
     loader: async ({ context, params }) => {

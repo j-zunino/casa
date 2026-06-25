@@ -1,1 +1,1 @@
-export { router as invitesRouter } from './invites.routes';
+export { router as invitesRouter } from "./invites.routes";

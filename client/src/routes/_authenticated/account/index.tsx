@@ -1,14 +1,14 @@
-import { authQueries } from '@/features/auth/queries';
-import { housesQueries } from '@/features/houses/queries';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { createFileRoute } from '@tanstack/react-router';
+import { authQueries } from "@/features/auth/queries";
+import { housesQueries } from "@/features/houses/queries";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
 
 import {
     SettingButton,
     SettingContent,
     SettingLink,
     Settings,
-} from '@/components/common/Settings';
+} from "@/components/common/Settings";
 import {
     Avatar,
     AvatarFallback,
@@ -16,16 +16,16 @@ import {
     AvatarGroupCount,
     AvatarImage,
     AvatarLabel,
-} from '@/components/ui/avatar';
+} from "@/components/ui/avatar";
 import {
     CaretRightIcon,
     HouseLineIcon,
     PasswordIcon,
     TrashIcon,
     UserIcon,
-} from '@phosphor-icons/react';
+} from "@phosphor-icons/react";
 
-import type { House } from '@/features/houses/types';
+import type { House } from "@/features/houses/types";
 
 const RouteComponent = () => {
     const { data: session } = useSuspenseQuery(authQueries.session());
@@ -103,7 +103,7 @@ const RouteComponent = () => {
     );
 };
 
-export const Route = createFileRoute('/_authenticated/account/')({
+export const Route = createFileRoute("/_authenticated/account/")({
     component: RouteComponent,
     loader: async ({ context }) => {
         await context.queryClient.ensureQueryData(housesQueries.all());

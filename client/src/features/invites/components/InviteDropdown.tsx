@@ -1,21 +1,21 @@
-import { toast } from 'sonner';
-import { invitesHooks } from '../hooks';
+import { toast } from "sonner";
+import { invitesHooks } from "../hooks";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { CopyIcon, DotsThreeIcon, ProhibitIcon } from '@phosphor-icons/react';
+} from "@/components/ui/dropdown-menu";
+import { CopyIcon, DotsThreeIcon, ProhibitIcon } from "@phosphor-icons/react";
 
-import type { House } from '@/features/houses/types';
+import type { House } from "@/features/houses/types";
 
 interface Props {
     inviteCode: string;
-    slug: House['slug'];
+    slug: House["slug"];
 }
 
 export const InviteDropdown = ({ inviteCode, slug }: Props) => {
@@ -28,9 +28,9 @@ export const InviteDropdown = ({ inviteCode, slug }: Props) => {
             await navigator.clipboard.writeText(
                 `${window.location.origin}/invite/${inviteCode}`,
             );
-            toast.success('Copied to clipboard');
+            toast.success("Copied to clipboard");
         } catch {
-            toast.error('Failed to copy to clipboard');
+            toast.error("Failed to copy to clipboard");
         }
     };
 

@@ -1,7 +1,7 @@
-import { housesKeys } from '@/features/houses/queries';
-import { router } from '@/main';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { authMutations, authQueries } from '../queries';
+import { housesKeys } from "@/features/houses/queries";
+import { router } from "@/main";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { authMutations, authQueries } from "../queries";
 
 export const authHooks = {
     useSession() {
@@ -17,7 +17,7 @@ export const authHooks = {
                 queryClient.clear();
 
                 await router.navigate({
-                    to: '/sign-in',
+                    to: "/sign-in",
                 });
             },
         });
@@ -32,7 +32,7 @@ export const authHooks = {
                 queryClient.clear();
 
                 await router.navigate({
-                    to: '/',
+                    to: "/",
                 });
             },
         });

@@ -1,4 +1,4 @@
-import { ErrorCode } from '@casa/types';
+import { ErrorCode } from "@casa/types";
 
 /**
  * Represents an application-level operational error.

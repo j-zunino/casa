@@ -1,6 +1,6 @@
-import { HouseLineIcon, SealWarningIcon } from '@phosphor-icons/react';
-import { Link } from '@tanstack/react-router';
-import { Button } from '../ui/button';
+import { HouseLineIcon, SealWarningIcon } from "@phosphor-icons/react";
+import { Link } from "@tanstack/react-router";
+import { Button } from "../ui/button";
 import {
     Empty,
     EmptyContent,
@@ -8,9 +8,9 @@ import {
     EmptyHeader,
     EmptyMedia,
     EmptyTitle,
-} from '../ui/empty';
+} from "../ui/empty";
 
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
 interface Props {
     icon?: ReactNode;
@@ -32,13 +32,13 @@ export const ErrorComponent = ({ icon, goHome = true, error }: Props) => {
 
                 <EmptyTitle>
                     {error.status && <>{error.status} - </>}
-                    {error.statusText || 'Something went wrong'}
+                    {error.statusText || "Something went wrong"}
                 </EmptyTitle>
 
                 {error.message && (
                     <EmptyDescription>
                         {/* TODO: Replace should be done in the server */}
-                        {error.message.replace('organization', 'house')}
+                        {error.message.replace("organization", "house")}
                     </EmptyDescription>
                 )}
             </EmptyHeader>

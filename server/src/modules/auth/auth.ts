@@ -1,14 +1,14 @@
-import { env, prisma } from '@/config';
-import { houseSchema, signUpSchema } from '@casa/schemas';
-import { ErrorCodes } from '@casa/types';
-import { betterAuth } from 'better-auth';
-import { prismaAdapter } from 'better-auth/adapters/prisma';
-import { APIError, createAuthMiddleware } from 'better-auth/api';
-import { organization } from 'better-auth/plugins';
-import slugify from 'slugify';
+import { env, prisma } from "@/config";
+import { houseSchema, signUpSchema } from "@casa/schemas";
+import { ErrorCodes } from "@casa/types";
+import { betterAuth } from "better-auth";
+import { prismaAdapter } from "better-auth/adapters/prisma";
+import { APIError, createAuthMiddleware } from "better-auth/api";
+import { organization } from "better-auth/plugins";
+import slugify from "slugify";
 
 export const auth = betterAuth({
-    database: prismaAdapter(prisma, { provider: 'postgresql' }),
+    database: prismaAdapter(prisma, { provider: "postgresql" }),
     trustedOrigins: env.CORS_WHITELIST,
     telemetry: { enabled: false },
 
@@ -36,7 +36,7 @@ export const auth = betterAuth({
                         throw new APIError(ErrorCodes.BAD_REQUEST, {
                             message:
                                 result.error.issues[0]?.message ??
-                                'invalid input',
+                                "invalid input",
                         });
                     }
 
@@ -52,7 +52,7 @@ export const auth = betterAuth({
                         });
                     } catch {
                         throw new APIError(ErrorCodes.CONFLICT, {
-                            message: 'House name already taken',
+                            message: "House name already taken",
                         });
                     }
 
@@ -74,7 +74,7 @@ export const auth = betterAuth({
                         throw new APIError(ErrorCodes.BAD_REQUEST, {
                             message:
                                 result.error.issues[0]?.message ??
-                                'invalid input',
+                                "invalid input",
                         });
                     }
 
@@ -90,7 +90,7 @@ export const auth = betterAuth({
                         });
                     } catch {
                         throw new APIError(ErrorCodes.CONFLICT, {
-                            message: 'House name already taken',
+                            message: "House name already taken",
                         });
                     }
 
@@ -105,23 +105,23 @@ export const auth = betterAuth({
             },
             schema: {
                 organization: {
-                    modelName: 'House',
+                    modelName: "House",
                 },
                 session: {
                     fields: {
-                        activeOrganizationId: 'activeHouseId',
+                        activeOrganizationId: "activeHouseId",
                     },
                 },
                 member: {
                     fields: {
-                        organization: 'house',
-                        organizationId: 'houseId',
+                        organization: "house",
+                        organizationId: "houseId",
                     },
                 },
                 invitation: {
                     fields: {
-                        organization: 'house',
-                        organizationId: 'houseId',
+                        organization: "house",
+                        organizationId: "houseId",
                     },
                 },
             },
@@ -130,13 +130,13 @@ export const auth = betterAuth({
 
     hooks: {
         before: createAuthMiddleware(async (ctx) => {
-            if (ctx.path.startsWith('/sign-up/email')) {
+            if (ctx.path.startsWith("/sign-up/email")) {
                 const result = signUpSchema.safeParse(ctx.body);
 
                 if (!result.success) {
                     throw new APIError(ErrorCodes.BAD_REQUEST, {
                         message:
-                            result.error.issues[0]?.message ?? 'invalid input',
+                            result.error.issues[0]?.message ?? "invalid input",
                     });
                 }
             }

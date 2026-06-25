@@ -1,7 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute } from "@tanstack/react-router";
 
-import { SignUpForm } from '@/features/auth/components';
-import { AuthLayout } from '@/layouts';
+import { SignUpForm } from "@/features/auth/components";
+import { AuthLayout } from "@/layouts";
 
 const RouteComponent = () => {
     return (
@@ -11,6 +11,6 @@ const RouteComponent = () => {
     );
 };
 
-export const Route = createFileRoute('/_guest/sign-up')({
+export const Route = createFileRoute("/_guest/sign-up")({
     component: RouteComponent,
 });

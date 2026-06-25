@@ -1,7 +1,7 @@
-import { signInSchema, signUpSchema } from '@casa/schemas';
-import z from 'zod';
+import { signInSchema, signUpSchema } from "@casa/schemas";
+import z from "zod";
 
-import type { authClient } from '../auth.client';
+import type { authClient } from "../auth.client";
 
 export interface AuthContext {
     user: User | null;

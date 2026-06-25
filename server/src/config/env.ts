@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 process.loadEnvFile();
 const envSchema = z.object({
@@ -6,7 +6,7 @@ const envSchema = z.object({
     DATABASE_URL: z.url(),
     CORS_WHITELIST: z
         .string()
-        .transform((urls) => urls.split(',').map((url) => url.trim()))
+        .transform((urls) => urls.split(",").map((url) => url.trim()))
         .pipe(z.array(z.url())),
 
     BETTER_AUTH_URL: z.url(),

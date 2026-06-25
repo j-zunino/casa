@@ -1,6 +1,6 @@
-import { router } from '@/main';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { housesKeys, housesMutations, housesQueries } from '../queries';
+import { router } from "@/main";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { housesKeys, housesMutations, housesQueries } from "../queries";
 
 export const housesHooks = {
     useAll() {
@@ -35,7 +35,7 @@ export const housesHooks = {
                 });
 
                 router.navigate({
-                    to: '/account/houses/$slug',
+                    to: "/account/houses/$slug",
                     params: {
                         slug: updatedHouse.slug,
                     },

@@ -15,6 +15,7 @@
         "typecheck": "tsc --noEmit"
     },
     "devDependencies": {
+        "prettier": "catalog:",
         "typescript": "catalog:"
     }
 }

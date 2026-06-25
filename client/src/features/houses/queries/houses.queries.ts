@@ -1,8 +1,8 @@
-import { queryOptions } from '@tanstack/react-query';
-import { housesKeys } from './houses.keys';
-import { housesApi } from '../api';
+import { queryOptions } from "@tanstack/react-query";
+import { housesKeys } from "./houses.keys";
+import { housesApi } from "../api";
 
-import type { House } from '../types';
+import type { House } from "../types";
 
 export const housesQueries = {
     // TODO: Include count?
@@ -13,7 +13,7 @@ export const housesQueries = {
         });
     },
 
-    details(slug: House['slug']) {
+    details(slug: House["slug"]) {
         return queryOptions({
             queryKey: housesKeys.details(slug),
             queryFn: () => housesApi.getDetails(slug),

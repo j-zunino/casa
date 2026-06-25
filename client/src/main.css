@@ -1,6 +1,6 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
-@import 'shadcn/tailwind.css';
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -26,7 +26,7 @@
     }
 
     .hover-ring,
-    [data-ring='true'] {
+    [data-ring="true"] {
         @apply border border-border transition;
 
         .group:hover & {
@@ -35,7 +35,7 @@
     }
 
     .focus-ring,
-    [data-ring='true'] {
+    [data-ring="true"] {
         @apply border border-border transition;
 
         .group:focus-visible & {
@@ -50,8 +50,8 @@
     --tracking-normal: 0.025em;
     --shadow-opacity: 0;
 
-    --font-sans: 'Funnel Display Variable', sans-serif, system-ui;
-    --font-mono: 'JetBrains Mono Variable', monospace;
+    --font-sans: "Funnel Display Variable", sans-serif, system-ui;
+    --font-mono: "JetBrains Mono Variable", monospace;
 
     --font-heading: var(--font-sans);
     --color-sidebar-ring: var(--sidebar-ring);

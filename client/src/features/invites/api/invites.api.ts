@@ -1,8 +1,8 @@
-import type { House } from '@/features/houses/types';
-import { api } from '@/lib/api';
+import type { House } from "@/features/houses/types";
+import { api } from "@/lib/api";
 
 export const invitesApi = {
-    async getAll(houseSlug: House['slug'], page = 1, limit = 10) {
+    async getAll(houseSlug: House["slug"], page = 1, limit = 10) {
         return api(`/houses/${houseSlug}/invites`, { page, limit });
     },
 
@@ -12,9 +12,9 @@ export const invitesApi = {
         return data;
     },
 
-    async create(houseSlug: House['slug'], maxUses: number) {
+    async create(houseSlug: House["slug"], maxUses: number) {
         const { data } = await api(`/houses/${houseSlug}/invites`, {
-            method: 'POST',
+            method: "POST",
             body: JSON.stringify({
                 maxUses,
             }),
@@ -24,24 +24,31 @@ export const invitesApi = {
 
     async join(inviteCode: string) {
         const { data } = await api(`/invites/${inviteCode}/join`, {
-            method: 'POST',
+            method: "POST",
         });
         return data;
     },
 
-    async update(houseSlug: House['slug'], inviteCode: string, maxUses: number | null) {
-        const { data } = await api(`/houses/${houseSlug}/invites/${inviteCode}`, {
-            method: 'PATCH',
-            body: JSON.stringify({ maxUses }),
-        });
+    async update(
+        houseSlug: House["slug"],
+        inviteCode: string,
+        maxUses: number | null,
+    ) {
+        const { data } = await api(
+            `/houses/${houseSlug}/invites/${inviteCode}`,
+            {
+                method: "PATCH",
+                body: JSON.stringify({ maxUses }),
+            },
+        );
         return data;
     },
 
-    async revoke(inviteCode: string, houseSlug: House['slug']) {
+    async revoke(inviteCode: string, houseSlug: House["slug"]) {
         const { data } = await api(
             `/houses/${houseSlug}/invites/${inviteCode}/revoke`,
             {
-                method: 'POST',
+                method: "POST",
             },
         );
         return data;

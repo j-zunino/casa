@@ -1,22 +1,22 @@
-import { prisma } from '@/config';
-import { AppError } from '@/utils';
-import { inviteLinkSchema } from '@casa/schemas';
-import { ErrorCodes } from '@casa/types';
-import { Router } from 'express';
-import crypto from 'node:crypto';
-import { requireAuth, requirePermission } from '../auth';
-import { getHouseBySlug } from './houses.utils';
+import { prisma } from "@/config";
+import { AppError } from "@/utils";
+import { inviteLinkSchema } from "@casa/schemas";
+import { ErrorCodes } from "@casa/types";
+import { Router } from "express";
+import crypto from "node:crypto";
+import { requireAuth, requirePermission } from "../auth";
+import { getHouseBySlug } from "./houses.utils";
 
-import type { ApiResponse } from '@casa/types';
-import type { Request, Response } from 'express';
+import type { ApiResponse } from "@casa/types";
+import type { Request, Response } from "express";
 
 export const router: Router = Router();
 
 router.get(
-    '/:houseSlug/invites',
+    "/:houseSlug/invites",
     requireAuth,
     // TODO: add "view" permission
-    requirePermission({ invitation: ['create'] }),
+    requirePermission({ invitation: ["create"] }),
     async (req: Request<{ houseSlug: string }>, res: Response) => {
         const { houseSlug } = req.params;
 
@@ -43,7 +43,7 @@ router.get(
                 },
                 skip,
                 take,
-                orderBy: { createdAt: 'desc' },
+                orderBy: { createdAt: "desc" },
             }),
             prisma.invitation.count({
                 where: { houseId: house.id },
@@ -72,16 +72,16 @@ router.get(
 );
 
 router.post(
-    '/:houseSlug/invites',
+    "/:houseSlug/invites",
     requireAuth,
-    requirePermission({ invitation: ['create'] }),
+    requirePermission({ invitation: ["create"] }),
     async (req: Request<{ houseSlug: string }>, res: Response) => {
         const { houseSlug } = req.params;
         const { maxUses } = inviteLinkSchema.parse(req.body);
 
         const house = await getHouseBySlug(houseSlug);
 
-        const code = crypto.randomBytes(6).toString('base64url');
+        const code = crypto.randomBytes(6).toString("base64url");
         const invitation = await prisma.invitation.create({
             data: {
                 id: crypto.randomUUID(),
@@ -102,9 +102,9 @@ router.post(
 );
 
 router.patch(
-    '/:houseSlug/invites/:inviteCode',
+    "/:houseSlug/invites/:inviteCode",
     requireAuth,
-    requirePermission({ invitation: ['create'] }),
+    requirePermission({ invitation: ["create"] }),
     async (
         req: Request<{ inviteCode: string; houseSlug: string }>,
         res: Response,
@@ -118,12 +118,12 @@ router.patch(
         });
 
         if (!invitation) {
-            throw new AppError('invite not found', 404, ErrorCodes.NOT_FOUND);
+            throw new AppError("invite not found", 404, ErrorCodes.NOT_FOUND);
         }
 
-        if (invitation.status !== 'active') {
+        if (invitation.status !== "active") {
             throw new AppError(
-                'can only edit active invites',
+                "can only edit active invites",
                 400,
                 ErrorCodes.BAD_REQUEST,
             );
@@ -144,9 +144,9 @@ router.patch(
 );
 
 router.post(
-    '/:houseSlug/invites/:inviteCode/revoke',
+    "/:houseSlug/invites/:inviteCode/revoke",
     requireAuth,
-    requirePermission({ invitation: ['cancel'] }),
+    requirePermission({ invitation: ["cancel"] }),
     async (
         req: Request<{ inviteCode: string; houseSlug: string }>,
         res: Response,
@@ -159,12 +159,12 @@ router.post(
         });
 
         if (!invitation) {
-            throw new AppError('invite not found', 404, ErrorCodes.NOT_FOUND);
+            throw new AppError("invite not found", 404, ErrorCodes.NOT_FOUND);
         }
 
-        if (invitation.status === 'revoked') {
+        if (invitation.status === "revoked") {
             throw new AppError(
-                'invite already revoked',
+                "invite already revoked",
                 400,
                 ErrorCodes.BAD_REQUEST,
             );
@@ -173,7 +173,7 @@ router.post(
         const updated = await prisma.invitation.update({
             where: { id: invitation.id },
             data: {
-                status: 'revoked',
+                status: "revoked",
                 revokedAt: new Date(),
                 revokedById: res.locals.user.id,
             },

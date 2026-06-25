@@ -1,32 +1,32 @@
-import { housesHooks } from '@/features/houses/hooks';
-import { housesQueries } from '@/features/houses/queries';
-import { houseSchema } from '@casa/schemas';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { createFileRoute, notFound } from '@tanstack/react-router';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import z from 'zod';
+import { housesHooks } from "@/features/houses/hooks";
+import { housesQueries } from "@/features/houses/queries";
+import { houseSchema } from "@casa/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute, notFound } from "@tanstack/react-router";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import z from "zod";
 
 import {
     SettingContent,
     SettingLink,
     Settings,
-} from '@/components/common/Settings';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { ButtonGroup } from '@/components/ui/button-group';
-import { Field, FieldContent, FieldError } from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
-import { DeleteHouse } from '@/features/houses/components';
+} from "@/components/common/Settings";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
+import { Field, FieldContent, FieldError } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { DeleteHouse } from "@/features/houses/components";
 import {
     CaretRightIcon,
     EnvelopeSimpleIcon,
     FloppyDiskIcon,
     HouseLineIcon,
     UserIcon,
-} from '@phosphor-icons/react';
-import { Controller } from 'react-hook-form';
+} from "@phosphor-icons/react";
+import { Controller } from "react-hook-form";
 
 type FormValues = z.infer<typeof houseSchema>;
 
@@ -47,8 +47,8 @@ const RouteComponent = () => {
         if (house.name === data.name) return;
 
         toast.promise(update({ id: house.id, input: data }), {
-            loading: 'Updating house...',
-            success: 'House updated successfully!',
+            loading: "Updating house...",
+            success: "House updated successfully!",
             error: (err) => err.message,
         });
     };
@@ -134,8 +134,8 @@ const RouteComponent = () => {
     );
 };
 
-export const Route = createFileRoute('/_authenticated/account/houses/$slug/')({
-    staticData: { homePath: '/h/$slug' },
+export const Route = createFileRoute("/_authenticated/account/houses/$slug/")({
+    staticData: { homePath: "/h/$slug" },
     component: RouteComponent,
     loader: async ({ context, params }) => {
         const house = await context.queryClient.ensureQueryData(

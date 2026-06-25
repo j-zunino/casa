@@ -1,8 +1,8 @@
-import { env } from '@/lib/zod';
-import { authClient } from '../auth.client';
+import { env } from "@/lib/zod";
+import { authClient } from "../auth.client";
 
-import type { SignInDto, SignUpDto } from '../types';
-import type { SocialProvider } from 'better-auth';
+import type { SignInDto, SignUpDto } from "../types";
+import type { SocialProvider } from "better-auth";
 
 export const authApi = {
     async getSession() {

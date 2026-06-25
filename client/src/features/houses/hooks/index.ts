@@ -1,1 +1,1 @@
-export { housesHooks } from './houses.hooks.ts';
+export { housesHooks } from "./houses.hooks.ts";

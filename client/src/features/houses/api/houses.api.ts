@@ -1,6 +1,6 @@
-import { authClient } from '@/features/auth/auth.client';
+import { authClient } from "@/features/auth/auth.client";
 
-import type { House, HouseDto } from '../types';
+import type { House, HouseDto } from "../types";
 
 export const housesApi = {
     async getAll() {
@@ -11,7 +11,7 @@ export const housesApi = {
         return data;
     },
 
-    async getDetails(slug: House['slug']) {
+    async getDetails(slug: House["slug"]) {
         const { data, error } =
             await authClient.organization.getFullOrganization({
                 query: {
@@ -38,7 +38,7 @@ export const housesApi = {
         return data;
     },
 
-    async update({ id, input }: { id: House['id']; input: HouseDto }) {
+    async update({ id, input }: { id: House["id"]; input: HouseDto }) {
         const { data, error } = await authClient.organization.update({
             organizationId: id,
             data: {
@@ -51,7 +51,7 @@ export const housesApi = {
         return data;
     },
 
-    async delete(id: House['id']) {
+    async delete(id: House["id"]) {
         const { data, error } = await authClient.organization.delete({
             organizationId: id,
         });

@@ -1,14 +1,14 @@
-import { housesQueries } from '@/features/houses/queries';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { createFileRoute } from '@tanstack/react-router';
+import { housesQueries } from "@/features/houses/queries";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
 
 import {
     SettingContent,
     SettingLink,
     Settings,
-} from '@/components/common/Settings';
-import { CaretRightIcon, HouseLineIcon } from '@phosphor-icons/react';
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+} from "@/components/common/Settings";
+import { CaretRightIcon, HouseLineIcon } from "@phosphor-icons/react";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 const RouteComponent = () => {
     const { data: houses } = useSuspenseQuery(housesQueries.all());
@@ -43,6 +43,6 @@ const RouteComponent = () => {
     );
 };
 
-export const Route = createFileRoute('/_authenticated/account/houses/')({
+export const Route = createFileRoute("/_authenticated/account/houses/")({
     component: RouteComponent,
 });

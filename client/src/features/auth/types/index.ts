@@ -4,4 +4,4 @@ export type {
     SignInDto,
     SignUpDto,
     User,
-} from './auth.types.ts';
+} from "./auth.types.ts";

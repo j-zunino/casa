@@ -1,11 +1,11 @@
-import { signUpFormSchema } from '@casa/schemas';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import z from 'zod';
-import { authHooks } from '../hooks';
+import { signUpFormSchema } from "@casa/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import z from "zod";
+import { authHooks } from "../hooks";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
     Field,
     FieldDescription,
@@ -14,12 +14,12 @@ import {
     FieldLabel,
     FieldLegend,
     FieldSet,
-} from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
-import { Spinner } from '@/components/ui/spinner';
-import { Link } from '@tanstack/react-router';
-import { Controller } from 'react-hook-form';
-import { GitHubSignIn } from './GitHubSignIn';
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { Spinner } from "@/components/ui/spinner";
+import { Link } from "@tanstack/react-router";
+import { Controller } from "react-hook-form";
+import { GitHubSignIn } from "./GitHubSignIn";
 
 type FormValues = z.infer<typeof signUpFormSchema>;
 
@@ -30,17 +30,17 @@ export const SignUpForm = () => {
     const form = useForm<FormValues>({
         resolver: zodResolver(signUpFormSchema),
         defaultValues: {
-            name: '',
-            email: '',
-            password: '',
-            passwordConfirmation: '',
+            name: "",
+            email: "",
+            password: "",
+            passwordConfirmation: "",
         },
     });
 
     const onSubmit = (data: FormValues) => {
         toast.promise(signUp(data), {
-            loading: 'Creating account...',
-            success: 'Account created successfully!',
+            loading: "Creating account...",
+            success: "Account created successfully!",
             error: (err) => err.message,
         });
     };
@@ -152,7 +152,7 @@ export const SignUpForm = () => {
                                     Creating account...
                                 </>
                             ) : (
-                                'Create account'
+                                "Create account"
                             )}
                         </Button>
                         <GitHubSignIn />

@@ -1,11 +1,11 @@
-import { router } from '@/main';
-import { toast } from 'sonner';
-import { housesHooks } from '../hooks/houses.hooks.ts';
+import { router } from "@/main";
+import { toast } from "sonner";
+import { housesHooks } from "../hooks/houses.hooks.ts";
 
 import {
     SettingButton,
     SettingContent,
-} from '@/components/common/Settings.tsx';
+} from "@/components/common/Settings.tsx";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -17,14 +17,14 @@ import {
     AlertDialogMedia,
     AlertDialogTitle,
     AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
-import { Spinner } from '@/components/ui/spinner';
-import { SealWarningIcon, TrashIcon } from '@phosphor-icons/react';
+} from "@/components/ui/alert-dialog";
+import { Spinner } from "@/components/ui/spinner";
+import { SealWarningIcon, TrashIcon } from "@phosphor-icons/react";
 
-import type { House } from '../types/houses.types.ts';
+import type { House } from "../types/houses.types.ts";
 
 interface Props {
-    id: House['id'];
+    id: House["id"];
 }
 
 export const DeleteHouse = ({ id }: Props) => {
@@ -33,13 +33,13 @@ export const DeleteHouse = ({ id }: Props) => {
 
     const onSubmit = async (houseId: typeof id) => {
         toast.promise(deleteHouse(houseId), {
-            loading: 'Deleting house...',
+            loading: "Deleting house...",
             success: () => {
                 router.navigate({
-                    to: '/',
+                    to: "/",
                 });
 
-                return 'House deleted successfully!';
+                return "House deleted successfully!";
             },
             error: (err) => err.message,
         });

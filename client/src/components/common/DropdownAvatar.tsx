@@ -1,31 +1,31 @@
-import { authHooks } from '@/features/auth/hooks';
-import { authQueries } from '@/features/auth/queries';
-import { housesQueries } from '@/features/houses/queries';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { authHooks } from "@/features/auth/hooks";
+import { authQueries } from "@/features/auth/queries";
+import { housesQueries } from "@/features/houses/queries";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 import {
     Avatar,
     AvatarFallback,
     AvatarImage,
     AvatarLabel,
-} from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
+} from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/dropdown-menu";
 import {
     GearSixIcon,
     HouseLineIcon,
     SignOutIcon,
     UserIcon,
-} from '@phosphor-icons/react';
-import { Link } from '@tanstack/react-router';
+} from "@phosphor-icons/react";
+import { Link } from "@tanstack/react-router";
 
-import type { House } from '@/features/houses/types';
+import type { House } from "@/features/houses/types";
 
 export const DropdownAvatar = () => {
     const { data: session } = useSuspenseQuery(authQueries.session());
