@@ -4,8 +4,8 @@ import {
     SealWarningIcon,
     SpinnerGapIcon,
     XIcon,
-} from '@phosphor-icons/react';
-import { Toaster as Sonner, type ToasterProps } from 'sonner';
+} from "@phosphor-icons/react";
+import { Toaster as Sonner, type ToasterProps } from "sonner";
 
 const Toaster = ({ ...props }: ToasterProps) => {
     return (
@@ -20,15 +20,15 @@ const Toaster = ({ ...props }: ToasterProps) => {
             }}
             style={
                 {
-                    '--normal-bg': 'var(--popover)',
-                    '--normal-text': 'var(--popover-foreground)',
-                    '--normal-border': 'var(--border)',
-                    '--border-radius': 'var(--radius)',
+                    "--normal-bg": "var(--popover)",
+                    "--normal-text": "var(--popover-foreground)",
+                    "--normal-border": "var(--border)",
+                    "--border-radius": "var(--radius)",
                 } as React.CSSProperties
             }
             toastOptions={{
                 classNames: {
-                    toast: 'cn-toast font-sans text-sm! select-none',
+                    toast: "cn-toast font-sans text-sm! select-none",
                 },
             }}
             {...props}

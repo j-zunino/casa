@@ -1,11 +1,11 @@
-import { signInSchema } from '@casa/schemas';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import z from 'zod';
-import { authHooks } from '../hooks';
+import { signInSchema } from "@casa/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import z from "zod";
+import { authHooks } from "../hooks";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
     Field,
     FieldDescription,
@@ -14,12 +14,12 @@ import {
     FieldLabel,
     FieldLegend,
     FieldSet,
-} from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
-import { Spinner } from '@/components/ui/spinner';
-import { Link } from '@tanstack/react-router';
-import { Controller } from 'react-hook-form';
-import { GitHubSignIn } from './GitHubSignIn';
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { Spinner } from "@/components/ui/spinner";
+import { Link } from "@tanstack/react-router";
+import { Controller } from "react-hook-form";
+import { GitHubSignIn } from "./GitHubSignIn";
 
 type FormValues = z.infer<typeof signInSchema>;
 
@@ -31,15 +31,15 @@ export const SignInForm = () => {
     const form = useForm<FormValues>({
         resolver: zodResolver(signInSchema),
         defaultValues: {
-            email: '',
-            password: '',
+            email: "",
+            password: "",
         },
     });
 
     const onSubmit = (data: FormValues) => {
         toast.promise(signIn(data), {
-            loading: 'Signing in...',
-            success: 'Successfully signed In',
+            loading: "Signing in...",
+            success: "Successfully signed In",
             error: (err) => err.message,
         });
     };
@@ -105,7 +105,7 @@ export const SignInForm = () => {
                                     Signing In
                                 </>
                             ) : (
-                                'Sign In'
+                                "Sign In"
                             )}
                         </Button>
                         <GitHubSignIn disabled={isSigningIn} />

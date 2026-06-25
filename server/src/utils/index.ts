@@ -1,2 +1,2 @@
-export { AppError } from './AppError';
-export { registerRoutes, type ModuleRouter } from './registerRoutes';
+export { AppError } from "./AppError";
+export { registerRoutes, type ModuleRouter } from "./registerRoutes";

@@ -1,4 +1,4 @@
 export const authKeys = {
-    base: () => ['auth'] as const,
-    session: () => [...authKeys.base(), 'session'] as const,
+    base: () => ["auth"] as const,
+    session: () => [...authKeys.base(), "session"] as const,
 };

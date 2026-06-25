@@ -1,18 +1,18 @@
-import { prisma } from '@/config';
-import { auth, requireAuth } from '@/modules/auth';
-import { AppError } from '@/utils';
-import { ErrorCodes } from '@casa/types';
-import { Router } from 'express';
+import { prisma } from "@/config";
+import { auth, requireAuth } from "@/modules/auth";
+import { AppError } from "@/utils";
+import { ErrorCodes } from "@casa/types";
+import { Router } from "express";
 
-import type { ApiResponse } from '@casa/types';
-import type { Request, Response } from 'express';
+import type { ApiResponse } from "@casa/types";
+import type { Request, Response } from "express";
 
 export const router: Router = Router();
 
 // TODO: Add stricter rate-limiting for unauthenticated users
 // TODO: Generate UUID with prisma?
 router.get(
-    '/:inviteCode',
+    "/:inviteCode",
     async (req: Request<{ inviteCode: string }>, res: Response) => {
         const { inviteCode } = req.params;
 
@@ -34,7 +34,7 @@ router.get(
         });
 
         if (!invitation) {
-            throw new AppError('invite not found', 404, ErrorCodes.NOT_FOUND);
+            throw new AppError("invite not found", 404, ErrorCodes.NOT_FOUND);
         }
 
         const response: ApiResponse<typeof invitation> = {
@@ -47,7 +47,7 @@ router.get(
 );
 
 router.post(
-    '/:inviteCode/join',
+    "/:inviteCode/join",
     requireAuth,
     async (req: Request<{ inviteCode: string }>, res: Response) => {
         const { inviteCode } = req.params;
@@ -59,34 +59,34 @@ router.post(
 
             if (!invitation) {
                 throw new AppError(
-                    'invite not found',
+                    "invite not found",
                     404,
                     ErrorCodes.NOT_FOUND,
                 );
             }
 
-            if (invitation.status === 'revoked') {
-                throw new AppError('invite revoked', 403, ErrorCodes.FORBIDDEN);
+            if (invitation.status === "revoked") {
+                throw new AppError("invite revoked", 403, ErrorCodes.FORBIDDEN);
             }
 
             if (
-                invitation.status === 'expired' ||
+                invitation.status === "expired" ||
                 (invitation.maxUses !== null &&
                     invitation.useCount >= invitation.maxUses)
             ) {
                 await tx.invitation.update({
                     where: { id: invitation.id },
-                    data: { status: 'expired' },
+                    data: { status: "expired" },
                 });
 
-                throw new AppError('invite expired', 403, ErrorCodes.FORBIDDEN);
+                throw new AppError("invite expired", 403, ErrorCodes.FORBIDDEN);
             }
 
             await auth.api.addMember({
                 body: {
                     userId: res.locals.user.id,
                     organizationId: invitation.houseId,
-                    role: ['member'],
+                    role: ["member"],
                 },
             });
 
@@ -101,7 +101,7 @@ router.post(
         const response: ApiResponse<Record<string, string>> = {
             success: true,
             data: {
-                message: 'joined successfully',
+                message: "joined successfully",
             },
         };
 

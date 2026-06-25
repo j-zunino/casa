@@ -1,12 +1,12 @@
-import { housesKeys } from '@/features/houses/queries/houses.keys';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { invitesKeys } from '../queries/invites.keys';
-import { invitesMutations } from '../queries/invites.mutations';
+import { housesKeys } from "@/features/houses/queries/houses.keys";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { invitesKeys } from "../queries/invites.keys";
+import { invitesMutations } from "../queries/invites.mutations";
 
-import type { House } from '@/features/houses/types';
+import type { House } from "@/features/houses/types";
 
 export const invitesHooks = {
-    useCreateInvite(houseSlug: House['slug']) {
+    useCreateInvite(houseSlug: House["slug"]) {
         const queryClient = useQueryClient();
         return useMutation({
             ...invitesMutations.create(houseSlug),
@@ -30,7 +30,7 @@ export const invitesHooks = {
         });
     },
 
-    useUpdateInvite(houseSlug: House['slug']) {
+    useUpdateInvite(houseSlug: House["slug"]) {
         const queryClient = useQueryClient();
         return useMutation({
             ...invitesMutations.update(houseSlug),
@@ -42,7 +42,7 @@ export const invitesHooks = {
         });
     },
 
-    useRevokeInvite(houseSlug: House['slug']) {
+    useRevokeInvite(houseSlug: House["slug"]) {
         const queryClient = useQueryClient();
         return useMutation({
             ...invitesMutations.revoke(houseSlug),

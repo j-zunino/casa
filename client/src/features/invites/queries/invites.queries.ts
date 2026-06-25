@@ -1,11 +1,11 @@
-import { queryOptions } from '@tanstack/react-query';
-import { invitesApi } from '../api';
-import { invitesKeys } from './invites.keys';
+import { queryOptions } from "@tanstack/react-query";
+import { invitesApi } from "../api";
+import { invitesKeys } from "./invites.keys";
 
-import type { House } from '@/features/houses/types';
+import type { House } from "@/features/houses/types";
 
 export const invitesQueries = {
-    all(houseSlug: House['slug'], options?: { page?: number; limit?: number }) {
+    all(houseSlug: House["slug"], options?: { page?: number; limit?: number }) {
         const page = options?.page ?? 1;
         const limit = options?.limit ?? 10;
 

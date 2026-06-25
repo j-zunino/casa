@@ -1,5 +1,5 @@
-import { mutationOptions } from '@tanstack/react-query';
-import { authApi } from '../api';
+import { mutationOptions } from "@tanstack/react-query";
+import { authApi } from "../api";
 
 export const authMutations = {
     signOut() {

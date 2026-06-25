@@ -1,21 +1,21 @@
-import { houseSchema } from '@casa/schemas';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import z from 'zod';
-import { housesHooks } from '../hooks';
+import { houseSchema } from "@casa/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import z from "zod";
+import { housesHooks } from "../hooks";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
     Field,
     FieldError,
     FieldGroup,
     FieldLabel,
     FieldSet,
-} from '@/components/ui/field';
-import { Input } from '@/components/ui/input.tsx';
-import { Spinner } from '@/components/ui/spinner';
-import { Controller } from 'react-hook-form';
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input.tsx";
+import { Spinner } from "@/components/ui/spinner";
+import { Controller } from "react-hook-form";
 
 type FormValues = z.infer<typeof houseSchema>;
 
@@ -25,16 +25,16 @@ export const CreateHouseForm = () => {
 
     const form = useForm<FormValues>({
         resolver: zodResolver(houseSchema),
-        defaultValues: { name: '' },
+        defaultValues: { name: "" },
     });
 
     const onSubmit = async (data: FormValues) => {
         toast.promise(createHouse(data), {
-            loading: 'Creating house...',
+            loading: "Creating house...",
             success: () => {
                 form.reset();
 
-                return 'House created successfully!';
+                return "House created successfully!";
             },
             error: (err) => err.message,
         });
@@ -75,7 +75,7 @@ export const CreateHouseForm = () => {
                                     Creating house...
                                 </>
                             ) : (
-                                'Create house'
+                                "Create house"
                             )}
                         </Button>
                     </Field>

@@ -1,16 +1,16 @@
-import { authQueries } from '@/features/auth/queries';
-import '@fontsource-variable/funnel-display/wght.css';
-import '@fontsource-variable/jetbrains-mono/wght.css';
-import { createRootRouteWithContext, useMatches } from '@tanstack/react-router';
+import { authQueries } from "@/features/auth/queries";
+import "@fontsource-variable/funnel-display/wght.css";
+import "@fontsource-variable/jetbrains-mono/wght.css";
+import { createRootRouteWithContext, useMatches } from "@tanstack/react-router";
 
-import { Navbar } from '@/components/common/Navbar';
-import { TanStackDevtools } from '@tanstack/react-devtools';
-import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools';
-import { Outlet } from '@tanstack/react-router';
-import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
+import { Navbar } from "@/components/common/Navbar";
+import { TanStackDevtools } from "@tanstack/react-devtools";
+import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
+import { Outlet } from "@tanstack/react-router";
+import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 
-import type { AuthContext } from '@/features/auth/types';
-import type { QueryClient } from '@tanstack/react-query';
+import type { AuthContext } from "@/features/auth/types";
+import type { QueryClient } from "@tanstack/react-query";
 
 interface RouterContext {
     queryClient: QueryClient;
@@ -34,11 +34,11 @@ const RootLayout = () => {
             <TanStackDevtools
                 plugins={[
                     {
-                        name: 'TanStack Query',
+                        name: "TanStack Query",
                         render: <ReactQueryDevtoolsPanel />,
                     },
                     {
-                        name: 'TanStack Router',
+                        name: "TanStack Router",
                         render: <TanStackRouterDevtoolsPanel />,
                     },
                 ]}

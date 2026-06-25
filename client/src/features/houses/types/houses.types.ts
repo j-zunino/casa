@@ -1,7 +1,7 @@
-import { houseSchema } from '@casa/schemas';
-import z from 'zod';
+import { houseSchema } from "@casa/schemas";
+import z from "zod";
 
-import type { authClient } from '@/features/auth/auth.client';
+import type { authClient } from "@/features/auth/auth.client";
 
 export interface HouseContext {
     active: House | null;

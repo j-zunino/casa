@@ -1,7 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute } from "@tanstack/react-router";
 
-import { BackButton } from '@/components/common/BackButton';
-import { Outlet } from '@tanstack/react-router';
+import { BackButton } from "@/components/common/BackButton";
+import { Outlet } from "@tanstack/react-router";
 
 const RouteComponent = () => {
     return (
@@ -13,6 +13,6 @@ const RouteComponent = () => {
     );
 };
 
-export const Route = createFileRoute('/_authenticated/account')({
+export const Route = createFileRoute("/_authenticated/account")({
     component: RouteComponent,
 });

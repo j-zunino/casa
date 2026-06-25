@@ -1,22 +1,22 @@
-import { navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
-import { authQueries } from '@/features/auth/queries';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { useMatches } from '@tanstack/react-router';
+import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
+import { authQueries } from "@/features/auth/queries";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { useMatches } from "@tanstack/react-router";
 
 import {
     NavigationMenu,
     NavigationMenuItem,
     NavigationMenuList,
-} from '@/components/ui/navigation-menu';
-import { Link } from '@tanstack/react-router';
-import { DropdownAvatar } from './DropdownAvatar';
+} from "@/components/ui/navigation-menu";
+import { Link } from "@tanstack/react-router";
+import { DropdownAvatar } from "./DropdownAvatar";
 
 export function Navbar() {
     const { data: session } = useSuspenseQuery(authQueries.session());
 
     const matches = useMatches();
     const homePath =
-        matches.find((m) => m.staticData?.homePath)?.staticData.homePath ?? '/';
+        matches.find((m) => m.staticData?.homePath)?.staticData.homePath ?? "/";
 
     return (
         <header className="sticky top-0 border-b bg-background">
@@ -27,7 +27,7 @@ export function Navbar() {
                             <Link
                                 to={homePath}
                                 className={navigationMenuTriggerStyle()}
-                                activeProps={{ className: 'underline' }}
+                                activeProps={{ className: "underline" }}
                             >
                                 Home
                             </Link>
@@ -46,7 +46,7 @@ export function Navbar() {
                                     <Link
                                         to="/sign-up"
                                         className={navigationMenuTriggerStyle()}
-                                        activeProps={{ className: 'underline' }}
+                                        activeProps={{ className: "underline" }}
                                     >
                                         Sign Up
                                     </Link>
@@ -56,7 +56,7 @@ export function Navbar() {
                                     <Link
                                         to="/sign-in"
                                         className={navigationMenuTriggerStyle()}
-                                        activeProps={{ className: 'underline' }}
+                                        activeProps={{ className: "underline" }}
                                     >
                                         Sign In
                                     </Link>

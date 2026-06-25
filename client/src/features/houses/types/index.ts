@@ -4,4 +4,4 @@ export type {
     HouseDto,
     Invitation,
     Member,
-} from './houses.types.ts';
+} from "./houses.types.ts";

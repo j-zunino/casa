@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarLabel } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarLabel } from "@/components/ui/avatar";
 import {
     Dialog,
     DialogContent,
@@ -6,13 +6,13 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-} from '@/components/ui/dialog';
-import { PlusIcon } from '@phosphor-icons/react';
-import { CreateHouseForm } from './CreateHouseForm';
+} from "@/components/ui/dialog";
+import { PlusIcon } from "@phosphor-icons/react";
+import { CreateHouseForm } from "./CreateHouseForm";
 
-import type { ComponentProps } from 'react';
+import type { ComponentProps } from "react";
 
-export const CreateHouse = ({ ...props }: ComponentProps<'button'>) => {
+export const CreateHouse = ({ ...props }: ComponentProps<"button">) => {
     return (
         <Dialog>
             <DialogTrigger asChild>

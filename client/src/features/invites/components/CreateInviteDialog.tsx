@@ -1,21 +1,21 @@
-import { useState } from 'react';
-import { invitesHooks } from '../hooks';
+import { useState } from "react";
+import { invitesHooks } from "../hooks";
 
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { Tabs, TabsContent } from '@/components/ui/tabs';
-import { PlusIcon } from '@phosphor-icons/react';
-import { CreateInviteLink } from './dialog/CreateInviteLink';
-import { EditInviteLink } from './dialog/EditInviteLink';
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
+import { PlusIcon } from "@phosphor-icons/react";
+import { CreateInviteLink } from "./dialog/CreateInviteLink";
+import { EditInviteLink } from "./dialog/EditInviteLink";
 
-import type { House } from '@/features/houses/types';
+import type { House } from "@/features/houses/types";
 
 interface Props {
-    slug: House['slug'];
+    slug: House["slug"];
 }
 
 export const CreateInviteDialog = ({ slug }: Props) => {
-    const [view, setView] = useState<'create' | 'edit'>('create');
+    const [view, setView] = useState<"create" | "edit">("create");
 
     const createInvite = invitesHooks.useCreateInvite(slug);
 
@@ -23,7 +23,7 @@ export const CreateInviteDialog = ({ slug }: Props) => {
         <Dialog
             onOpenChange={(open) => {
                 if (open) {
-                    setView('create');
+                    setView("create");
 
                     if (!createInvite.data) {
                         createInvite.mutate();
@@ -44,7 +44,7 @@ export const CreateInviteDialog = ({ slug }: Props) => {
                         <CreateInviteLink
                             inviteCode={createInvite.data?.code}
                             isPending={createInvite.isPending}
-                            onEdit={() => setView('edit')}
+                            onEdit={() => setView("edit")}
                         />
                     </TabsContent>
 
@@ -52,7 +52,7 @@ export const CreateInviteDialog = ({ slug }: Props) => {
                         <EditInviteLink
                             slug={slug}
                             inviteCode={createInvite.data?.code}
-                            onCancel={() => setView('create')}
+                            onCancel={() => setView("create")}
                         />
                     </TabsContent>
                 </Tabs>

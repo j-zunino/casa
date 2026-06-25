@@ -1,13 +1,13 @@
-import { authQueries } from '@/features/auth/queries';
-import { createFileRoute, redirect } from '@tanstack/react-router';
+import { authQueries } from "@/features/auth/queries";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
-import { Outlet } from '@tanstack/react-router';
+import { Outlet } from "@tanstack/react-router";
 
 const GuestLayout = () => {
     return <Outlet />;
 };
 
-export const Route = createFileRoute('/_guest')({
+export const Route = createFileRoute("/_guest")({
     component: GuestLayout,
     beforeLoad: async ({ context }) => {
         const session = await context.queryClient.ensureQueryData(
@@ -16,7 +16,7 @@ export const Route = createFileRoute('/_guest')({
 
         if (session) {
             throw redirect({
-                to: '/',
+                to: "/",
                 replace: true,
             });
         }

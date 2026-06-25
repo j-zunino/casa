@@ -1,5 +1,5 @@
-import { mutationOptions } from '@tanstack/react-query';
-import { housesApi } from '../api';
+import { mutationOptions } from "@tanstack/react-query";
+import { housesApi } from "../api";
 
 export const housesMutations = {
     create() {

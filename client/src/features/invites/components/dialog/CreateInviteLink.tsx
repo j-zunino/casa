@@ -1,16 +1,16 @@
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
     DialogDescription,
     DialogHeader,
     DialogTitle,
-} from '@/components/ui/dialog';
+} from "@/components/ui/dialog";
 import {
     InputGroup,
     InputGroupAddon,
     InputGroupButton,
     InputGroupInput,
-} from '@/components/ui/input-group';
-import { CopyIcon } from '@phosphor-icons/react';
+} from "@/components/ui/input-group";
+import { CopyIcon } from "@phosphor-icons/react";
 
 interface Props {
     inviteCode: string;
@@ -35,7 +35,7 @@ export const CreateInviteLink = ({ inviteCode, isPending, onEdit }: Props) => {
 
             <InputGroup>
                 <InputGroupInput
-                    value={`${window.location.origin}/${isPending ? '...' : inviteCode}`}
+                    value={`${window.location.origin}/${isPending ? "..." : inviteCode}`}
                     readOnly
                 />
                 <InputGroupAddon align="inline-end">

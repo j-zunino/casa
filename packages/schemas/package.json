@@ -19,6 +19,7 @@
         "zod": "catalog:"
     },
     "devDependencies": {
+        "prettier": "catalog:",
         "typescript": "catalog:"
     }
 }

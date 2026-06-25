@@ -1,11 +1,11 @@
-import { housesQueries } from '@/features/houses/queries';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { createFileRoute } from '@tanstack/react-router';
+import { housesQueries } from "@/features/houses/queries";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
 
-import { Button } from '@/components/ui/button';
-import { HouseSelect } from '@/features/houses/components';
-import { GearSixIcon } from '@phosphor-icons/react';
-import { Link } from '@tanstack/react-router';
+import { Button } from "@/components/ui/button";
+import { HouseSelect } from "@/features/houses/components";
+import { GearSixIcon } from "@phosphor-icons/react";
+import { Link } from "@tanstack/react-router";
 
 const Index = () => {
     const { data: houses } = useSuspenseQuery(housesQueries.all());
@@ -26,7 +26,7 @@ const Index = () => {
     );
 };
 
-export const Route = createFileRoute('/_authenticated/')({
+export const Route = createFileRoute("/_authenticated/")({
     staticData: { showNavbar: false },
     component: Index,
     loader: async ({ context }) => {

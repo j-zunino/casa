@@ -4,14 +4,14 @@ import {
     CardDescription,
     CardHeader,
     CardTitle,
-} from '@/components/ui/card';
+} from "@/components/ui/card";
 import {
     Pagination,
     PaginationContent,
     PaginationItem,
     PaginationNext,
     PaginationPrevious,
-} from '@/components/ui/pagination';
+} from "@/components/ui/pagination";
 import {
     Table,
     TableBody,
@@ -19,18 +19,18 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from '@/components/ui/table';
-import { InviteAvatar } from './InviteAvatar';
-import { InviteDropdown } from './InviteDropdown';
+} from "@/components/ui/table";
+import { InviteAvatar } from "./InviteAvatar";
+import { InviteDropdown } from "./InviteDropdown";
 
-import type { House } from '@/features/houses/types';
-import type { ApiPagination } from '@casa/types';
+import type { House } from "@/features/houses/types";
+import type { ApiPagination } from "@casa/types";
 
 interface Props {
     // TODO: Type invites
     invites: any;
     pagination: ApiPagination;
-    slug: House['slug'];
+    slug: House["slug"];
 }
 
 export const InvitesList = ({ invites, pagination, slug }: Props) => {
@@ -51,7 +51,7 @@ export const InvitesList = ({ invites, pagination, slug }: Props) => {
                     {invites.map((invite: any) => (
                         <TableRow
                             key={invite.id}
-                            className={`${invite.status !== 'active' && 'pointer-events-none opacity-50'}`}
+                            className={`${invite.status !== "active" && "pointer-events-none opacity-50"}`}
                         >
                             <TableCell>
                                 <InviteAvatar
@@ -80,7 +80,7 @@ export const InvitesList = ({ invites, pagination, slug }: Props) => {
 
             {invites.map((invite: any) => (
                 <Card
-                    className={`sm:hidden ${invite.status !== 'active' && 'pointer-events-none opacity-50'}`}
+                    className={`sm:hidden ${invite.status !== "active" && "pointer-events-none opacity-50"}`}
                     size="sm"
                     key={invite.id}
                 >
@@ -107,7 +107,7 @@ export const InvitesList = ({ invites, pagination, slug }: Props) => {
             <div className="flex items-center justify-between">
                 <p className="text-sm text-muted-foreground">
                     Page {pagination.page} of {pagination.totalPages}
-                    {' — '}
+                    {" — "}
                     {pagination.total} total
                 </p>
 

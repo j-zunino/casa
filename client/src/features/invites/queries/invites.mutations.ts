@@ -1,10 +1,10 @@
-import { mutationOptions } from '@tanstack/react-query';
-import { invitesApi } from '../api';
+import { mutationOptions } from "@tanstack/react-query";
+import { invitesApi } from "../api";
 
-import type { House } from '@/features/houses/types';
+import type { House } from "@/features/houses/types";
 
 export const invitesMutations = {
-    create(houseSlug: House['slug'], maxUses?: number) {
+    create(houseSlug: House["slug"], maxUses?: number) {
         return mutationOptions({
             mutationFn: () => invitesApi.create(houseSlug, maxUses),
         });
@@ -16,16 +16,22 @@ export const invitesMutations = {
         });
     },
 
-    update(houseSlug: House['slug']) {
+    update(houseSlug: House["slug"]) {
         return mutationOptions({
-            mutationFn: ({ inviteCode, maxUses }: { inviteCode: string; maxUses: number | null }) =>
-                invitesApi.update(houseSlug, inviteCode, maxUses),
+            mutationFn: ({
+                inviteCode,
+                maxUses,
+            }: {
+                inviteCode: string;
+                maxUses: number | null;
+            }) => invitesApi.update(houseSlug, inviteCode, maxUses),
         });
     },
 
-    revoke(houseSlug: House['slug']) {
+    revoke(houseSlug: House["slug"]) {
         return mutationOptions({
-            mutationFn: (inviteCode: string) => invitesApi.revoke(inviteCode, houseSlug),
+            mutationFn: (inviteCode: string) =>
+                invitesApi.revoke(inviteCode, houseSlug),
         });
     },
 };

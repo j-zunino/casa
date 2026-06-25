@@ -1,11 +1,11 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { UserIcon } from '@phosphor-icons/react';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { UserIcon } from "@phosphor-icons/react";
 
-import type { User } from '@/features/auth/types';
+import type { User } from "@/features/auth/types";
 
 interface Props {
-    name: User['name'];
-    image: User['image'];
+    name: User["name"];
+    image: User["image"];
 }
 
 export const InviteAvatar = ({ name, image }: Props) => {

@@ -1,18 +1,18 @@
-import { inviteLinkSchema } from '@casa/schemas';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import z from 'zod';
-import { invitesHooks } from '../../hooks';
+import { inviteLinkSchema } from "@casa/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import z from "zod";
+import { invitesHooks } from "../../hooks";
 
-import { Button } from '@/components/ui/button';
-import { DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Button } from "@/components/ui/button";
+import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import {
     Field,
     FieldError,
     FieldGroup,
     FieldLabel,
-} from '@/components/ui/field';
+} from "@/components/ui/field";
 import {
     Select,
     SelectContent,
@@ -20,26 +20,26 @@ import {
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from '@/components/ui/select';
-import { FloppyDiskIcon } from '@phosphor-icons/react';
-import { Controller } from 'react-hook-form';
+} from "@/components/ui/select";
+import { FloppyDiskIcon } from "@phosphor-icons/react";
+import { Controller } from "react-hook-form";
 
-import type { House } from '@/features/houses/types';
+import type { House } from "@/features/houses/types";
 
 interface Props {
-    slug: House['slug'];
+    slug: House["slug"];
     inviteCode: string;
     onCancel?: () => void;
 }
 
 const maxUsesValues = [
-    { label: 'No limit', value: null },
-    { label: '1 use', value: 1 },
-    { label: '5 uses', value: 5 },
-    { label: '10 uses', value: 10 },
-    { label: '25 uses', value: 25 },
-    { label: '50 uses', value: 50 },
-    { label: '100 uses', value: 100 },
+    { label: "No limit", value: null },
+    { label: "1 use", value: 1 },
+    { label: "5 uses", value: 5 },
+    { label: "10 uses", value: 10 },
+    { label: "25 uses", value: 25 },
+    { label: "50 uses", value: 50 },
+    { label: "100 uses", value: 100 },
 ] as const;
 
 type FormValues = z.infer<typeof inviteLinkSchema>;
@@ -55,10 +55,10 @@ export const EditInviteLink = ({ slug, inviteCode, onCancel }: Props) => {
 
     const onSubmit = async (data: FormValues) => {
         toast.promise(updateInvite({ maxUses: data.maxUses, inviteCode }), {
-            loading: 'Updating house...',
+            loading: "Updating house...",
             success: (data) => {
                 form.reset({ maxUses: data.maxUses });
-                return 'Invite updated successfully!';
+                return "Invite updated successfully!";
             },
             error: (err) => err.message,
         });
@@ -82,10 +82,10 @@ export const EditInviteLink = ({ slug, inviteCode, onCancel }: Props) => {
                                 </FieldLabel>
 
                                 <Select
-                                    value={field.value?.toString() ?? 'null'}
+                                    value={field.value?.toString() ?? "null"}
                                     onValueChange={(value) => {
                                         field.onChange(
-                                            value === 'null'
+                                            value === "null"
                                                 ? null
                                                 : Number(value),
                                         );

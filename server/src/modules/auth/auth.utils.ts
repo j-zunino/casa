@@ -1,4 +1,4 @@
-import { ErrorCodes } from '@casa/types';
+import { ErrorCodes } from "@casa/types";
 
 export const mapBetterAuthError = (status?: number) => {
     switch (status) {

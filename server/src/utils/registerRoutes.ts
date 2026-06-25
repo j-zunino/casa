@@ -1,4 +1,4 @@
-import express, { type Router } from 'express';
+import express, { type Router } from "express";
 
 export type ModuleRouter = {
     prefix: string;
@@ -36,7 +36,7 @@ export type ModuleRouter = {
 export const registerRoutes = (appRouter: Router, modules: ModuleRouter[]) => {
     for (const module of modules) {
         if (!module.skipJson) {
-            appRouter.use(module.prefix, express.json({ limit: '10kb' }));
+            appRouter.use(module.prefix, express.json({ limit: "10kb" }));
         }
 
         appRouter.use(module.prefix, module.router);
