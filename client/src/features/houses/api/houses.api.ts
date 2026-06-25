@@ -60,4 +60,31 @@ export const housesApi = {
 
         return data;
     },
+
+    async getUsers(slug: House["slug"], page = 1, limit = 10) {
+        const offset = (page - 1) * limit;
+        const { data, error } = await authClient.organization.listMembers({
+            query: {
+                organizationSlug: slug,
+                limit,
+                offset,
+            },
+        });
+
+        if (error) throw error;
+
+        const totalPages = Math.ceil(data.total / limit);
+
+        return {
+            data: data.members,
+            pagination: {
+                page,
+                limit,
+                total: data.total,
+                totalPages,
+                hasNext: page < totalPages,
+                hasPrevious: page > 1,
+            },
+        };
+    },
 };

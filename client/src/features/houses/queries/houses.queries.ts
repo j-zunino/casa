@@ -19,4 +19,14 @@ export const housesQueries = {
             queryFn: () => housesApi.getDetails(slug),
         });
     },
+
+    users(slug: House["slug"], options?: { page?: number; limit?: number }) {
+        const page = options?.page ?? 1;
+        const limit = options?.limit ?? 10;
+
+        return queryOptions({
+            queryKey: housesKeys.users(slug, page, limit),
+            queryFn: () => housesApi.getUsers(slug, page, limit),
+        });
+    },
 };
