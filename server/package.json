@@ -1,37 +1,38 @@
 {
-  "name": "server",
-  "type": "module",
-  "private": true,
-  "version": "0.0.1",
-  "main": "dist/index.js",
-  "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "build": "tsup src/index.ts --dts",
-    "start": "node dist/index.js",
-    "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "@casa/schemas": "workspace:*",
-    "@casa/types": "workspace:*",
-    "@prisma/adapter-pg": "catalog:",
-    "@prisma/client": "catalog:",
-    "better-auth": "catalog:",
-    "cors": "^2.8.6",
-    "express": "^5.0.0",
-    "express-rate-limit": "^8.5.1",
-    "helmet": "^8.1.0",
-    "pg": "^8.18.0",
-    "slugify": "^1.6.9",
-    "zod": "catalog:"
-  },
-  "devDependencies": {
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.0",
-    "@types/node": "catalog:",
-    "@types/pg": "^8.16.0",
-    "prisma": "catalog:",
-    "tsup": "^8.3.5",
-    "tsx": "^4.19.2"
-  }
+    "name": "server",
+    "type": "module",
+    "private": true,
+    "version": "0.0.1",
+    "main": "dist/index.js",
+    "scripts": {
+        "dev": "tsx watch src/index.ts",
+        "build": "tsup src/index.ts --dts",
+        "start": "node dist/index.js",
+        "lint": "eslint",
+        "format": "prettier --write \"**/*.{ts,tsx}\"",
+        "typecheck": "tsc --noEmit"
+    },
+    "dependencies": {
+        "@casa/schemas": "workspace:*",
+        "@casa/types": "workspace:*",
+        "@prisma/adapter-pg": "catalog:",
+        "@prisma/client": "catalog:",
+        "better-auth": "catalog:",
+        "cors": "^2.8.6",
+        "express": "^5.0.0",
+        "express-rate-limit": "^8.5.1",
+        "helmet": "^8.1.0",
+        "pg": "^8.18.0",
+        "slugify": "^1.6.9",
+        "zod": "catalog:"
+    },
+    "devDependencies": {
+        "@types/cors": "^2.8.19",
+        "@types/express": "^5.0.0",
+        "@types/node": "catalog:",
+        "@types/pg": "^8.16.0",
+        "prisma": "catalog:",
+        "tsup": "^8.3.5",
+        "tsx": "^4.19.2"
+    }
 }

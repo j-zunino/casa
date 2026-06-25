@@ -1,8 +1,7 @@
 packages:
-  - client
-  - server
-  - packages/types
-  - packages/schemas
+  - 'client/'
+  - 'server/'
+  - 'packages/*'
 
 catalog:
   zod: ^4.3.6
