@@ -21,6 +21,7 @@ import { Route as AuthenticatedInviteCodeRouteImport } from './routes/_authentic
 import { Route as AuthenticatedHSlugRouteImport } from './routes/_authenticated/h/$slug'
 import { Route as AuthenticatedAccountHousesIndexRouteImport } from './routes/_authenticated/account/houses/index'
 import { Route as AuthenticatedAccountHousesSlugIndexRouteImport } from './routes/_authenticated/account/houses/$slug/index'
+import { Route as AuthenticatedAccountHousesSlugUsersRouteImport } from './routes/_authenticated/account/houses/$slug/users'
 import { Route as AuthenticatedAccountHousesSlugInvitesRouteImport } from './routes/_authenticated/account/houses/$slug/invites'
 
 const GuestRouteRoute = GuestRouteRouteImport.update({
@@ -86,6 +87,12 @@ const AuthenticatedAccountHousesSlugIndexRoute =
     path: '/houses/$slug/',
     getParentRoute: () => AuthenticatedAccountRouteRoute,
   } as any)
+const AuthenticatedAccountHousesSlugUsersRoute =
+  AuthenticatedAccountHousesSlugUsersRouteImport.update({
+    id: '/houses/$slug/users',
+    path: '/houses/$slug/users',
+    getParentRoute: () => AuthenticatedAccountRouteRoute,
+  } as any)
 const AuthenticatedAccountHousesSlugInvitesRoute =
   AuthenticatedAccountHousesSlugInvitesRouteImport.update({
     id: '/houses/$slug/invites',
@@ -104,6 +111,7 @@ export interface FileRoutesByFullPath {
   '/account/': typeof AuthenticatedAccountIndexRoute
   '/account/houses/': typeof AuthenticatedAccountHousesIndexRoute
   '/account/houses/$slug/invites': typeof AuthenticatedAccountHousesSlugInvitesRoute
+  '/account/houses/$slug/users': typeof AuthenticatedAccountHousesSlugUsersRoute
   '/account/houses/$slug/': typeof AuthenticatedAccountHousesSlugIndexRoute
 }
 export interface FileRoutesByTo {
@@ -116,6 +124,7 @@ export interface FileRoutesByTo {
   '/account': typeof AuthenticatedAccountIndexRoute
   '/account/houses': typeof AuthenticatedAccountHousesIndexRoute
   '/account/houses/$slug/invites': typeof AuthenticatedAccountHousesSlugInvitesRoute
+  '/account/houses/$slug/users': typeof AuthenticatedAccountHousesSlugUsersRoute
   '/account/houses/$slug': typeof AuthenticatedAccountHousesSlugIndexRoute
 }
 export interface FileRoutesById {
@@ -132,6 +141,7 @@ export interface FileRoutesById {
   '/_authenticated/account/': typeof AuthenticatedAccountIndexRoute
   '/_authenticated/account/houses/': typeof AuthenticatedAccountHousesIndexRoute
   '/_authenticated/account/houses/$slug/invites': typeof AuthenticatedAccountHousesSlugInvitesRoute
+  '/_authenticated/account/houses/$slug/users': typeof AuthenticatedAccountHousesSlugUsersRoute
   '/_authenticated/account/houses/$slug/': typeof AuthenticatedAccountHousesSlugIndexRoute
 }
 export interface FileRouteTypes {
@@ -147,6 +157,7 @@ export interface FileRouteTypes {
     | '/account/'
     | '/account/houses/'
     | '/account/houses/$slug/invites'
+    | '/account/houses/$slug/users'
     | '/account/houses/$slug/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -159,6 +170,7 @@ export interface FileRouteTypes {
     | '/account'
     | '/account/houses'
     | '/account/houses/$slug/invites'
+    | '/account/houses/$slug/users'
     | '/account/houses/$slug'
   id:
     | '__root__'
@@ -174,6 +186,7 @@ export interface FileRouteTypes {
     | '/_authenticated/account/'
     | '/_authenticated/account/houses/'
     | '/_authenticated/account/houses/$slug/invites'
+    | '/_authenticated/account/houses/$slug/users'
     | '/_authenticated/account/houses/$slug/'
   fileRoutesById: FileRoutesById
 }
@@ -268,6 +281,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAccountHousesSlugIndexRouteImport
       parentRoute: typeof AuthenticatedAccountRouteRoute
     }
+    '/_authenticated/account/houses/$slug/users': {
+      id: '/_authenticated/account/houses/$slug/users'
+      path: '/houses/$slug/users'
+      fullPath: '/account/houses/$slug/users'
+      preLoaderRoute: typeof AuthenticatedAccountHousesSlugUsersRouteImport
+      parentRoute: typeof AuthenticatedAccountRouteRoute
+    }
     '/_authenticated/account/houses/$slug/invites': {
       id: '/_authenticated/account/houses/$slug/invites'
       path: '/houses/$slug/invites'
@@ -282,6 +302,7 @@ interface AuthenticatedAccountRouteRouteChildren {
   AuthenticatedAccountIndexRoute: typeof AuthenticatedAccountIndexRoute
   AuthenticatedAccountHousesIndexRoute: typeof AuthenticatedAccountHousesIndexRoute
   AuthenticatedAccountHousesSlugInvitesRoute: typeof AuthenticatedAccountHousesSlugInvitesRoute
+  AuthenticatedAccountHousesSlugUsersRoute: typeof AuthenticatedAccountHousesSlugUsersRoute
   AuthenticatedAccountHousesSlugIndexRoute: typeof AuthenticatedAccountHousesSlugIndexRoute
 }
 
@@ -291,6 +312,8 @@ const AuthenticatedAccountRouteRouteChildren: AuthenticatedAccountRouteRouteChil
     AuthenticatedAccountHousesIndexRoute: AuthenticatedAccountHousesIndexRoute,
     AuthenticatedAccountHousesSlugInvitesRoute:
       AuthenticatedAccountHousesSlugInvitesRoute,
+    AuthenticatedAccountHousesSlugUsersRoute:
+      AuthenticatedAccountHousesSlugUsersRoute,
     AuthenticatedAccountHousesSlugIndexRoute:
       AuthenticatedAccountHousesSlugIndexRoute,
   }
