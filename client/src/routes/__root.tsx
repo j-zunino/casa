@@ -9,12 +9,10 @@ import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
 import { Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 
-import type { AuthContext } from "@/features/auth/types";
 import type { QueryClient } from "@tanstack/react-query";
 
 interface RouterContext {
     queryClient: QueryClient;
-    auth: AuthContext;
 }
 
 const RootLayout = () => {

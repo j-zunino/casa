@@ -16,11 +16,6 @@ export const router = createRouter({
     scrollRestoration: true,
     context: {
         queryClient,
-        auth: {
-            user: null,
-            isAuthenticated: false,
-            isLoading: true,
-        },
     },
 
     defaultPendingComponent: () => <Loading />,
