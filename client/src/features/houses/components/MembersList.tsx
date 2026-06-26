@@ -58,15 +58,19 @@ export const MembersList = ({ members, pagination }: Props) => {
                                 />
                             </TableCell>
                             <TableCell>
-                                <Tooltip>
-                                    <TooltipTrigger className="w-[200px] truncate text-left select-text">
-                                        {member.user.email}
-                                    </TooltipTrigger>
+                                {member.user.email.length < 30 ? (
+                                    member.user.email
+                                ) : (
+                                    <Tooltip>
+                                        <TooltipTrigger className="w-[30ch] truncate text-left select-text">
+                                            {member.user.email}
+                                        </TooltipTrigger>
 
-                                    <TooltipContent>
-                                        {member.user.email}
-                                    </TooltipContent>
-                                </Tooltip>
+                                        <TooltipContent>
+                                            {member.user.email}
+                                        </TooltipContent>
+                                    </Tooltip>
+                                )}
                             </TableCell>
                             <TableCell className="text-center">
                                 {member.role}
