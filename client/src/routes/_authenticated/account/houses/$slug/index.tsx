@@ -59,7 +59,7 @@ const RouteComponent = () => {
 
     return (
         <Settings>
-            <div className="mb-2 flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5">
                 <Avatar size="lg" rounded="normal">
                     <AvatarImage
                         src={house.logo ?? undefined}

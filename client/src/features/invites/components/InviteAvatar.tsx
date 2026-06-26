@@ -1,4 +1,9 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+    Avatar,
+    AvatarFallback,
+    AvatarImage,
+    AvatarLabel,
+} from "@/components/ui/avatar";
 import { UserIcon } from "@phosphor-icons/react";
 
 import type { User } from "@/features/auth/types";
@@ -18,7 +23,7 @@ export const InviteAvatar = ({ name, image }: Props) => {
                 </AvatarFallback>
             </Avatar>
 
-            <p>{name}</p>
+            <AvatarLabel>{name}</AvatarLabel>
         </div>
     );
 };
