@@ -21,9 +21,7 @@ const RouteComponent = () => {
 
     return (
         <div className="flex flex-col gap-1.5">
-            <h2 className="font-heading text-base font-medium">
-                House members
-            </h2>
+            <h2 className="font-heading text-base font-medium">Members</h2>
 
             <MembersList members={members} pagination={pagination} />
         </div>
