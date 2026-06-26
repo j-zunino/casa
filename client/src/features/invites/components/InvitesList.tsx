@@ -1,3 +1,4 @@
+import { MemberAvatar } from "@/components/common/MemberAvatar";
 import {
     Card,
     CardContent,
@@ -20,7 +21,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { InviteAvatar } from "./InviteAvatar";
 import { InviteDropdown } from "./InviteDropdown";
 
 import type { House } from "@/features/houses/types";
@@ -54,7 +54,7 @@ export const InvitesList = ({ invites, pagination, slug }: Props) => {
                             className={`${invite.status !== "active" && "pointer-events-none opacity-50"}`}
                         >
                             <TableCell>
-                                <InviteAvatar
+                                <MemberAvatar
                                     name={invite.inviter.name}
                                     image={invite.inviter.image}
                                 />
@@ -96,7 +96,7 @@ export const InvitesList = ({ invites, pagination, slug }: Props) => {
                         <InviteDropdown inviteCode={invite.code} slug={slug} />
                     </CardHeader>
                     <CardContent>
-                        <InviteAvatar
+                        <MemberAvatar
                             name={invite.inviter.name}
                             image={invite.inviter.image}
                         />

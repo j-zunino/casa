@@ -13,7 +13,7 @@ interface Props {
     image: User["image"];
 }
 
-export const InviteAvatar = ({ name, image }: Props) => {
+export const MemberAvatar = ({ name, image }: Props) => {
     return (
         <div className="flex gap-1.5">
             <Avatar size="sm">
