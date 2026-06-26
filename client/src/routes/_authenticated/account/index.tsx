@@ -8,6 +8,11 @@ import {
     SettingContent,
     SettingLink,
     Settings,
+    SettingsDescription,
+    SettingsGroup,
+    SettingsHeader,
+    SettingsSet,
+    SettingsTitle,
 } from "@/components/common/Settings";
 import {
     Avatar,
@@ -34,7 +39,7 @@ const RouteComponent = () => {
     // TODO: If account is email allow to change username
     return (
         <Settings>
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center gap-1.5">
                 <Avatar size="lg">
                     <AvatarImage
                         src={session?.user.image ?? undefined}
@@ -49,56 +54,74 @@ const RouteComponent = () => {
                 <AvatarLabel>{session?.user.name}</AvatarLabel>
             </div>
 
-            <SettingButton disabled={true}>
-                <SettingContent
-                    title="Update password"
-                    icon={<PasswordIcon />}
-                />
-            </SettingButton>
+            <SettingsHeader>
+                <SettingsTitle>Account settings</SettingsTitle>
+            </SettingsHeader>
 
-            {houses.length > 0 && (
-                <SettingLink to="/account/houses">
-                    <SettingContent
-                        title="Manage houses"
-                        description={`${houses.length} Houses`}
-                        icon={<HouseLineIcon />}
-                        iconEnd={
-                            <span className="flex items-center gap-1.5">
-                                <AvatarGroup>
-                                    {houses.slice(0, 2).map((h: House) => (
-                                        <Avatar
-                                            key={h.id}
-                                            size="sm"
-                                            rounded="normal"
-                                        >
-                                            <AvatarImage
-                                                src={h.logo ?? undefined}
-                                                alt={h.name}
-                                            />
+            <SettingsGroup>
+                <SettingsSet>
+                    <SettingButton disabled={true}>
+                        <SettingContent
+                            title="Update password"
+                            icon={<PasswordIcon />}
+                        />
+                    </SettingButton>
 
-                                            <AvatarFallback>
-                                                <HouseLineIcon />
-                                            </AvatarFallback>
-                                        </Avatar>
-                                    ))}
+                    {houses.length > 0 && (
+                        <SettingLink to="/account/houses">
+                            <SettingContent
+                                title="Manage houses"
+                                description={`${houses.length} Houses`}
+                                icon={<HouseLineIcon />}
+                                iconEnd={
+                                    <span className="flex items-center gap-1.5">
+                                        <AvatarGroup>
+                                            {houses
+                                                .slice(0, 2)
+                                                .map((h: House) => (
+                                                    <Avatar
+                                                        key={h.id}
+                                                        size="sm"
+                                                        rounded="normal"
+                                                    >
+                                                        <AvatarImage
+                                                            src={
+                                                                h.logo ??
+                                                                undefined
+                                                            }
+                                                            alt={h.name}
+                                                        />
 
-                                    {houses.length > 2 && (
-                                        <AvatarGroupCount>
-                                            +{houses.length - 2}
-                                        </AvatarGroupCount>
-                                    )}
-                                </AvatarGroup>
+                                                        <AvatarFallback>
+                                                            <HouseLineIcon />
+                                                        </AvatarFallback>
+                                                    </Avatar>
+                                                ))}
 
-                                <CaretRightIcon />
-                            </span>
-                        }
-                    />
-                </SettingLink>
-            )}
+                                            {houses.length > 2 && (
+                                                <AvatarGroupCount>
+                                                    +{houses.length - 2}
+                                                </AvatarGroupCount>
+                                            )}
+                                        </AvatarGroup>
 
-            <SettingButton variant="destructive" disabled={true}>
-                <SettingContent title="Delete account" icon={<TrashIcon />} />
-            </SettingButton>
+                                        <CaretRightIcon />
+                                    </span>
+                                }
+                            />
+                        </SettingLink>
+                    )}
+                </SettingsSet>
+
+                <SettingsSet>
+                    <SettingButton variant="destructive" disabled={true}>
+                        <SettingContent
+                            title="Delete account"
+                            icon={<TrashIcon />}
+                        />
+                    </SettingButton>
+                </SettingsSet>
+            </SettingsGroup>
         </Settings>
     );
 };

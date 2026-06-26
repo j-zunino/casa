@@ -25,7 +25,7 @@ export const HouseSelect = ({ list, editMode }: Props) => {
                     key={h.id}
                     to={path}
                     params={{ slug: h.slug }}
-                    className="group relative w-30 rounded-md transition outline-none select-none"
+                    className="group relative flex w-30 flex-col gap-1.5 rounded-md transition outline-none select-none"
                 >
                     <Avatar size="lg" rounded="normal" ring={true}>
                         <AvatarImage src={h.logo ?? undefined} alt={h.name} />

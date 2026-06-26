@@ -68,7 +68,7 @@ export const DropdownAvatar = () => {
                                 </AvatarFallback>
                             </Avatar>
 
-                            <AvatarLabel className="py-0">{h.name}</AvatarLabel>
+                            <AvatarLabel>{h.name}</AvatarLabel>
                         </Link>
                     </DropdownMenuItem>
                 ))}
