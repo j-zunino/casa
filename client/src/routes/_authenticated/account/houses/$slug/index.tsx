@@ -12,6 +12,10 @@ import {
     SettingContent,
     SettingLink,
     Settings,
+    SettingsGroup,
+    SettingsHeader,
+    SettingsSet,
+    SettingsTitle,
 } from "@/components/common/Settings";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -55,7 +59,7 @@ const RouteComponent = () => {
 
     return (
         <Settings>
-            <section className="mb-2 flex items-center gap-1.5">
+            <div className="mb-2 flex items-center gap-1.5">
                 <Avatar size="lg" rounded="normal">
                     <AvatarImage
                         src={house.logo ?? undefined}
@@ -107,29 +111,40 @@ const RouteComponent = () => {
                         )}
                     />
                 </form>
-            </section>
-            <SettingLink
-                to="/account/houses/$slug/invites"
-                params={{ slug: house.slug }}
-            >
-                <SettingContent
-                    title="Invites"
-                    description="Create and manage invite links"
-                    icon={<EnvelopeSimpleIcon />}
-                    iconEnd={<CaretRightIcon />}
-                />
-            </SettingLink>
+            </div>
 
-            <SettingLink to=".">
-                <SettingContent
-                    title="Users"
-                    description="Manage users"
-                    icon={<UserIcon />}
-                    iconEnd={<CaretRightIcon />}
-                />
-            </SettingLink>
+            <SettingsHeader>
+                <SettingsTitle>House settings</SettingsTitle>
+            </SettingsHeader>
 
-            <DeleteHouse id={house.id} />
+            <SettingsGroup>
+                <SettingsSet>
+                    <SettingLink
+                        to="/account/houses/$slug/invites"
+                        params={{ slug: house.slug }}
+                    >
+                        <SettingContent
+                            title="Invites"
+                            description="Create and manage invite links"
+                            icon={<EnvelopeSimpleIcon />}
+                            iconEnd={<CaretRightIcon />}
+                        />
+                    </SettingLink>
+
+                    <SettingLink to=".">
+                        <SettingContent
+                            title="Users"
+                            description="Manage users"
+                            icon={<UserIcon />}
+                            iconEnd={<CaretRightIcon />}
+                        />
+                    </SettingLink>
+                </SettingsSet>
+
+                <SettingsSet>
+                    <DeleteHouse id={house.id} />
+                </SettingsSet>
+            </SettingsGroup>
         </Settings>
     );
 };
