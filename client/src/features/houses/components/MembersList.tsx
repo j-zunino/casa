@@ -14,6 +14,11 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 import type { ApiPagination } from "@casa/types";
 import type { Member } from "../types";
@@ -44,7 +49,17 @@ export const MembersList = ({ members, pagination }: Props) => {
                                     image={member.user.image}
                                 />
                             </TableCell>
-                            <TableCell>{member.user.email}</TableCell>
+                            <TableCell>
+                                <Tooltip>
+                                    <TooltipTrigger className="w-[200px] truncate text-left select-text">
+                                        {member.user.email}
+                                    </TooltipTrigger>
+
+                                    <TooltipContent>
+                                        {member.user.email}
+                                    </TooltipContent>
+                                </Tooltip>
+                            </TableCell>
                             <TableCell>{member.role}</TableCell>
                             <TableCell className="text-right">
                                 {/* <InviteDropdown */}
