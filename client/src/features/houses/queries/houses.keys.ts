@@ -6,6 +6,6 @@ export const housesKeys = {
     detailsBase: () => [...housesKeys.base(), "details"] as const,
     details: (slug?: House["slug"]) =>
         [...housesKeys.detailsBase(), slug] as const,
-    users: (slug: House["slug"], page = 1, limit = 10) =>
-        [...housesKeys.base(), "users", slug, page, limit] as const,
+    members: (slug: House["slug"], page = 1, limit = 10) =>
+        [...housesKeys.base(), "members", slug, page, limit] as const,
 };

@@ -20,13 +20,13 @@ export const housesQueries = {
         });
     },
 
-    users(slug: House["slug"], options?: { page?: number; limit?: number }) {
+    members(slug: House["slug"], options?: { page?: number; limit?: number }) {
         const page = options?.page ?? 1;
         const limit = options?.limit ?? 10;
 
         return queryOptions({
-            queryKey: housesKeys.users(slug, page, limit),
-            queryFn: () => housesApi.getUsers(slug, page, limit),
+            queryKey: housesKeys.members(slug, page, limit),
+            queryFn: () => housesApi.getMembers(slug, page, limit),
         });
     },
 };

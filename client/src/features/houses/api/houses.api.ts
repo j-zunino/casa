@@ -61,7 +61,7 @@ export const housesApi = {
         return data;
     },
 
-    async getUsers(slug: House["slug"], page = 1, limit = 10) {
+    async getMembers(slug: House["slug"], page = 1, limit = 10) {
         const offset = (page - 1) * limit;
         const { data, error } = await authClient.organization.listMembers({
             query: {
