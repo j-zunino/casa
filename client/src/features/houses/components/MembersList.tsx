@@ -1,4 +1,11 @@
 import { MemberAvatar } from "@/components/common/MemberAvatar";
+import { Button } from "@/components/ui/button";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
     Pagination,
     PaginationContent,
@@ -19,6 +26,7 @@ import {
     TooltipContent,
     TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { DotsThreeIcon, UserMinusIcon } from "@phosphor-icons/react";
 
 import type { ApiPagination } from "@casa/types";
 import type { Member } from "../types";
@@ -36,7 +44,7 @@ export const MembersList = ({ members, pagination }: Props) => {
                     <TableRow>
                         <TableHead>Member</TableHead>
                         <TableHead>Email</TableHead>
-                        <TableHead>Role</TableHead>
+                        <TableHead className="text-center">Role</TableHead>
                         <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -60,12 +68,36 @@ export const MembersList = ({ members, pagination }: Props) => {
                                     </TooltipContent>
                                 </Tooltip>
                             </TableCell>
-                            <TableCell>{member.role}</TableCell>
+                            <TableCell className="text-center">
+                                {member.role}
+                            </TableCell>
                             <TableCell className="text-right">
-                                {/* <InviteDropdown */}
-                                {/*     inviteCode={invite.code} */}
-                                {/*     slug={slug} */}
-                                {/* /> */}
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button variant="ghost" size="icon">
+                                            <DotsThreeIcon />
+                                            <span className="sr-only">
+                                                Open menu
+                                            </span>
+                                        </Button>
+                                    </DropdownMenuTrigger>
+
+                                    <DropdownMenuContent
+                                        className="w-fit"
+                                        align="end"
+                                    >
+                                        {/* <DropdownMenuItem> */}
+                                        {/*     Lorem Ipsum */}
+                                        {/* </DropdownMenuItem> */}
+                                        {/**/}
+                                        {/* <DropdownMenuSeparator /> */}
+                                        {/**/}
+                                        <DropdownMenuItem variant="destructive">
+                                            <UserMinusIcon />
+                                            Kick member
+                                        </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
                             </TableCell>
                         </TableRow>
                     ))}
