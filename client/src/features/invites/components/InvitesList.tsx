@@ -1,5 +1,6 @@
 import {
     Card,
+    CardAction,
     CardContent,
     CardDescription,
     CardHeader,
@@ -84,16 +85,18 @@ export const InvitesList = ({ invites, pagination, slug }: Props) => {
                     size="sm"
                     key={invite.id}
                 >
-                    <CardHeader className="flex justify-between gap-1.5">
-                        <div>
-                            <CardTitle>{invite.code}</CardTitle>
-                            <CardDescription>
-                                Uses: {invite.useCount}
-                                {invite.maxUses && ` of ${invite.maxUses}`}
-                            </CardDescription>
-                        </div>
-
-                        <InviteDropdown inviteCode={invite.code} slug={slug} />
+                    <CardHeader>
+                        <CardTitle>{invite.code}</CardTitle>
+                        <CardDescription>
+                            Uses: {invite.useCount}
+                            {invite.maxUses && ` of ${invite.maxUses}`}
+                        </CardDescription>
+                        <CardAction>
+                            <InviteDropdown
+                                inviteCode={invite.code}
+                                slug={slug}
+                            />
+                        </CardAction>
                     </CardHeader>
                     <CardContent>
                         <InviteAvatar
