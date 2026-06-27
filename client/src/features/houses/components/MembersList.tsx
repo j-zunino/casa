@@ -37,7 +37,7 @@ interface Props {
     pagination: ApiPagination;
 }
 
-// TODO: Only show actions for owners/admins, needs to implement org role checking
+// TODO: Only show actions for owners/admins, needs to implement house role checking
 export const MembersList = ({ members, pagination }: Props) => {
     return (
         <>
