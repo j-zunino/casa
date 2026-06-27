@@ -18,7 +18,7 @@ export const MemberDropdown = () => {
                 </Button>
             </DropdownMenuTrigger>
 
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" className="w-fit">
                 <DropdownMenuItem>Lorem Ipsum</DropdownMenuItem>
 
                 <DropdownMenuSeparator />
