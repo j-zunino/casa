@@ -52,6 +52,7 @@ export const InviteDropdown = ({ inviteCode, slug }: Props) => {
                 <DropdownMenuSeparator />
 
                 {/* TODO: Confirm action */}
+                {/* TODO: Only show for admin/owner, needs to implement house role checking */}
                 <DropdownMenuItem
                     variant="destructive"
                     onClick={() => revokeInvite(inviteCode)}

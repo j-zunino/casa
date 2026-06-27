@@ -28,6 +28,7 @@ const RouteComponent = () => {
                     Invitation links
                 </h2>
 
+                {/* TODO: Only show for admin/owner, needs to implement house role checking */}
                 <CreateInviteDialog slug={slug} />
             </div>
 
