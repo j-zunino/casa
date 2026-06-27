@@ -1,4 +1,12 @@
 import { MemberAvatar } from "@/components/common/MemberAvatar";
+import { RoleBadge } from "@/components/common/RoleBadge";
+import {
+    Card,
+    CardAction,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card";
 import {
     Pagination,
     PaginationContent,
@@ -51,11 +59,11 @@ export const MembersList = ({ members, pagination }: Props) => {
                                 />
                             </TableCell>
                             <TableCell>
-                                {member.user.email.length < 30 ? (
+                                {member.user.email.length < 25 ? (
                                     member.user.email
                                 ) : (
                                     <Tooltip>
-                                        <TooltipTrigger className="w-[30ch] truncate text-left select-text">
+                                        <TooltipTrigger className="w-[25ch] truncate text-left select-text">
                                             {member.user.email}
                                         </TooltipTrigger>
 
@@ -66,7 +74,7 @@ export const MembersList = ({ members, pagination }: Props) => {
                                 )}
                             </TableCell>
                             <TableCell className="text-center">
-                                {member.role}
+                                <RoleBadge role={member.role} />
                             </TableCell>
                             <TableCell className="text-right">
                                 <MemberDropdown />
@@ -75,6 +83,29 @@ export const MembersList = ({ members, pagination }: Props) => {
                     ))}
                 </TableBody>
             </Table>
+
+            {members.map((member: Member) => (
+                <Card size="sm" className="sm:hidden" key={member.id}>
+                    <CardHeader>
+                        <CardTitle>
+                            <MemberAvatar
+                                name={member.user.name}
+                                image={member.user.image}
+                                role={member.role}
+                            />
+                            <p className="sr-only">
+                                User {member.user.name} information
+                            </p>
+                        </CardTitle>
+                        <CardDescription className="truncate">
+                            {member.user.email}
+                        </CardDescription>
+                        <CardAction>
+                            <MemberDropdown />
+                        </CardAction>
+                    </CardHeader>
+                </Card>
+            ))}
 
             <div className="flex items-center justify-between">
                 <p className="text-sm text-muted-foreground">
