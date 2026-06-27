@@ -145,10 +145,10 @@ const RouteComponent = () => {
                         />
                     </SettingLink>
 
-                    <SettingLink to=".">
+                    <SettingLink to="/account/houses/$slug/members">
                         <SettingContent
-                            title="Users"
-                            description="Manage users"
+                            title="Members"
+                            description="Manage members"
                             icon={<UserIcon />}
                             iconEnd={<CaretRightIcon />}
                         />

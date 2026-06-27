@@ -4,17 +4,16 @@ import "@fontsource-variable/jetbrains-mono/wght.css";
 import { createRootRouteWithContext, useMatches } from "@tanstack/react-router";
 
 import { Navbar } from "@/components/common/Navbar";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
 import { Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 
-import type { AuthContext } from "@/features/auth/types";
 import type { QueryClient } from "@tanstack/react-query";
 
 interface RouterContext {
     queryClient: QueryClient;
-    auth: AuthContext;
 }
 
 const RootLayout = () => {
@@ -28,7 +27,9 @@ const RootLayout = () => {
             {showNavbar && <Navbar />}
 
             <div className="flex grow flex-col">
-                <Outlet />
+                <TooltipProvider>
+                    <Outlet />
+                </TooltipProvider>
             </div>
 
             <TanStackDevtools

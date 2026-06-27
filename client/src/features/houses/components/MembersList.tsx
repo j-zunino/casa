@@ -1,8 +1,8 @@
 import { MemberAvatar } from "@/components/common/MemberAvatar";
+import { RoleBadge } from "@/components/common/RoleBadge";
 import {
     Card,
     CardAction,
-    CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
@@ -22,88 +22,89 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { InviteDropdown } from "./InviteDropdown";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { MemberDropdown } from "./MemberDropdown";
 
-import type { House } from "@/features/houses/types";
 import type { ApiPagination } from "@casa/types";
+import type { Member } from "../types";
 
 interface Props {
-    // TODO: Type invites
-    invites: any;
+    members: Member[];
     pagination: ApiPagination;
-    slug: House["slug"];
 }
 
-export const InvitesList = ({ invites, pagination, slug }: Props) => {
+// TODO: Only show actions for owners/admins, needs to implement house role checking
+export const MembersList = ({ members, pagination }: Props) => {
     return (
         <>
             <Table className="hidden sm:table">
                 <TableHeader>
                     <TableRow>
-                        <TableHead>Inviter</TableHead>
-                        <TableHead>Invite code</TableHead>
-                        <TableHead className="text-center">Uses</TableHead>
-                        <TableHead className="text-center">Status</TableHead>
+                        <TableHead>Member</TableHead>
+                        <TableHead>Email</TableHead>
+                        <TableHead className="text-center">Role</TableHead>
                         <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {/* TODO:FIX: 'invite' is type any */}
-                    {invites.map((invite: any) => (
-                        <TableRow
-                            key={invite.id}
-                            className={`${invite.status !== "active" && "pointer-events-none opacity-50"}`}
-                        >
+                    {members.map((member: Member) => (
+                        <TableRow key={member.id}>
                             <TableCell>
                                 <MemberAvatar
-                                    name={invite.inviter.name}
-                                    image={invite.inviter.image}
+                                    name={member.user.name}
+                                    image={member.user.image}
                                 />
                             </TableCell>
-                            <TableCell>{invite.code}</TableCell>
-                            <TableCell className="text-center">
-                                {invite.useCount}
-                                {invite.maxUses && ` of ${invite.maxUses}`}
+                            <TableCell>
+                                {member.user.email.length < 25 ? (
+                                    member.user.email
+                                ) : (
+                                    <Tooltip>
+                                        <TooltipTrigger className="w-[25ch] truncate text-left select-text">
+                                            {member.user.email}
+                                        </TooltipTrigger>
+
+                                        <TooltipContent>
+                                            {member.user.email}
+                                        </TooltipContent>
+                                    </Tooltip>
+                                )}
                             </TableCell>
                             <TableCell className="text-center">
-                                {invite.status}
+                                <RoleBadge role={member.role} />
                             </TableCell>
                             <TableCell className="text-right">
-                                <InviteDropdown
-                                    inviteCode={invite.code}
-                                    slug={slug}
-                                />
+                                <MemberDropdown />
                             </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
             </Table>
 
-            {invites.map((invite: any) => (
-                <Card
-                    className={`sm:hidden ${invite.status !== "active" && "pointer-events-none opacity-50"}`}
-                    size="sm"
-                    key={invite.id}
-                >
+            {members.map((member: Member) => (
+                <Card size="sm" className="sm:hidden" key={member.id}>
                     <CardHeader>
-                        <CardTitle>{invite.code}</CardTitle>
-                        <CardDescription>
-                            Uses: {invite.useCount}
-                            {invite.maxUses && ` of ${invite.maxUses}`}
+                        <CardTitle>
+                            <MemberAvatar
+                                name={member.user.name}
+                                image={member.user.image}
+                                role={member.role}
+                            />
+                            <p className="sr-only">
+                                User {member.user.name} information
+                            </p>
+                        </CardTitle>
+                        <CardDescription className="truncate">
+                            {member.user.email}
                         </CardDescription>
                         <CardAction>
-                            <InviteDropdown
-                                inviteCode={invite.code}
-                                slug={slug}
-                            />
+                            <MemberDropdown />
                         </CardAction>
                     </CardHeader>
-                    <CardContent>
-                        <MemberAvatar
-                            name={invite.inviter.name}
-                            image={invite.inviter.image}
-                        />
-                    </CardContent>
                 </Card>
             ))}
 
