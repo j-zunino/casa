@@ -22,6 +22,11 @@ import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Field, FieldContent, FieldError } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { DeleteHouse } from "@/features/houses/components";
 import {
     CaretRightIcon,
@@ -87,18 +92,27 @@ const RouteComponent = () => {
                                             placeholder="House name"
                                             autoComplete="on"
                                         />
-                                        <Button
-                                            variant="outline"
-                                            aria-label="Save house name"
-                                            disabled={
-                                                isUpdating ||
-                                                house.name === field.value
-                                                    ? true
-                                                    : false
-                                            }
-                                        >
-                                            <FloppyDiskIcon weight="fill" />
-                                        </Button>
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <Button
+                                                    variant="outline"
+                                                    aria-label="Save house name"
+                                                    disabled={
+                                                        isUpdating ||
+                                                        house.name ===
+                                                            field.value
+                                                            ? true
+                                                            : false
+                                                    }
+                                                >
+                                                    <FloppyDiskIcon weight="fill" />
+                                                </Button>
+                                            </TooltipTrigger>
+
+                                            <TooltipContent>
+                                                Save changes
+                                            </TooltipContent>
+                                        </Tooltip>
                                     </ButtonGroup>
 
                                     {fieldState.invalid && (
