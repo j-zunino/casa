@@ -37,7 +37,7 @@ export const InviteDropdown = ({ inviteCode, slug }: Props) => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="size-8">
+                <Button variant="ghost" size="icon">
                     <DotsThreeIcon />
                     <span className="sr-only">Open menu</span>
                 </Button>
@@ -46,7 +46,7 @@ export const InviteDropdown = ({ inviteCode, slug }: Props) => {
             <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={handleCopy}>
                     <CopyIcon />
-                    Copy
+                    Copy link
                 </DropdownMenuItem>
 
                 <DropdownMenuSeparator />
