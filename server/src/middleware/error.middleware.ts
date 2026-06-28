@@ -1,11 +1,11 @@
 import { mapBetterAuthError } from "@/modules/auth";
 import { normalizeHouseError } from "@/modules/houses";
 import { AppError } from "@/utils";
-import type { ApiResponse } from "@casa/types";
 import { ErrorCodes } from "@casa/types";
 import { isAPIError } from "better-auth/api";
-import type { NextFunction, Request, Response } from "express";
 import { ZodError } from "zod";
+
+import type { NextFunction, Request, Response } from "express";
 
 /**
  * Error-handling middleware.
