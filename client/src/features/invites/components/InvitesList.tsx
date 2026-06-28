@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/table";
 import { InviteDropdown } from "./InviteDropdown";
 
+import { StatusBadge } from "@/components/common/StatusBadge";
 import type { House } from "@/features/houses/types";
 import type { ApiPagination } from "@casa/types";
 
@@ -66,7 +67,7 @@ export const InvitesList = ({ invites, pagination, slug }: Props) => {
                                 {invite.maxUses && ` of ${invite.maxUses}`}
                             </TableCell>
                             <TableCell className="text-center">
-                                {invite.status}
+                                <StatusBadge status={invite.status} />
                             </TableCell>
                             <TableCell className="text-right">
                                 <InviteDropdown
@@ -86,7 +87,10 @@ export const InvitesList = ({ invites, pagination, slug }: Props) => {
                     key={invite.id}
                 >
                     <CardHeader>
-                        <CardTitle>{invite.code}</CardTitle>
+                        <CardTitle className="flex gap-1.5">
+                            {invite.code}
+                            <StatusBadge status={invite.status} />
+                        </CardTitle>
                         <CardDescription>
                             Uses: {invite.useCount}
                             {invite.maxUses && ` of ${invite.maxUses}`}
