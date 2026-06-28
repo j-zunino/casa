@@ -3,10 +3,9 @@ import { housesQueries } from "@/features/houses/queries";
 import { houseSchema } from "@casa/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import z from "zod";
 
 import {
     SettingContent,
@@ -36,6 +35,8 @@ import {
     UserIcon,
 } from "@phosphor-icons/react";
 import { Controller } from "react-hook-form";
+
+import type { z } from "zod";
 
 type FormValues = z.infer<typeof houseSchema>;
 
@@ -170,8 +171,6 @@ export const Route = createFileRoute("/_authenticated/account/houses/$slug/")({
         const house = await context.queryClient.ensureQueryData(
             housesQueries.details(params.slug),
         );
-
-        if (!house) throw notFound();
 
         return { house };
     },

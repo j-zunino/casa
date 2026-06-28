@@ -1,8 +1,9 @@
-import { Badge, badgeVariants } from "../ui/badge";
+import { Badge } from "../ui/badge";
 
 import type { InvitationStatus } from "@casa/types";
 import type { VariantProps } from "class-variance-authority";
 import type { ComponentProps } from "react";
+import type { badgeVariants } from "../ui/badge";
 
 const inviteStatus: Record<
     InvitationStatus,

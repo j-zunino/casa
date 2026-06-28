@@ -2,7 +2,6 @@ import { signInSchema } from "@casa/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import z from "zod";
 import { authHooks } from "../hooks";
 
 import { Button } from "@/components/ui/button";
@@ -20,6 +19,8 @@ import { Spinner } from "@/components/ui/spinner";
 import { Link } from "@tanstack/react-router";
 import { Controller } from "react-hook-form";
 import { GitHubSignIn } from "./GitHubSignIn";
+
+import type { z } from "zod";
 
 type FormValues = z.infer<typeof signInSchema>;
 

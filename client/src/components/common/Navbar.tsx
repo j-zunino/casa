@@ -16,7 +16,7 @@ export function Navbar() {
 
     const matches = useMatches();
     const homePath =
-        matches.find((m) => m.staticData?.homePath)?.staticData.homePath ?? "/";
+        matches.find((m) => m.staticData.homePath)?.staticData.homePath ?? "/";
 
     return (
         <header className="sticky top-0 border-b bg-background">

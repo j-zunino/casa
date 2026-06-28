@@ -2,7 +2,6 @@ import { houseSchema } from "@casa/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import z from "zod";
 import { housesHooks } from "../hooks";
 
 import { Button } from "@/components/ui/button";
@@ -16,6 +15,8 @@ import {
 import { Input } from "@/components/ui/input.tsx";
 import { Spinner } from "@/components/ui/spinner";
 import { Controller } from "react-hook-form";
+
+import type { z } from "zod";
 
 type FormValues = z.infer<typeof houseSchema>;
 

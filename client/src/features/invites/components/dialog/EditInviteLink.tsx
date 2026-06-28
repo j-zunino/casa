@@ -2,7 +2,6 @@ import { inviteLinkSchema } from "@casa/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import z from "zod";
 import { invitesHooks } from "../../hooks";
 
 import { Button } from "@/components/ui/button";
@@ -26,6 +25,7 @@ import { Controller } from "react-hook-form";
 
 import type { House } from "@/features/houses/types";
 import type { Invitation } from "@casa/types";
+import type { z } from "zod";
 
 interface Props {
     slug: House["slug"];
@@ -57,7 +57,7 @@ export const EditInviteLink = ({ slug, inviteCode, onCancel }: Props) => {
     const onSubmit = async (data: FormValues) => {
         toast.promise(updateInvite({ maxUses: data.maxUses, inviteCode }), {
             loading: "Updating house...",
-            success: (data) => {
+            success: () => {
                 form.reset({ maxUses: data.maxUses });
                 return "Invite updated successfully!";
             },

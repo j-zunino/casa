@@ -19,7 +19,7 @@ interface RouterContext {
 const RootLayout = () => {
     const showNavbar = useMatches({
         select: (matches) =>
-            !matches.some((m) => m.staticData?.showNavbar === false),
+            !matches.some((m) => m.staticData.showNavbar === false),
     });
 
     return (

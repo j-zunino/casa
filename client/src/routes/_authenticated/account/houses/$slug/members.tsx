@@ -1,7 +1,7 @@
 import { housesQueries } from "@/features/houses/queries";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import z from "zod";
+import { z } from "zod";
 
 import { MembersList } from "@/features/houses/components";
 

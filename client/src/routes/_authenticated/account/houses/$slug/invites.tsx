@@ -1,7 +1,7 @@
 import { invitesQueries } from "@/features/invites/queries";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import z from "zod";
+import { z } from "zod";
 
 import { ErrorComponent } from "@/components/common/ErrorComponent";
 import { CreateInviteDialog, InvitesList } from "@/features/invites/components";

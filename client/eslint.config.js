@@ -7,6 +7,7 @@ export default [
         rules: {
             "import/no-cycle": "off",
             "import/order": "off",
+            "import/no-duplicates": "off",
             "sort-imports": "off",
             "@typescript-eslint/array-type": "off",
             "@typescript-eslint/require-await": "off",
@@ -14,6 +15,13 @@ export default [
         },
     },
     {
-        ignores: ["eslint.config.js", ".prettierrc"],
+        ignores: ["eslint.config.js", ".prettierrc", "node_modules", "dist"],
+    },
+    {
+        files: ["src/components/ui/**.tsx"],
+        rules: {
+            "react-refresh/only-export-components": "off",
+            "import/consistent-type-specifier-style": "off",
+        },
     },
 ];

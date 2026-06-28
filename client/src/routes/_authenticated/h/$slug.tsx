@@ -1,6 +1,6 @@
 import { housesQueries } from "@/features/houses/queries";
-import { createFileRoute, notFound } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
 
 import { Link } from "@tanstack/react-router";
 
@@ -22,8 +22,6 @@ export const Route = createFileRoute("/_authenticated/h/$slug")({
         const house = await context.queryClient.ensureQueryData(
             housesQueries.details(params.slug),
         );
-
-        if (!house) throw notFound();
 
         return { house };
     },

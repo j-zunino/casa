@@ -192,6 +192,7 @@ function FieldError({
             ...new Map(errors.map((error) => [error?.message, error])).values(),
         ];
 
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (uniqueErrors?.length == 1) {
             return uniqueErrors[0]?.message;
         }
