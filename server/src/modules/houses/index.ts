@@ -1,2 +1,2 @@
-export { router as housesRouter } from "./houses.routes";
-export { getHouseBySlug, normalizeHouseError } from "./houses.utils";
+export { router as housesRouter } from "./houses.routes.ts";
+export { getHouseBySlug, normalizeHouseError } from "./houses.utils.ts";

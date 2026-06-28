@@ -1,7 +1,8 @@
-import express from "express";
-import { Server } from "http";
 import { env } from "@/config";
 import { mainRouter } from "@/modules";
+import express from "express";
+
+import type { Server } from "http";
 
 const app = express();
 const PORT = env.PORT;

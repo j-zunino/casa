@@ -9,7 +9,7 @@
         ".": "./dist/index.js"
     },
     "scripts": {
-        "build": "tsc",
+        "build": "tsup src/index.ts --dts",
         "lint": "eslint",
         "format": "prettier --write \"**/*.{ts,tsx}\"",
         "typecheck": "tsc --noEmit"
@@ -19,7 +19,14 @@
         "zod": "catalog:"
     },
     "devDependencies": {
+        "@eslint/js": "catalog:",
+        "eslint": "catalog:",
+        "eslint-config-prettier": "catalog:",
+        "eslint-plugin-prettier": "catalog:",
+        "globals": "catalog:",
         "prettier": "catalog:",
-        "typescript": "catalog:"
+        "tsup": "catalog:",
+        "typescript": "catalog:",
+        "typescript-eslint": "catalog:"
     }
 }

@@ -3,7 +3,7 @@ import { errorMiddleware } from "@/middleware";
 import { AppError, registerRoutes } from "@/utils";
 import { ErrorCodes } from "@casa/types";
 import cors from "cors";
-import { NextFunction, Request, Response, Router } from "express";
+import { Router } from "express";
 import helmet from "helmet";
 
 import { authRouter } from "./auth";
@@ -11,6 +11,8 @@ import { healthRouter } from "./health";
 import { housesRouter } from "./houses";
 import { invitesRouter } from "./invites";
 import { meRouter } from "./me";
+
+import type { NextFunction, Request, Response } from "express";
 
 const router: Router = Router();
 
@@ -27,7 +29,7 @@ registerRoutes(router, [
 ]);
 
 // Handle 404 routes
-router.use((req: Request, _res: Response, next: NextFunction) => {
+router.use((req: Request, res: Response, next: NextFunction) => {
     next(
         new AppError(
             `route ${req.originalUrl} not found`,

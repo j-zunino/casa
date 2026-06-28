@@ -18,9 +18,9 @@ import type { NextFunction, Request, Response } from "express";
  */
 export const errorMiddleware = (
     error: unknown,
-    _req: Request,
+    req: Request,
     res: Response,
-    _next: NextFunction,
+    next: NextFunction,
 ) => {
     if (error instanceof ZodError) {
         const errors = error.issues.map((issue) => ({

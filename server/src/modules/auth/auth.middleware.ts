@@ -1,6 +1,6 @@
 import { AppError } from "@/utils";
 import { ErrorCodes } from "@casa/types";
-import { getHouseBySlug } from "../houses/houses.utils";
+import { getHouseBySlug } from "../houses/houses.utils"; // FIX: Circular dependency if imported from barrel
 import { auth } from "./auth";
 
 import type { NextFunction, Request, Response } from "express";
@@ -36,7 +36,7 @@ export const requireAuth = async (
 
 export const requirePermission =
     (permissions: Record<string, string[]>, message?: string) =>
-    async (req: Request, _res: Response, next: NextFunction) => {
+    async (req: Request, res: Response, next: NextFunction) => {
         const { houseSlug } = req.params;
 
         if (typeof houseSlug !== "string") {

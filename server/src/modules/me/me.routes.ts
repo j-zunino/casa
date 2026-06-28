@@ -1,10 +1,12 @@
 import { requireAuth } from "@/modules/auth";
+import { Router } from "express";
+
 import type { ApiResponse } from "@casa/types";
-import { type Request, type Response, Router } from "express";
+import type { Request, Response } from "express";
 
 export const router: Router = Router();
 
-router.get("/", requireAuth, async (_req: Request, res: Response) => {
+router.get("/", requireAuth, async (req: Request, res: Response) => {
     const { user } = res.locals;
 
     const response: ApiResponse<typeof user> = {
