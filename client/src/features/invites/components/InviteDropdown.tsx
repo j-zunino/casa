@@ -12,9 +12,10 @@ import {
 import { CopyIcon, DotsThreeIcon, ProhibitIcon } from "@phosphor-icons/react";
 
 import type { House } from "@/features/houses/types";
+import type { Invitation } from "@casa/types";
 
 interface Props {
-    inviteCode: string;
+    inviteCode: Invitation["code"];
     slug: House["slug"];
 }
 

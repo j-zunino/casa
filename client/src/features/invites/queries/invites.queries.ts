@@ -3,6 +3,7 @@ import { invitesApi } from "../api";
 import { invitesKeys } from "./invites.keys";
 
 import type { House } from "@/features/houses/types";
+import type { Invitation } from "@casa/types";
 
 export const invitesQueries = {
     all(houseSlug: House["slug"], options?: { page?: number; limit?: number }) {
@@ -15,7 +16,7 @@ export const invitesQueries = {
         });
     },
 
-    details(inviteCode: string) {
+    details(inviteCode: Invitation["code"]) {
         return queryOptions({
             queryKey: invitesKeys.details(inviteCode),
             queryFn: () => invitesApi.getDetails(inviteCode),

@@ -1,4 +1,5 @@
 import { MemberAvatar } from "@/components/common/MemberAvatar";
+import { StatusBadge } from "@/components/common/StatusBadge";
 import {
     Card,
     CardAction,
@@ -24,13 +25,11 @@ import {
 } from "@/components/ui/table";
 import { InviteDropdown } from "./InviteDropdown";
 
-import { StatusBadge } from "@/components/common/StatusBadge";
 import type { House } from "@/features/houses/types";
-import type { ApiPagination } from "@casa/types";
+import type { ApiPagination, Invitation } from "@casa/types";
 
 interface Props {
-    // TODO: Type invites
-    invites: any;
+    invites: Invitation[];
     pagination: ApiPagination;
     slug: House["slug"];
 }
@@ -49,8 +48,7 @@ export const InvitesList = ({ invites, pagination, slug }: Props) => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {/* TODO:FIX: 'invite' is type any */}
-                    {invites.map((invite: any) => (
+                    {invites.map((invite: Invitation) => (
                         <TableRow
                             key={invite.id}
                             className={`${invite.status !== "active" && "pointer-events-none opacity-50"}`}
@@ -80,7 +78,7 @@ export const InvitesList = ({ invites, pagination, slug }: Props) => {
                 </TableBody>
             </Table>
 
-            {invites.map((invite: any) => (
+            {invites.map((invite: Invitation) => (
                 <Card
                     className={`sm:hidden ${invite.status !== "active" && "pointer-events-none opacity-50"}`}
                     size="sm"

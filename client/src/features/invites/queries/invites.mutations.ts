@@ -2,15 +2,16 @@ import { mutationOptions } from "@tanstack/react-query";
 import { invitesApi } from "../api";
 
 import type { House } from "@/features/houses/types";
+import type { Invitation } from "@casa/types";
 
 export const invitesMutations = {
-    create(houseSlug: House["slug"], maxUses?: number) {
+    create(houseSlug: House["slug"], maxUses: Invitation["maxUses"]) {
         return mutationOptions({
             mutationFn: () => invitesApi.create(houseSlug, maxUses),
         });
     },
 
-    join(inviteCode: string) {
+    join(inviteCode: Invitation["code"]) {
         return mutationOptions({
             mutationFn: () => invitesApi.join(inviteCode),
         });
@@ -22,8 +23,8 @@ export const invitesMutations = {
                 inviteCode,
                 maxUses,
             }: {
-                inviteCode: string;
-                maxUses: number | null;
+                inviteCode: Invitation["code"];
+                maxUses: Invitation["maxUses"];
             }) => invitesApi.update(houseSlug, inviteCode, maxUses),
         });
     },

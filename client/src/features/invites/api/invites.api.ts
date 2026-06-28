@@ -1,18 +1,19 @@
-import type { House } from "@/features/houses/types";
 import { api } from "@/lib/api";
+
+import type { House } from "@/features/houses/types";
+import type { Invitation } from "@casa/types";
 
 export const invitesApi = {
     async getAll(houseSlug: House["slug"], page = 1, limit = 10) {
         return api(`/houses/${houseSlug}/invites`, { page, limit });
     },
 
-    // TODO: Create invite type
-    async getDetails(inviteCode: string) {
+    async getDetails(inviteCode: Invitation["code"]) {
         const { data } = await api(`/invites/${inviteCode}`);
         return data;
     },
 
-    async create(houseSlug: House["slug"], maxUses: number) {
+    async create(houseSlug: House["slug"], maxUses: Invitation["maxUses"]) {
         const { data } = await api(`/houses/${houseSlug}/invites`, {
             method: "POST",
             body: JSON.stringify({
@@ -22,7 +23,7 @@ export const invitesApi = {
         return data;
     },
 
-    async join(inviteCode: string) {
+    async join(inviteCode: Invitation["code"]) {
         const { data } = await api(`/invites/${inviteCode}/join`, {
             method: "POST",
         });
@@ -31,8 +32,8 @@ export const invitesApi = {
 
     async update(
         houseSlug: House["slug"],
-        inviteCode: string,
-        maxUses: number | null,
+        inviteCode: Invitation["code"],
+        maxUses: Invitation["maxUses"],
     ) {
         const { data } = await api(
             `/houses/${houseSlug}/invites/${inviteCode}`,
@@ -44,7 +45,7 @@ export const invitesApi = {
         return data;
     },
 
-    async revoke(inviteCode: string, houseSlug: House["slug"]) {
+    async revoke(inviteCode: Invitation["code"], houseSlug: House["slug"]) {
         const { data } = await api(
             `/houses/${houseSlug}/invites/${inviteCode}/revoke`,
             {

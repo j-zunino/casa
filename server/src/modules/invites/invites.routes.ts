@@ -4,7 +4,7 @@ import { AppError } from "@/utils";
 import { ErrorCodes } from "@casa/types";
 import { Router } from "express";
 
-import type { ApiResponse } from "@casa/types";
+import type { ApiResponse, Invitation } from "@casa/types";
 import type { Request, Response } from "express";
 
 export const router: Router = Router();
@@ -13,7 +13,7 @@ export const router: Router = Router();
 // TODO: Generate UUID with prisma?
 router.get(
     "/:inviteCode",
-    async (req: Request<{ inviteCode: string }>, res: Response) => {
+    async (req: Request<{ inviteCode: Invitation["code"] }>, res: Response) => {
         const { inviteCode } = req.params;
 
         const invitation = await prisma.invitation.findUnique({
@@ -49,7 +49,7 @@ router.get(
 router.post(
     "/:inviteCode/join",
     requireAuth,
-    async (req: Request<{ inviteCode: string }>, res: Response) => {
+    async (req: Request<{ inviteCode: Invitation["code"] }>, res: Response) => {
         const { inviteCode } = req.params;
 
         await prisma.$transaction(async (tx) => {

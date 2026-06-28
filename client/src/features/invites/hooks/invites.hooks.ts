@@ -4,6 +4,7 @@ import { invitesKeys } from "../queries/invites.keys";
 import { invitesMutations } from "../queries/invites.mutations";
 
 import type { House } from "@/features/houses/types";
+import type { Invitation } from "@casa/types";
 
 export const invitesHooks = {
     useCreateInvite(houseSlug: House["slug"]) {
@@ -18,7 +19,7 @@ export const invitesHooks = {
         });
     },
 
-    useJoinInvite(inviteCode: string) {
+    useJoinInvite(inviteCode: Invitation["code"]) {
         const queryClient = useQueryClient();
         return useMutation({
             ...invitesMutations.join(inviteCode),

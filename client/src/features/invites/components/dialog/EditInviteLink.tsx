@@ -25,10 +25,11 @@ import { FloppyDiskIcon } from "@phosphor-icons/react";
 import { Controller } from "react-hook-form";
 
 import type { House } from "@/features/houses/types";
+import type { Invitation } from "@casa/types";
 
 interface Props {
     slug: House["slug"];
-    inviteCode: string;
+    inviteCode: Invitation["code"];
     onCancel?: () => void;
 }
 

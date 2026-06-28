@@ -7,7 +7,7 @@ import crypto from "node:crypto";
 import { requireAuth, requirePermission } from "../auth";
 import { getHouseBySlug } from "./houses.utils";
 
-import type { ApiResponse } from "@casa/types";
+import type { ApiResponse, Invitation } from "@casa/types";
 import type { Request, Response } from "express";
 
 export const router: Router = Router();
@@ -106,7 +106,8 @@ router.patch(
     requireAuth,
     requirePermission({ invitation: ["create"] }),
     async (
-        req: Request<{ inviteCode: string; houseSlug: string }>,
+        // TODO: Type houseSlug
+        req: Request<{ inviteCode: Invitation["code"]; houseSlug: string }>,
         res: Response,
     ) => {
         const { inviteCode } = req.params;
@@ -148,7 +149,8 @@ router.post(
     requireAuth,
     requirePermission({ invitation: ["cancel"] }),
     async (
-        req: Request<{ inviteCode: string; houseSlug: string }>,
+        // TODO: Type houseSlug
+        req: Request<{ inviteCode: Invitation["code"]; houseSlug: string }>,
         res: Response,
     ) => {
         const { inviteCode } = req.params;

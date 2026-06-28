@@ -12,8 +12,10 @@ import {
 } from "@/components/ui/input-group";
 import { CopyIcon } from "@phosphor-icons/react";
 
+import type { Invitation } from "@casa/types";
+
 interface Props {
-    inviteCode: string;
+    inviteCode: Invitation["code"];
     isPending: boolean;
     onEdit?: () => void;
 }
