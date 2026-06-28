@@ -10,11 +10,13 @@ const PORT = env.PORT;
 app.use("/api", mainRouter);
 
 const server: Server = app.listen(PORT, () => {
+    // eslint-disable-next-line no-console
     console.log(`server running at http://localhost:${PORT}`);
 });
 
 server.on("error", (error: NodeJS.ErrnoException) => {
     if (error.code === "EADDRINUSE") {
+        // eslint-disable-next-line no-console
         console.error(`port ${PORT} is already in use. Try a different port`);
         process.exit(1);
     }
@@ -26,14 +28,17 @@ server.on("error", (error: NodeJS.ErrnoException) => {
  * @param {string} signal - The termination signal received
  */
 const gracefulShutdown = (signal: string) => {
+    // eslint-disable-next-line no-console
     console.log(`\n${signal} received. Shutting down gracefully...`);
     server.close(() => {
+        // eslint-disable-next-line no-console
         console.log("Server closed.");
         process.exit(0);
     });
 
     // Force close after 10 seconds
     setTimeout(() => {
+        // eslint-disable-next-line no-console
         console.error(
             "could not close connections in time, forcefully shutting down",
         );
