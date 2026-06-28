@@ -1,1 +1,1 @@
-export type { House, HouseDto, Invitation, Member } from "./houses.types.ts";
+export type { House, HouseDto, Member } from "./houses.types.ts";
