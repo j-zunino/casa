@@ -6,6 +6,7 @@ import { housesQueries } from "./houses.queries";
 import type { Client } from "@/config";
 import type { HouseFindUniqueArgs } from "@/generated/prisma/models";
 
+// TODO: Try to move invite logic to invite module
 export const housesServices = {
     async getHouse(client: Client, options: HouseFindUniqueArgs) {
         const house = await housesQueries.findHouse(client, { ...options });
