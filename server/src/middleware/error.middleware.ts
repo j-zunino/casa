@@ -1,5 +1,5 @@
-import { mapBetterAuthError } from "@/modules/auth";
-import { normalizeHouseError } from "@/modules/houses";
+import { mapBetterAuthError } from "@/features/auth";
+import { normalizeHouseError } from "@/features/houses";
 import { AppError } from "@/utils";
 import { ErrorCodes } from "@casa/types";
 import { isAPIError } from "better-auth/api";
