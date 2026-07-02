@@ -23,10 +23,10 @@ const RootLayout = () => {
     });
 
     return (
-        <div className="flex min-h-screen flex-col">
+        <div className="flex h-screen flex-col">
             {showNavbar && <Navbar />}
 
-            <div className="flex grow flex-col">
+            <div className="flex grow flex-col overflow-y-auto">
                 <TooltipProvider>
                     <Outlet />
                 </TooltipProvider>
