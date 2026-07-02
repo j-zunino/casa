@@ -35,8 +35,7 @@ export function Navbar() {
                     </NavigationMenuList>
 
                     <NavigationMenuList>
-                        {/* TODO:FIX: 'session' is possibly undefined */}
-                        {session?.session ? (
+                        {session ? (
                             <NavigationMenuItem>
                                 <DropdownAvatar />
                             </NavigationMenuItem>
