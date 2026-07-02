@@ -1,6 +1,7 @@
+import { prisma } from "@/config";
 import { AppError } from "@/utils";
 import { ErrorCodes } from "@casa/types";
-import { getHouseBySlug } from "../houses/houses.utils"; // FIX: Circular dependency if imported from barrel
+import { housesServices } from "../houses/houses.services";
 import { auth } from "./auth";
 
 import type { NextFunction, Request, Response } from "express";
@@ -45,7 +46,9 @@ export const requirePermission =
             );
         }
 
-        const house = await getHouseBySlug(houseSlug);
+        const house = await housesServices.getHouse(prisma, {
+            where: { slug: houseSlug },
+        });
 
         const { success } = await auth.api.hasPermission({
             headers: req.headers,
