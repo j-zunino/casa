@@ -1,5 +1,5 @@
 import { env } from "@/config";
-import { mainRouter } from "@/modules";
+import { mainRouter } from "@/features";
 import express from "express";
 
 import type { Server } from "http";

@@ -1,4 +1,4 @@
-import { auth } from "@/modules/auth";
+import { auth } from "@/features/auth";
 import { AppError } from "@/utils";
 import { ErrorCodes } from "@casa/types";
 import { invitationQueries } from "./invites.queries";

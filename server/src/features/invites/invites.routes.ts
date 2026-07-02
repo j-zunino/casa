@@ -1,5 +1,5 @@
 import { prisma } from "@/config";
-import { requireAuth } from "@/modules/auth";
+import { requireAuth } from "@/features/auth";
 import { Router } from "express";
 
 import type { ApiResponse, Invitation } from "@casa/types";
