@@ -12,11 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as GuestRouteRouteImport } from './routes/_guest/route'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
-import { Route as GuestSignUpRouteImport } from './routes/_guest/sign-up'
-import { Route as GuestSignInRouteImport } from './routes/_guest/sign-in'
 import { Route as AuthenticatedManageHousesRouteImport } from './routes/_authenticated/manage-houses'
+import { Route as GuestAuthRouteRouteImport } from './routes/_guest/_auth/route'
 import { Route as AuthenticatedAccountRouteRouteImport } from './routes/_authenticated/account/route'
 import { Route as AuthenticatedAccountIndexRouteImport } from './routes/_authenticated/account/index'
+import { Route as GuestAuthSignUpRouteImport } from './routes/_guest/_auth/sign-up'
+import { Route as GuestAuthSignInRouteImport } from './routes/_guest/_auth/sign-in'
 import { Route as AuthenticatedInviteCodeRouteImport } from './routes/_authenticated/invite/$code'
 import { Route as AuthenticatedHSlugRouteImport } from './routes/_authenticated/h/$slug'
 import { Route as AuthenticatedAccountHousesIndexRouteImport } from './routes/_authenticated/account/houses/index'
@@ -37,22 +38,16 @@ const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const GuestSignUpRoute = GuestSignUpRouteImport.update({
-  id: '/sign-up',
-  path: '/sign-up',
-  getParentRoute: () => GuestRouteRoute,
-} as any)
-const GuestSignInRoute = GuestSignInRouteImport.update({
-  id: '/sign-in',
-  path: '/sign-in',
-  getParentRoute: () => GuestRouteRoute,
-} as any)
 const AuthenticatedManageHousesRoute =
   AuthenticatedManageHousesRouteImport.update({
     id: '/manage-houses',
     path: '/manage-houses',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const GuestAuthRouteRoute = GuestAuthRouteRouteImport.update({
+  id: '/_auth',
+  getParentRoute: () => GuestRouteRoute,
+} as any)
 const AuthenticatedAccountRouteRoute =
   AuthenticatedAccountRouteRouteImport.update({
     id: '/account',
@@ -65,6 +60,16 @@ const AuthenticatedAccountIndexRoute =
     path: '/',
     getParentRoute: () => AuthenticatedAccountRouteRoute,
   } as any)
+const GuestAuthSignUpRoute = GuestAuthSignUpRouteImport.update({
+  id: '/sign-up',
+  path: '/sign-up',
+  getParentRoute: () => GuestAuthRouteRoute,
+} as any)
+const GuestAuthSignInRoute = GuestAuthSignInRouteImport.update({
+  id: '/sign-in',
+  path: '/sign-in',
+  getParentRoute: () => GuestAuthRouteRoute,
+} as any)
 const AuthenticatedInviteCodeRoute = AuthenticatedInviteCodeRouteImport.update({
   id: '/invite/$code',
   path: '/invite/$code',
@@ -104,10 +109,10 @@ export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
   '/account': typeof AuthenticatedAccountRouteRouteWithChildren
   '/manage-houses': typeof AuthenticatedManageHousesRoute
-  '/sign-in': typeof GuestSignInRoute
-  '/sign-up': typeof GuestSignUpRoute
   '/h/$slug': typeof AuthenticatedHSlugRoute
   '/invite/$code': typeof AuthenticatedInviteCodeRoute
+  '/sign-in': typeof GuestAuthSignInRoute
+  '/sign-up': typeof GuestAuthSignUpRoute
   '/account/': typeof AuthenticatedAccountIndexRoute
   '/account/houses/': typeof AuthenticatedAccountHousesIndexRoute
   '/account/houses/$slug/invites': typeof AuthenticatedAccountHousesSlugInvitesRoute
@@ -117,10 +122,10 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof AuthenticatedIndexRoute
   '/manage-houses': typeof AuthenticatedManageHousesRoute
-  '/sign-in': typeof GuestSignInRoute
-  '/sign-up': typeof GuestSignUpRoute
   '/h/$slug': typeof AuthenticatedHSlugRoute
   '/invite/$code': typeof AuthenticatedInviteCodeRoute
+  '/sign-in': typeof GuestAuthSignInRoute
+  '/sign-up': typeof GuestAuthSignUpRoute
   '/account': typeof AuthenticatedAccountIndexRoute
   '/account/houses': typeof AuthenticatedAccountHousesIndexRoute
   '/account/houses/$slug/invites': typeof AuthenticatedAccountHousesSlugInvitesRoute
@@ -132,12 +137,13 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/_guest': typeof GuestRouteRouteWithChildren
   '/_authenticated/account': typeof AuthenticatedAccountRouteRouteWithChildren
+  '/_guest/_auth': typeof GuestAuthRouteRouteWithChildren
   '/_authenticated/manage-houses': typeof AuthenticatedManageHousesRoute
-  '/_guest/sign-in': typeof GuestSignInRoute
-  '/_guest/sign-up': typeof GuestSignUpRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/h/$slug': typeof AuthenticatedHSlugRoute
   '/_authenticated/invite/$code': typeof AuthenticatedInviteCodeRoute
+  '/_guest/_auth/sign-in': typeof GuestAuthSignInRoute
+  '/_guest/_auth/sign-up': typeof GuestAuthSignUpRoute
   '/_authenticated/account/': typeof AuthenticatedAccountIndexRoute
   '/_authenticated/account/houses/': typeof AuthenticatedAccountHousesIndexRoute
   '/_authenticated/account/houses/$slug/invites': typeof AuthenticatedAccountHousesSlugInvitesRoute
@@ -150,10 +156,10 @@ export interface FileRouteTypes {
     | '/'
     | '/account'
     | '/manage-houses'
-    | '/sign-in'
-    | '/sign-up'
     | '/h/$slug'
     | '/invite/$code'
+    | '/sign-in'
+    | '/sign-up'
     | '/account/'
     | '/account/houses/'
     | '/account/houses/$slug/invites'
@@ -163,10 +169,10 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/manage-houses'
-    | '/sign-in'
-    | '/sign-up'
     | '/h/$slug'
     | '/invite/$code'
+    | '/sign-in'
+    | '/sign-up'
     | '/account'
     | '/account/houses'
     | '/account/houses/$slug/invites'
@@ -177,12 +183,13 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/_guest'
     | '/_authenticated/account'
+    | '/_guest/_auth'
     | '/_authenticated/manage-houses'
-    | '/_guest/sign-in'
-    | '/_guest/sign-up'
     | '/_authenticated/'
     | '/_authenticated/h/$slug'
     | '/_authenticated/invite/$code'
+    | '/_guest/_auth/sign-in'
+    | '/_guest/_auth/sign-up'
     | '/_authenticated/account/'
     | '/_authenticated/account/houses/'
     | '/_authenticated/account/houses/$slug/invites'
@@ -218,26 +225,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_guest/sign-up': {
-      id: '/_guest/sign-up'
-      path: '/sign-up'
-      fullPath: '/sign-up'
-      preLoaderRoute: typeof GuestSignUpRouteImport
-      parentRoute: typeof GuestRouteRoute
-    }
-    '/_guest/sign-in': {
-      id: '/_guest/sign-in'
-      path: '/sign-in'
-      fullPath: '/sign-in'
-      preLoaderRoute: typeof GuestSignInRouteImport
-      parentRoute: typeof GuestRouteRoute
-    }
     '/_authenticated/manage-houses': {
       id: '/_authenticated/manage-houses'
       path: '/manage-houses'
       fullPath: '/manage-houses'
       preLoaderRoute: typeof AuthenticatedManageHousesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_guest/_auth': {
+      id: '/_guest/_auth'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof GuestAuthRouteRouteImport
+      parentRoute: typeof GuestRouteRoute
     }
     '/_authenticated/account': {
       id: '/_authenticated/account'
@@ -252,6 +252,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/account/'
       preLoaderRoute: typeof AuthenticatedAccountIndexRouteImport
       parentRoute: typeof AuthenticatedAccountRouteRoute
+    }
+    '/_guest/_auth/sign-up': {
+      id: '/_guest/_auth/sign-up'
+      path: '/sign-up'
+      fullPath: '/sign-up'
+      preLoaderRoute: typeof GuestAuthSignUpRouteImport
+      parentRoute: typeof GuestAuthRouteRoute
+    }
+    '/_guest/_auth/sign-in': {
+      id: '/_guest/_auth/sign-in'
+      path: '/sign-in'
+      fullPath: '/sign-in'
+      preLoaderRoute: typeof GuestAuthSignInRouteImport
+      parentRoute: typeof GuestAuthRouteRoute
     }
     '/_authenticated/invite/$code': {
       id: '/_authenticated/invite/$code'
@@ -342,14 +356,26 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface GuestAuthRouteRouteChildren {
+  GuestAuthSignInRoute: typeof GuestAuthSignInRoute
+  GuestAuthSignUpRoute: typeof GuestAuthSignUpRoute
+}
+
+const GuestAuthRouteRouteChildren: GuestAuthRouteRouteChildren = {
+  GuestAuthSignInRoute: GuestAuthSignInRoute,
+  GuestAuthSignUpRoute: GuestAuthSignUpRoute,
+}
+
+const GuestAuthRouteRouteWithChildren = GuestAuthRouteRoute._addFileChildren(
+  GuestAuthRouteRouteChildren,
+)
+
 interface GuestRouteRouteChildren {
-  GuestSignInRoute: typeof GuestSignInRoute
-  GuestSignUpRoute: typeof GuestSignUpRoute
+  GuestAuthRouteRoute: typeof GuestAuthRouteRouteWithChildren
 }
 
 const GuestRouteRouteChildren: GuestRouteRouteChildren = {
-  GuestSignInRoute: GuestSignInRoute,
-  GuestSignUpRoute: GuestSignUpRoute,
+  GuestAuthRouteRoute: GuestAuthRouteRouteWithChildren,
 }
 
 const GuestRouteRouteWithChildren = GuestRouteRoute._addFileChildren(
