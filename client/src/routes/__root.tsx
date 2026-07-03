@@ -4,7 +4,6 @@ import "@fontsource-variable/jetbrains-mono/wght.css";
 import { createRootRouteWithContext, useMatches } from "@tanstack/react-router";
 
 import { Navbar } from "@/components/common/Navbar";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
 import { Outlet } from "@tanstack/react-router";
@@ -27,9 +26,7 @@ const RootLayout = () => {
             {showNavbar && <Navbar />}
 
             <div className="flex grow flex-col overflow-y-auto">
-                <TooltipProvider>
-                    <Outlet />
-                </TooltipProvider>
+                <Outlet />
             </div>
 
             <TanStackDevtools
