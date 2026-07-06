@@ -122,7 +122,7 @@ function AvatarLabel({
     return (
         <p
             className={cn(
-                "line-clamp-1 block truncate text-center text-sm font-bold",
+                "block truncate text-center text-sm font-bold",
                 className,
             )}
             {...props}

@@ -41,7 +41,7 @@ export const HouseSelect = ({ list, editMode }: Props) => {
                         )}
                     </Avatar>
 
-                    <AvatarLabel>{h.name}</AvatarLabel>
+                    <AvatarLabel className="text-wrap">{h.name}</AvatarLabel>
                 </Link>
             ))}
 
