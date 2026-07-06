@@ -20,7 +20,11 @@ export const router = createRouter({
         queryClient,
     },
 
-    defaultPendingComponent: () => <Loading />,
+    defaultPendingComponent: () => (
+        <div className="h-svh">
+            <Loading />
+        </div>
+    ),
     defaultNotFoundComponent: () => (
         <ErrorComponent
             icon={<GhostIcon />}

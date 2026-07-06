@@ -5,7 +5,7 @@ import { Outlet } from "@tanstack/react-router";
 
 const RouteComponent = () => {
     return (
-        <div className="mx-auto flex w-full max-w-xl flex-col gap-1.5 p-4">
+        <div className="mx-auto flex h-full w-full max-w-xl grow flex-col gap-1.5 p-4">
             <BackButton />
 
             <Outlet />

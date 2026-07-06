@@ -22,7 +22,7 @@ const RootLayout = () => {
     });
 
     return (
-        <div className="flex h-screen flex-col">
+        <div className="flex h-svh flex-col">
             {showNavbar && <Navbar />}
 
             <div className="flex grow flex-col overflow-y-auto">
