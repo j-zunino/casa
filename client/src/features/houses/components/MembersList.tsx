@@ -8,13 +8,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import {
-    Pagination,
-    PaginationContent,
-    PaginationItem,
-    PaginationNext,
-    PaginationPrevious,
-} from "@/components/ui/pagination";
+import { Pagination } from "@/components/ui/pagination";
 import {
     Table,
     TableBody,
@@ -24,6 +18,10 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { MemberDropdown } from "./MemberDropdown";
+import {
+    PaginationControls,
+    PaginationTotal,
+} from "@/components/common/Pagination";
 
 import type { ApiPagination } from "@casa/types";
 import type { Member } from "../types";
@@ -119,33 +117,18 @@ export const MembersList = ({ members, pagination }: Props) => {
                 </Card>
             ))}
 
-            <div className="flex items-center justify-between">
-                <p className="text-sm text-muted-foreground">
-                    Page {pagination.page} of {pagination.totalPages}
-                    {" — "}
-                    {pagination.total} total
-                </p>
-
-                <Pagination className="mx-0 w-auto">
-                    <PaginationContent>
-                        {pagination.hasPrevious && (
-                            <PaginationItem>
-                                <PaginationPrevious
-                                    search={{ page: pagination.page - 1 }}
-                                />
-                            </PaginationItem>
-                        )}
-
-                        {pagination.hasNext && (
-                            <PaginationItem>
-                                <PaginationNext
-                                    search={{ page: pagination.page + 1 }}
-                                />
-                            </PaginationItem>
-                        )}
-                    </PaginationContent>
-                </Pagination>
-            </div>
+            <Pagination className="flex items-center justify-between">
+                <PaginationTotal
+                    page={pagination.page}
+                    total={pagination.total}
+                    totalPages={pagination.totalPages}
+                />
+                <PaginationControls
+                    page={pagination.page}
+                    hasPrevious={pagination.hasPrevious}
+                    hasNext={pagination.hasNext}
+                />
+            </Pagination>
         </>
     );
 };
