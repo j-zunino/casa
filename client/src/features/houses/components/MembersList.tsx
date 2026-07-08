@@ -1,5 +1,6 @@
-import { MemberAvatar } from "@/components/common/MemberAvatar";
+import { Profile, ProfileAvatar } from "@/components/common/MemberAvatar";
 import { RoleBadge } from "@/components/common/RoleBadge";
+import { Truncate } from "@/components/common/Truncate";
 import {
     Card,
     CardAction,
@@ -22,11 +23,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { MemberDropdown } from "./MemberDropdown";
 
 import type { ApiPagination } from "@casa/types";
@@ -54,25 +50,27 @@ export const MembersList = ({ members, pagination }: Props) => {
                     {members.map((member: Member) => (
                         <TableRow key={member.id}>
                             <TableCell>
-                                <MemberAvatar
-                                    name={member.user.name}
-                                    image={member.user.image}
-                                />
+                                <Profile>
+                                    <ProfileAvatar
+                                        src={member.user.image}
+                                        alt={member.user.name}
+                                    />
+
+                                    <Truncate
+                                        className="max-w-30"
+                                        tooltip={member.user.name}
+                                    >
+                                        {member.user.name}
+                                    </Truncate>
+                                </Profile>
                             </TableCell>
                             <TableCell>
-                                {member.user.email.length < 25 ? (
-                                    member.user.email
-                                ) : (
-                                    <Tooltip>
-                                        <TooltipTrigger className="w-[25ch] truncate text-left select-text">
-                                            {member.user.email}
-                                        </TooltipTrigger>
-
-                                        <TooltipContent>
-                                            {member.user.email}
-                                        </TooltipContent>
-                                    </Tooltip>
-                                )}
+                                <Truncate
+                                    className="block max-w-40"
+                                    tooltip={member.user.email}
+                                >
+                                    {member.user.email}
+                                </Truncate>
                             </TableCell>
                             <TableCell className="text-center">
                                 <RoleBadge role={member.role} />
@@ -88,18 +86,31 @@ export const MembersList = ({ members, pagination }: Props) => {
             {members.map((member: Member) => (
                 <Card size="sm" className="sm:hidden" key={member.id}>
                     <CardHeader>
-                        <CardTitle>
-                            <MemberAvatar
-                                name={member.user.name}
-                                image={member.user.image}
-                                role={member.role}
-                            />
-                            <p className="sr-only">
-                                User {member.user.name} information
-                            </p>
+                        <CardTitle className="min-w-0">
+                            <Profile>
+                                <ProfileAvatar
+                                    src={member.user.image}
+                                    alt={member.user.name}
+                                />
+
+                                {/* NOTE: Maybe flex-wrap name and badge with min-w-0 */}
+                                <Truncate
+                                    className="block"
+                                    tooltip={member.user.name}
+                                >
+                                    {member.user.name}
+                                </Truncate>
+
+                                <RoleBadge role={member.role} />
+                            </Profile>
                         </CardTitle>
-                        <CardDescription className="truncate">
-                            {member.user.email}
+                        <CardDescription className="min-w-0">
+                            <Truncate
+                                className="block"
+                                tooltip={member.user.email}
+                            >
+                                {member.user.email}
+                            </Truncate>
                         </CardDescription>
                         <CardAction>
                             <MemberDropdown />
