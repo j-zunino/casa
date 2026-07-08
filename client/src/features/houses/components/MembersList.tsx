@@ -1,6 +1,11 @@
-import { Profile, ProfileAvatar } from "@/components/common/Profile";
+import {
+    PaginationControls,
+    PaginationTotal,
+} from "@/components/common/Pagination";
+import { Profile } from "@/components/common/Profile";
 import { RoleBadge } from "@/components/common/RoleBadge";
 import { Truncate } from "@/components/common/Truncate";
+import { AvatarEntity } from "@/components/ui/avatar";
 import {
     Card,
     CardAction,
@@ -17,11 +22,8 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { UserIcon } from "@phosphor-icons/react";
 import { MemberDropdown } from "./MemberDropdown";
-import {
-    PaginationControls,
-    PaginationTotal,
-} from "@/components/common/Pagination";
 
 import type { ApiPagination } from "@casa/types";
 import type { Member } from "../types";
@@ -49,9 +51,11 @@ export const MembersList = ({ members, pagination }: Props) => {
                         <TableRow key={member.id}>
                             <TableCell>
                                 <Profile>
-                                    <ProfileAvatar
+                                    <AvatarEntity
+                                        size="sm"
                                         src={member.user.image}
                                         alt={member.user.name}
+                                        fallback={<UserIcon />}
                                     />
 
                                     <Truncate
@@ -86,9 +90,11 @@ export const MembersList = ({ members, pagination }: Props) => {
                     <CardHeader>
                         <CardTitle className="min-w-0">
                             <Profile>
-                                <ProfileAvatar
+                                <AvatarEntity
+                                    size="sm"
                                     src={member.user.image}
                                     alt={member.user.name}
+                                    fallback={<UserIcon />}
                                 />
 
                                 {/* NOTE: Maybe flex-wrap name and badge with min-w-0 */}

@@ -1,11 +1,11 @@
+import { invitesHooks } from "@/features/invites/hooks";
 import { invitesQueries } from "@/features/invites/queries";
+import { router } from "@/main";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import { invitesHooks } from "@/features/invites/hooks";
 import { toast } from "sonner";
-import { router } from "@/main";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { AvatarEntity } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -42,16 +42,13 @@ const RouteComponent = () => {
         <div className="flex grow flex-col items-center justify-center">
             <Card className="w-full max-w-sm">
                 <div className="flex w-full items-center justify-center">
-                    <Avatar size="lg" rounded="normal">
-                        <AvatarImage
-                            src={invite.house.logo ?? undefined}
-                            alt={invite.house.name}
-                        />
-
-                        <AvatarFallback>
-                            <HouseLineIcon />
-                        </AvatarFallback>
-                    </Avatar>
+                    <AvatarEntity
+                        size="lg"
+                        rounded="normal"
+                        src={invite.house.logo ?? undefined}
+                        alt={invite.house.name}
+                        fallback={<HouseLineIcon />}
+                    />
                 </div>
 
                 <CardHeader>

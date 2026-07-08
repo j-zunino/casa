@@ -1,48 +1,42 @@
-import {
-    Avatar,
-    AvatarFallback,
-    AvatarImage,
-    AvatarLabel,
-} from "@/components/ui/avatar";
+import { AvatarEntity } from "@/components/ui/avatar";
 import { HouseLineIcon, PencilIcon } from "@phosphor-icons/react";
-import { CreateHouse } from "./CreateHouse.tsx";
-import { Link } from "@tanstack/react-router";
+import { CreateHouse } from "./CreateHouse";
+import { House, HouseLabel } from "./House";
 
-import type { House } from "@/features/houses/types";
+import type { House as HouseType } from "@/features/houses/types";
+import type { LinkProps } from "@tanstack/react-router";
 
 interface Props {
-    list: House[];
+    list: HouseType[];
     editMode?: boolean;
 }
 
 export const HouseSelect = ({ list, editMode }: Props) => {
-    const path = editMode ? "/account/houses/$slug" : "/h/$slug";
+    const path: LinkProps["to"] = editMode
+        ? "/account/houses/$slug"
+        : "/h/$slug";
 
     return (
         <div className="flex w-full max-w-3xl flex-wrap justify-center gap-1.5 p-4">
-            {list.map((h: House) => (
-                <Link
-                    key={h.id}
-                    to={path}
-                    params={{ slug: h.slug }}
-                    className="group relative flex w-30 flex-col gap-1.5 rounded-md transition outline-none select-none"
-                >
-                    <Avatar size="lg" rounded="normal" ring={true}>
-                        <AvatarImage src={h.logo ?? undefined} alt={h.name} />
-
-                        <AvatarFallback>
-                            <HouseLineIcon />
-                        </AvatarFallback>
-
+            {list.map((h: HouseType) => (
+                <House key={h.id} to={path} params={{ slug: h.slug }}>
+                    <AvatarEntity
+                        size="lg"
+                        rounded="normal"
+                        src={h.logo}
+                        alt={h.name}
+                        ring={true}
+                        fallback={<HouseLineIcon />}
+                    >
                         {editMode && (
-                            <div className="absolute inset-0 flex aspect-square items-center justify-center text-3xl backdrop-brightness-70">
-                                <PencilIcon />
+                            <div className="absolute inset-0 flex aspect-square items-center justify-center bg-black/40">
+                                <PencilIcon className="text-3xl text-foreground" />
                             </div>
                         )}
-                    </Avatar>
+                    </AvatarEntity>
 
-                    <AvatarLabel className="text-wrap">{h.name}</AvatarLabel>
-                </Link>
+                    <HouseLabel>{h.name}</HouseLabel>
+                </House>
             ))}
 
             {list.length < 5 && <CreateHouse />}

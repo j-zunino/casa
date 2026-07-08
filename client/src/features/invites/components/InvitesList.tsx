@@ -1,6 +1,11 @@
-import { Profile, ProfileAvatar } from "@/components/common/Profile";
+import {
+    PaginationControls,
+    PaginationTotal,
+} from "@/components/common/Pagination";
+import { Profile } from "@/components/common/Profile";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { Truncate } from "@/components/common/Truncate";
+import { AvatarEntity } from "@/components/ui/avatar";
 import {
     Card,
     CardAction,
@@ -18,11 +23,8 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { UserIcon } from "@phosphor-icons/react";
 import { InviteDropdown } from "./InviteDropdown";
-import {
-    PaginationControls,
-    PaginationTotal,
-} from "@/components/common/Pagination";
 
 import type { House } from "@/features/houses/types";
 import type { ApiPagination, Invitation } from "@casa/types";
@@ -54,9 +56,11 @@ export const InvitesList = ({ invites, pagination, slug }: Props) => {
                         >
                             <TableCell>
                                 <Profile>
-                                    <ProfileAvatar
+                                    <AvatarEntity
+                                        size="sm"
                                         src={invite.inviter.image}
                                         alt={invite.inviter.name}
+                                        fallback={<UserIcon />}
                                     />
 
                                     <Truncate
@@ -110,9 +114,11 @@ export const InvitesList = ({ invites, pagination, slug }: Props) => {
                     </CardHeader>
                     <CardContent>
                         <Profile>
-                            <ProfileAvatar
+                            <AvatarEntity
+                                size="sm"
                                 src={invite.inviter.image}
                                 alt={invite.inviter.name}
+                                fallback={<UserIcon />}
                             />
 
                             <Truncate

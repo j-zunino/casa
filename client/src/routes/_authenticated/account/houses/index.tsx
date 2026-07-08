@@ -11,7 +11,7 @@ import {
     SettingsSet,
     SettingsTitle,
 } from "@/components/common/Settings";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { AvatarEntity } from "@/components/ui/avatar";
 import { CaretRightIcon, HouseLineIcon } from "@phosphor-icons/react";
 
 const RouteComponent = () => {
@@ -34,16 +34,12 @@ const RouteComponent = () => {
                             <SettingContent
                                 title={h.name}
                                 icon={
-                                    <Avatar size="sm" rounded="normal">
-                                        <AvatarImage
-                                            src={h.logo ?? undefined}
-                                            alt={h.name}
-                                        />
-
-                                        <AvatarFallback>
-                                            <HouseLineIcon />
-                                        </AvatarFallback>
-                                    </Avatar>
+                                    <AvatarEntity
+                                        rounded="normal"
+                                        src={h.logo}
+                                        alt={h.name}
+                                        fallback={<HouseLineIcon />}
+                                    />
                                 }
                                 iconEnd={<CaretRightIcon />}
                             />

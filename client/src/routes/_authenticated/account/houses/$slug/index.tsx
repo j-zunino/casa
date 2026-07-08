@@ -16,7 +16,7 @@ import {
     SettingsSet,
     SettingsTitle,
 } from "@/components/common/Settings";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { AvatarEntity } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Field, FieldContent, FieldError } from "@/components/ui/field";
@@ -66,16 +66,13 @@ const RouteComponent = () => {
     return (
         <Settings>
             <div className="flex items-center gap-1.5">
-                <Avatar size="lg" rounded="normal">
-                    <AvatarImage
-                        src={house.logo ?? undefined}
-                        alt={house.name}
-                    />
-
-                    <AvatarFallback>
-                        <HouseLineIcon />
-                    </AvatarFallback>
-                </Avatar>
+                <AvatarEntity
+                    size="lg"
+                    rounded="normal"
+                    src={house.logo}
+                    alt={house.name}
+                    fallback={<HouseLineIcon />}
+                />
 
                 <form className="w-full" onSubmit={form.handleSubmit(onSubmit)}>
                     <Controller

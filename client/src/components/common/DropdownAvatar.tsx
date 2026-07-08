@@ -3,12 +3,7 @@ import { authQueries } from "@/features/auth/queries";
 import { housesQueries } from "@/features/houses/queries";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
-import {
-    Avatar,
-    AvatarFallback,
-    AvatarImage,
-    AvatarLabel,
-} from "@/components/ui/avatar";
+import { AvatarEntity, AvatarLabel } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
@@ -37,16 +32,13 @@ export const DropdownAvatar = () => {
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="rounded-full">
-                    <Avatar size="sm">
-                        <AvatarImage
-                            // TODO:FIX: 'session' is possibly undefined
-                            src={session?.user.image ?? undefined}
-                            alt={session?.user.name}
-                        />
-                        <AvatarFallback>
-                            <UserIcon />
-                        </AvatarFallback>
-                    </Avatar>
+                    <AvatarEntity
+                        // TODO:FIX: 'session' is possibly undefined
+                        size="sm"
+                        src={session.user.image}
+                        alt={session.user.name}
+                        fallback={<UserIcon />}
+                    />
                 </Button>
             </DropdownMenuTrigger>
 
@@ -57,17 +49,13 @@ export const DropdownAvatar = () => {
                 {houses.map((h: House) => (
                     <DropdownMenuItem key={h.id} asChild>
                         <Link to="/h/$slug" params={{ slug: h.slug }}>
-                            <Avatar size="sm" rounded="normal">
-                                <AvatarImage
-                                    src={h.logo ?? undefined}
-                                    alt={h.name}
-                                />
-
-                                <AvatarFallback>
-                                    <HouseLineIcon />
-                                </AvatarFallback>
-                            </Avatar>
-
+                            <AvatarEntity
+                                size="sm"
+                                rounded="normal"
+                                src={h.logo ?? undefined}
+                                alt={h.name}
+                                fallback={<HouseLineIcon />}
+                            />
                             <AvatarLabel>{h.name}</AvatarLabel>
                         </Link>
                     </DropdownMenuItem>

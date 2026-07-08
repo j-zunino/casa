@@ -3,23 +3,21 @@ import { housesQueries } from "@/features/houses/queries";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
+import { Profile } from "@/components/common/Profile";
 import {
     SettingButton,
     SettingContent,
     SettingLink,
     Settings,
-    SettingsDescription,
     SettingsGroup,
     SettingsHeader,
     SettingsSet,
     SettingsTitle,
 } from "@/components/common/Settings";
 import {
-    Avatar,
-    AvatarFallback,
+    AvatarEntity,
     AvatarGroup,
     AvatarGroupCount,
-    AvatarImage,
     AvatarLabel,
 } from "@/components/ui/avatar";
 import {
@@ -39,20 +37,16 @@ const RouteComponent = () => {
     // TODO: If account is email allow to change username
     return (
         <Settings>
-            <div className="flex flex-col items-center gap-1.5">
-                <Avatar size="lg">
-                    <AvatarImage
-                        src={session?.user.image ?? undefined}
-                        alt={session?.user.name}
-                    />
-
-                    <AvatarFallback>
-                        <UserIcon />
-                    </AvatarFallback>
-                </Avatar>
+            <Profile className="flex-col">
+                <AvatarEntity
+                    size="lg"
+                    src={session?.user.image ?? undefined}
+                    alt={session?.user.name}
+                    fallback={<UserIcon />}
+                />
 
                 <AvatarLabel>{session?.user.name}</AvatarLabel>
-            </div>
+            </Profile>
 
             <SettingsHeader>
                 <SettingsTitle>Account settings</SettingsTitle>
@@ -79,23 +73,13 @@ const RouteComponent = () => {
                                             {houses
                                                 .slice(0, 2)
                                                 .map((h: House) => (
-                                                    <Avatar
+                                                    <AvatarEntity
                                                         key={h.id}
-                                                        size="sm"
                                                         rounded="normal"
-                                                    >
-                                                        <AvatarImage
-                                                            src={
-                                                                h.logo ??
-                                                                undefined
-                                                            }
-                                                            alt={h.name}
-                                                        />
-
-                                                        <AvatarFallback>
+                                                        fallback={
                                                             <HouseLineIcon />
-                                                        </AvatarFallback>
-                                                    </Avatar>
+                                                        }
+                                                    />
                                                 ))}
 
                                             {houses.length > 2 && (

@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarLabel } from "@/components/ui/avatar";
+import { AvatarEntity } from "@/components/ui/avatar";
 import {
     Dialog,
     DialogContent,
@@ -9,25 +9,24 @@ import {
 } from "@/components/ui/dialog";
 import { PlusIcon } from "@phosphor-icons/react";
 import { CreateHouseForm } from "./CreateHouseForm";
+import { House, HouseLabel } from "./House";
 
-import type { ComponentProps } from "react";
-
-export const CreateHouse = ({ ...props }: ComponentProps<"button">) => {
+export const CreateHouse = () => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <button
-                    className="group flex flex-col gap-1.5 rounded-md transition outline-none select-none"
-                    {...props}
-                >
-                    <Avatar size="lg" rounded="normal" ring={true}>
-                        <AvatarFallback className="bg-muted/30">
-                            <PlusIcon />
-                        </AvatarFallback>
-                    </Avatar>
+                <House asChild>
+                    <button>
+                        <AvatarEntity
+                            size="lg"
+                            rounded="normal"
+                            ring={true}
+                            fallback={<PlusIcon />}
+                        />
 
-                    <AvatarLabel>Create</AvatarLabel>
-                </button>
+                        <HouseLabel>Create</HouseLabel>
+                    </button>
+                </House>
             </DialogTrigger>
 
             <DialogContent>

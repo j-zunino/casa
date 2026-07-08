@@ -132,6 +132,23 @@ function AvatarLabel({
     );
 }
 
+function AvatarEntity({
+    fallback,
+    src,
+    alt,
+    children,
+    ...props
+}: { fallback: React.ReactNode } & React.ComponentProps<typeof AvatarImage> &
+    React.ComponentProps<typeof Avatar>) {
+    return (
+        <Avatar {...props}>
+            <AvatarImage src={src} alt={alt} />
+            <AvatarFallback>{fallback}</AvatarFallback>
+            {children}
+        </Avatar>
+    );
+}
+
 export {
     Avatar,
     AvatarImage,
@@ -140,4 +157,5 @@ export {
     AvatarGroup,
     AvatarGroupCount,
     AvatarBadge,
+    AvatarEntity,
 };
