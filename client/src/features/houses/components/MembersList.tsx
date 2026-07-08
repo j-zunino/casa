@@ -1,4 +1,4 @@
-import { Profile, ProfileAvatar } from "@/components/common/MemberAvatar";
+import { Profile, ProfileAvatar } from "@/components/common/Profile";
 import { RoleBadge } from "@/components/common/RoleBadge";
 import { Truncate } from "@/components/common/Truncate";
 import {

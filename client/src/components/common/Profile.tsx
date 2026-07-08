@@ -1,4 +1,3 @@
-// TODO: Rename file
 import { cn } from "@/lib/utils";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
