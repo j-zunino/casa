@@ -33,6 +33,7 @@ export const housesServices = {
 
         const [invitations, total] = await Promise.all([
             housesQueries.findInvitation(client, {
+                where: { houseId: house.id },
                 skip,
                 take,
                 omit: { email: true },
