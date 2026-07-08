@@ -1,5 +1,6 @@
-import { MemberAvatar } from "@/components/common/MemberAvatar";
+import { Profile, ProfileAvatar } from "@/components/common/Profile";
 import { StatusBadge } from "@/components/common/StatusBadge";
+import { Truncate } from "@/components/common/Truncate";
 import {
     Card,
     CardAction,
@@ -54,10 +55,19 @@ export const InvitesList = ({ invites, pagination, slug }: Props) => {
                             className={`${invite.status !== "active" && "pointer-events-none opacity-50"}`}
                         >
                             <TableCell>
-                                <MemberAvatar
-                                    name={invite.inviter.name}
-                                    image={invite.inviter.image}
-                                />
+                                <Profile>
+                                    <ProfileAvatar
+                                        src={invite.inviter.image}
+                                        alt={invite.inviter.name}
+                                    />
+
+                                    <Truncate
+                                        className="max-w-30"
+                                        tooltip={invite.inviter.name}
+                                    >
+                                        {invite.inviter.name}
+                                    </Truncate>
+                                </Profile>
                             </TableCell>
                             <TableCell>{invite.code}</TableCell>
                             <TableCell className="text-center">
@@ -85,7 +95,7 @@ export const InvitesList = ({ invites, pagination, slug }: Props) => {
                     key={invite.id}
                 >
                     <CardHeader>
-                        <CardTitle className="flex gap-1.5">
+                        <CardTitle className="flex flex-wrap gap-x-1.5">
                             {invite.code}
                             <StatusBadge status={invite.status} />
                         </CardTitle>
@@ -101,10 +111,19 @@ export const InvitesList = ({ invites, pagination, slug }: Props) => {
                         </CardAction>
                     </CardHeader>
                     <CardContent>
-                        <MemberAvatar
-                            name={invite.inviter.name}
-                            image={invite.inviter.image}
-                        />
+                        <Profile>
+                            <ProfileAvatar
+                                src={invite.inviter.image}
+                                alt={invite.inviter.name}
+                            />
+
+                            <Truncate
+                                className="block"
+                                tooltip={invite.inviter.name}
+                            >
+                                {invite.inviter.name}
+                            </Truncate>
+                        </Profile>
                     </CardContent>
                 </Card>
             ))}
