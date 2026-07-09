@@ -27,11 +27,21 @@ export async function api<T>(
         },
     );
 
-    const json = await response.json();
+    let json: Record<string, unknown>;
 
-    if (!response.ok || !json.success) {
-        throw new Error(json.error.message ?? "Request failed");
+    try {
+        json = await response.json();
+    } catch {
+        throw new Error(`Request failed with status ${response.status}`);
     }
 
-    return { data: json.data as T, pagination: json.pagination };
+    if (!response.ok || !json.success) {
+        const error = json.error as { message?: string } | undefined;
+        throw new Error(error?.message ?? "Request failed");
+    }
+
+    return {
+        data: json.data as T,
+        pagination: json.pagination as ApiPagination | undefined,
+    };
 }
