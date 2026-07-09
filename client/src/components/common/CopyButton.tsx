@@ -1,32 +1,30 @@
 import { toast } from "sonner";
-import { useCallback } from "react";
+import { copyToClipboard } from "@/lib/utils";
 
 import { CopyIcon } from "@phosphor-icons/react";
 
 import type { ComponentProps } from "react";
 
-interface Props extends ComponentProps<"div"> {
+interface Props extends ComponentProps<"button"> {
     value: string;
-    disabled: boolean;
+    disabled?: boolean;
 }
 
 export const CopyButton = ({ value, disabled, ...props }: Props) => {
-    const handleCopy = useCallback(async () => {
+    const handleCopy = async () => {
         if (!value || disabled) return;
 
-        try {
-            await navigator.clipboard.writeText(value);
-            toast.success("Copied to clipboard");
-        } catch {
-            toast.error("Failed to copy to clipboard");
-        }
-    }, [value, disabled]);
+        toast.promise(copyToClipboard(value), {
+            loading: "Copying to clipboard...",
+            success: "Copied to clipboard!",
+            error: "Failed to copy to clipboard",
+        });
+    };
 
-    // NOTE: Could use radix Slot
     return (
-        <div onClick={handleCopy} {...props}>
+        <button onClick={handleCopy} aria-disabled={disabled} {...props}>
             <CopyIcon />
             Copy
-        </div>
+        </button>
     );
 };

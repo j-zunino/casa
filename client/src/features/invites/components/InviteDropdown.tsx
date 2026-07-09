@@ -1,3 +1,4 @@
+import { copyToClipboard } from "@/lib/utils";
 import { toast } from "sonner";
 import { invitesHooks } from "../hooks";
 
@@ -23,16 +24,14 @@ export const InviteDropdown = ({ inviteCode, slug }: Props) => {
     const { mutate: revokeInvite } = invitesHooks.useRevokeInvite(slug);
 
     const handleCopy = async () => {
-        if (!inviteCode) return;
-
-        try {
-            await navigator.clipboard.writeText(
-                `${window.location.origin}/invite/${inviteCode}`,
-            );
-            toast.success("Copied to clipboard");
-        } catch {
-            toast.error("Failed to copy to clipboard");
-        }
+        toast.promise(
+            copyToClipboard(`${window.location.origin}/invite/${inviteCode}`),
+            {
+                loading: "Copying to clipboard...",
+                success: "Copied to clipboard!",
+                error: "Failed to copy to clipboard",
+            },
+        );
     };
 
     return (
