@@ -32,7 +32,7 @@ export const invitesMutations = {
     revoke(houseSlug: House["slug"]) {
         return mutationOptions({
             mutationFn: (inviteCode: string) =>
-                invitesApi.revoke(inviteCode, houseSlug),
+                invitesApi.revoke(houseSlug, inviteCode),
         });
     },
 };

@@ -45,7 +45,7 @@ export const invitesApi = {
         return data;
     },
 
-    async revoke(inviteCode: Invitation["code"], houseSlug: House["slug"]) {
+    async revoke(houseSlug: House["slug"], inviteCode: Invitation["code"]) {
         const { data } = await api(
             `/houses/${houseSlug}/invites/${inviteCode}/revoke`,
             {
