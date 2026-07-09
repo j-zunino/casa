@@ -1,16 +1,11 @@
 import { invitesQueries } from "@/features/invites/queries";
+import { paginationSearchSchema } from "@casa/schemas";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { z } from "zod";
 
 import { ErrorComponent } from "@/components/common/ErrorComponent";
 import { CreateInviteDialog, InvitesList } from "@/features/invites/components";
-
-// TODO: Move to @casa/schemas
-const invitesSearchSchema = z.object({
-    page: z.coerce.number().int().min(1).default(1),
-    limit: z.coerce.number().int().min(1).max(50).default(10),
-});
+import { EnvelopeIcon } from "@phosphor-icons/react";
 
 const RouteComponent = () => {
     const { slug } = Route.useParams();
@@ -34,9 +29,10 @@ const RouteComponent = () => {
 
             {invites.length <= 0 ? (
                 <ErrorComponent
+                    icon={<EnvelopeIcon />}
                     goHome={false}
                     error={{
-                        statusText: "No invitations are available",
+                        statusText: "No invitations available",
                         message:
                             'To create a invitation you can use the "Create invite" button.',
                     }}
@@ -55,7 +51,7 @@ const RouteComponent = () => {
 export const Route = createFileRoute(
     "/_authenticated/account/houses/$slug/invites",
 )({
-    validateSearch: invitesSearchSchema,
+    validateSearch: paginationSearchSchema,
     component: RouteComponent,
     loaderDeps: ({ search: { page, limit } }) => ({ page, limit }),
     loader: async ({ context, params, deps }) => {

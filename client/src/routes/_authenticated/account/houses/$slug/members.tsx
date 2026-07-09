@@ -1,14 +1,11 @@
 import { housesQueries } from "@/features/houses/queries";
+import { paginationSearchSchema } from "@casa/schemas";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { z } from "zod";
 
+import { ErrorComponent } from "@/components/common/ErrorComponent";
 import { MembersList } from "@/features/houses/components";
-
-const membersSearchSchema = z.object({
-    page: z.coerce.number().int().min(1).default(1),
-    limit: z.coerce.number().int().min(1).max(50).default(10),
-});
+import { UsersThreeIcon } from "@phosphor-icons/react";
 
 const RouteComponent = () => {
     const { slug } = Route.useParams();
@@ -23,7 +20,18 @@ const RouteComponent = () => {
         <div className="flex flex-col gap-1.5">
             <h2 className="font-heading text-base font-medium">Members</h2>
 
-            <MembersList members={members} pagination={pagination} />
+            {members.length <= 0 ? (
+                <ErrorComponent
+                    icon={<UsersThreeIcon />}
+                    goHome={false}
+                    error={{
+                        statusText: "No members available",
+                        message: "Invite members to see them here.",
+                    }}
+                />
+            ) : (
+                <MembersList members={members} pagination={pagination} />
+            )}
         </div>
     );
 };
@@ -31,7 +39,7 @@ const RouteComponent = () => {
 export const Route = createFileRoute(
     "/_authenticated/account/houses/$slug/members",
 )({
-    validateSearch: membersSearchSchema,
+    validateSearch: paginationSearchSchema,
     component: RouteComponent,
     loaderDeps: ({ search: { page, limit } }) => ({ page, limit }),
     loader: async ({ context, params, deps }) => {
