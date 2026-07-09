@@ -15,14 +15,24 @@ import type { ReactNode } from "react";
 interface Props {
     icon?: ReactNode;
     goHome?: boolean;
-    error: {
-        status?: number;
-        statusText?: string;
-        message?: string;
-    };
+    error:
+        | Error
+        | {
+              status?: number;
+              statusText?: string;
+              message?: string;
+          };
 }
 
+// TODO: Allow to link routes and add actions
 export const ErrorComponent = ({ icon, goHome = true, error }: Props) => {
+    const status = error instanceof Error ? undefined : error.status;
+    const statusText =
+        error instanceof Error
+            ? error.message
+            : error.statusText || error.message;
+    const message = error instanceof Error ? error.message : error.message;
+
     return (
         <Empty>
             <EmptyHeader>
@@ -31,15 +41,15 @@ export const ErrorComponent = ({ icon, goHome = true, error }: Props) => {
                 </EmptyMedia>
 
                 <EmptyTitle>
-                    {error.status && <>{error.status} - </>}
-                    {error.statusText || "Something went wrong"}
+                    {status && <>{status} - </>}
+                    {statusText || "Something went wrong"}
                 </EmptyTitle>
 
-                {error.message && (
+                {message && (
                     <EmptyDescription>
                         {/* TODO: Replace should be done in the server */}
                         {/* TODO: Should be case-insensitive */}
-                        {error.message.replace("organization", "house")}
+                        {message.replace("organization", "house")}
                     </EmptyDescription>
                 )}
             </EmptyHeader>
