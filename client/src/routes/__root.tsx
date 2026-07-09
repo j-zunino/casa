@@ -15,7 +15,7 @@ interface RouterContext {
     queryClient: QueryClient;
 }
 
-const RootLayout = () => {
+const RouteComponent = () => {
     const showNavbar = useMatches({
         select: (matches) =>
             !matches.some((m) => m.staticData.showNavbar === false),
@@ -46,7 +46,7 @@ const RootLayout = () => {
 };
 
 export const Route = createRootRouteWithContext<RouterContext>()({
-    component: RootLayout,
+    component: RouteComponent,
     loader: async ({ context }) => {
         await context.queryClient.ensureQueryData(authQueries.session());
     },

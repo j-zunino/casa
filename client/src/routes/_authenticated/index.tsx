@@ -7,7 +7,7 @@ import { HouseSelect } from "@/features/houses/components";
 import { GearSixIcon } from "@phosphor-icons/react";
 import { Link } from "@tanstack/react-router";
 
-const Index = () => {
+const RouteComponent = () => {
     const { data: houses } = useSuspenseQuery(housesQueries.all());
 
     return (
@@ -28,7 +28,7 @@ const Index = () => {
 
 export const Route = createFileRoute("/_authenticated/")({
     staticData: { showNavbar: false },
-    component: Index,
+    component: RouteComponent,
     loader: async ({ context }) => {
         await context.queryClient.ensureQueryData(housesQueries.all());
     },

@@ -3,8 +3,8 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
 import {
-    SettingContent,
-    SettingLink,
+    SettingsContent,
+    SettingsLink,
     Settings,
     SettingsGroup,
     SettingsHeader,
@@ -26,12 +26,12 @@ const RouteComponent = () => {
             <SettingsGroup>
                 <SettingsSet>
                     {houses.map((h) => (
-                        <SettingLink
+                        <SettingsLink
                             key={h.id}
                             to="/account/houses/$slug"
                             params={{ slug: h.slug }}
                         >
-                            <SettingContent
+                            <SettingsContent
                                 title={h.name}
                                 icon={
                                     <AvatarEntity
@@ -43,7 +43,7 @@ const RouteComponent = () => {
                                 }
                                 iconEnd={<CaretRightIcon />}
                             />
-                        </SettingLink>
+                        </SettingsLink>
                     ))}
                 </SettingsSet>
             </SettingsGroup>

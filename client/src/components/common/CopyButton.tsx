@@ -5,12 +5,12 @@ import { CopyIcon } from "@phosphor-icons/react";
 
 import type { ComponentProps } from "react";
 
-interface CopyButtonProps extends ComponentProps<"div"> {
+interface Props extends ComponentProps<"div"> {
     value: string;
     disabled: boolean;
 }
 
-export const CopyButton = ({ value, disabled, ...props }: CopyButtonProps) => {
+export const CopyButton = ({ value, disabled, ...props }: Props) => {
     const handleCopy = useCallback(async () => {
         if (!value || disabled) return;
 
@@ -22,6 +22,7 @@ export const CopyButton = ({ value, disabled, ...props }: CopyButtonProps) => {
         }
     }, [value, disabled]);
 
+    // NOTE: Could use radix Slot
     return (
         <div onClick={handleCopy} {...props}>
             <CopyIcon />

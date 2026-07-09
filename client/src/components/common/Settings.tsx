@@ -1,14 +1,14 @@
 import { cn } from "@/lib/utils";
 
 import { Link } from "@tanstack/react-router";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import {
     Item,
     ItemContent,
     ItemDescription,
     ItemMedia,
     ItemTitle,
-} from "../ui/item";
+} from "@/components/ui/item";
 
 import type { LinkProps } from "@tanstack/react-router";
 import type { ComponentProps, ReactNode } from "react";
@@ -20,7 +20,7 @@ interface SettingsButtonProps extends ComponentProps<"button"> {
     variant?: ComponentProps<typeof Button>["variant"];
 }
 
-interface SettingContentProps {
+interface SettingsContentProps {
     title: string;
     description?: string;
     icon?: ReactNode;
@@ -96,7 +96,7 @@ export const SettingsSet = ({ className, ...props }: ComponentProps<"div">) => {
     );
 };
 
-export const SettingLink = ({
+export const SettingsLink = ({
     variant = "outline",
     ...props
 }: SettingsLinkProps) => {
@@ -108,7 +108,7 @@ export const SettingLink = ({
 };
 
 // TODO:FIX: Destructive variant doesn't change ring
-export const SettingButton = ({
+export const SettingsButton = ({
     variant = "outline",
     ...props
 }: SettingsButtonProps) => {
@@ -119,12 +119,12 @@ export const SettingButton = ({
     );
 };
 
-export const SettingContent = ({
+export const SettingsContent = ({
     title,
     description,
     icon,
     iconEnd,
-}: SettingContentProps) => {
+}: SettingsContentProps) => {
     return (
         <>
             {icon && <ItemMedia>{icon}</ItemMedia>}

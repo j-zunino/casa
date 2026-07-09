@@ -1,5 +1,5 @@
-export { CreateHouse } from "./CreateHouse.tsx";
-export { CreateHouseForm } from "./CreateHouseForm.tsx";
-export { DeleteHouse } from "./DeleteHouse.tsx";
-export { HouseSelect } from "./HouseSelect.tsx";
-export { MembersList } from "./MembersList.tsx";
+export { CreateHouse } from "./CreateHouse";
+export { CreateHouseForm } from "./CreateHouseForm";
+export { DeleteHouse } from "./DeleteHouse";
+export { HouseSelect } from "./HouseSelect";
+export { MembersList } from "./MembersList";

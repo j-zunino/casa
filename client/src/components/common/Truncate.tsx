@@ -1,20 +1,20 @@
 import { useIsTruncated } from "@/lib/hooks/isTruncated";
 import { cn } from "@/lib/utils";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 import type { ComponentProps, ReactNode } from "react";
 
-interface TruncateProps extends ComponentProps<"span"> {
+interface Props extends ComponentProps<"span"> {
     children: ReactNode;
     tooltip: ReactNode;
 }
 
-export const Truncate = ({
-    children,
-    tooltip,
-    className,
-    ...props
-}: TruncateProps) => {
+export const Truncate = ({ children, tooltip, className, ...props }: Props) => {
     const { ref, isTruncated } = useIsTruncated<HTMLSpanElement>();
 
     return (

@@ -5,9 +5,9 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { Profile } from "@/components/common/Profile";
 import {
-    SettingButton,
-    SettingContent,
-    SettingLink,
+    SettingsButton,
+    SettingsContent,
+    SettingsLink,
     Settings,
     SettingsGroup,
     SettingsHeader,
@@ -54,16 +54,16 @@ const RouteComponent = () => {
 
             <SettingsGroup>
                 <SettingsSet>
-                    <SettingButton disabled={true}>
-                        <SettingContent
+                    <SettingsButton disabled={true}>
+                        <SettingsContent
                             title="Update password"
                             icon={<PasswordIcon />}
                         />
-                    </SettingButton>
+                    </SettingsButton>
 
                     {houses.length > 0 && (
-                        <SettingLink to="/account/houses">
-                            <SettingContent
+                        <SettingsLink to="/account/houses">
+                            <SettingsContent
                                 title="Manage houses"
                                 description={`${houses.length} Houses`}
                                 icon={<HouseLineIcon />}
@@ -93,17 +93,17 @@ const RouteComponent = () => {
                                     </span>
                                 }
                             />
-                        </SettingLink>
+                        </SettingsLink>
                     )}
                 </SettingsSet>
 
                 <SettingsSet>
-                    <SettingButton variant="destructive" disabled={true}>
-                        <SettingContent
+                    <SettingsButton variant="destructive" disabled={true}>
+                        <SettingsContent
                             title="Delete account"
                             icon={<TrashIcon />}
                         />
-                    </SettingButton>
+                    </SettingsButton>
                 </SettingsSet>
             </SettingsGroup>
         </Settings>

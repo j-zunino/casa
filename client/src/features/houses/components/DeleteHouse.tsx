@@ -1,11 +1,8 @@
 import { router } from "@/main";
 import { toast } from "sonner";
-import { housesHooks } from "../hooks/houses.hooks.ts";
+import { housesHooks } from "../hooks";
 
-import {
-    SettingButton,
-    SettingContent,
-} from "@/components/common/Settings.tsx";
+import { SettingsButton, SettingsContent } from "@/components/common/Settings";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -21,7 +18,7 @@ import {
 import { Spinner } from "@/components/ui/spinner";
 import { SealWarningIcon, TrashIcon } from "@phosphor-icons/react";
 
-import type { House } from "../types/houses.types.ts";
+import type { House } from "../types";
 
 interface Props {
     id: House["id"];
@@ -48,13 +45,16 @@ export const DeleteHouse = ({ id }: Props) => {
     return (
         <AlertDialog>
             <AlertDialogTrigger asChild>
-                <SettingButton variant="destructive" disabled={isDeletingHouse}>
-                    <SettingContent
+                <SettingsButton
+                    variant="destructive"
+                    disabled={isDeletingHouse}
+                >
+                    <SettingsContent
                         title="Delete house"
                         icon={<TrashIcon />}
                         iconEnd={isDeletingHouse && <Spinner />}
                     />
-                </SettingButton>
+                </SettingsButton>
             </AlertDialogTrigger>
 
             <AlertDialogContent size="sm">

@@ -8,8 +8,8 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 import {
-    SettingContent,
-    SettingLink,
+    SettingsContent,
+    SettingsLink,
     Settings,
     SettingsGroup,
     SettingsHeader,
@@ -131,26 +131,26 @@ const RouteComponent = () => {
 
             <SettingsGroup>
                 <SettingsSet>
-                    <SettingLink
+                    <SettingsLink
                         to="/account/houses/$slug/invites"
                         params={{ slug: house.slug }}
                     >
-                        <SettingContent
+                        <SettingsContent
                             title="Invites"
                             description="Create and manage invite links"
                             icon={<EnvelopeSimpleIcon />}
                             iconEnd={<CaretRightIcon />}
                         />
-                    </SettingLink>
+                    </SettingsLink>
 
-                    <SettingLink to="/account/houses/$slug/members">
-                        <SettingContent
+                    <SettingsLink to="/account/houses/$slug/members">
+                        <SettingsContent
                             title="Members"
                             description="Manage members"
                             icon={<UserIcon />}
                             iconEnd={<CaretRightIcon />}
                         />
-                    </SettingLink>
+                    </SettingsLink>
                 </SettingsSet>
 
                 <SettingsSet>

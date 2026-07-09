@@ -1,1 +1,1 @@
-export { authHooks } from "./auth.hooks.ts";
+export { authHooks } from "./auth.hooks";

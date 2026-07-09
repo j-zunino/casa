@@ -1,1 +1,1 @@
-export { housesApi } from "./houses.api.ts";
+export { housesApi } from "./houses.api";

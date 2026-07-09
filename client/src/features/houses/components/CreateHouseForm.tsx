@@ -12,7 +12,7 @@ import {
     FieldLabel,
     FieldSet,
 } from "@/components/ui/field";
-import { Input } from "@/components/ui/input.tsx";
+import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { Controller } from "react-hook-form";
 

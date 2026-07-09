@@ -11,7 +11,7 @@ import {
 import { Link } from "@tanstack/react-router";
 import { DropdownAvatar } from "./DropdownAvatar";
 
-export function Navbar() {
+export const Navbar = () => {
     const { data: session } = useSuspenseQuery(authQueries.session());
 
     const matches = useMatches();
@@ -67,4 +67,4 @@ export function Navbar() {
             </NavigationMenu>
         </header>
     );
-}
+};

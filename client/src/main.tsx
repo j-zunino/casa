@@ -1,17 +1,17 @@
-import "@/main.css";
+import { queryClient } from "@/lib/query-client";
 import { routeTree } from "@/routeTree.gen";
-import { createRouter } from "@tanstack/react-router";
-import { queryClient } from "./lib/query-client";
-
-import { Toaster } from "@/components/ui/sonner";
-import { GhostIcon } from "@phosphor-icons/react";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { RouterProvider } from "@tanstack/react-router";
+import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
-import { ErrorComponent } from "./components/common/ErrorComponent";
-import { Loading } from "./components/common/Loading";
-import { TooltipProvider } from "./components/ui/tooltip";
+
+import { ErrorComponent } from "@/components/common/ErrorComponent";
+import { Loading } from "@/components/common/Loading";
+import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { GhostIcon } from "@phosphor-icons/react";
+
+import "@/main.css";
 
 export const router = createRouter({
     routeTree,

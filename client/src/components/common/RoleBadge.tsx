@@ -1,9 +1,9 @@
-import { Badge } from "../ui/badge";
+import { Badge } from "@/components/ui/badge";
 
+import type { badgeVariants } from "@/components/ui/badge";
 import type { Member } from "better-auth/client/plugins";
 import type { VariantProps } from "class-variance-authority";
 import type { ComponentProps } from "react";
-import type { badgeVariants } from "../ui/badge";
 
 const roles: Record<
     Member["role"],
