@@ -9,9 +9,7 @@ export const useIsTruncated = <T extends HTMLElement>() => {
     const check = useCallback(() => {
         if (!node) return;
 
-        const next = node.scrollWidth > node.clientWidth;
-
-        setIsTruncated((prev) => (prev === next ? prev : next));
+        setIsTruncated(node.scrollWidth > node.clientWidth);
     }, [node]);
 
     useLayoutEffect(() => {
