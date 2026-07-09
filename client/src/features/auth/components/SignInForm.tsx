@@ -41,7 +41,7 @@ export const SignInForm = () => {
         toast.promise(signIn(data), {
             loading: "Signing in...",
             success: "Successfully signed In",
-            error: (err) => err.message,
+            error: (err) => err?.message ?? "An unexpected error occurred",
         });
     };
 

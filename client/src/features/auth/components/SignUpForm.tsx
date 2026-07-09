@@ -42,7 +42,7 @@ export const SignUpForm = () => {
         toast.promise(signUp(data), {
             loading: "Creating account...",
             success: "Account created successfully!",
-            error: (err) => err.message,
+            error: (err) => err?.message ?? "An unexpected error occurred",
         });
     };
 
