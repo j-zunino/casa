@@ -34,14 +34,14 @@ interface Props {
 }
 
 const maxUsesValues = [
-    { label: "No limit", value: null },
-    { label: "1 use", value: 1 },
-    { label: "5 uses", value: 5 },
-    { label: "10 uses", value: 10 },
-    { label: "25 uses", value: 25 },
-    { label: "50 uses", value: 50 },
-    { label: "100 uses", value: 100 },
-] as const;
+    { label: "No limit", value: "unlimited" as const },
+    { label: "1 use", value: "1" as const },
+    { label: "5 uses", value: "5" as const },
+    { label: "10 uses", value: "10" as const },
+    { label: "25 uses", value: "25" as const },
+    { label: "50 uses", value: "50" as const },
+    { label: "100 uses", value: "100" as const },
+];
 
 type FormValues = z.infer<typeof inviteLinkSchema>;
 
@@ -83,10 +83,10 @@ export const EditInviteLink = ({ slug, inviteCode, onCancel }: Props) => {
                                 </FieldLabel>
 
                                 <Select
-                                    value={field.value?.toString() ?? "null"}
+                                    value={field.value?.toString() ?? "unlimited"}
                                     onValueChange={(value) => {
                                         field.onChange(
-                                            value === "null"
+                                            value === "unlimited"
                                                 ? null
                                                 : Number(value),
                                         );
@@ -102,8 +102,8 @@ export const EditInviteLink = ({ slug, inviteCode, onCancel }: Props) => {
                                         <SelectGroup>
                                             {maxUsesValues.map((use) => (
                                                 <SelectItem
-                                                    key={String(use.value)}
-                                                    value={String(use.value)}
+                                                    key={use.value}
+                                                    value={use.value}
                                                 >
                                                     {use.label}
                                                 </SelectItem>
