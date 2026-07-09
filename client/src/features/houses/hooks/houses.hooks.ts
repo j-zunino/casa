@@ -31,7 +31,7 @@ export const housesHooks = {
                 });
 
                 queryClient.removeQueries({
-                    queryKey: [...housesKeys.detailsBase()],
+                    queryKey: housesKeys.detailsBase(),
                 });
 
                 router.navigate({
@@ -55,7 +55,7 @@ export const housesHooks = {
                 });
 
                 queryClient.removeQueries({
-                    queryKey: [...housesKeys.detailsBase()],
+                    queryKey: housesKeys.detailsBase(),
                 });
             },
         });
