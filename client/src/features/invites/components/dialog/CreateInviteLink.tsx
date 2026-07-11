@@ -1,3 +1,6 @@
+import { copyToClipboard } from "@/lib/utils";
+import { toast } from "sonner";
+
 import { Button } from "@/components/ui/button";
 import {
     DialogDescription,
@@ -21,6 +24,16 @@ interface Props {
 }
 
 export const CreateInviteLink = ({ inviteCode, isPending, onEdit }: Props) => {
+    const inviteLink = `${window.location.origin}/${isPending ? "..." : inviteCode}`;
+
+    const handleCopy = async () => {
+        toast.promise(copyToClipboard(inviteLink), {
+            loading: "Copying to clipboard...",
+            success: "Copied to clipboard!",
+            error: "Failed to copy to clipboard",
+        });
+    };
+
     return (
         <>
             <DialogHeader>
@@ -36,12 +49,13 @@ export const CreateInviteLink = ({ inviteCode, isPending, onEdit }: Props) => {
             </DialogHeader>
 
             <InputGroup>
-                <InputGroupInput
-                    value={`${window.location.origin}/${isPending ? "..." : inviteCode}`}
-                    readOnly
-                />
+                <InputGroupInput value={inviteLink} readOnly />
                 <InputGroupAddon align="inline-end">
-                    <InputGroupButton variant="secondary" disabled={isPending}>
+                    <InputGroupButton
+                        variant="secondary"
+                        onClick={handleCopy}
+                        disabled={isPending}
+                    >
                         <CopyIcon />
                         Copy
                     </InputGroupButton>
