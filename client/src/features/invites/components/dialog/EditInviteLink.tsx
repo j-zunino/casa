@@ -61,7 +61,7 @@ export const EditInviteLink = ({ slug, inviteCode, onCancel }: Props) => {
                 form.reset({ maxUses: data.maxUses });
                 return "Invite updated successfully!";
             },
-            error: (err) => err.message,
+            error: (err) => err?.message ?? "An unexpected error occurred",
         });
     };
 
@@ -83,7 +83,9 @@ export const EditInviteLink = ({ slug, inviteCode, onCancel }: Props) => {
                                 </FieldLabel>
 
                                 <Select
-                                    value={field.value?.toString() ?? "unlimited"}
+                                    value={
+                                        field.value?.toString() ?? "unlimited"
+                                    }
                                     onValueChange={(value) => {
                                         field.onChange(
                                             value === "unlimited"

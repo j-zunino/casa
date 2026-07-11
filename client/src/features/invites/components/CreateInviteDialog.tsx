@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "sonner";
 import { invitesHooks } from "../hooks";
 
 import { Button } from "@/components/ui/button";
@@ -26,7 +27,10 @@ export const CreateInviteDialog = ({ slug }: Props) => {
                     setView("create");
 
                     if (!createInvite.data) {
-                        createInvite.mutate();
+                        toast.promise(createInvite.mutateAsync(undefined), {
+                            error: (err) =>
+                                err?.message ?? "An unexpected error occurred",
+                        });
                     }
                 }
             }}

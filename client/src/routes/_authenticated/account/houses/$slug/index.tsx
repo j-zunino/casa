@@ -59,7 +59,7 @@ const RouteComponent = () => {
         toast.promise(update({ id: house.id, input: data }), {
             loading: "Updating house...",
             success: "House updated successfully!",
-            error: (err) => err.message,
+            error: (err) => err?.message ?? "An unexpected error occurred",
         });
     };
 

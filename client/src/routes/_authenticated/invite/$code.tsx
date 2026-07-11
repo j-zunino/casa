@@ -34,7 +34,7 @@ const RouteComponent = () => {
 
                 return "Joined successfully!";
             },
-            error: (err) => err.message,
+            error: (err) => err?.message ?? "An unexpected error occurred",
         });
     };
 

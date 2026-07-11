@@ -38,7 +38,7 @@ export const DeleteHouse = ({ id }: Props) => {
 
                 return "House deleted successfully!";
             },
-            error: (err) => err.message,
+            error: (err) => err?.message ?? "An unexpected error occurred",
         });
     };
 

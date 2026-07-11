@@ -37,7 +37,7 @@ export const CreateHouseForm = () => {
 
                 return "House created successfully!";
             },
-            error: (err) => err.message,
+            error: (err) => err?.message ?? "An unexpected error occurred",
         });
     };
 
