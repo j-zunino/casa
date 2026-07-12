@@ -12,7 +12,7 @@ export const router: Router = Router();
 router.get(
     "/:houseSlug/invites",
     requireAuth,
-    requirePermission({ invitation: ["create"] }),
+    requirePermission({ invitation: ["read"] }),
     async (req: Request<{ houseSlug: string }>, res: Response) => {
         const { houseSlug } = req.params;
 
@@ -67,7 +67,7 @@ router.post(
 router.patch(
     "/:houseSlug/invites/:inviteCode",
     requireAuth,
-    requirePermission({ invitation: ["create"] }),
+    requirePermission({ invitation: ["update"] }),
     async (
         req: Request<{ inviteCode: Invitation["code"]; houseSlug: string }>,
         res: Response,
@@ -93,7 +93,7 @@ router.patch(
 router.post(
     "/:houseSlug/invites/:inviteCode/revoke",
     requireAuth,
-    requirePermission({ invitation: ["cancel"] }),
+    requirePermission({ invitation: ["revoke"] }),
     async (
         req: Request<{ inviteCode: Invitation["code"]; houseSlug: string }>,
         res: Response,

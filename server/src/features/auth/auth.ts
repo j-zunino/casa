@@ -5,7 +5,32 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { APIError, createAuthMiddleware } from "better-auth/api";
 import { organization } from "better-auth/plugins";
+import { createAccessControl } from "better-auth/plugins/access";
 import slugify from "slugify";
+
+const ac = createAccessControl({
+    organization: ["update", "delete"],
+    member: ["update", "kick", "read"],
+    invitation: ["create", "update", "revoke", "delete", "read"],
+} as const);
+
+const owner = ac.newRole({
+    organization: ["update", "delete"],
+    member: ["update", "kick", "read"],
+    invitation: ["create", "update", "revoke", "delete", "read"],
+});
+
+const admin = ac.newRole({
+    organization: ["update"],
+    member: ["kick", "read"],
+    invitation: ["create", "update", "revoke", "read"],
+});
+
+const member = ac.newRole({
+    member: ["read"],
+});
+
+export const roleDefinitions = { owner, admin, member } as const;
 
 export const auth = betterAuth({
     database: prismaAdapter(prisma, { provider: "postgresql" }),
@@ -23,6 +48,12 @@ export const auth = betterAuth({
     plugins: [
         organization({
             organizationLimit: 5,
+            ac,
+            roles: {
+                owner,
+                admin,
+                member,
+            },
             organizationHooks: {
                 // TODO: Find a better way to do this lol
                 // TODO: Make this a function and use before create/update
