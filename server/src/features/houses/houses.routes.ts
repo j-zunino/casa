@@ -10,18 +10,18 @@ import type { Request, Response } from "express";
 export const router: Router = Router();
 
 router.get(
-    "/:houseSlug/members/me",
+    "/:houseSlug/permissions",
     requireAuth,
     async (req: Request<{ houseSlug: string }>, res: Response) => {
-        const member = await housesServices.getMember(
+        const permissions = await housesServices.getPermissions(
             prisma,
             res.locals.user.id,
             req.params.houseSlug,
         );
 
-        const response: ApiResponse<typeof member> = {
+        const response: ApiResponse<typeof permissions> = {
             success: true,
-            data: member,
+            data: permissions,
         };
 
         res.json(response);

@@ -28,10 +28,12 @@ export const housesServices = {
             throw new AppError("not a member", 403, ErrorCodes.FORBIDDEN);
         }
 
-        return {
-            ...member,
-            permissions: getRolePermissions(member.role),
-        };
+        return member;
+    },
+
+    async getPermissions(client: Client, userId: string, slug: string) {
+        const member = await housesServices.getMember(client, userId, slug);
+        return getRolePermissions(member.role);
     },
 
     async listInvitations(
