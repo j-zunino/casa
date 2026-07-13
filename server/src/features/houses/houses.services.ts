@@ -1,3 +1,4 @@
+import { getRolePermissions } from "@/features/auth";
 import { AppError } from "@/utils";
 import { ErrorCodes } from "@casa/types";
 import crypto from "node:crypto";
@@ -16,6 +17,21 @@ export const housesServices = {
         }
 
         return house;
+    },
+
+    async getMember(client: Client, userId: string, slug: string) {
+        const member = await housesQueries.findMember(client, {
+            where: { userId, house: { slug } },
+        });
+
+        if (!member) {
+            throw new AppError("not a member", 403, ErrorCodes.FORBIDDEN);
+        }
+
+        return {
+            ...member,
+            permissions: getRolePermissions(member.role),
+        };
     },
 
     async listInvitations(

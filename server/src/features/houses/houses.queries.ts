@@ -5,11 +5,16 @@ import type {
     InvitationCreateArgs,
     InvitationFindManyArgs,
     InvitationUpdateArgs,
+    MemberFindFirstArgs,
 } from "@/generated/prisma/models";
 
 export const housesQueries = {
     findHouse(client: Client, options: HouseFindUniqueArgs) {
         return client.house.findUnique({ ...options });
+    },
+
+    findMember(client: Client, options: MemberFindFirstArgs) {
+        return client.member.findFirst({ ...options });
     },
 
     findInvitation(client: Client, options: InvitationFindManyArgs) {
