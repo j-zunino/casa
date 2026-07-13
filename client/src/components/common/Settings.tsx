@@ -96,6 +96,7 @@ export const SettingsSet = ({ className, ...props }: ComponentProps<"div">) => {
     );
 };
 
+// TODO: Add disabled styles
 export const SettingsLink = ({
     variant = "outline",
     ...props
