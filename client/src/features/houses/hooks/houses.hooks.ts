@@ -2,9 +2,15 @@ import { router } from "@/main";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { housesKeys, housesMutations, housesQueries } from "../queries";
 
+import type { House } from "../types";
+
 export const housesHooks = {
     useAll() {
         return useQuery(housesQueries.all());
+    },
+
+    usePermissions(slug: House["slug"]) {
+        return useQuery(housesQueries.permissions(slug));
     },
 
     useCreate() {

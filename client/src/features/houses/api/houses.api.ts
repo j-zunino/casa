@@ -1,4 +1,5 @@
 import { authClient } from "@/features/auth/auth.client";
+import { api } from "@/lib/api";
 
 import type { House, HouseDto } from "../types";
 
@@ -58,6 +59,13 @@ export const housesApi = {
 
         if (error) throw error;
 
+        return data;
+    },
+
+    async getPermissions(slug: House["slug"]) {
+        const { data } = await api<Record<string, string[]>>(
+            `/houses/${slug}/permissions`,
+        );
         return data;
     },
 

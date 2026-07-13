@@ -20,6 +20,13 @@ export const housesQueries = {
         });
     },
 
+    permissions(slug: House["slug"]) {
+        return queryOptions({
+            queryKey: housesKeys.permissions(slug),
+            queryFn: () => housesApi.getPermissions(slug),
+        });
+    },
+
     members(slug: House["slug"], options?: { page?: number; limit?: number }) {
         const page = options?.page ?? 1;
         const limit = options?.limit ?? 10;
