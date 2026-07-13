@@ -1,13 +1,46 @@
 import { prisma } from "@/config";
+import { AppError } from "@/utils";
 import { inviteLinkSchema } from "@casa/schemas";
+import { ErrorCodes } from "@casa/types";
 import { Router } from "express";
-import { requireAuth, requirePermission } from "../auth";
+import { getRolePermissions, requireAuth, requirePermission } from "../auth";
 import { housesServices } from "./houses.services";
 
 import type { ApiResponse, Invitation } from "@casa/types";
 import type { Request, Response } from "express";
 
 export const router: Router = Router();
+
+router.get(
+    "/:houseSlug/members/me",
+    requireAuth,
+    async (req: Request<{ houseSlug: string }>, res: Response) => {
+        const member = await prisma.member.findFirst({
+            where: {
+                userId: res.locals.user.id,
+                house: { slug: req.params.houseSlug },
+            },
+        });
+
+        if (!member) {
+            throw new AppError("not a member", 403, ErrorCodes.FORBIDDEN);
+        }
+
+        const response: ApiResponse<
+            typeof member & {
+                permissions: ReturnType<typeof getRolePermissions>;
+            }
+        > = {
+            success: true,
+            data: {
+                ...member,
+                permissions: getRolePermissions(member.role),
+            },
+        };
+
+        res.json(response);
+    },
+);
 
 router.get(
     "/:houseSlug/invites",

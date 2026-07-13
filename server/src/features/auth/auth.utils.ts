@@ -1,4 +1,5 @@
 import { ErrorCodes } from "@casa/types";
+import { roleDefinitions } from "./auth";
 
 export const mapBetterAuthError = (status?: number) => {
     switch (status) {
@@ -15,4 +16,9 @@ export const mapBetterAuthError = (status?: number) => {
         default:
             return ErrorCodes.INTERNAL_ERROR;
     }
+};
+
+export const getRolePermissions = (role: string) => {
+    const entry = roleDefinitions[role as keyof typeof roleDefinitions];
+    return entry?.statements ?? {};
 };
