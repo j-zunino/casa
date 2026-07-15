@@ -1,6 +1,5 @@
 import { z } from "zod";
 
-// TODO: Add logo
 export const houseSchema = z.object({
     name: z
         .string()
@@ -10,4 +9,5 @@ export const houseSchema = z.object({
         .regex(/^[\p{L}0-9_.,\s'-]+$/u, {
             error: "name can only contain letters, numbers, spaces, dots, commas, hyphens and underscores",
         }),
+    logo: z.string().url().or(z.literal("")).optional(),
 });

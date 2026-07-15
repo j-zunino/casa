@@ -32,6 +32,7 @@ export const housesApi = {
             // HACK: Pass temp slug and generate in server with before hooks
             //       https://better-auth.com/docs/concepts/hooks
             slug: crypto.randomUUID(),
+            logo: input.logo,
         });
 
         if (error) throw error;
@@ -44,6 +45,7 @@ export const housesApi = {
             organizationId: id,
             data: {
                 name: input.name,
+                logo: input.logo,
             },
         });
 
