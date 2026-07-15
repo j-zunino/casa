@@ -26,7 +26,7 @@ export const CreateHouseForm = () => {
 
     const form = useForm<FormValues>({
         resolver: zodResolver(houseSchema),
-        defaultValues: { name: "" },
+        defaultValues: { name: "", logo: "" },
     });
 
     const onSubmit = async (data: FormValues) => {
@@ -60,6 +60,26 @@ export const CreateHouseForm = () => {
                                     aria-invalid={fieldState.invalid}
                                     placeholder="My house"
                                     autoComplete="on"
+                                />
+                                {fieldState.invalid && (
+                                    <FieldError errors={[fieldState.error]} />
+                                )}
+                            </Field>
+                        )}
+                    />
+
+                    <Controller
+                        name="logo"
+                        control={form.control}
+                        render={({ field, fieldState }) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldLabel htmlFor="logo">Logo URL</FieldLabel>
+                                <Input
+                                    {...field}
+                                    id="logo"
+                                    type="url"
+                                    aria-invalid={fieldState.invalid}
+                                    placeholder="https://example.com/logo.jpeg"
                                 />
                                 {fieldState.invalid && (
                                     <FieldError errors={[fieldState.error]} />
