@@ -1,6 +1,6 @@
 import { houseSchema } from "@casa/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 import { housesHooks } from "../hooks";
 
@@ -38,7 +38,7 @@ interface Props {
     house: House;
 }
 
-export const EditHouseModal = ({ house }: Props) => {
+export const EditHouseDialog = ({ house }: Props) => {
     const { mutateAsync: update, isPending: isUpdating } =
         housesHooks.useUpdate();
 
@@ -49,6 +49,8 @@ export const EditHouseModal = ({ house }: Props) => {
             logo: house.logo ?? "",
         },
     });
+
+    const formValues = useWatch({ control: form.control });
 
     const onSubmit = (data: FormValues) => {
         if (house.name === data.name && (house.logo ?? "") === data.logo)
@@ -78,8 +80,8 @@ export const EditHouseModal = ({ house }: Props) => {
                     <AvatarEntity
                         size="lg"
                         rounded="normal"
-                        src={house.logo}
-                        alt={house.name}
+                        src={formValues.logo || undefined}
+                        alt={formValues.name || house.name}
                         fallback={<HouseLineIcon />}
                     />
                 </Profile>
@@ -165,7 +167,7 @@ export const EditHouseModal = ({ house }: Props) => {
                                     </Button>
                                     <Button
                                         type="submit"
-                                        aria-label="Save house name"
+                                        aria-label="Save house changes"
                                         disabled={isUpdating}
                                     >
                                         {isUpdating ? (

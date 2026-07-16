@@ -14,7 +14,7 @@ import {
 } from "@/components/common/Settings";
 import { AvatarEntity, AvatarLabel } from "@/components/ui/avatar";
 import { DeleteHouse } from "@/features/houses/components";
-import { EditHouseModal } from "@/features/houses/components/EditHouseModal";
+import { EditHouseDialog } from "@/features/houses/components/EditHouseDialog";
 import { LeaveHouse } from "@/features/houses/components/LeaveHouse";
 import {
     CaretRightIcon,
@@ -46,7 +46,7 @@ const RouteComponent = () => {
                         <AvatarLabel>{house.name}</AvatarLabel>
 
                         {permissions.organization?.includes("update") && (
-                            <EditHouseModal house={house} />
+                            <EditHouseDialog house={house} />
                         )}
                     </div>
                 </Profile>
