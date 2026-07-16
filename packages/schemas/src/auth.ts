@@ -43,3 +43,8 @@ export const signUpFormSchema = signUpSchema
             path: ["passwordConfirmation"],
         },
     );
+
+export const profileSchema = z.object({
+    name: nameSchema,
+    image: z.string().url().or(z.literal("")).optional(),
+});

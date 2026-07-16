@@ -1,7 +1,7 @@
 import { env } from "@/lib/zod";
 import { authClient } from "../auth.client";
 
-import type { SignInDto, SignUpDto } from "../types";
+import type { ProfileDto, SignInDto, SignUpDto } from "../types";
 import type { SocialProvider } from "better-auth";
 
 export const authApi = {
@@ -48,5 +48,16 @@ export const authApi = {
             provider,
             callbackURL: env.VITE_BETTER_AUTH_CALLBACK_URL,
         });
+    },
+
+    async updateUser(input: ProfileDto) {
+        const { data, error } = await authClient.updateUser({
+            name: input.name,
+            image: input.image,
+        });
+
+        if (error) throw error;
+
+        return data;
     },
 };

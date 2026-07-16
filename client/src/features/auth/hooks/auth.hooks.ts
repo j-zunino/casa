@@ -1,7 +1,7 @@
 import { housesKeys } from "@/features/houses/queries";
 import { router } from "@/main";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { authMutations, authQueries } from "../queries";
+import { authKeys, authMutations, authQueries } from "../queries";
 
 export const authHooks = {
     useSession() {
@@ -59,6 +59,19 @@ export const authHooks = {
             onSuccess: async () => {
                 await queryClient.invalidateQueries({
                     queryKey: housesKeys.base(),
+                });
+            },
+        });
+    },
+
+    useUpdateUser() {
+        const queryClient = useQueryClient();
+
+        return useMutation({
+            ...authMutations.updateUser(),
+            onSuccess: async () => {
+                await queryClient.invalidateQueries({
+                    queryKey: authKeys.session(),
                 });
             },
         });

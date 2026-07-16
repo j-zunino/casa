@@ -25,4 +25,10 @@ export const authMutations = {
             mutationFn: authApi.signInSocial,
         });
     },
+
+    updateUser() {
+        return mutationOptions({
+            mutationFn: authApi.updateUser,
+        });
+    },
 };

@@ -5,12 +5,12 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { Profile } from "@/components/common/Profile";
 import {
+    Settings,
     SettingsButton,
     SettingsContent,
-    SettingsLink,
-    Settings,
     SettingsGroup,
     SettingsHeader,
+    SettingsLink,
     SettingsSet,
     SettingsTitle,
 } from "@/components/common/Settings";
@@ -20,6 +20,7 @@ import {
     AvatarGroupCount,
     AvatarLabel,
 } from "@/components/ui/avatar";
+import { EditProfileDialog } from "@/features/auth/components";
 import {
     CaretRightIcon,
     HouseLineIcon,
@@ -37,16 +38,22 @@ const RouteComponent = () => {
     // TODO: If account is email allow to change username
     return (
         <Settings>
-            <Profile className="flex-col">
-                <AvatarEntity
-                    size="lg"
-                    src={session?.user.image ?? undefined}
-                    alt={session?.user.name}
-                    fallback={<UserIcon />}
-                />
+            <div className="flex items-center gap-1.5">
+                <Profile className="w-full flex-col items-start">
+                    <AvatarEntity
+                        size="lg"
+                        src={session?.user.image}
+                        alt={session?.user.name}
+                        fallback={<UserIcon />}
+                    />
 
-                <AvatarLabel>{session?.user.name}</AvatarLabel>
-            </Profile>
+                    <div className="flex w-full justify-between">
+                        <AvatarLabel>{session?.user.name}</AvatarLabel>
+
+                        <EditProfileDialog user={session.user} />
+                    </div>
+                </Profile>
+            </div>
 
             <SettingsHeader>
                 <SettingsTitle>Account settings</SettingsTitle>
@@ -54,12 +61,14 @@ const RouteComponent = () => {
 
             <SettingsGroup>
                 <SettingsSet>
-                    <SettingsButton disabled={true}>
-                        <SettingsContent
-                            title="Update password"
-                            icon={<PasswordIcon />}
-                        />
-                    </SettingsButton>
+                    {!session?.user.isOAuth && (
+                        <SettingsButton disabled={true}>
+                            <SettingsContent
+                                title="Update password"
+                                icon={<PasswordIcon />}
+                            />
+                        </SettingsButton>
+                    )}
 
                     {houses.length > 0 && (
                         <SettingsLink to="/account/houses">
