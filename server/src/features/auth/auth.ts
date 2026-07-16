@@ -4,7 +4,7 @@ import { ErrorCodes } from "@casa/types";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { APIError, createAuthMiddleware } from "better-auth/api";
-import { organization } from "better-auth/plugins";
+import { customSession, organization } from "better-auth/plugins";
 import { createAccessControl } from "better-auth/plugins/access";
 import { generateSlug, parseHouseName } from "../houses/houses.utils";
 
@@ -108,6 +108,19 @@ export const auth = betterAuth({
                     },
                 },
             },
+        }),
+        customSession(async ({ user, session }) => {
+            const account = await prisma.account.findMany({
+                where: { userId: user.id },
+                select: { providerId: true },
+            });
+            return {
+                user: {
+                    ...user,
+                    isOAuth: account.some((a) => a.providerId !== "credential"),
+                },
+                session,
+            };
         }),
     ],
 
