@@ -1,12 +1,12 @@
 import { env, prisma } from "@/config";
-import { houseSchema, signUpSchema } from "@casa/schemas";
+import { signUpSchema } from "@casa/schemas";
 import { ErrorCodes } from "@casa/types";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { APIError, createAuthMiddleware } from "better-auth/api";
 import { organization } from "better-auth/plugins";
 import { createAccessControl } from "better-auth/plugins/access";
-import slugify from "slugify";
+import { generateSlug, parseHouseName } from "../houses/houses.utils";
 
 const ac = createAccessControl({
     organization: ["update", "delete"],
@@ -55,83 +55,35 @@ export const auth = betterAuth({
                 member,
             },
             organizationHooks: {
-                // TODO: Find a better way to do this lol
-                // TODO: Make this a function and use before create/update
-                // TODO: De-duplicate slug generation logic
                 beforeCreateOrganization: async ({ organization }) => {
-                    const result = houseSchema.safeParse({
-                        name: organization.name,
-                    });
+                    const name = parseHouseName(organization.name);
+                    const slug = generateSlug(name);
 
-                    if (!result.success) {
-                        throw new APIError(ErrorCodes.BAD_REQUEST, {
-                            message:
-                                result.error.issues[0]?.message ??
-                                "invalid input",
-                        });
-                    }
+                    await auth.api.checkOrganizationSlug({ body: { slug } });
 
-                    const slug = slugify(result.data.name, {
-                        lower: true,
-                        strict: true,
-                        trim: true,
-                    });
-
-                    try {
-                        await auth.api.checkOrganizationSlug({
-                            body: { slug },
-                        });
-                    } catch {
-                        throw new APIError(ErrorCodes.CONFLICT, {
-                            message: "House name already taken",
-                        });
-                    }
-
-                    return {
-                        data: {
-                            ...organization,
-                            name: result.data.name,
-                            slug,
-                        },
-                    };
+                    return { data: { ...organization, name, slug } };
                 },
 
-                beforeUpdateOrganization: async ({ organization }) => {
-                    const result = houseSchema.safeParse({
-                        name: organization.name,
+                beforeUpdateOrganization: async ({ organization, member }) => {
+                    const name = parseHouseName(organization.name);
+                    const slug = generateSlug(name);
+                    const current = await prisma.house.findUnique({
+                        where: { id: member.organizationId },
+                        select: { slug: true },
                     });
 
-                    if (!result.success) {
-                        throw new APIError(ErrorCodes.BAD_REQUEST, {
-                            message:
-                                result.error.issues[0]?.message ??
-                                "invalid input",
+                    if (!current) {
+                        throw new APIError(ErrorCodes.NOT_FOUND, {
+                            message: "House not found",
                         });
                     }
-
-                    const slug = slugify(result.data.name, {
-                        lower: true,
-                        strict: true,
-                        trim: true,
-                    });
-
-                    try {
+                    if (slug !== current.slug) {
                         await auth.api.checkOrganizationSlug({
                             body: { slug },
                         });
-                    } catch {
-                        throw new APIError(ErrorCodes.CONFLICT, {
-                            message: "House name already taken",
-                        });
                     }
 
-                    return {
-                        data: {
-                            ...organization,
-                            name: result.data.name,
-                            slug,
-                        },
-                    };
+                    return { data: { ...organization, name, slug } };
                 },
             },
             schema: {
