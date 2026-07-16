@@ -13,9 +13,11 @@ import {
     SettingsTitle,
 } from "@/components/common/Settings";
 import { AvatarEntity, AvatarLabel } from "@/components/ui/avatar";
-import { DeleteHouse } from "@/features/houses/components";
-import { EditHouseDialog } from "@/features/houses/components/EditHouseDialog";
-import { LeaveHouse } from "@/features/houses/components/LeaveHouse";
+import {
+    DeleteHouse,
+    EditHouseDialog,
+    LeaveHouse,
+} from "@/features/houses/components";
 import {
     CaretRightIcon,
     EnvelopeSimpleIcon,
