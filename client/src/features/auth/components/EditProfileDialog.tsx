@@ -19,6 +19,7 @@ import {
 import {
     Field,
     FieldContent,
+    FieldDescription,
     FieldError,
     FieldGroup,
     FieldLabel,
@@ -26,7 +27,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
-import { UserIcon } from "@phosphor-icons/react";
+import { InfoIcon, UserIcon } from "@phosphor-icons/react";
 import { Controller } from "react-hook-form";
 
 import type { z } from "zod";
@@ -39,6 +40,7 @@ interface Props {
 }
 
 export const EditProfileDialog = ({ user }: Props) => {
+    const isDisabled = user.isOAuth;
     const { mutateAsync: update, isPending: isUpdating } =
         authHooks.useUpdateUser();
 
@@ -106,6 +108,7 @@ export const EditProfileDialog = ({ user }: Props) => {
                                                     fieldState.invalid
                                                 }
                                                 placeholder="Name"
+                                                disabled={isDisabled}
                                             />
 
                                             {fieldState.invalid && (
@@ -114,6 +117,14 @@ export const EditProfileDialog = ({ user }: Props) => {
                                                 />
                                             )}
                                         </FieldContent>
+
+                                        {user.isOAuth && (
+                                            <FieldDescription className="inline-flex items-center gap-1.5">
+                                                <InfoIcon />
+                                                Name managed by your OAuth
+                                                provider.
+                                            </FieldDescription>
+                                        )}
                                     </Field>
                                 )}
                             />
@@ -136,6 +147,7 @@ export const EditProfileDialog = ({ user }: Props) => {
                                                     fieldState.invalid
                                                 }
                                                 placeholder="https://example.com/avatar.jpeg"
+                                                disabled={isDisabled}
                                             />
 
                                             {fieldState.invalid && (
@@ -144,6 +156,14 @@ export const EditProfileDialog = ({ user }: Props) => {
                                                 />
                                             )}
                                         </FieldContent>
+
+                                        {user.isOAuth && (
+                                            <FieldDescription className="inline-flex items-center gap-1.5">
+                                                <InfoIcon />
+                                                Avatar managed by your OAuth
+                                                provider.
+                                            </FieldDescription>
+                                        )}
                                     </Field>
                                 )}
                             />
@@ -160,14 +180,14 @@ export const EditProfileDialog = ({ user }: Props) => {
                                         type="button"
                                         aria-label="Reset changes"
                                         onClick={() => form.reset()}
-                                        disabled={isUpdating}
+                                        disabled={isDisabled || isUpdating}
                                     >
                                         Reset
                                     </Button>
                                     <Button
                                         type="submit"
                                         aria-label="Save profile changes"
-                                        disabled={isUpdating}
+                                        disabled={isDisabled || isUpdating}
                                     >
                                         {isUpdating ? (
                                             <>
