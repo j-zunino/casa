@@ -111,20 +111,20 @@ export const EditProfileDialog = ({ user }: Props) => {
                                                 disabled={isDisabled}
                                             />
 
+                                            {user.isOAuth && (
+                                                <FieldDescription className="inline-flex items-center gap-1.5">
+                                                    <InfoIcon />
+                                                    Name is managed by your
+                                                    OAuth provider.
+                                                </FieldDescription>
+                                            )}
+
                                             {fieldState.invalid && (
                                                 <FieldError
                                                     errors={[fieldState.error]}
                                                 />
                                             )}
                                         </FieldContent>
-
-                                        {user.isOAuth && (
-                                            <FieldDescription className="inline-flex items-center gap-1.5">
-                                                <InfoIcon />
-                                                Name managed by your OAuth
-                                                provider.
-                                            </FieldDescription>
-                                        )}
                                     </Field>
                                 )}
                             />
@@ -150,20 +150,20 @@ export const EditProfileDialog = ({ user }: Props) => {
                                                 disabled={isDisabled}
                                             />
 
+                                            {user.isOAuth && (
+                                                <FieldDescription className="inline-flex items-center gap-1.5">
+                                                    <InfoIcon />
+                                                    Avatar is managed by your
+                                                    OAuth provider.
+                                                </FieldDescription>
+                                            )}
+
                                             {fieldState.invalid && (
                                                 <FieldError
                                                     errors={[fieldState.error]}
                                                 />
                                             )}
                                         </FieldContent>
-
-                                        {user.isOAuth && (
-                                            <FieldDescription className="inline-flex items-center gap-1.5">
-                                                <InfoIcon />
-                                                Avatar managed by your OAuth
-                                                provider.
-                                            </FieldDescription>
-                                        )}
                                     </Field>
                                 )}
                             />
