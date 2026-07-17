@@ -1,7 +1,7 @@
 import { authClient } from "@/features/auth/auth.client";
 import { api } from "@/lib/api";
 
-import type { House, HouseDto } from "../types";
+import type { House, HouseDto, Member } from "../types";
 
 export const housesApi = {
     async getAll() {
@@ -96,5 +96,42 @@ export const housesApi = {
                 hasPrevious: page > 1,
             },
         };
+    },
+
+    async updateRole({
+        memberId,
+        role,
+        organizationId,
+    }: {
+        memberId: Member["id"];
+        role: Member["role"];
+        organizationId: string;
+    }) {
+        const { data, error } = await authClient.organization.updateMemberRole({
+            memberId,
+            role,
+            organizationId,
+        });
+
+        if (error) throw error;
+
+        return data;
+    },
+
+    async removeMember({
+        memberIdOrEmail,
+        organizationId,
+    }: {
+        memberIdOrEmail: Member["id"];
+        organizationId: string;
+    }) {
+        const { data, error } = await authClient.organization.removeMember({
+            memberIdOrEmail,
+            organizationId,
+        });
+
+        if (error) throw error;
+
+        return data;
     },
 };

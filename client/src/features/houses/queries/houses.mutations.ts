@@ -19,4 +19,16 @@ export const housesMutations = {
             mutationFn: housesApi.delete,
         });
     },
+
+    updateRole() {
+        return mutationOptions({
+            mutationFn: housesApi.updateRole,
+        });
+    },
+
+    removeMember() {
+        return mutationOptions({
+            mutationFn: housesApi.removeMember,
+        });
+    },
 };

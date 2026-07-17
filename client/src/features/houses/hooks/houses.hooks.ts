@@ -66,4 +66,30 @@ export const housesHooks = {
             },
         });
     },
+
+    useUpdateRole(houseSlug: House["slug"]) {
+        const queryClient = useQueryClient();
+
+        return useMutation({
+            ...housesMutations.updateRole(),
+            onSuccess: async () => {
+                await queryClient.invalidateQueries({
+                    queryKey: [...housesKeys.base(), "members", houseSlug],
+                });
+            },
+        });
+    },
+
+    useRemoveMember(houseSlug: House["slug"]) {
+        const queryClient = useQueryClient();
+
+        return useMutation({
+            ...housesMutations.removeMember(),
+            onSuccess: async () => {
+                await queryClient.invalidateQueries({
+                    queryKey: [...housesKeys.base(), "members", houseSlug],
+                });
+            },
+        });
+    },
 };
