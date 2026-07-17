@@ -26,15 +26,23 @@ import { UserIcon } from "@phosphor-icons/react";
 import { MemberDropdown } from "./MemberDropdown";
 
 import type { ApiPagination } from "@casa/types";
-import type { Member } from "../types";
+import type { House, Member } from "../types";
 
+// TODO: Type permissions?
 interface Props {
     members: Member[];
+    slug: House["slug"];
     pagination: ApiPagination;
+    permissions: Record<string, string[]>;
 }
 
 // TODO: Only show actions for owners/admins, needs to implement house role checking
-export const MembersList = ({ members, pagination }: Props) => {
+export const MembersList = ({
+    members,
+    slug,
+    pagination,
+    permissions,
+}: Props) => {
     return (
         <>
             <Table className="hidden sm:table">
@@ -78,7 +86,11 @@ export const MembersList = ({ members, pagination }: Props) => {
                                 <RoleBadge role={member.role} />
                             </TableCell>
                             <TableCell className="text-right">
-                                <MemberDropdown />
+                                <MemberDropdown
+                                    member={member}
+                                    slug={slug}
+                                    permissions={permissions}
+                                />
                             </TableCell>
                         </TableRow>
                     ))}

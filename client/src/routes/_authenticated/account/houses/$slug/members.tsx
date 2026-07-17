@@ -14,6 +14,10 @@ const RouteComponent = () => {
     const { data } = useSuspenseQuery(
         housesQueries.members(slug, { page, limit }),
     );
+    const { data: permissions } = useSuspenseQuery(
+        housesQueries.permissions(slug),
+    );
+
     const { data: members, pagination } = data;
 
     return (
@@ -30,7 +34,12 @@ const RouteComponent = () => {
                     }}
                 />
             ) : (
-                <MembersList members={members} pagination={pagination} />
+                <MembersList
+                    members={members}
+                    slug={slug}
+                    pagination={pagination}
+                    permissions={permissions}
+                />
             )}
         </div>
     );
