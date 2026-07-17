@@ -9,9 +9,7 @@ const envSchema = z.object({
 const result = envSchema.safeParse(import.meta.env);
 
 if (!result.success) {
-    const missing = result.error.issues
-        .map((i) => i.path.join("."))
-        .join(", ");
+    const missing = result.error.issues.map((i) => i.path.join(".")).join(", ");
     throw new Error(
         `Missing or invalid environment variables: ${missing}. Check your .env file.`,
     );
