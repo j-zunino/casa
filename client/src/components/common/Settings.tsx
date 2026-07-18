@@ -131,7 +131,9 @@ export const SettingsContent = ({
             {icon && <ItemMedia>{icon}</ItemMedia>}
 
             <ItemContent>
-                <ItemTitle>{title}</ItemTitle>
+                <ItemTitle className="line-clamp-2 truncate text-wrap">
+                    {title}
+                </ItemTitle>
 
                 {description && (
                     <ItemDescription>{description}</ItemDescription>
