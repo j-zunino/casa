@@ -1,9 +1,11 @@
 import { signUpFormSchema } from "@casa/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { authHooks } from "../hooks";
 
+import { Required } from "@/components/common/Required";
 import { Button } from "@/components/ui/button";
 import {
     Field,
@@ -20,11 +22,21 @@ import { Link } from "@tanstack/react-router";
 import { Controller } from "react-hook-form";
 import { GitHubSignIn } from "./GitHubSignIn";
 
+import {
+    InputGroup,
+    InputGroupAddon,
+    InputGroupButton,
+    InputGroupInput,
+} from "@/components/ui/input-group";
+import { EyeClosedIcon, EyeIcon } from "@phosphor-icons/react";
 import type { z } from "zod";
 
 type FormValues = z.infer<typeof signUpFormSchema>;
 
 export const SignUpForm = () => {
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
     const { mutateAsync: signUp, isPending: isSigningUp } =
         authHooks.useSignUpEmail();
 
@@ -61,7 +73,7 @@ export const SignUpForm = () => {
                         render={({ field, fieldState }) => (
                             <Field data-invalid={fieldState.invalid}>
                                 <FieldLabel htmlFor="name">
-                                    Full name
+                                    Full name <Required />
                                 </FieldLabel>
                                 <Input
                                     {...field}
@@ -83,7 +95,9 @@ export const SignUpForm = () => {
                         control={form.control}
                         render={({ field, fieldState }) => (
                             <Field data-invalid={fieldState.invalid}>
-                                <FieldLabel htmlFor="email">Email</FieldLabel>
+                                <FieldLabel htmlFor="email">
+                                    Email <Required />
+                                </FieldLabel>
                                 <Input
                                     {...field}
                                     id="email"
@@ -105,16 +119,36 @@ export const SignUpForm = () => {
                         render={({ field, fieldState }) => (
                             <Field data-invalid={fieldState.invalid}>
                                 <FieldLabel htmlFor="password">
-                                    Password
+                                    Password <Required />
                                 </FieldLabel>
-                                <Input
-                                    {...field}
-                                    id="password"
-                                    type="password"
-                                    aria-invalid={fieldState.invalid}
-                                    placeholder="••••••••••••"
-                                    autoComplete="off"
-                                />
+                                <InputGroup>
+                                    <InputGroupInput
+                                        {...field}
+                                        id="password"
+                                        type={
+                                            showPassword ? "text" : "password"
+                                        }
+                                        aria-invalid={fieldState.invalid}
+                                        placeholder="••••••••••••"
+                                        autoComplete="off"
+                                    />
+                                    <InputGroupAddon align="inline-end">
+                                        <InputGroupButton
+                                            aria-label="Show password"
+                                            title="Show password"
+                                            size="icon-xs"
+                                            onClick={() =>
+                                                setShowPassword(!showPassword)
+                                            }
+                                        >
+                                            {showPassword ? (
+                                                <EyeClosedIcon />
+                                            ) : (
+                                                <EyeIcon />
+                                            )}
+                                        </InputGroupButton>
+                                    </InputGroupAddon>
+                                </InputGroup>
                                 {fieldState.invalid && (
                                     <FieldError errors={[fieldState.error]} />
                                 )}
@@ -128,16 +162,40 @@ export const SignUpForm = () => {
                         render={({ field, fieldState }) => (
                             <Field data-invalid={fieldState.invalid}>
                                 <FieldLabel htmlFor="passwordConfirmation">
-                                    Confirm password
+                                    Confirm password <Required />
                                 </FieldLabel>
-                                <Input
-                                    {...field}
-                                    id="passwordConfirmation"
-                                    type="password"
-                                    aria-invalid={fieldState.invalid}
-                                    placeholder="••••••••••••"
-                                    autoComplete="off"
-                                />
+                                <InputGroup>
+                                    <InputGroupInput
+                                        {...field}
+                                        id="passwordConfirmation"
+                                        type={
+                                            showConfirmPassword
+                                                ? "text"
+                                                : "password"
+                                        }
+                                        aria-invalid={fieldState.invalid}
+                                        placeholder="••••••••••••"
+                                        autoComplete="off"
+                                    />
+                                    <InputGroupAddon align="inline-end">
+                                        <InputGroupButton
+                                            aria-label="Show confirm password"
+                                            title="Show confirm password"
+                                            size="icon-xs"
+                                            onClick={() =>
+                                                setShowConfirmPassword(
+                                                    !showConfirmPassword,
+                                                )
+                                            }
+                                        >
+                                            {showConfirmPassword ? (
+                                                <EyeClosedIcon />
+                                            ) : (
+                                                <EyeIcon />
+                                            )}
+                                        </InputGroupButton>
+                                    </InputGroupAddon>
+                                </InputGroup>
                                 {fieldState.invalid && (
                                     <FieldError errors={[fieldState.error]} />
                                 )}

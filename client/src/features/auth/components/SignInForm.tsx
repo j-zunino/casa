@@ -1,9 +1,11 @@
 import { signInSchema } from "@casa/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { authHooks } from "../hooks";
 
+import { Required } from "@/components/common/Required";
 import { Button } from "@/components/ui/button";
 import {
     Field,
@@ -15,7 +17,14 @@ import {
     FieldSet,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import {
+    InputGroup,
+    InputGroupAddon,
+    InputGroupButton,
+    InputGroupInput,
+} from "@/components/ui/input-group";
 import { Spinner } from "@/components/ui/spinner";
+import { EyeClosedIcon, EyeIcon } from "@phosphor-icons/react";
 import { Link } from "@tanstack/react-router";
 import { Controller } from "react-hook-form";
 import { GitHubSignIn } from "./GitHubSignIn";
@@ -26,6 +35,8 @@ type FormValues = z.infer<typeof signInSchema>;
 
 // TODO: Forgot password
 export const SignInForm = () => {
+    const [showPassword, setShowPassword] = useState(false);
+
     const { mutateAsync: signIn, isPending: isSigningIn } =
         authHooks.useSignInEmail();
 
@@ -59,7 +70,9 @@ export const SignInForm = () => {
                         control={form.control}
                         render={({ field, fieldState }) => (
                             <Field data-invalid={fieldState.invalid}>
-                                <FieldLabel htmlFor="email">Email</FieldLabel>
+                                <FieldLabel htmlFor="email">
+                                    Email <Required />
+                                </FieldLabel>
                                 <Input
                                     {...field}
                                     id="email"
@@ -81,16 +94,36 @@ export const SignInForm = () => {
                         render={({ field, fieldState }) => (
                             <Field data-invalid={fieldState.invalid}>
                                 <FieldLabel htmlFor="password">
-                                    Password
+                                    Password <Required />
                                 </FieldLabel>
-                                <Input
-                                    {...field}
-                                    id="password"
-                                    type="password"
-                                    aria-invalid={fieldState.invalid}
-                                    placeholder="••••••••••••"
-                                    autoComplete="off"
-                                />
+                                <InputGroup>
+                                    <InputGroupInput
+                                        {...field}
+                                        id="password"
+                                        type={
+                                            showPassword ? "text" : "password"
+                                        }
+                                        aria-invalid={fieldState.invalid}
+                                        placeholder="••••••••••••"
+                                        autoComplete="off"
+                                    />
+                                    <InputGroupAddon align="inline-end">
+                                        <InputGroupButton
+                                            aria-label="Show password"
+                                            title="Show password"
+                                            size="icon-xs"
+                                            onClick={() =>
+                                                setShowPassword(!showPassword)
+                                            }
+                                        >
+                                            {showPassword ? (
+                                                <EyeClosedIcon />
+                                            ) : (
+                                                <EyeIcon />
+                                            )}
+                                        </InputGroupButton>
+                                    </InputGroupAddon>
+                                </InputGroup>
                                 {fieldState.invalid && (
                                     <FieldError errors={[fieldState.error]} />
                                 )}

@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { housesHooks } from "../hooks";
 
+import { Required } from "@/components/common/Required";
 import { Button } from "@/components/ui/button";
 import {
     Field,
@@ -52,6 +53,7 @@ export const CreateHouseForm = () => {
                             <Field data-invalid={fieldState.invalid}>
                                 <FieldLabel htmlFor="name">
                                     House name
+                                    <Required />
                                 </FieldLabel>
                                 <Input
                                     {...field}
