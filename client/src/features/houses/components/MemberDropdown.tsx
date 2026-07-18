@@ -38,8 +38,8 @@ export const MemberDropdown = ({ member, slug }: Props) => {
         housesQueries.permissions(slug),
     );
 
-    const canUpdate = permissions?.member.includes("update");
-    const canKick = permissions?.member.includes("delete");
+    const canUpdate = permissions.member?.includes("update");
+    const canKick = permissions.member?.includes("delete");
     const isOwner = member?.role === "owner";
 
     const onRoleUpdate = (role: Member["role"]) => {

@@ -28,7 +28,7 @@ export const InviteDropdown = ({ inviteCode, slug }: Props) => {
         housesQueries.permissions(slug),
     );
 
-    const canRevoke = permissions?.invitation.includes("revoke");
+    const canRevoke = permissions.invitation?.includes("revoke");
 
     const handleCopy = async () => {
         toast.promise(
