@@ -1,5 +1,7 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { housesHooks } from "../hooks";
+import { housesQueries } from "../queries";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -27,16 +29,18 @@ import type { House, Member } from "../types";
 interface Props {
     member: Member;
     slug: House["slug"];
-    permissions: Record<string, string[]>;
 }
 
-export const MemberDropdown = ({ member, slug, permissions }: Props) => {
+export const MemberDropdown = ({ member, slug }: Props) => {
+    const { mutateAsync: updateRole } = housesHooks.useUpdateRole(slug);
+    const { mutateAsync: kickMember } = housesHooks.useRemoveMember(slug);
+    const { data: permissions } = useSuspenseQuery(
+        housesQueries.permissions(slug),
+    );
+
     const canUpdate = permissions?.member.includes("update");
     const canKick = permissions?.member.includes("delete");
     const isOwner = member?.role === "owner";
-
-    const { mutateAsync: updateRole } = housesHooks.useUpdateRole(slug);
-    const { mutateAsync: kickMember } = housesHooks.useRemoveMember(slug);
 
     const onRoleUpdate = (role: Member["role"]) => {
         toast.promise(

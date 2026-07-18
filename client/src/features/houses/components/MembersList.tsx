@@ -28,21 +28,14 @@ import { MemberDropdown } from "./MemberDropdown";
 import type { ApiPagination } from "@casa/types";
 import type { House, Member } from "../types";
 
-// TODO: Type permissions?
 interface Props {
     members: Member[];
     slug: House["slug"];
     pagination: ApiPagination;
-    permissions: Record<string, string[]>;
 }
 
 // TODO: Only show actions for owners/admins, needs to implement house role checking
-export const MembersList = ({
-    members,
-    slug,
-    pagination,
-    permissions,
-}: Props) => {
+export const MembersList = ({ members, slug, pagination }: Props) => {
     return (
         <>
             <Table className="hidden sm:table">
@@ -86,11 +79,7 @@ export const MembersList = ({
                                 <RoleBadge role={member.role} />
                             </TableCell>
                             <TableCell className="text-right">
-                                <MemberDropdown
-                                    member={member}
-                                    slug={slug}
-                                    permissions={permissions}
-                                />
+                                <MemberDropdown member={member} slug={slug} />
                             </TableCell>
                         </TableRow>
                     ))}
@@ -129,11 +118,7 @@ export const MembersList = ({
                             </Truncate>
                         </CardDescription>
                         <CardAction>
-                            <MemberDropdown
-                                member={member}
-                                slug={slug}
-                                permissions={permissions}
-                            />
+                            <MemberDropdown member={member} slug={slug} />
                         </CardAction>
                     </CardHeader>
                 </Card>
