@@ -47,9 +47,8 @@ export const ErrorComponent = ({ icon, goHome = true, error }: Props) => {
 
                 {message && (
                     <EmptyDescription>
-                        {/* TODO: Replace should be done in the server */}
-                        {/* TODO: Should be case-insensitive */}
-                        {message.replace("organization", "house")}
+                        {/* NOTE: .replace() should be done in the server */}
+                        {message.replace(/organization/gi, "house")}
                     </EmptyDescription>
                 )}
             </EmptyHeader>
