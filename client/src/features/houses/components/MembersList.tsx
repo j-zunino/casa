@@ -129,7 +129,11 @@ export const MembersList = ({
                             </Truncate>
                         </CardDescription>
                         <CardAction>
-                            <MemberDropdown />
+                            <MemberDropdown
+                                member={member}
+                                slug={slug}
+                                permissions={permissions}
+                            />
                         </CardAction>
                     </CardHeader>
                 </Card>
