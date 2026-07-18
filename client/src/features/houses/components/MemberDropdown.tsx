@@ -36,6 +36,7 @@ export const MemberDropdown = ({ member, slug, permissions }: Props) => {
     const isOwner = member?.role === "owner";
 
     const { mutateAsync: updateRole } = housesHooks.useUpdateRole(slug);
+    const { mutateAsync: kickMember } = housesHooks.useRemoveMember(slug);
 
     const onRoleUpdate = (role: Member["role"]) => {
         toast.promise(
@@ -47,6 +48,19 @@ export const MemberDropdown = ({ member, slug, permissions }: Props) => {
             {
                 success: "Role updated successfully!",
                 error: (error) => error.message ?? "Failed to update role",
+            },
+        );
+    };
+
+    const onKickMember = () => {
+        toast.promise(
+            kickMember({
+                memberIdOrEmail: member.id,
+                organizationId: member.organizationId,
+            }),
+            {
+                success: "Member kicked successfully!",
+                error: (error) => error.message ?? "Failed to kick member",
             },
         );
     };
@@ -97,7 +111,10 @@ export const MemberDropdown = ({ member, slug, permissions }: Props) => {
                 {canUpdate && canKick && <DropdownMenuSeparator />}
 
                 {canKick && (
-                    <DropdownMenuItem variant="destructive">
+                    <DropdownMenuItem
+                        variant="destructive"
+                        onClick={onKickMember}
+                    >
                         <UserMinusIcon />
                         Kick member
                     </DropdownMenuItem>
