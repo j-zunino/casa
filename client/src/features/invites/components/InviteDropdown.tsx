@@ -1,4 +1,6 @@
+import { housesQueries } from "@/features/houses/queries";
 import { copyToClipboard } from "@/lib/utils";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { invitesHooks } from "../hooks";
 
@@ -22,6 +24,11 @@ interface Props {
 
 export const InviteDropdown = ({ inviteCode, slug }: Props) => {
     const { mutate: revokeInvite } = invitesHooks.useRevokeInvite(slug);
+    const { data: permissions } = useSuspenseQuery(
+        housesQueries.permissions(slug),
+    );
+
+    const canRevoke = permissions?.invitation.includes("revoke");
 
     const handleCopy = async () => {
         toast.promise(
@@ -49,17 +56,19 @@ export const InviteDropdown = ({ inviteCode, slug }: Props) => {
                     Copy link
                 </DropdownMenuItem>
 
-                <DropdownMenuSeparator />
+                {canRevoke && (
+                    <>
+                        <DropdownMenuSeparator />
 
-                {/* TODO: Confirm action */}
-                {/* TODO: Only show for admin/owner, needs to implement house role checking */}
-                <DropdownMenuItem
-                    variant="destructive"
-                    onClick={() => revokeInvite(inviteCode)}
-                >
-                    <ProhibitIcon />
-                    Revoke
-                </DropdownMenuItem>
+                        <DropdownMenuItem
+                            variant="destructive"
+                            onClick={() => revokeInvite(inviteCode)}
+                        >
+                            <ProhibitIcon />
+                            Revoke
+                        </DropdownMenuItem>
+                    </>
+                )}
             </DropdownMenuContent>
         </DropdownMenu>
     );
