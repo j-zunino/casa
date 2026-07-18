@@ -6,6 +6,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ErrorComponent } from "@/components/common/ErrorComponent";
 import { CreateInviteDialog, InvitesList } from "@/features/invites/components";
 import { EnvelopeIcon } from "@phosphor-icons/react";
+import { housesQueries } from "@/features/houses/queries";
 
 const RouteComponent = () => {
     const { slug } = Route.useParams();
@@ -14,6 +15,10 @@ const RouteComponent = () => {
     const { data } = useSuspenseQuery(
         invitesQueries.all(slug, { page, limit }),
     );
+    const { data: permissions } = useSuspenseQuery(
+        housesQueries.permissions(slug),
+    );
+
     const { data: invites, pagination } = data;
 
     return (
@@ -23,8 +28,9 @@ const RouteComponent = () => {
                     Invitation links
                 </h2>
 
-                {/* TODO: Only show for admin/owner, needs to implement house role checking */}
-                <CreateInviteDialog slug={slug} />
+                {permissions.invitation?.includes("create") && (
+                    <CreateInviteDialog slug={slug} />
+                )}
             </div>
 
             {invites.length <= 0 ? (
