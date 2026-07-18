@@ -10,19 +10,19 @@ import { generateSlug, parseHouseName } from "../houses/houses.utils";
 
 const ac = createAccessControl({
     organization: ["update", "delete"],
-    member: ["update", "kick", "read"],
+    member: ["update", "delete", "read"],
     invitation: ["create", "update", "revoke", "delete", "read"],
 } as const);
 
 const owner = ac.newRole({
     organization: ["update", "delete"],
-    member: ["update", "kick", "read"],
+    member: ["update", "delete", "read"],
     invitation: ["create", "update", "revoke", "delete", "read"],
 });
 
 const admin = ac.newRole({
     organization: ["update"],
-    member: ["kick", "read"],
+    member: ["delete", "read"],
     invitation: ["create", "update", "revoke", "read"],
 });
 
@@ -56,7 +56,7 @@ export const auth = betterAuth({
             },
             organizationHooks: {
                 beforeCreateOrganization: async ({ organization }) => {
-                    const name = parseHouseName(organization.name);
+                    const name = parseHouseName(organization.name ?? "");
                     const slug = generateSlug(name);
 
                     await auth.api.checkOrganizationSlug({ body: { slug } });
@@ -65,7 +65,7 @@ export const auth = betterAuth({
                 },
 
                 beforeUpdateOrganization: async ({ organization, member }) => {
-                    const name = parseHouseName(organization.name);
+                    const name = parseHouseName(organization.name ?? "");
                     const slug = generateSlug(name);
                     const current = await prisma.house.findUnique({
                         where: { id: member.organizationId },
@@ -133,6 +133,55 @@ export const auth = betterAuth({
                     throw new APIError(ErrorCodes.BAD_REQUEST, {
                         message:
                             result.error.issues[0]?.message ?? "invalid input",
+                    });
+                }
+            }
+
+            // TODO: Prevent names to contain "@"
+            if (ctx.path === "/organization/remove-member") {
+                const session = await auth.api.getSession({
+                    headers: ctx.headers,
+                });
+                if (!session) {
+                    throw new APIError("UNAUTHORIZED", {
+                        message: "Not authenticated",
+                    });
+                }
+
+                const actor = await prisma.member.findFirst({
+                    where: {
+                        userId: session.user.id,
+                        houseId: ctx.body.organizationId, // NOTE: Probably shouldn't trust this
+                    },
+                    select: { role: true },
+                });
+
+                if (!actor) {
+                    throw new APIError(ErrorCodes.FORBIDDEN, {
+                        message: "You are not a member of this house",
+                    });
+                }
+
+                const target = await prisma.member.findUnique({
+                    where: { id: ctx.body.memberIdOrEmail },
+                    select: { role: true },
+                });
+
+                if (!target) {
+                    throw new APIError(ErrorCodes.NOT_FOUND, {
+                        message: "Member not found",
+                    });
+                }
+
+                const roleRank = {
+                    member: 0,
+                    admin: 1,
+                    owner: 2,
+                } as const;
+
+                if (roleRank[actor.role] <= roleRank[target.role]) {
+                    throw new APIError(ErrorCodes.FORBIDDEN, {
+                        message: "You cannot remove an equal or higher role",
                     });
                 }
             }

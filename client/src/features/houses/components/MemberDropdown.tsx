@@ -32,7 +32,7 @@ interface Props {
 
 export const MemberDropdown = ({ member, slug, permissions }: Props) => {
     const canUpdate = permissions?.member.includes("update");
-    const canKick = permissions?.member.includes("kick");
+    const canKick = permissions?.member.includes("delete");
     const isOwner = member?.role === "owner";
 
     const { mutateAsync: updateRole } = housesHooks.useUpdateRole(slug);
