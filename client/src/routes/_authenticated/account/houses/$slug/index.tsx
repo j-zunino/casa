@@ -44,8 +44,10 @@ const RouteComponent = () => {
                         fallback={<HouseLineIcon />}
                     />
 
-                    <div className="flex w-full justify-between">
-                        <AvatarLabel>{house.name}</AvatarLabel>
+                    <div className="flex w-full justify-between gap-1.5">
+                        <AvatarLabel className="line-clamp-2 text-left text-wrap">
+                            {house.name}
+                        </AvatarLabel>
 
                         {permissions.organization?.includes("update") && (
                             <EditHouseDialog house={house} />
