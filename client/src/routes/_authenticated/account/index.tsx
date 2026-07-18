@@ -35,7 +35,6 @@ const RouteComponent = () => {
     const { data: session } = useSuspenseQuery(authQueries.session());
     const { data: houses } = useSuspenseQuery(housesQueries.all());
 
-    // TODO: If account is email allow to change username
     return (
         <Settings>
             <div className="flex items-center gap-1.5">
