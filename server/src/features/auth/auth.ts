@@ -179,7 +179,10 @@ export const auth = betterAuth({
                     owner: 2,
                 } as const;
 
-                if (roleRank[actor.role] <= roleRank[target.role]) {
+                if (
+                    roleRank[actor.role as keyof typeof roleRank] <=
+                    roleRank[target.role as keyof typeof roleRank]
+                ) {
                     throw new APIError(ErrorCodes.FORBIDDEN, {
                         message: "You cannot remove an equal or higher role",
                     });
