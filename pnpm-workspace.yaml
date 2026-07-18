@@ -3,6 +3,11 @@ packages:
   - server/
   - packages/*
 
+allowBuilds:
+  '@prisma/engines': true
+  esbuild: true
+  prisma: true
+
 catalog:
   '@eslint/js': ^10
   '@prisma/adapter-pg': 7.2.0
