@@ -39,6 +39,8 @@ model User {
     members            Member[]
     invitations        Invitation[] @relation("InvitationInviter")
     revokedInvitations Invitation[] @relation("InvitationRevokedBy")
+    todos              Todo[]    @relation("UserTodoCreated")
+    updatedTodos       Todo[]    @relation("UserTodoUpdated")
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -107,6 +109,7 @@ model House {
     metadata    String?
     members     Member[]
     invitations Invitation[]
+    todos       Todo[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -152,4 +155,25 @@ model Invitation {
     @@index([houseId])
     @@index([code])
     @@map("invitation")
+}
+
+model Todo {
+    id          String     @id
+    title       String
+    description String?
+    visibility  Visibility @default(PRIVATE)
+    isCompleted Boolean    @default(false)
+    house       House      @relation(fields: [houseId], references: [id], onDelete: Cascade)
+    houseId     String
+    createdBy   User   @relation("UserTodoCreated", fields: [createdById], references: [id])
+    createdById String
+    updatedBy   User?  @relation("UserTodoUpdated", fields: [updatedById], references: [id])
+    updatedById String?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([houseId])
+    @@index([createdById])
+    @@map("todo")
 }
