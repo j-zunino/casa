@@ -14,7 +14,7 @@ catalog:
   '@prisma/client': 7.2.0
   '@types/node': ^22.19.11
   better-auth: ^1.6.9
-  eslint: ^9
+  eslint: ^10
   eslint-config-prettier: ^10
   eslint-plugin-prettier: ^5.5
   globals: ^17.7
