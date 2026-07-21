@@ -7,3 +7,4 @@ export {
 export { houseSchema } from "./houses";
 export { inviteLinkSchema } from "./invites";
 export { paginationSearchSchema } from "./pagination";
+export { createTodoSchema, updateTodoSchema } from "./todo";
