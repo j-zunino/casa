@@ -11,6 +11,7 @@ import { healthRouter } from "./health";
 import { housesRouter } from "./houses";
 import { invitesRouter } from "./invites";
 import { meRouter } from "./me";
+import { todosRouter } from "./todos";
 
 import type { NextFunction, Request, Response } from "express";
 
@@ -26,6 +27,7 @@ registerRoutes(router, [
     { prefix: "/houses", router: housesRouter },
     { prefix: "/me", router: meRouter },
     { prefix: "/invites", router: invitesRouter },
+    { prefix: "/houses/:houseSlug/todos", router: todosRouter },
 ]);
 
 // Handle 404 routes

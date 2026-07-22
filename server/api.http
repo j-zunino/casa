@@ -86,6 +86,13 @@ Content-Type: application/json
 }
 
 
+### Get house permissions
+
+# @attach-cookie-jar
+
+GET {{URL}}/houses/{{HOUSE_SLUG}}/permissions
+
+
 ##############################################################################
 ### INVITE
 ##############################################################################
@@ -129,3 +136,69 @@ POST {{URL}}/invites/{{INVITE_CODE}}/join
 # @attach-cookie-jar
 
 POST {{URL}}/houses/{{HOUSE_SLUG}}/invites/{{INVITE_CODE}}/revoke
+
+
+### Update invite max uses
+
+# @attach-cookie-jar
+
+PATCH {{URL}}/houses/{{HOUSE_SLUG}}/invites/{{INVITE_CODE}}
+Content-Type: application/json
+
+{
+  "maxUses": 5
+}
+
+
+##############################################################################
+### TODOS
+##############################################################################
+
+@TODO_ID = 83b3459d-8212-476c-9743-03635e3a8482
+
+### List house todos
+
+# @attach-cookie-jar
+
+GET {{URL}}/houses/{{HOUSE_SLUG}}/todos?page=1&limit=10
+
+
+### Create todo
+
+# @attach-cookie-jar
+
+POST {{URL}}/houses/{{HOUSE_SLUG}}/todos
+Content-Type: application/json
+
+{
+  "title": "Buy groceries",
+  "description": "Milk, eggs, bread",
+  "visibility": "PRIVATE"
+}
+
+
+### Get todo by ID
+
+# @attach-cookie-jar
+
+GET {{URL}}/houses/{{HOUSE_SLUG}}/todos/{{TODO_ID}}
+
+
+### Update todo
+
+# @attach-cookie-jar
+
+PATCH {{URL}}/houses/{{HOUSE_SLUG}}/todos/{{TODO_ID}}
+Content-Type: application/json
+
+{
+  "title": "Buy groceries and cleaning supplies",
+  "isCompleted": true
+}
+
+
+### Delete todo
+
+# @attach-cookie-jar
+
+DELETE {{URL}}/houses/{{HOUSE_SLUG}}/todos/{{TODO_ID}}
