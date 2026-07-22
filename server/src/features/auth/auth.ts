@@ -12,22 +12,50 @@ const ac = createAccessControl({
     organization: ["update", "delete"],
     member: ["update", "delete", "read"],
     invitation: ["create", "update", "revoke", "delete", "read"],
+    todo: [
+        "create",
+        "update",
+        "delete",
+        "read",
+        "update:any",
+        "delete:any",
+        "read:any",
+    ],
 } as const);
 
 const owner = ac.newRole({
     organization: ["update", "delete"],
     member: ["update", "delete", "read"],
     invitation: ["create", "update", "revoke", "delete", "read"],
+    todo: [
+        "create",
+        "update",
+        "delete",
+        "read",
+        "update:any",
+        "delete:any",
+        "read:any",
+    ],
 });
 
 const admin = ac.newRole({
     organization: ["update"],
     member: ["delete", "read"],
     invitation: ["create", "update", "revoke", "read"],
+    todo: [
+        "create",
+        "update",
+        "delete",
+        "read",
+        "update:any",
+        "delete:any",
+        "read:any",
+    ],
 });
 
 const member = ac.newRole({
     member: ["read"],
+    todo: ["create", "update", "delete", "read"],
 });
 
 export const roleDefinitions = { owner, admin, member } as const;
