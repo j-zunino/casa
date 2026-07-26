@@ -9,9 +9,8 @@ pkgs.mkShell {
     prettierd
     prisma-language-server
     tailwindcss-language-server
-    typescript-language-server
     vscode-langservers-extracted
-    vtsls
+    typescript-go
   ];
 
   buildInputs = with pkgs; [
