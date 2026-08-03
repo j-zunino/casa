@@ -4,6 +4,9 @@ export type TodoDto = {
     description: string | null;
     visibility: "PUBLIC" | "PRIVATE";
     isCompleted: boolean;
+    dueDate: Date | null;
+    parentId: string | null;
+    subTasks: TodoDto[];
     createdById: string;
     updatedById: string | null;
     createdAt: Date;

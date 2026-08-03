@@ -28,9 +28,10 @@ export const todosServices = {
         const skip = (page - 1) * limit;
 
         const where = canReadAny
-            ? { houseId: house.id }
+            ? { houseId: house.id, parentId: null }
             : {
                   houseId: house.id,
+                  parentId: null,
                   OR: [
                       { visibility: "PUBLIC" as Visibility },
                       { createdById: userId },
@@ -43,6 +44,7 @@ export const todosServices = {
                 skip,
                 take: limit,
                 orderBy: { createdAt: "desc" },
+                include: { subTasks: true },
             }),
             todosQueries.count(client, where),
         ]);
@@ -69,6 +71,7 @@ export const todosServices = {
 
         const todo = await todosQueries.findUnique(client, {
             where: { id },
+            include: { subTasks: true },
         });
 
         if (!todo || todo.houseId !== house.id) {
@@ -102,9 +105,24 @@ export const todosServices = {
                 title: data.title,
                 description: data.description ?? null,
                 visibility: data.visibility ?? "PRIVATE",
+                dueDate: data.dueDate,
                 houseId: house.id,
                 createdById: userId,
+                ...(data.subTasks?.length
+                    ? {
+                          subTasks: {
+                              create: data.subTasks.map((title) => ({
+                                  id: crypto.randomUUID(),
+                                  title,
+                                  visibility: "PRIVATE" as Visibility,
+                                  houseId: house.id,
+                                  createdById: userId,
+                              })),
+                          },
+                      }
+                    : {}),
             },
+            include: { subTasks: true },
         });
     },
 
@@ -141,7 +159,27 @@ export const todosServices = {
 
         return todosQueries.update(client, {
             where: { id },
-            data: { ...data, updatedById: userId },
+            data: {
+                title: data.title,
+                description: data.description,
+                visibility: data.visibility,
+                isCompleted: data.isCompleted,
+                dueDate: data.dueDate,
+                updatedById: userId,
+                ...(data.subTasks !== undefined && {
+                    subTasks: {
+                        deleteMany: {},
+                        create: data.subTasks.map((title) => ({
+                            id: crypto.randomUUID(),
+                            title,
+                            visibility: "PRIVATE" as Visibility,
+                            houseId: house.id,
+                            createdById: userId,
+                        })),
+                    },
+                }),
+            },
+            include: { subTasks: true },
         });
     },
 

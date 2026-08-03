@@ -163,6 +163,10 @@ model Todo {
     description String?
     visibility  Visibility @default(PRIVATE)
     isCompleted Boolean    @default(false)
+    dueDate     DateTime?
+    parent      Todo?      @relation("TodoSubtasks", fields: [parentId], references: [id], onDelete: Cascade)
+    parentId    String?
+    subTasks    Todo[]     @relation("TodoSubtasks")
     house       House      @relation(fields: [houseId], references: [id], onDelete: Cascade)
     houseId     String
     createdBy   User   @relation("UserTodoCreated", fields: [createdById], references: [id])
@@ -175,5 +179,6 @@ model Todo {
 
     @@index([houseId])
     @@index([createdById])
+    @@index([parentId])
     @@map("todo")
 }

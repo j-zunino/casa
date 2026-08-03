@@ -83,7 +83,13 @@ export const CreateTaskForm = ({ slug }: Props) => {
     };
 
     const onSubmit = (data: FormValues) => {
-        toast.promise(createTodo(data), {
+        const payload: FormValues = {
+            ...data,
+            dueDate: date,
+            subTasks,
+        };
+
+        toast.promise(createTodo(payload), {
             loading: "Creating task...",
             success: () => {
                 form.reset();
