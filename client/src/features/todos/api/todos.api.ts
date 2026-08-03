@@ -1,5 +1,5 @@
 import { api } from "@/lib/api";
-import { createTodoSchema, updateTodoSchema } from "@casa/schemas";
+import type { createTodoSchema, updateTodoSchema } from "@casa/schemas";
 
 import type { House } from "@/features/houses/types";
 import type { TodoDto } from "@casa/types";

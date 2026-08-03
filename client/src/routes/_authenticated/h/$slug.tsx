@@ -1,4 +1,5 @@
 import { housesQueries } from "@/features/houses/queries";
+import { Tasks } from "@/features/todos/components/Tasks";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -11,6 +12,10 @@ const RouteComponent = () => {
     return (
         <div>
             <Link to="/">Back</Link>
+
+            <div className="p-8">
+                <Tasks slug={slug} />
+            </div>
         </div>
     );
 };

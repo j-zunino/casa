@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -10,7 +11,13 @@ import {
 import { PlusIcon } from "@phosphor-icons/react";
 import { CreateTaskForm } from "./CreateTaskForm";
 
-export const Tasks = () => {
+import type { House } from "@/features/houses/types";
+
+interface Props {
+    slug: House["slug"];
+}
+
+export const Tasks = ({ slug }: Props) => {
     return (
         <Card className="max-w-sm">
             <CardHeader>
@@ -18,13 +25,13 @@ export const Tasks = () => {
             </CardHeader>
             <CardContent>
                 {/* TODO: Add mobile view */}
-                <TasksPopover />
+                <TasksPopover slug={slug} />
             </CardContent>
         </Card>
     );
 };
 
-export const TasksPopover = () => {
+export const TasksPopover = ({ slug }: Props) => {
     return (
         <Popover>
             <PopoverTrigger asChild>
@@ -38,7 +45,7 @@ export const TasksPopover = () => {
                     <PopoverTitle>Create new task</PopoverTitle>
                 </PopoverHeader>
 
-                <CreateTaskForm />
+                <CreateTaskForm slug={slug} />
             </PopoverContent>
         </Popover>
     );

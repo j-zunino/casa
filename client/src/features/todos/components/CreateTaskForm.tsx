@@ -1,11 +1,22 @@
+import { createTodoSchema } from "@casa/schemas";
 import { format } from "date-fns";
 import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { todosHooks } from "../hooks";
 
 import { Required } from "@/components/common/Required";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Calendar } from "@/components/ui/calendar";
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
+import {
+    Field,
+    FieldContent,
+    FieldError,
+    FieldGroup,
+    FieldLabel,
+} from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import {
     Popover,
@@ -20,6 +31,8 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { Spinner } from "@/components/ui/spinner";
+import { Textarea } from "@/components/ui/textarea";
 import {
     CalendarIcon,
     CheckCircleIcon,
@@ -29,92 +42,259 @@ import {
     XIcon,
 } from "@phosphor-icons/react";
 
+import type { House } from "@/features/houses/types";
+import type { z } from "zod";
+
+type FormValues = z.input<typeof createTodoSchema>;
+
+interface Props {
+    slug: House["slug"];
+}
+
 const visibilityValues = [
     { label: "Private", icon: <LockIcon />, value: "PRIVATE" as const },
     { label: "Public", icon: <GlobeIcon />, value: "PUBLIC" as const },
 ];
 
-export const CreateTaskForm = () => {
+export const CreateTaskForm = ({ slug }: Props) => {
+    const { mutateAsync: createTodo, isPending: isCreating } =
+        todosHooks.useCreate(slug);
+
     const [createSub, setCreateSub] = useState(false);
+    const [subTasks, setSubTasks] = useState<string[]>([]);
+    const [subTaskInput, setSubTaskInput] = useState("");
     const [date, setDate] = useState<Date>();
 
+    const form = useForm<FormValues>({
+        resolver: zodResolver(createTodoSchema),
+        defaultValues: {
+            title: "",
+            description: "",
+            visibility: "PRIVATE",
+        },
+    });
+
+    const addSubTask = () => {
+        if (!subTaskInput.trim()) return;
+
+        setSubTasks((prev) => [...prev, subTaskInput.trim()]);
+        setSubTaskInput("");
+        setCreateSub(false);
+    };
+
+    const onSubmit = (data: FormValues) => {
+        toast.promise(createTodo(data), {
+            loading: "Creating task...",
+            success: () => {
+                form.reset();
+                setSubTasks([]);
+                setDate(undefined);
+
+                return "Task created successfully!";
+            },
+            error: (err) => err?.message ?? "An unexpected error occurred",
+        });
+    };
+
+    const handleCancel = () => {
+        form.reset();
+        setSubTasks([]);
+        setSubTaskInput("");
+        setDate(undefined);
+        setCreateSub(false);
+    };
+
     return (
-        <form>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
             <FieldGroup>
-                <Field>
-                    <FieldLabel htmlFor="title">
-                        Title <Required />
-                    </FieldLabel>
-                    <Input id="name" placeholder="Grocery's list" />
-                </Field>
+                <Controller
+                    name="title"
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                        <Field data-invalid={fieldState.invalid}>
+                            <FieldLabel htmlFor="title">
+                                Title <Required />
+                            </FieldLabel>
+
+                            <FieldContent>
+                                <Input
+                                    {...field}
+                                    id="title"
+                                    aria-invalid={fieldState.invalid}
+                                    placeholder="Grocery's list"
+                                />
+
+                                {fieldState.invalid && (
+                                    <FieldError errors={[fieldState.error]} />
+                                )}
+                            </FieldContent>
+                        </Field>
+                    )}
+                />
+
+                <Controller
+                    name="description"
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                        <Field data-invalid={fieldState.invalid}>
+                            <FieldLabel htmlFor="description">
+                                Description
+                            </FieldLabel>
+
+                            <FieldContent>
+                                <Textarea
+                                    {...field}
+                                    id="description"
+                                    aria-invalid={fieldState.invalid}
+                                    placeholder="Describe your task..."
+                                />
+
+                                {fieldState.invalid && (
+                                    <FieldError errors={[fieldState.error]} />
+                                )}
+                            </FieldContent>
+                        </Field>
+                    )}
+                />
 
                 <Field>
                     <FieldLabel>Sub tasks</FieldLabel>
-                    {createSub ? (
-                        <ButtonGroup>
-                            <Input size="sm" placeholder="Type something..." />
+
+                    <FieldContent>
+                        {subTasks.map((task, index) => (
+                            <ButtonGroup key={index} className="w-full">
+                                <Input
+                                    size="sm"
+                                    value={task}
+                                    onChange={(e) => {
+                                        const next = [...subTasks];
+                                        next[index] = e.target.value;
+                                        setSubTasks(next);
+                                    }}
+                                />
+
+                                <Button
+                                    type="button"
+                                    size="icon-sm"
+                                    variant="ghost"
+                                    className="ml-1.5"
+                                    onClick={() =>
+                                        setSubTasks((prev) =>
+                                            prev.filter((_, i) => i !== index),
+                                        )
+                                    }
+                                >
+                                    <XIcon />
+                                </Button>
+                            </ButtonGroup>
+                        ))}
+
+                        {createSub ? (
+                            <ButtonGroup className="w-full">
+                                <Input
+                                    size="sm"
+                                    placeholder="Type something..."
+                                    value={subTaskInput}
+                                    onChange={(e) =>
+                                        setSubTaskInput(e.target.value)
+                                    }
+                                    onKeyDown={(e) => {
+                                        if (e.key === "Enter") {
+                                            e.preventDefault();
+                                            addSubTask();
+                                        }
+                                    }}
+                                />
+
+                                <Button
+                                    type="button"
+                                    size="sm"
+                                    variant="outline"
+                                    onClick={addSubTask}
+                                >
+                                    <PlusIcon /> Add
+                                </Button>
+
+                                <Button
+                                    type="button"
+                                    size="icon-sm"
+                                    variant="ghost"
+                                    className="ml-1.5"
+                                    onClick={() => setCreateSub(false)}
+                                >
+                                    <XIcon />
+                                </Button>
+                            </ButtonGroup>
+                        ) : (
                             <Button
                                 type="button"
                                 size="sm"
                                 variant="outline"
-                                onClick={() => setCreateSub(false)}
+                                className="w-fit"
+                                onClick={() => setCreateSub(true)}
                             >
-                                <PlusIcon /> Add
+                                <CheckCircleIcon />
+                                Add new sub task
                             </Button>
-                            <Button
-                                type="button"
-                                size="icon-sm"
-                                variant="ghost"
-                                className="ml-1.5"
-                                onClick={() => setCreateSub(false)}
-                            >
-                                <XIcon />
-                            </Button>
-                        </ButtonGroup>
-                    ) : (
-                        <Button
-                            type="button"
-                            size="sm"
-                            variant="outline"
-                            onClick={() => setCreateSub(true)}
-                        >
-                            <CheckCircleIcon />
-                            Add new sub task
-                        </Button>
-                    )}
+                        )}
+                    </FieldContent>
                 </Field>
 
                 <Field orientation="horizontal">
-                    <Field>
-                        <FieldLabel htmlFor="visibility">
-                            Visibility <Required />
-                        </FieldLabel>
-                        <Select defaultValue="PRIVATE" name="visibility">
-                            <SelectTrigger>
-                                <SelectValue />
-                            </SelectTrigger>
+                    <Controller
+                        name="visibility"
+                        control={form.control}
+                        render={({ field, fieldState }) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldLabel htmlFor="visibility">
+                                    Visibility <Required />
+                                </FieldLabel>
 
-                            <SelectContent>
-                                <SelectGroup>
-                                    {visibilityValues.map((item) => (
-                                        <SelectItem
-                                            key={item.value}
-                                            value={item.value}
+                                <FieldContent>
+                                    <Select
+                                        value={field.value}
+                                        onValueChange={field.onChange}
+                                        name="visibility"
+                                    >
+                                        <SelectTrigger
+                                            aria-invalid={fieldState.invalid}
                                         >
-                                            {item.icon}
-                                            {item.label}
-                                        </SelectItem>
-                                    ))}
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
-                    </Field>
+                                            <SelectValue />
+                                        </SelectTrigger>
+
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                {visibilityValues.map(
+                                                    (item) => (
+                                                        <SelectItem
+                                                            key={item.value}
+                                                            value={item.value}
+                                                        >
+                                                            {item.icon}
+                                                            {item.label}
+                                                        </SelectItem>
+                                                    ),
+                                                )}
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
+
+                                    {fieldState.invalid && (
+                                        <FieldError
+                                            errors={[fieldState.error]}
+                                        />
+                                    )}
+                                </FieldContent>
+                            </Field>
+                        )}
+                    />
 
                     <Field>
                         <FieldLabel htmlFor="due-date">Due date</FieldLabel>
                         <Popover>
                             <PopoverTrigger asChild>
                                 <Button
+                                    type="button"
                                     variant="outline"
                                     data-empty={!date}
                                     name="due-date"
@@ -128,6 +308,7 @@ export const CreateTaskForm = () => {
                                     )}
                                 </Button>
                             </PopoverTrigger>
+
                             <PopoverContent className="w-auto p-0">
                                 <Calendar
                                     mode="single"
@@ -140,8 +321,25 @@ export const CreateTaskForm = () => {
                 </Field>
 
                 <div className="ml-auto flex gap-2">
-                    <Button variant="outline">Cancel</Button>
-                    <Button>Create task</Button>
+                    <Button
+                        type="button"
+                        variant="outline"
+                        onClick={handleCancel}
+                        disabled={isCreating}
+                    >
+                        Cancel
+                    </Button>
+
+                    <Button type="submit" disabled={isCreating}>
+                        {isCreating ? (
+                            <>
+                                <Spinner />
+                                Creating...
+                            </>
+                        ) : (
+                            "Create task"
+                        )}
+                    </Button>
                 </div>
             </FieldGroup>
         </form>
