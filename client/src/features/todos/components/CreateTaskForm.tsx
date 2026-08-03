@@ -265,6 +265,7 @@ export const CreateTaskForm = ({ slug }: Props) => {
                                     >
                                         <SelectTrigger
                                             aria-invalid={fieldState.invalid}
+                                            className="w-full"
                                         >
                                             <SelectValue />
                                         </SelectTrigger>
