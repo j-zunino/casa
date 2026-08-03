@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/popover";
 import { PlusIcon } from "@phosphor-icons/react";
 import { CreateTaskForm } from "./CreateTaskForm";
+import { TasksList } from "./TasksList";
 
 import type { House } from "@/features/houses/types";
 import type { TodoDto } from "@casa/types";
@@ -25,6 +26,7 @@ import type { ComponentProps } from "react";
 
 interface Props {
     slug: House["slug"];
+    todos: TodoDto;
 }
 
 const NewTaskButton = ({ ...props }: ComponentProps<typeof Button>) => {
@@ -49,6 +51,8 @@ export const Tasks = ({ slug, todos }: Props) => {
                 ) : (
                     <TasksDialog slug={slug} />
                 )}
+
+                <TasksList todos={todos} />
             </CardContent>
         </Card>
     );

@@ -1,8 +1,8 @@
 import { createTodoSchema } from "@casa/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { todosHooks } from "../hooks";
 
@@ -34,13 +34,14 @@ import {
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import {
-    CalendarIcon,
+    CalendarDotsIcon,
     CheckCircleIcon,
     GlobeIcon,
     LockIcon,
     PlusIcon,
     XIcon,
 } from "@phosphor-icons/react";
+import { Controller } from "react-hook-form";
 
 import type { House } from "@/features/houses/types";
 import type { z } from "zod";
@@ -306,7 +307,7 @@ export const CreateTaskForm = ({ slug }: Props) => {
                                     name="due-date"
                                     className="justify-start text-left font-normal data-[empty=true]:text-muted-foreground"
                                 >
-                                    <CalendarIcon />
+                                    <CalendarDotsIcon />
                                     {date ? (
                                         format(date, "PPP")
                                     ) : (
