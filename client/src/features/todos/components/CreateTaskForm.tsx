@@ -102,7 +102,7 @@ export const CreateTaskForm = ({ slug }: Props) => {
         });
     };
 
-    const handleCancel = () => {
+    const handleReset = () => {
         form.reset();
         setSubTasks([]);
         setSubTaskInput("");
@@ -330,10 +330,10 @@ export const CreateTaskForm = ({ slug }: Props) => {
                     <Button
                         type="button"
                         variant="outline"
-                        onClick={handleCancel}
+                        onClick={handleReset}
                         disabled={isCreating}
                     >
-                        Cancel
+                        Reset
                     </Button>
 
                     <Button type="submit" disabled={isCreating}>
