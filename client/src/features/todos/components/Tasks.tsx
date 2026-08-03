@@ -1,3 +1,5 @@
+import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -18,13 +20,22 @@ import { PlusIcon } from "@phosphor-icons/react";
 import { CreateTaskForm } from "./CreateTaskForm";
 
 import type { House } from "@/features/houses/types";
-import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
+import type { TodoDto } from "@casa/types";
+import type { ComponentProps } from "react";
 
 interface Props {
     slug: House["slug"];
 }
 
-export const Tasks = ({ slug }: Props) => {
+const NewTaskButton = ({ ...props }: ComponentProps<typeof Button>) => {
+    return (
+        <Button variant="outline" className="w-full" {...props}>
+            <PlusIcon /> New task
+        </Button>
+    );
+};
+
+export const Tasks = ({ slug, todos }: Props) => {
     const isDesktop = useMediaQuery("(min-width: 768px)");
 
     return (
@@ -32,7 +43,7 @@ export const Tasks = ({ slug }: Props) => {
             <CardHeader>
                 <CardTitle>Tasks</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="space-y-1.5">
                 {isDesktop ? (
                     <TasksPopover slug={slug} />
                 ) : (
@@ -47,9 +58,7 @@ export const TasksPopover = ({ slug }: Props) => {
     return (
         <Popover>
             <PopoverTrigger asChild>
-                <Button variant="outline">
-                    <PlusIcon /> New task
-                </Button>
+                <NewTaskButton />
             </PopoverTrigger>
 
             <PopoverContent className="w-md" align="start">
@@ -67,9 +76,7 @@ export const TasksDialog = ({ slug }: Props) => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="outline">
-                    <PlusIcon /> New task
-                </Button>
+                <NewTaskButton />
             </DialogTrigger>
 
             <DialogContent>
