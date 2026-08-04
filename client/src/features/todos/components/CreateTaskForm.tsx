@@ -2,7 +2,7 @@ import { createTodoSchema } from "@casa/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { todosHooks } from "../hooks";
 
@@ -35,7 +35,6 @@ import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import {
     CalendarDotsIcon,
-    CheckCircleIcon,
     GlobeIcon,
     LockIcon,
     PlusIcon,
@@ -61,8 +60,6 @@ export const CreateTaskForm = ({ slug }: Props) => {
     const { mutateAsync: createTodo, isPending: isCreating } =
         todosHooks.useCreate(slug);
 
-    const [createSub, setCreateSub] = useState(false);
-    const [subTasks, setSubTasks] = useState<string[]>([]);
     const [subTaskInput, setSubTaskInput] = useState("");
     const [date, setDate] = useState<Date>();
 
@@ -72,29 +69,38 @@ export const CreateTaskForm = ({ slug }: Props) => {
             title: "",
             description: "",
             visibility: "PRIVATE",
+            subTasks: [],
         },
     });
 
-    const addSubTask = () => {
-        if (!subTaskInput.trim()) return;
+    const {
+        fields: subTasks,
+        append,
+        remove,
+    } = useFieldArray({
+        control: form.control,
+        name: "subTasks",
+    });
 
-        setSubTasks((prev) => [...prev, subTaskInput.trim()]);
+    const addSubTask = () => {
+        const value = subTaskInput.trim();
+
+        if (!value) return;
+
+        append(value);
         setSubTaskInput("");
-        setCreateSub(false);
     };
 
     const onSubmit = (data: FormValues) => {
         const payload: FormValues = {
             ...data,
             dueDate: date,
-            subTasks,
         };
 
         toast.promise(createTodo(payload), {
             loading: "Creating task...",
             success: () => {
                 form.reset();
-                setSubTasks([]);
                 setDate(undefined);
 
                 return "Task created successfully!";
@@ -105,10 +111,8 @@ export const CreateTaskForm = ({ slug }: Props) => {
 
     const handleReset = () => {
         form.reset();
-        setSubTasks([]);
         setSubTaskInput("");
         setDate(undefined);
-        setCreateSub(false);
     };
 
     return (
@@ -168,82 +172,69 @@ export const CreateTaskForm = ({ slug }: Props) => {
                     <FieldLabel>Sub tasks</FieldLabel>
 
                     <FieldContent>
-                        {subTasks.map((task, index) => (
-                            <ButtonGroup key={index} className="w-full">
-                                <Input
-                                    size="sm"
-                                    value={task}
-                                    onChange={(e) => {
-                                        const next = [...subTasks];
-                                        next[index] = e.target.value;
-                                        setSubTasks(next);
-                                    }}
-                                />
+                        {subTasks.map((subTask, index) => (
+                            <Controller
+                                key={subTask.id}
+                                name={`subTasks.${index}`}
+                                control={form.control}
+                                render={({ field, fieldState }) => (
+                                    <ButtonGroup className="w-full">
+                                        <Input
+                                            {...field}
+                                            size="sm"
+                                            aria-invalid={fieldState.invalid}
+                                        />
 
-                                <Button
-                                    type="button"
-                                    size="icon-sm"
-                                    variant="ghost"
-                                    className="ml-1.5"
-                                    onClick={() =>
-                                        setSubTasks((prev) =>
-                                            prev.filter((_, i) => i !== index),
-                                        )
-                                    }
-                                >
-                                    <XIcon />
-                                </Button>
-                            </ButtonGroup>
+                                        <Button
+                                            type="button"
+                                            size="icon-sm"
+                                            variant="ghost"
+                                            className="ml-1.5"
+                                            onClick={() => remove(index)}
+                                        >
+                                            <XIcon />
+                                        </Button>
+                                    </ButtonGroup>
+                                )}
+                            />
                         ))}
 
-                        {createSub ? (
-                            <ButtonGroup className="w-full">
-                                <Input
-                                    size="sm"
-                                    placeholder="Type something..."
-                                    value={subTaskInput}
-                                    onChange={(e) =>
-                                        setSubTaskInput(e.target.value)
+                        <ButtonGroup className="w-full">
+                            <Input
+                                size="sm"
+                                placeholder="Type something..."
+                                value={subTaskInput}
+                                onChange={(e) =>
+                                    setSubTaskInput(e.target.value)
+                                }
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter") {
+                                        e.preventDefault();
+                                        addSubTask();
                                     }
-                                    onKeyDown={(e) => {
-                                        if (e.key === "Enter") {
-                                            e.preventDefault();
-                                            addSubTask();
-                                        }
-                                    }}
-                                />
+                                }}
+                            />
 
-                                <Button
-                                    type="button"
-                                    size="sm"
-                                    variant="outline"
-                                    onClick={addSubTask}
-                                >
-                                    <PlusIcon /> Add
-                                </Button>
-
-                                <Button
-                                    type="button"
-                                    size="icon-sm"
-                                    variant="ghost"
-                                    className="ml-1.5"
-                                    onClick={() => setCreateSub(false)}
-                                >
-                                    <XIcon />
-                                </Button>
-                            </ButtonGroup>
-                        ) : (
                             <Button
                                 type="button"
                                 size="sm"
                                 variant="outline"
-                                className="w-fit"
-                                onClick={() => setCreateSub(true)}
+                                onClick={addSubTask}
                             >
-                                <CheckCircleIcon />
-                                Add new sub task
+                                <PlusIcon />
+                                Add
                             </Button>
-                        )}
+                        </ButtonGroup>
+
+                        <FieldError
+                            errors={[
+                                form.formState.errors.subTasks?.root,
+                                ...subTasks.map(
+                                    (_, index) =>
+                                        form.formState.errors.subTasks?.[index],
+                                ),
+                            ]}
+                        />
                     </FieldContent>
                 </Field>
 
