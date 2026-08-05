@@ -57,6 +57,7 @@ const visibilityValues = [
 ];
 
 export const CreateTaskForm = ({ slug }: Props) => {
+    // TODO: Validate sub tasks before appending (max length and max count)
     const { mutateAsync: createTodo, isPending: isCreating } =
         todosHooks.useCreate(slug);
 
@@ -177,6 +178,7 @@ export const CreateTaskForm = ({ slug }: Props) => {
                                             {...field}
                                             size="sm"
                                             aria-invalid={fieldState.invalid}
+                                            disabled={isCreating}
                                         />
 
                                         <Button
@@ -185,6 +187,8 @@ export const CreateTaskForm = ({ slug }: Props) => {
                                             variant="ghost"
                                             className="ml-1.5"
                                             onClick={() => remove(index)}
+                                            disabled={isCreating}
+                                            aria-label="Remove sub task"
                                         >
                                             <XIcon />
                                         </Button>
@@ -198,6 +202,7 @@ export const CreateTaskForm = ({ slug }: Props) => {
                                 size="sm"
                                 placeholder="Type something..."
                                 value={subTaskInput}
+                                disabled={isCreating}
                                 onChange={(e) =>
                                     setSubTaskInput(e.target.value)
                                 }
@@ -214,6 +219,7 @@ export const CreateTaskForm = ({ slug }: Props) => {
                                 size="sm"
                                 variant="outline"
                                 onClick={addSubTask}
+                                disabled={isCreating}
                             >
                                 <PlusIcon />
                                 Add
@@ -249,6 +255,7 @@ export const CreateTaskForm = ({ slug }: Props) => {
                                         name="visibility"
                                     >
                                         <SelectTrigger
+                                            id="visibility"
                                             aria-invalid={fieldState.invalid}
                                             className="w-full"
                                         >
@@ -298,6 +305,7 @@ export const CreateTaskForm = ({ slug }: Props) => {
                                             <Button
                                                 type="button"
                                                 variant="outline"
+                                                id="due-date"
                                                 data-empty={!value}
                                                 name="due-date"
                                                 className="justify-start text-left font-normal data-[empty=true]:text-muted-foreground"
