@@ -35,6 +35,13 @@ const TaskItem = ({
             >
                 <Checkbox id={`task-${todo.id}`} />
                 {todo.title}
+
+                {todo.dueDate && (
+                    <span className="ml-auto inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+                        <CalendarDotsIcon />
+                        {format(todo.dueDate, "MM/d")}
+                    </span>
+                )}
             </Label>
         </li>
     );
