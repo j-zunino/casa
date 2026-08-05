@@ -61,7 +61,6 @@ export const CreateTaskForm = ({ slug }: Props) => {
         todosHooks.useCreate(slug);
 
     const [subTaskInput, setSubTaskInput] = useState("");
-    const [date, setDate] = useState<Date>();
 
     const form = useForm<FormValues>({
         resolver: zodResolver(createTodoSchema),
@@ -69,6 +68,7 @@ export const CreateTaskForm = ({ slug }: Props) => {
             title: "",
             description: "",
             visibility: "PRIVATE",
+            dueDate: undefined,
             subTasks: [],
         },
     });
@@ -92,16 +92,11 @@ export const CreateTaskForm = ({ slug }: Props) => {
     };
 
     const onSubmit = (data: FormValues) => {
-        const payload: FormValues = {
-            ...data,
-            dueDate: date,
-        };
-
-        toast.promise(createTodo(payload), {
+        toast.promise(createTodo(data), {
             loading: "Creating task...",
             success: () => {
                 form.reset();
-                setDate(undefined);
+                setSubTaskInput("");
 
                 return "Task created successfully!";
             },
@@ -112,7 +107,6 @@ export const CreateTaskForm = ({ slug }: Props) => {
     const handleReset = () => {
         form.reset();
         setSubTaskInput("");
-        setDate(undefined);
     };
 
     return (
@@ -290,32 +284,44 @@ export const CreateTaskForm = ({ slug }: Props) => {
 
                     <Field>
                         <FieldLabel htmlFor="due-date">Due date</FieldLabel>
-                        <Popover>
-                            <PopoverTrigger asChild>
-                                <Button
-                                    type="button"
-                                    variant="outline"
-                                    data-empty={!date}
-                                    name="due-date"
-                                    className="justify-start text-left font-normal data-[empty=true]:text-muted-foreground"
-                                >
-                                    <CalendarDotsIcon />
-                                    {date ? (
-                                        format(date, "PPP")
-                                    ) : (
-                                        <span>Pick a date</span>
-                                    )}
-                                </Button>
-                            </PopoverTrigger>
+                        <Controller
+                            name="dueDate"
+                            control={form.control}
+                            render={({ field }) => {
+                                const value = field.value as
+                                    | Date
+                                    | undefined;
 
-                            <PopoverContent className="w-auto p-0">
-                                <Calendar
-                                    mode="single"
-                                    selected={date}
-                                    onSelect={setDate}
-                                />
-                            </PopoverContent>
-                        </Popover>
+                                return (
+                                    <Popover>
+                                        <PopoverTrigger asChild>
+                                            <Button
+                                                type="button"
+                                                variant="outline"
+                                                data-empty={!value}
+                                                name="due-date"
+                                                className="justify-start text-left font-normal data-[empty=true]:text-muted-foreground"
+                                            >
+                                                <CalendarDotsIcon />
+                                                {value ? (
+                                                    format(value, "PPP")
+                                                ) : (
+                                                    <span>Pick a date</span>
+                                                )}
+                                            </Button>
+                                        </PopoverTrigger>
+
+                                        <PopoverContent className="w-auto p-0">
+                                            <Calendar
+                                                mode="single"
+                                                selected={value}
+                                                onSelect={field.onChange}
+                                            />
+                                        </PopoverContent>
+                                    </Popover>
+                                );
+                            }}
+                        />
                     </Field>
                 </Field>
             </FieldGroup>
