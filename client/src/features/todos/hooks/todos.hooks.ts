@@ -23,7 +23,7 @@ export const todosHooks = {
             ...todosMutations.create(houseSlug),
             onSuccess: async () => {
                 await queryClient.invalidateQueries({
-                    queryKey: [todosKeys.base()],
+                    queryKey: [...todosKeys.base()],
                 });
             },
         });
@@ -36,7 +36,7 @@ export const todosHooks = {
             ...todosMutations.update(houseSlug),
             onSuccess: async () => {
                 await queryClient.invalidateQueries({
-                    queryKey: [todosKeys.base()],
+                    queryKey: [...todosKeys.base()],
                 });
             },
         });
