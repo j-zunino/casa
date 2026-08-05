@@ -117,7 +117,7 @@ export const CreateTaskForm = ({ slug }: Props) => {
 
     return (
         <form onSubmit={form.handleSubmit(onSubmit)}>
-            <FieldGroup>
+            <FieldGroup className="no-scrollbar max-h-80 scroll-fade-y overflow-y-auto">
                 <Controller
                     name="title"
                     control={form.control}
@@ -318,29 +318,30 @@ export const CreateTaskForm = ({ slug }: Props) => {
                         </Popover>
                     </Field>
                 </Field>
-
-                <div className="ml-auto flex gap-2">
-                    <Button
-                        type="button"
-                        variant="outline"
-                        onClick={handleReset}
-                        disabled={isCreating}
-                    >
-                        Reset
-                    </Button>
-
-                    <Button type="submit" disabled={isCreating}>
-                        {isCreating ? (
-                            <>
-                                <Spinner />
-                                Creating...
-                            </>
-                        ) : (
-                            "Create task"
-                        )}
-                    </Button>
-                </div>
             </FieldGroup>
+
+            <div className="mt-4 flex w-full gap-2">
+                <Button
+                    type="button"
+                    variant="outline"
+                    onClick={handleReset}
+                    disabled={isCreating}
+                    className="ml-auto"
+                >
+                    Reset
+                </Button>
+
+                <Button type="submit" disabled={isCreating}>
+                    {isCreating ? (
+                        <>
+                            <Spinner />
+                            Creating...
+                        </>
+                    ) : (
+                        "Create task"
+                    )}
+                </Button>
+            </div>
         </form>
     );
 };
