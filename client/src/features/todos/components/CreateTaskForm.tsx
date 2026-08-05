@@ -117,7 +117,7 @@ export const CreateTaskForm = ({ slug }: Props) => {
 
     return (
         <form onSubmit={form.handleSubmit(onSubmit)}>
-            <FieldGroup className="no-scrollbar max-h-80 scroll-fade-y overflow-y-auto">
+            <FieldGroup className="no-scrollbar max-h-80 scroll-fade-y overflow-y-auto p-1">
                 <Controller
                     name="title"
                     control={form.control}
