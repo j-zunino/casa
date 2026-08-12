@@ -26,6 +26,17 @@ interface Props {
     pagination?: ApiPagination;
 }
 
+const TaskDate = ({ dueDate }: { dueDate: TodoDto["dueDate"] }) => {
+    if (!dueDate) return;
+
+    return (
+        <span className="ml-auto inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+            <CalendarDotsIcon />
+            {format(dueDate.toString(), "MM/d")}
+        </span>
+    );
+};
+
 const TaskItem = ({
     todo,
     className,
@@ -33,24 +44,18 @@ const TaskItem = ({
 }: { todo: TodoDto } & ComponentProps<typeof Label>) => {
     return (
         <li>
-            <Label
-                htmlFor={`task-${todo.id}`}
-                className={cn(
-                    "flex h-8 w-full items-center gap-2 px-2 hover:bg-muted dark:hover:bg-muted/50",
-                    className,
-                )}
-                {...props}
+            <Button
+                variant="ghost"
+                className={cn("w-full justify-start", className)}
+                asChild
             >
-                <Checkbox id={`task-${todo.id}`} />
-                {todo.title}
+                <Label htmlFor={`task-${todo.id}`} {...props}>
+                    <Checkbox id={`task-${todo.id}`} />
+                    {todo.title}
 
-                {todo.dueDate && (
-                    <span className="ml-auto inline-flex items-center gap-1.5 text-xs text-muted-foreground">
-                        <CalendarDotsIcon />
-                        {format(todo.dueDate, "MM/d")}
-                    </span>
-                )}
-            </Label>
+                    {todo.dueDate && <TaskDate dueDate={todo.dueDate} />}
+                </Label>
+            </Button>
         </li>
     );
 };
@@ -63,12 +68,7 @@ const ColapsedTask = ({ todo }: { todo: TodoDto }) => {
                     <CaretRightIcon className="mr-0.5 group-data-[state=open]:rotate-90" />
                     {todo.title}
 
-                    {todo.dueDate && (
-                        <span className="ml-auto inline-flex items-center gap-1.5 text-xs text-muted-foreground">
-                            <CalendarDotsIcon />
-                            {format(todo.dueDate, "MM/d")}
-                        </span>
-                    )}
+                    {todo.dueDate && <TaskDate dueDate={todo.dueDate} />}
                 </Button>
             </CollapsibleTrigger>
 
