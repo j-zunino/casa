@@ -9,13 +9,21 @@ import {
     CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { Label } from "@/components/ui/label";
+import { Pagination } from "@/components/ui/pagination";
 import { CalendarDotsIcon, CaretRightIcon } from "@phosphor-icons/react";
 
+import {
+    PaginationControls,
+    PaginationTotal,
+} from "@/components/common/Pagination";
+
 import type { TodoDto } from "@casa/types";
+import type { ApiPagination } from "@casa/types";
 import type { ComponentProps } from "react";
 
 interface Props {
     todos: TodoDto[];
+    pagination?: ApiPagination;
 }
 
 const TaskItem = ({
@@ -79,16 +87,33 @@ const ColapsedTask = ({ todo }: { todo: TodoDto }) => {
     );
 };
 
-export const TasksList = ({ todos }: Props) => {
+export const TasksList = ({ todos, pagination }: Props) => {
     return (
-        <ul className="flex flex-col">
-            {todos.map((todo) =>
-                todo.subTasks.length > 0 ? (
-                    <ColapsedTask key={todo.id} todo={todo} />
-                ) : (
-                    <TaskItem key={todo.id} todo={todo} />
-                ),
+        <div className="flex flex-col gap-1.5">
+            <ul className="flex flex-col">
+                {todos.map((todo) =>
+                    todo.subTasks.length > 0 ? (
+                        <ColapsedTask key={todo.id} todo={todo} />
+                    ) : (
+                        <TaskItem key={todo.id} todo={todo} />
+                    ),
+                )}
+            </ul>
+
+            {pagination && pagination.totalPages > 1 && (
+                <Pagination className="flex items-center justify-between">
+                    <PaginationTotal
+                        page={pagination.page}
+                        total={pagination.total}
+                        totalPages={pagination.totalPages}
+                    />
+                    <PaginationControls
+                        page={pagination.page}
+                        hasPrevious={pagination.hasPrevious}
+                        hasNext={pagination.hasNext}
+                    />
+                </Pagination>
             )}
-        </ul>
+        </div>
     );
 };

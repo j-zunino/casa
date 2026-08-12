@@ -21,13 +21,16 @@ import { CreateTaskForm } from "./CreateTaskForm";
 import { TasksList } from "./TasksList";
 
 import type { House } from "@/features/houses/types";
-import type { TodoDto } from "@casa/types";
+import type { ApiPagination, TodoDto } from "@casa/types";
 import type { ComponentProps } from "react";
 
-interface Props {
+interface TasksProps {
     slug: House["slug"];
-    todos: TodoDto;
+    todos: TodoDto[];
+    pagination?: ApiPagination;
 }
+
+type TaskCreatorProps = Pick<TasksProps, "slug">;
 
 const NewTaskButton = ({ ...props }: ComponentProps<typeof Button>) => {
     return (
@@ -37,7 +40,7 @@ const NewTaskButton = ({ ...props }: ComponentProps<typeof Button>) => {
     );
 };
 
-export const Tasks = ({ slug, todos }: Props) => {
+export const Tasks = ({ slug, todos, pagination }: TasksProps) => {
     const isDesktop = useMediaQuery("(min-width: 768px)");
 
     return (
@@ -52,13 +55,13 @@ export const Tasks = ({ slug, todos }: Props) => {
                     <TasksDialog slug={slug} />
                 )}
 
-                <TasksList todos={todos} />
+                <TasksList todos={todos} pagination={pagination} />
             </CardContent>
         </Card>
     );
 };
 
-export const TasksPopover = ({ slug }: Props) => {
+export const TasksPopover = ({ slug }: TaskCreatorProps) => {
     return (
         <Popover>
             <PopoverTrigger asChild>
@@ -76,7 +79,7 @@ export const TasksPopover = ({ slug }: Props) => {
     );
 };
 
-export const TasksDialog = ({ slug }: Props) => {
+export const TasksDialog = ({ slug }: TaskCreatorProps) => {
     return (
         <Dialog>
             <DialogTrigger asChild>

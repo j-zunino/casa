@@ -9,7 +9,7 @@ type CreateTodoData = z.input<typeof createTodoSchema>;
 type UpdateTodoData = z.input<typeof updateTodoSchema>;
 
 export const todosApi = {
-    async getAll(houseSlug: House["slug"], page = 1, limit = 10) {
+    async getAll(houseSlug: House["slug"], page = 1, limit = 5) {
         return api<TodoDto[]>(`/houses/${houseSlug}/todos`, { page, limit });
     },
 

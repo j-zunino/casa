@@ -10,7 +10,7 @@ export const todosQueries = {
         options?: { page?: number; limit?: number },
     ) {
         const page = options?.page ?? 1;
-        const limit = options?.limit ?? 10;
+        const limit = options?.limit ?? 5;
 
         return queryOptions({
             queryKey: todosKeys.list(houseSlug, page, limit),
