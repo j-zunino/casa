@@ -112,7 +112,7 @@ export const CreateTaskForm = ({ slug }: Props) => {
 
     return (
         <form onSubmit={form.handleSubmit(onSubmit)}>
-            <FieldGroup className="no-scrollbar max-h-80 scroll-fade-y overflow-y-auto p-1">
+            <FieldGroup className="max-h-80 scroll-fade-y overflow-y-auto p-1">
                 <Controller
                     name="title"
                     control={form.control}
@@ -295,9 +295,7 @@ export const CreateTaskForm = ({ slug }: Props) => {
                             name="dueDate"
                             control={form.control}
                             render={({ field }) => {
-                                const value = field.value as
-                                    | Date
-                                    | undefined;
+                                const value = field.value as Date | undefined;
 
                                 return (
                                     <Popover>
