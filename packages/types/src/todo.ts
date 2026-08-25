@@ -6,7 +6,7 @@ export type TodoDto = {
     isCompleted: boolean;
     dueDate: Date | null;
     parentId: string | null;
-    subTasks: TodoDto[];
+    subTasks?: TodoDto[];
     createdById: string;
     updatedById: string | null;
     createdAt: Date;
