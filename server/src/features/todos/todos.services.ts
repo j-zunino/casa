@@ -139,6 +139,7 @@ export const todosServices = {
 
         const todo = await todosQueries.findUnique(client, {
             where: { id },
+            include: { subTasks: true },
         });
 
         if (!todo || todo.houseId !== house.id) {
@@ -155,6 +156,72 @@ export const todosServices = {
                     ErrorCodes.FORBIDDEN,
                 );
             }
+        }
+
+        const isCompleting = data.isCompleted !== undefined;
+        const isParent = todo.subTasks.length > 0;
+        const isChild = todo.parentId !== null;
+
+        if (isCompleting && (isParent || isChild)) {
+            const updated = await todosQueries.update(client, {
+                where: { id },
+                data: {
+                    title: data.title,
+                    description: data.description,
+                    visibility: data.visibility,
+                    isCompleted: data.isCompleted,
+                    dueDate: data.dueDate,
+                    updatedById: userId,
+                },
+                include: { subTasks: true },
+            });
+
+            if (isParent) {
+                await todosQueries.update(client, {
+                    where: { id },
+                    data: {
+                        title: data.title,
+                        description: data.description,
+                        visibility: data.visibility,
+                        isCompleted: data.isCompleted,
+                        dueDate: data.dueDate,
+                        updatedById: userId,
+                        subTasks: {
+                            updateMany: {
+                                where: { parentId: id },
+                                data: { isCompleted: data.isCompleted as boolean },
+                            },
+                        },
+                    },
+                    include: { subTasks: true },
+                });
+
+                return {
+                    ...updated,
+                    subTasks: updated.subTasks.map((subTask) => ({
+                        ...subTask,
+                        isCompleted: data.isCompleted as boolean,
+                    })),
+                };
+            }
+
+            const siblings = await todosQueries.findMany(client, {
+                where: { parentId: todo.parentId },
+            });
+
+            const allComplete =
+                (data.isCompleted as boolean) &&
+                siblings
+                    .filter((s) => s.id !== id)
+                    .every((s) => s.isCompleted);
+
+            await todosQueries.update(client, {
+                where: { id: todo.parentId },
+                data: { isCompleted: allComplete, updatedById: userId },
+                include: { subTasks: true },
+            });
+
+            return updated;
         }
 
         return todosQueries.update(client, {

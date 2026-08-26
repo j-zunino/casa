@@ -16,12 +16,14 @@ import {
     PaginationControls,
     PaginationTotal,
 } from "@/components/common/Pagination";
+import { todosHooks } from "../hooks/todos.hooks";
 
-import type { TodoDto } from "@casa/types";
-import type { ApiPagination } from "@casa/types";
+import type { TodoDto, ApiPagination } from "@casa/types";
+import type { House } from "@/features/houses/types";
 import type { ComponentProps } from "react";
 
 interface Props {
+    slug: House["slug"];
     todos: TodoDto[];
     pagination?: ApiPagination;
 }
@@ -39,9 +41,12 @@ const TaskDate = ({ dueDate }: { dueDate: TodoDto["dueDate"] }) => {
 
 const TaskItem = ({
     todo,
+    slug,
     className,
     ...props
-}: { todo: TodoDto } & ComponentProps<typeof Label>) => {
+}: { todo: TodoDto; slug: House["slug"] } & ComponentProps<typeof Label>) => {
+    const toggle = todosHooks.useToggle(slug);
+
     return (
         <li>
             <Button
@@ -50,8 +55,23 @@ const TaskItem = ({
                 asChild
             >
                 <Label htmlFor={`task-${todo.id}`} {...props}>
-                    <Checkbox id={`task-${todo.id}`} />
-                    {todo.title}
+                    <Checkbox
+                        id={`task-${todo.id}`}
+                        checked={todo.isCompleted}
+                        onCheckedChange={(checked) =>
+                            toggle.mutate({
+                                id: todo.id,
+                                isCompleted: checked === true,
+                            })
+                        }
+                    />
+                    <span
+                        className={cn(
+                            todo.isCompleted && "line-through text-muted-foreground",
+                        )}
+                    >
+                        {todo.title}
+                    </span>
 
                     {todo.dueDate && <TaskDate dueDate={todo.dueDate} />}
                 </Label>
@@ -60,13 +80,31 @@ const TaskItem = ({
     );
 };
 
-const ColapsedTask = ({ todo }: { todo: TodoDto }) => {
+const ColapsedTask = ({ todo, slug }: { todo: TodoDto; slug: House["slug"] }) => {
+    const toggle = todosHooks.useToggle(slug);
+
     return (
         <Collapsible className="group">
             <CollapsibleTrigger asChild>
                 <Button variant="ghost" size="sm" className="w-full">
+                    <Checkbox
+                        checked={todo.isCompleted}
+                        onCheckedChange={(checked) =>
+                            toggle.mutate({
+                                id: todo.id,
+                                isCompleted: checked === true,
+                            })
+                        }
+                        onClick={(e) => e.stopPropagation()}
+                    />
                     <CaretRightIcon className="mr-0.5 group-data-[state=open]:rotate-90" />
-                    {todo.title}
+                    <span
+                        className={cn(
+                            todo.isCompleted && "line-through text-muted-foreground",
+                        )}
+                    >
+                        {todo.title}
+                    </span>
 
                     {todo.dueDate && <TaskDate dueDate={todo.dueDate} />}
                 </Button>
@@ -74,10 +112,11 @@ const ColapsedTask = ({ todo }: { todo: TodoDto }) => {
 
             <CollapsibleContent>
                 <ul className="flex flex-col">
-                    {todo.subTasks.map((subTask) => (
+                    {(todo.subTasks ?? []).map((subTask) => (
                         <TaskItem
                             key={subTask.id}
                             todo={subTask}
+                            slug={slug}
                             className="pl-8"
                         />
                     ))}
@@ -87,15 +126,15 @@ const ColapsedTask = ({ todo }: { todo: TodoDto }) => {
     );
 };
 
-export const TasksList = ({ todos, pagination }: Props) => {
+export const TasksList = ({ slug, todos, pagination }: Props) => {
     return (
         <div className="flex flex-col gap-1.5">
             <ul className="flex flex-col">
                 {todos.map((todo) =>
-                    todo.subTasks.length > 0 ? (
-                        <ColapsedTask key={todo.id} todo={todo} />
+                    (todo.subTasks?.length ?? 0) > 0 ? (
+                        <ColapsedTask key={todo.id} todo={todo} slug={slug} />
                     ) : (
-                        <TaskItem key={todo.id} todo={todo} />
+                        <TaskItem key={todo.id} todo={todo} slug={slug} />
                     ),
                 )}
             </ul>

@@ -5,6 +5,7 @@ import type {
     TodoFindManyArgs,
     TodoFindUniqueArgs,
     TodoUpdateArgs,
+    TodoUpdateManyArgs,
 } from "@/generated/prisma/models";
 
 export const todosQueries = {
@@ -22,6 +23,10 @@ export const todosQueries = {
 
     update(client: Client, options: TodoUpdateArgs) {
         return client.todo.update({ ...options });
+    },
+
+    updateMany(client: Client, options: TodoUpdateManyArgs) {
+        return client.todo.updateMany({ ...options });
     },
 
     delete_(client: Client, options: TodoDeleteArgs) {

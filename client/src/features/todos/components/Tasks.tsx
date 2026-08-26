@@ -55,7 +55,7 @@ export const Tasks = ({ slug, todos, pagination }: TasksProps) => {
                     <TasksDialog slug={slug} />
                 )}
 
-                <TasksList todos={todos} pagination={pagination} />
+                <TasksList slug={slug} todos={todos} pagination={pagination} />
             </CardContent>
         </Card>
     );

@@ -28,4 +28,11 @@ export const todosMutations = {
             mutationFn: (id: string) => todosApi.delete(houseSlug, id),
         });
     },
+
+    toggle(houseSlug: House["slug"]) {
+        return mutationOptions({
+            mutationFn: ({ id, isCompleted }: { id: string; isCompleted: boolean }) =>
+                todosApi.update(houseSlug, id, { isCompleted }),
+        });
+    },
 };
