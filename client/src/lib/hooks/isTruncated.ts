@@ -1,30 +1,24 @@
-import { useCallback, useLayoutEffect, useState } from "react";
+import { useRef, useState } from "react";
+import { useResizeObserver } from "usehooks-ts";
 
-import type { RefCallback } from "react";
+import type { RefObject } from "react";
 
 export const useIsTruncated = <T extends HTMLElement>() => {
-    const [node, setNode] = useState<T | null>(null);
+    const ref = useRef<T>(null);
     const [isTruncated, setIsTruncated] = useState(false);
 
-    const check = useCallback(() => {
-        if (!node) return;
+    useResizeObserver({
+        ref: ref as RefObject<T>,
+        onResize: () => {
+            const node = ref.current;
+            if (!node) return;
 
-        setIsTruncated(node.scrollWidth > node.clientWidth);
-    }, [node]);
-
-    useLayoutEffect(() => {
-        if (!node) return;
-
-        check();
-
-        const observer = new ResizeObserver(check);
-        observer.observe(node);
-
-        return () => observer.disconnect();
-    }, [node, check]);
+            setIsTruncated(node.scrollWidth > node.clientWidth);
+        },
+    });
 
     return {
-        ref: setNode as RefCallback<T>,
+        ref: ref as RefObject<T>,
         isTruncated,
     };
 };

@@ -1,5 +1,4 @@
-import { copyToClipboard } from "@/lib/utils";
-import { toast } from "sonner";
+import { useCopy } from "@/lib/hooks/useCopy";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -26,13 +25,9 @@ interface Props {
 export const CreateInviteLink = ({ inviteCode, isPending, onEdit }: Props) => {
     const inviteLink = `${window.location.origin}/${isPending ? "..." : inviteCode}`;
 
-    const handleCopy = async () => {
-        toast.promise(copyToClipboard(inviteLink), {
-            loading: "Copying to clipboard...",
-            success: "Copied to clipboard!",
-            error: "Failed to copy to clipboard",
-        });
-    };
+    const copy = useCopy();
+
+    const handleCopy = () => copy(inviteLink);
 
     return (
         <>

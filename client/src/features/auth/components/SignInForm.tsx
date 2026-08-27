@@ -1,6 +1,6 @@
 import { signInSchema } from "@casa/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useBoolean } from "usehooks-ts";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { authHooks } from "../hooks";
@@ -35,7 +35,7 @@ type FormValues = z.infer<typeof signInSchema>;
 
 // TODO: Forgot password
 export const SignInForm = () => {
-    const [showPassword, setShowPassword] = useState(false);
+    const showPassword = useBoolean(false);
 
     const { mutateAsync: signIn, isPending: isSigningIn } =
         authHooks.useSignInEmail();
@@ -101,7 +101,9 @@ export const SignInForm = () => {
                                         {...field}
                                         id="password"
                                         type={
-                                            showPassword ? "text" : "password"
+                                            showPassword.value
+                                                ? "text"
+                                                : "password"
                                         }
                                         aria-invalid={fieldState.invalid}
                                         placeholder="••••••••••••"
@@ -112,11 +114,9 @@ export const SignInForm = () => {
                                             aria-label="Show password"
                                             title="Show password"
                                             size="icon-xs"
-                                            onClick={() =>
-                                                setShowPassword(!showPassword)
-                                            }
+                                            onClick={showPassword.toggle}
                                         >
-                                            {showPassword ? (
+                                            {showPassword.value ? (
                                                 <EyeClosedIcon />
                                             ) : (
                                                 <EyeIcon />

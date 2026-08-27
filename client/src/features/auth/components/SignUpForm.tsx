@@ -1,6 +1,6 @@
 import { signUpFormSchema } from "@casa/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useBoolean } from "usehooks-ts";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { authHooks } from "../hooks";
@@ -34,8 +34,8 @@ import type { z } from "zod";
 type FormValues = z.infer<typeof signUpFormSchema>;
 
 export const SignUpForm = () => {
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const showPassword = useBoolean(false);
+    const showConfirmPassword = useBoolean(false);
 
     const { mutateAsync: signUp, isPending: isSigningUp } =
         authHooks.useSignUpEmail();
@@ -126,7 +126,9 @@ export const SignUpForm = () => {
                                         {...field}
                                         id="password"
                                         type={
-                                            showPassword ? "text" : "password"
+                                            showPassword.value
+                                                ? "text"
+                                                : "password"
                                         }
                                         aria-invalid={fieldState.invalid}
                                         placeholder="••••••••••••"
@@ -137,11 +139,9 @@ export const SignUpForm = () => {
                                             aria-label="Show password"
                                             title="Show password"
                                             size="icon-xs"
-                                            onClick={() =>
-                                                setShowPassword(!showPassword)
-                                            }
+                                            onClick={showPassword.toggle}
                                         >
-                                            {showPassword ? (
+                                            {showPassword.value ? (
                                                 <EyeClosedIcon />
                                             ) : (
                                                 <EyeIcon />
@@ -169,7 +169,7 @@ export const SignUpForm = () => {
                                         {...field}
                                         id="passwordConfirmation"
                                         type={
-                                            showConfirmPassword
+                                            showConfirmPassword.value
                                                 ? "text"
                                                 : "password"
                                         }
@@ -182,13 +182,9 @@ export const SignUpForm = () => {
                                             aria-label="Show confirm password"
                                             title="Show confirm password"
                                             size="icon-xs"
-                                            onClick={() =>
-                                                setShowConfirmPassword(
-                                                    !showConfirmPassword,
-                                                )
-                                            }
+                                            onClick={showConfirmPassword.toggle}
                                         >
-                                            {showConfirmPassword ? (
+                                            {showConfirmPassword.value ? (
                                                 <EyeClosedIcon />
                                             ) : (
                                                 <EyeIcon />
