@@ -1,6 +1,12 @@
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
+import { todosHooks } from "../hooks/todos.hooks";
 
+import {
+    PaginationControls,
+    PaginationTotal,
+} from "@/components/common/Pagination";
+import { ScrollingText } from "@/components/common/ScrollingText";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -12,15 +18,8 @@ import { Label } from "@/components/ui/label";
 import { Pagination } from "@/components/ui/pagination";
 import { CalendarDotsIcon, CaretRightIcon } from "@phosphor-icons/react";
 
-import {
-    PaginationControls,
-    PaginationTotal,
-} from "@/components/common/Pagination";
-import { todosHooks } from "../hooks/todos.hooks";
-
-import type { TodoDto, ApiPagination } from "@casa/types";
 import type { House } from "@/features/houses/types";
-import type { ComponentProps } from "react";
+import type { ApiPagination, TodoDto } from "@casa/types";
 
 interface Props {
     slug: House["slug"];
@@ -28,6 +27,11 @@ interface Props {
     pagination?: ApiPagination;
 }
 
+/*
+    Tasks list TODO:
+        - Add dnd-kit
+        - Task list tree sorteable
+*/
 const TaskDate = ({ dueDate }: { dueDate: TodoDto["dueDate"] }) => {
     if (!dueDate) return;
 
@@ -39,42 +43,67 @@ const TaskDate = ({ dueDate }: { dueDate: TodoDto["dueDate"] }) => {
     );
 };
 
+const TaskRow = ({
+    todo,
+    slug,
+    caret = false,
+}: {
+    todo: TodoDto;
+    slug: House["slug"];
+    caret?: boolean;
+}) => {
+    const toggle = todosHooks.useToggle(slug);
+
+    return (
+        <>
+            <Checkbox
+                id={`task-${todo.id}`}
+                checked={todo.isCompleted}
+                onCheckedChange={(checked) =>
+                    toggle.mutate({
+                        id: todo.id,
+                        isCompleted: checked === true,
+                    })
+                }
+                onClick={(e) => e.stopPropagation()}
+            />
+
+            {caret && (
+                <CaretRightIcon className="mr-0.5 shrink-0 group-data-[state=open]:rotate-90" />
+            )}
+
+            <ScrollingText
+                className={cn(
+                    "min-w-0 flex-1",
+                    todo.isCompleted && "text-muted-foreground line-through",
+                )}
+            >
+                {todo.title}
+            </ScrollingText>
+
+            {todo.dueDate && <TaskDate dueDate={todo.dueDate} />}
+        </>
+    );
+};
+
 const TaskItem = ({
     todo,
     slug,
     className,
-    ...props
-}: { todo: TodoDto; slug: House["slug"] } & ComponentProps<typeof Label>) => {
-    const toggle = todosHooks.useToggle(slug);
-
+}: {
+    todo: TodoDto;
+    slug: House["slug"];
+    className?: string;
+}) => {
     return (
         <li>
             <Button
+                className={cn("w-full justify-start text-left", className)}
                 variant="ghost"
-                className={cn("w-full justify-start", className)}
                 asChild
             >
-                <Label htmlFor={`task-${todo.id}`} {...props}>
-                    <Checkbox
-                        id={`task-${todo.id}`}
-                        checked={todo.isCompleted}
-                        onCheckedChange={(checked) =>
-                            toggle.mutate({
-                                id: todo.id,
-                                isCompleted: checked === true,
-                            })
-                        }
-                    />
-                    <span
-                        className={cn(
-                            todo.isCompleted &&
-                                "line-through text-muted-foreground",
-                        )}
-                    >
-                        {todo.title}
-                    </span>
-
-                    {todo.dueDate && <TaskDate dueDate={todo.dueDate} />}
+                <Label htmlFor={`task-${todo.id}`}>
+                    <TaskRow todo={todo} slug={slug} />
                 </Label>
             </Button>
         </li>
@@ -88,49 +117,34 @@ const ColapsedTask = ({
     todo: TodoDto;
     slug: House["slug"];
 }) => {
-    const toggle = todosHooks.useToggle(slug);
+    const subTasks = todo.subTasks ?? [];
 
     return (
-        <Collapsible className="group">
-            <CollapsibleTrigger asChild>
-                <Button variant="ghost" size="sm" className="w-full">
-                    <Checkbox
-                        checked={todo.isCompleted}
-                        onCheckedChange={(checked) =>
-                            toggle.mutate({
-                                id: todo.id,
-                                isCompleted: checked === true,
-                            })
-                        }
-                        onClick={(e) => e.stopPropagation()}
-                    />
-                    <CaretRightIcon className="mr-0.5 group-data-[state=open]:rotate-90" />
-                    <span
-                        className={cn(
-                            todo.isCompleted &&
-                                "line-through text-muted-foreground",
-                        )}
+        <li>
+            <Collapsible className="group">
+                <CollapsibleTrigger asChild>
+                    <Button
+                        className="w-full justify-start text-left"
+                        variant="ghost"
                     >
-                        {todo.title}
-                    </span>
+                        <TaskRow todo={todo} slug={slug} caret={true} />
+                    </Button>
+                </CollapsibleTrigger>
 
-                    {todo.dueDate && <TaskDate dueDate={todo.dueDate} />}
-                </Button>
-            </CollapsibleTrigger>
-
-            <CollapsibleContent>
-                <ul className="flex flex-col">
-                    {(todo.subTasks ?? []).map((subTask) => (
-                        <TaskItem
-                            key={subTask.id}
-                            todo={subTask}
-                            slug={slug}
-                            className="pl-8"
-                        />
-                    ))}
-                </ul>
-            </CollapsibleContent>
-        </Collapsible>
+                <CollapsibleContent>
+                    <ul className="flex flex-col">
+                        {subTasks.map((subTask) => (
+                            <TaskItem
+                                key={subTask.id}
+                                todo={subTask}
+                                slug={slug}
+                                className="pl-8"
+                            />
+                        ))}
+                    </ul>
+                </CollapsibleContent>
+            </Collapsible>
+        </li>
     );
 };
 
