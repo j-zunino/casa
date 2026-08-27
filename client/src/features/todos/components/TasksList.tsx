@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { format } from "date-fns";
+import { format, isBefore, startOfDay } from "date-fns";
 import { todosHooks } from "../hooks/todos.hooks";
 
 import {
@@ -32,11 +32,28 @@ interface Props {
         - Add dnd-kit
         - Task list tree sorteable
 */
-const TaskDate = ({ dueDate }: { dueDate: TodoDto["dueDate"] }) => {
+const TaskDate = ({
+    dueDate,
+    isCompleted,
+}: {
+    dueDate: TodoDto["dueDate"];
+    isCompleted: boolean;
+}) => {
     if (!dueDate) return;
 
+    const isOverdue =
+        !isCompleted && isBefore(startOfDay(dueDate), startOfDay(new Date()));
+
     return (
-        <span className="ml-auto inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+        <span
+            className={cn(
+                "ml-auto inline-flex items-center gap-1.5 text-xs",
+                isOverdue
+                    ? "animate-pulse text-destructive"
+                    : "text-muted-foreground",
+                isCompleted && "opacity-50",
+            )}
+        >
             <CalendarDotsIcon />
             {format(dueDate.toString(), "MM/d")}
         </span>
@@ -75,13 +92,19 @@ const TaskRow = ({
             <ScrollingText
                 className={cn(
                     "min-w-0 flex-1",
-                    todo.isCompleted && "text-muted-foreground line-through",
+                    todo.isCompleted &&
+                        "text-muted-foreground line-through opacity-50",
                 )}
             >
                 {todo.title}
             </ScrollingText>
 
-            {todo.dueDate && <TaskDate dueDate={todo.dueDate} />}
+            {todo.dueDate && (
+                <TaskDate
+                    dueDate={todo.dueDate}
+                    isCompleted={todo.isCompleted}
+                />
+            )}
         </>
     );
 };
