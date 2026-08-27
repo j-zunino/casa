@@ -189,7 +189,9 @@ export const todosServices = {
                         subTasks: {
                             updateMany: {
                                 where: { parentId: id },
-                                data: { isCompleted: data.isCompleted as boolean },
+                                data: {
+                                    isCompleted: data.isCompleted as boolean,
+                                },
                             },
                         },
                     },
@@ -211,9 +213,7 @@ export const todosServices = {
 
             const allComplete =
                 (data.isCompleted as boolean) &&
-                siblings
-                    .filter((s) => s.id !== id)
-                    .every((s) => s.isCompleted);
+                siblings.filter((s) => s.id !== id).every((s) => s.isCompleted);
 
             await todosQueries.update(client, {
                 where: { id: todo.parentId },

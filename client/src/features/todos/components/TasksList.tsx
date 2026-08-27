@@ -67,7 +67,8 @@ const TaskItem = ({
                     />
                     <span
                         className={cn(
-                            todo.isCompleted && "line-through text-muted-foreground",
+                            todo.isCompleted &&
+                                "line-through text-muted-foreground",
                         )}
                     >
                         {todo.title}
@@ -80,7 +81,13 @@ const TaskItem = ({
     );
 };
 
-const ColapsedTask = ({ todo, slug }: { todo: TodoDto; slug: House["slug"] }) => {
+const ColapsedTask = ({
+    todo,
+    slug,
+}: {
+    todo: TodoDto;
+    slug: House["slug"];
+}) => {
     const toggle = todosHooks.useToggle(slug);
 
     return (
@@ -100,7 +107,8 @@ const ColapsedTask = ({ todo, slug }: { todo: TodoDto; slug: House["slug"] }) =>
                     <CaretRightIcon className="mr-0.5 group-data-[state=open]:rotate-90" />
                     <span
                         className={cn(
-                            todo.isCompleted && "line-through text-muted-foreground",
+                            todo.isCompleted &&
+                                "line-through text-muted-foreground",
                         )}
                     >
                         {todo.title}

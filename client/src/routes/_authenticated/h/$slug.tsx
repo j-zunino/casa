@@ -22,7 +22,11 @@ const RouteComponent = () => {
             <Link to="/">Back</Link>
 
             <div className="p-8">
-                <Tasks slug={slug} todos={todos.data} pagination={todos.pagination} />
+                <Tasks
+                    slug={slug}
+                    todos={todos.data}
+                    pagination={todos.pagination}
+                />
             </div>
         </div>
     );

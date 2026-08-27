@@ -1,7 +1,6 @@
 import { housesQueries } from "@/features/houses/queries";
-import { copyToClipboard } from "@/lib/utils";
+import { useCopy } from "@/lib/hooks/useCopy";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { toast } from "sonner";
 import { invitesHooks } from "../hooks";
 
 import { Button } from "@/components/ui/button";
@@ -30,16 +29,10 @@ export const InviteDropdown = ({ inviteCode, slug }: Props) => {
 
     const canRevoke = permissions.invitation?.includes("revoke");
 
-    const handleCopy = async () => {
-        toast.promise(
-            copyToClipboard(`${window.location.origin}/invite/${inviteCode}`),
-            {
-                loading: "Copying to clipboard...",
-                success: "Copied to clipboard!",
-                error: "Failed to copy to clipboard",
-            },
-        );
-    };
+    const copy = useCopy();
+
+    const handleCopy = () =>
+        copy(`${window.location.origin}/invite/${inviteCode}`);
 
     return (
         <DropdownMenu>

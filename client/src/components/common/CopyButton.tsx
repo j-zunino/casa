@@ -1,5 +1,4 @@
-import { toast } from "sonner";
-import { copyToClipboard } from "@/lib/utils";
+import { useCopy } from "@/lib/hooks/useCopy";
 
 import { CopyIcon } from "@phosphor-icons/react";
 
@@ -11,14 +10,12 @@ interface Props extends ComponentProps<"button"> {
 }
 
 export const CopyButton = ({ value, disabled, ...props }: Props) => {
-    const handleCopy = async () => {
+    const copy = useCopy();
+
+    const handleCopy = () => {
         if (!value || disabled) return;
 
-        toast.promise(copyToClipboard(value), {
-            loading: "Copying to clipboard...",
-            success: "Copied to clipboard!",
-            error: "Failed to copy to clipboard",
-        });
+        copy(value);
     };
 
     return (

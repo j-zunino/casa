@@ -31,8 +31,13 @@ export const todosMutations = {
 
     toggle(houseSlug: House["slug"]) {
         return mutationOptions({
-            mutationFn: ({ id, isCompleted }: { id: string; isCompleted: boolean }) =>
-                todosApi.update(houseSlug, id, { isCompleted }),
+            mutationFn: ({
+                id,
+                isCompleted,
+            }: {
+                id: string;
+                isCompleted: boolean;
+            }) => todosApi.update(houseSlug, id, { isCompleted }),
         });
     },
 };
