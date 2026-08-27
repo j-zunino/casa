@@ -8,7 +8,6 @@ export const createTodoSchema = z.object({
         .trim()
         .min(1, { message: "title is required" })
         .max(200, { message: "title is too long" }),
-    description: z.string().trim().max(1000).optional(),
     visibility: visibilitySchema.default("PRIVATE"),
     dueDate: z.coerce.date().optional(),
     subTasks: z

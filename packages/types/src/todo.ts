@@ -1,7 +1,6 @@
 export type TodoDto = {
     id: string;
     title: string;
-    description: string | null;
     visibility: "PUBLIC" | "PRIVATE";
     isCompleted: boolean;
     dueDate: Date | null;

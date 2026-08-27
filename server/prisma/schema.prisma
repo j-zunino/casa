@@ -160,7 +160,6 @@ model Invitation {
 model Todo {
     id          String     @id
     title       String
-    description String?
     visibility  Visibility @default(PRIVATE)
     isCompleted Boolean    @default(false)
     dueDate     DateTime?

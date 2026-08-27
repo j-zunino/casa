@@ -29,8 +29,9 @@ interface Props {
 
 /*
     Tasks list TODO:
-        - Add dnd-kit
         - Task list tree sorteable
+        - Consistent task list order
+        - Sorteable tree with dnd-kit
 */
 const TaskDate = ({
     dueDate,

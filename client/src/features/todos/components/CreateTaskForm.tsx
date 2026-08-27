@@ -32,7 +32,6 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
-import { Textarea } from "@/components/ui/textarea";
 import {
     CalendarDotsIcon,
     GlobeIcon,
@@ -67,7 +66,6 @@ export const CreateTaskForm = ({ slug }: Props) => {
         resolver: zodResolver(createTodoSchema),
         defaultValues: {
             title: "",
-            description: "",
             visibility: "PRIVATE",
             dueDate: undefined,
             subTasks: [],
@@ -112,7 +110,7 @@ export const CreateTaskForm = ({ slug }: Props) => {
 
     return (
         <form onSubmit={form.handleSubmit(onSubmit)}>
-            <FieldGroup className="max-h-80 scroll-fade-y overflow-y-auto p-1">
+            <FieldGroup className="max-h-80 overflow-y-auto p-1">
                 <Controller
                     name="title"
                     control={form.control}
@@ -128,31 +126,6 @@ export const CreateTaskForm = ({ slug }: Props) => {
                                     id="title"
                                     aria-invalid={fieldState.invalid}
                                     placeholder="Grocery's list"
-                                />
-
-                                {fieldState.invalid && (
-                                    <FieldError errors={[fieldState.error]} />
-                                )}
-                            </FieldContent>
-                        </Field>
-                    )}
-                />
-
-                <Controller
-                    name="description"
-                    control={form.control}
-                    render={({ field, fieldState }) => (
-                        <Field data-invalid={fieldState.invalid}>
-                            <FieldLabel htmlFor="description">
-                                Description
-                            </FieldLabel>
-
-                            <FieldContent>
-                                <Textarea
-                                    {...field}
-                                    id="description"
-                                    aria-invalid={fieldState.invalid}
-                                    placeholder="Describe your task..."
                                 />
 
                                 {fieldState.invalid && (

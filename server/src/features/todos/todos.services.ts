@@ -103,7 +103,6 @@ export const todosServices = {
             data: {
                 id: crypto.randomUUID(),
                 title: data.title,
-                description: data.description ?? null,
                 visibility: data.visibility ?? "PRIVATE",
                 dueDate: data.dueDate,
                 houseId: house.id,
@@ -167,7 +166,6 @@ export const todosServices = {
                 where: { id },
                 data: {
                     title: data.title,
-                    description: data.description,
                     visibility: data.visibility,
                     isCompleted: data.isCompleted,
                     dueDate: data.dueDate,
@@ -181,7 +179,6 @@ export const todosServices = {
                     where: { id },
                     data: {
                         title: data.title,
-                        description: data.description,
                         visibility: data.visibility,
                         isCompleted: data.isCompleted,
                         dueDate: data.dueDate,
@@ -228,7 +225,6 @@ export const todosServices = {
             where: { id },
             data: {
                 title: data.title,
-                description: data.description,
                 visibility: data.visibility,
                 isCompleted: data.isCompleted,
                 dueDate: data.dueDate,
