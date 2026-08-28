@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { format, isBefore, startOfDay } from "date-fns";
+import { useState } from "react";
 import { todosHooks } from "../hooks/todos.hooks";
 
 import {
@@ -16,7 +17,12 @@ import {
 } from "@/components/ui/collapsible";
 import { Label } from "@/components/ui/label";
 import { Pagination } from "@/components/ui/pagination";
-import { CalendarDotsIcon, CaretRightIcon } from "@phosphor-icons/react";
+import {
+    CalendarDotsIcon,
+    CaretRightIcon,
+    PencilIcon,
+} from "@phosphor-icons/react";
+import { EditTaskDialog } from "./EditTaskDialog";
 
 import type { House } from "@/features/houses/types";
 import type { ApiPagination, TodoDto } from "@casa/types";
@@ -65,26 +71,31 @@ const TaskRow = ({
     todo,
     slug,
     caret = false,
+    canEdit = false,
 }: {
     todo: TodoDto;
     slug: House["slug"];
     caret?: boolean;
+    canEdit?: boolean;
 }) => {
+    const [isEditOpen, setIsEditOpen] = useState(false);
     const toggle = todosHooks.useToggle(slug);
 
     return (
         <>
-            <Checkbox
-                id={`task-${todo.id}`}
-                checked={todo.isCompleted}
-                onCheckedChange={(checked) =>
-                    toggle.mutate({
-                        id: todo.id,
-                        isCompleted: checked === true,
-                    })
-                }
-                onClick={(e) => e.stopPropagation()}
-            />
+            {!caret && (
+                <Checkbox
+                    id={`task-${todo.id}`}
+                    checked={todo.isCompleted}
+                    onCheckedChange={(checked) =>
+                        toggle.mutate({
+                            id: todo.id,
+                            isCompleted: checked === true,
+                        })
+                    }
+                    onClick={(e) => e.stopPropagation()}
+                />
+            )}
 
             {caret && (
                 <CaretRightIcon className="mr-0.5 shrink-0 group-data-[state=open]:rotate-90" />
@@ -106,6 +117,32 @@ const TaskRow = ({
                     isCompleted={todo.isCompleted}
                 />
             )}
+
+            {canEdit && (
+                <Button
+                    type="button"
+                    size="icon-sm"
+                    variant="ghost"
+                    className="-mr-2 opacity-0 group-hover:opacity-100"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setIsEditOpen(true);
+                    }}
+                    aria-label={`Edit ${todo.title}`}
+                >
+                    <PencilIcon />
+                </Button>
+            )}
+
+            {canEdit && (
+                <EditTaskDialog
+                    todo={todo}
+                    slug={slug}
+                    open={isEditOpen}
+                    onOpenChange={setIsEditOpen}
+                />
+            )}
         </>
     );
 };
@@ -114,20 +151,25 @@ const TaskItem = ({
     todo,
     slug,
     className,
+    canEdit = false,
 }: {
     todo: TodoDto;
     slug: House["slug"];
     className?: string;
+    canEdit?: boolean;
 }) => {
     return (
         <li>
             <Button
-                className={cn("w-full justify-start text-left", className)}
+                className={cn(
+                    "group w-full justify-start text-left",
+                    className,
+                )}
                 variant="ghost"
                 asChild
             >
                 <Label htmlFor={`task-${todo.id}`}>
-                    <TaskRow todo={todo} slug={slug} />
+                    <TaskRow todo={todo} slug={slug} canEdit={canEdit} />
                 </Label>
             </Button>
         </li>
@@ -151,7 +193,7 @@ const ColapsedTask = ({
                         className="w-full justify-start text-left"
                         variant="ghost"
                     >
-                        <TaskRow todo={todo} slug={slug} caret={true} />
+                        <TaskRow todo={todo} slug={slug} caret={true} canEdit />
                     </Button>
                 </CollapsibleTrigger>
 
@@ -180,7 +222,12 @@ export const TasksList = ({ slug, todos, pagination }: Props) => {
                     (todo.subTasks?.length ?? 0) > 0 ? (
                         <ColapsedTask key={todo.id} todo={todo} slug={slug} />
                     ) : (
-                        <TaskItem key={todo.id} todo={todo} slug={slug} />
+                        <TaskItem
+                            key={todo.id}
+                            todo={todo}
+                            slug={slug}
+                            canEdit
+                        />
                     ),
                 )}
             </ul>

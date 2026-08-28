@@ -1,47 +1,11 @@
-import { createTodoSchema } from "@casa/schemas";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { format } from "date-fns";
-import { useState } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { todosHooks } from "../hooks";
 
-import { Required } from "@/components/common/Required";
-import { Button } from "@/components/ui/button";
-import { ButtonGroup } from "@/components/ui/button-group";
-import { Calendar } from "@/components/ui/calendar";
-import {
-    Field,
-    FieldContent,
-    FieldError,
-    FieldGroup,
-    FieldLabel,
-} from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover";
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
-import {
-    CalendarDotsIcon,
-    GlobeIcon,
-    LockIcon,
-    PlusIcon,
-    XIcon,
-} from "@phosphor-icons/react";
-import { Controller } from "react-hook-form";
+import { TaskForm } from "./TaskForm";
 
 import type { House } from "@/features/houses/types";
+import type { createTodoSchema } from "@casa/schemas";
 import type { z } from "zod";
 
 type FormValues = z.input<typeof createTodoSchema>;
@@ -50,283 +14,41 @@ interface Props {
     slug: House["slug"];
 }
 
-const visibilityValues = [
-    { label: "Private", icon: <LockIcon />, value: "PRIVATE" as const },
-    { label: "Public", icon: <GlobeIcon />, value: "PUBLIC" as const },
-];
-
 export const CreateTaskForm = ({ slug }: Props) => {
-    // TODO: Validate sub tasks before appending (max length and max count)
     const { mutateAsync: createTodo, isPending: isCreating } =
         todosHooks.useCreate(slug);
-
-    const [subTaskInput, setSubTaskInput] = useState("");
-
-    const form = useForm<FormValues>({
-        resolver: zodResolver(createTodoSchema),
-        defaultValues: {
-            title: "",
-            visibility: "PRIVATE",
-            dueDate: undefined,
-            subTasks: [],
-        },
-    });
-
-    const {
-        fields: subTasks,
-        append,
-        remove,
-    } = useFieldArray({
-        control: form.control,
-        name: "subTasks",
-    });
-
-    const addSubTask = () => {
-        const value = subTaskInput.trim();
-
-        if (!value) return;
-
-        append(value);
-        setSubTaskInput("");
-    };
 
     const onSubmit = (data: FormValues) => {
         toast.promise(createTodo(data), {
             loading: "Creating task...",
             success: () => {
-                form.reset();
-                setSubTaskInput("");
-
                 return "Task created successfully!";
             },
             error: (err) => err?.message ?? "An unexpected error occurred",
         });
     };
 
-    const handleReset = () => {
-        form.reset();
-        setSubTaskInput("");
-    };
-
     return (
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-            <FieldGroup className="max-h-80 overflow-y-auto p-1">
-                <Controller
-                    name="title"
-                    control={form.control}
-                    render={({ field, fieldState }) => (
-                        <Field data-invalid={fieldState.invalid}>
-                            <FieldLabel htmlFor="title">
-                                Title <Required />
-                            </FieldLabel>
-
-                            <FieldContent>
-                                <Input
-                                    {...field}
-                                    id="title"
-                                    aria-invalid={fieldState.invalid}
-                                    placeholder="Grocery's list"
-                                />
-
-                                {fieldState.invalid && (
-                                    <FieldError errors={[fieldState.error]} />
-                                )}
-                            </FieldContent>
-                        </Field>
-                    )}
-                />
-
-                <Field>
-                    <FieldLabel>Sub tasks</FieldLabel>
-
-                    <FieldContent>
-                        {subTasks.map((subTask, index) => (
-                            <Controller
-                                key={subTask.id}
-                                name={`subTasks.${index}`}
-                                control={form.control}
-                                render={({ field, fieldState }) => (
-                                    <ButtonGroup className="w-full">
-                                        <Input
-                                            {...field}
-                                            size="sm"
-                                            aria-invalid={fieldState.invalid}
-                                            disabled={isCreating}
-                                        />
-
-                                        <Button
-                                            type="button"
-                                            size="icon-sm"
-                                            variant="ghost"
-                                            className="ml-1.5"
-                                            onClick={() => remove(index)}
-                                            disabled={isCreating}
-                                            aria-label="Remove sub task"
-                                        >
-                                            <XIcon />
-                                        </Button>
-                                    </ButtonGroup>
-                                )}
-                            />
-                        ))}
-
-                        <ButtonGroup className="w-full">
-                            <Input
-                                size="sm"
-                                placeholder="Type something..."
-                                value={subTaskInput}
-                                disabled={isCreating}
-                                onChange={(e) =>
-                                    setSubTaskInput(e.target.value)
-                                }
-                                onKeyDown={(e) => {
-                                    if (e.key === "Enter") {
-                                        e.preventDefault();
-                                        addSubTask();
-                                    }
-                                }}
-                            />
-
-                            <Button
-                                type="button"
-                                size="sm"
-                                variant="outline"
-                                onClick={addSubTask}
-                                disabled={isCreating}
-                            >
-                                <PlusIcon />
-                                Add
-                            </Button>
-                        </ButtonGroup>
-
-                        <FieldError
-                            errors={[
-                                form.formState.errors.subTasks?.root,
-                                ...subTasks.map(
-                                    (_, index) =>
-                                        form.formState.errors.subTasks?.[index],
-                                ),
-                            ]}
-                        />
-                    </FieldContent>
-                </Field>
-
-                <Field orientation="horizontal">
-                    <Controller
-                        name="visibility"
-                        control={form.control}
-                        render={({ field, fieldState }) => (
-                            <Field data-invalid={fieldState.invalid}>
-                                <FieldLabel htmlFor="visibility">
-                                    Visibility <Required />
-                                </FieldLabel>
-
-                                <FieldContent>
-                                    <Select
-                                        value={field.value}
-                                        onValueChange={field.onChange}
-                                        name="visibility"
-                                    >
-                                        <SelectTrigger
-                                            id="visibility"
-                                            aria-invalid={fieldState.invalid}
-                                            className="w-full"
-                                        >
-                                            <SelectValue />
-                                        </SelectTrigger>
-
-                                        <SelectContent>
-                                            <SelectGroup>
-                                                {visibilityValues.map(
-                                                    (item) => (
-                                                        <SelectItem
-                                                            key={item.value}
-                                                            value={item.value}
-                                                        >
-                                                            {item.icon}
-                                                            {item.label}
-                                                        </SelectItem>
-                                                    ),
-                                                )}
-                                            </SelectGroup>
-                                        </SelectContent>
-                                    </Select>
-
-                                    {fieldState.invalid && (
-                                        <FieldError
-                                            errors={[fieldState.error]}
-                                        />
-                                    )}
-                                </FieldContent>
-                            </Field>
-                        )}
-                    />
-
-                    <Field>
-                        <FieldLabel htmlFor="due-date">Due date</FieldLabel>
-                        <Controller
-                            name="dueDate"
-                            control={form.control}
-                            render={({ field }) => {
-                                const value = field.value as Date | undefined;
-
-                                return (
-                                    <Popover>
-                                        <PopoverTrigger asChild>
-                                            <Button
-                                                type="button"
-                                                variant="outline"
-                                                id="due-date"
-                                                data-empty={!value}
-                                                name="due-date"
-                                                className="justify-start text-left font-normal data-[empty=true]:text-muted-foreground"
-                                            >
-                                                <CalendarDotsIcon />
-                                                {value ? (
-                                                    format(value, "PPP")
-                                                ) : (
-                                                    <span>Pick a date</span>
-                                                )}
-                                            </Button>
-                                        </PopoverTrigger>
-
-                                        <PopoverContent className="w-auto p-0">
-                                            <Calendar
-                                                mode="single"
-                                                selected={value}
-                                                onSelect={field.onChange}
-                                            />
-                                        </PopoverContent>
-                                    </Popover>
-                                );
-                            }}
-                        />
-                    </Field>
-                </Field>
-            </FieldGroup>
-
-            <div className="mt-4 flex w-full gap-2">
-                <Button
-                    type="button"
-                    variant="outline"
-                    onClick={handleReset}
-                    disabled={isCreating}
-                    className="ml-auto"
-                >
-                    Reset
-                </Button>
-
-                <Button type="submit" disabled={isCreating}>
-                    {isCreating ? (
-                        <>
-                            <Spinner />
-                            Creating...
-                        </>
-                    ) : (
-                        "Create task"
-                    )}
-                </Button>
-            </div>
-        </form>
+        <TaskForm
+            defaultValues={{
+                title: "",
+                visibility: "PRIVATE",
+                dueDate: undefined,
+                subTasks: [],
+            }}
+            onSubmit={onSubmit}
+            submitLabel={
+                isCreating ? (
+                    <>
+                        <Spinner />
+                        Creating...
+                    </>
+                ) : (
+                    "Create task"
+                )
+            }
+            isSubmitting={isCreating}
+            showReset
+        />
     );
 };
